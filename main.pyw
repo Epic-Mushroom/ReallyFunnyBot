@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 from pathlib import Path
 # from keep_up import keep_awake
 
-print('test')
+print('testing')
 
 script_directory = Path(__file__).parent.resolve()
 os.chdir(script_directory)
