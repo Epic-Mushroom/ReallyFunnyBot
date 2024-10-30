@@ -1,6 +1,7 @@
 name: Run Code
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - master
@@ -38,3 +39,5 @@ jobs:
           git push
         env:
           GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
+        permissions:
+          contents: write
