@@ -336,11 +336,6 @@ async def on_message(message):
             else:
                 await message.add_reaction(random.choice(FUNNY_EMOJIS))
 
-    if not something_sent:
-        if random.randrange(1, 51) == 1:
-            await reply_to_message(message, f"{random.choice(BAITS)}")
-        elif index_of_pronoun > -1 and random.randrange(1, 5) == 1:
-            await reply_to_message(message, f"{random.choice(BAITS[4:])}")
 
     if find_word_bool(lowercase_message_content, THICK_OF_IT_TRIGGERS):
         await reply_to_message(message, "https://www.youtube.com/watch?v=At8v_Yc044Y")
@@ -450,6 +445,11 @@ async def on_message(message):
 
     if find_word_bool(message.content, ['what is my name']):
         await reply_to_message(message, f"{message.author.display_name} *({message.author.name})*")
+
+    if random.randrange(1, 51) == 1:
+        await reply_to_message(message, f"{random.choice(BAITS)}")
+    elif index_of_pronoun > -1 and random.randrange(1, 5) == 1:
+        await reply_to_message(message, f"{random.choice(BAITS[4:])}")
 
 # keep_awake()
 
