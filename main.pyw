@@ -1,7 +1,6 @@
 from inspect import Attribute
 
 import discord, os, random, time
-from openai import OpenAI
 from dotenv import load_dotenv
 from pathlib import Path
 # from keep_up import keep_awake
