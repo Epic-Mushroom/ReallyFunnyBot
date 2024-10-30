@@ -37,6 +37,6 @@ jobs:
           git add .
           git pull
           git commit -m "Automated changes by GitHub Actions"
-          git push
+          git push --force
         env:
           GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
