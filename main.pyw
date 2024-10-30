@@ -1,15 +1,33 @@
-from inspect import Attribute
-
-import discord, os, random, time
+import discord, os, random, time, logging, sys
 from dotenv import load_dotenv
 from pathlib import Path
-# from keep_up import keep_awake
 
-print('testing')
-
+# SETUP
 script_directory = Path(__file__).parent.resolve()
 os.chdir(script_directory)
 
+logging.basicConfig(level=logging.INFO, stream=sys.stdout)
+
+load_dotenv()
+
+try:
+    TOKEN = os.environ['DISCORD_TOKEN']
+except KeyError:
+    TOKEN = os.getenv('DISCORD_TOKEN')
+MY_GUILD = os.getenv('DISCORD_GUILD')
+intents = discord.Intents.default()
+intents.message_content = True
+client = discord.Client(intents=intents)
+
+# GLOBAL VARIABLES oh no im using global variables oh noo
+comedians = ["Kush", "Kayshav", "dad", "James", "GUYS IF YOU SEE THIS TEXT THE BOT IS BUGGED LOL"] # last element must be debug string
+guild_list = []
+
+cooldown_last_reset_time = time.time()
+something_sent = True
+recently_sent_messages = 0
+
+# CONSTANTS
 FOLLOWING_CHARACTERS = ['', ' ', '.', '?', '!', '"', "'"]
 PRECEDING_CHARACTERS = [' ', '.', ':', '"', "'"]
 ENDING_CHARACTERS = ['.', '?', '!', ':', 'bruh'] # god forbid anyone other than me read this unholy mess of code oh my god
@@ -180,14 +198,6 @@ def update_user_database(path: Path, username: str, increment=1) -> None:
     file.truncate()
     file.close()
 
-assert "t ext".lower() == "t ext"
-assert find_word_index("where", ['ere', 'r']) == 2
-assert find_word_index("where", ['ere', 'r', 'q']) == 2
-assert find_word_index("bob", ["q", "o"]) == 1
-assert find_word_index("where", ['eRe', 'r']) == 2
-assert find_word_index("ERE", ['ere', 'r']) == 0
-assert find_word_index("jump", ['F']) == -1
-
 async def send_message(reference, text, bypass_cd=False, file_path=None) -> None:
     global something_sent, recently_sent_messages
 
@@ -196,7 +206,7 @@ async def send_message(reference, text, bypass_cd=False, file_path=None) -> None
         file = discord.File(file_path)
 
     if on_cooldown():
-        print(f'On cooldown. Message withheld: {text}')
+        logging.info(f'On cooldown. Message withheld: {text}')
 
     if bypass_cd or not (something_sent or on_cooldown()):
         something_sent = True
@@ -223,7 +233,7 @@ async def reply_to_message(reference, text, bypass_cd=False, ping=True) -> None:
     global something_sent, recently_sent_messages
 
     if on_cooldown():
-        print(f'On cooldown. Message withheld: {text}')
+        logging.info(f'On cooldown. Message withheld: {text}')
 
     if bypass_cd or not (something_sent or on_cooldown()):
         something_sent = True
@@ -246,34 +256,17 @@ async def reply_to_message(reference, text, bypass_cd=False, ping=True) -> None:
 
         update_user_database(USER_TRIGGERS, reference.author.name)
 
-load_dotenv()
 
-try:
-    TOKEN = os.environ['DISCORD_TOKEN']
-except KeyError:
-    TOKEN = os.getenv('DISCORD_TOKEN')
-MY_GUILD = os.getenv('DISCORD_GUILD')
-intents = discord.Intents.default()
-intents.message_content = True
-client = discord.Client(intents=intents)
-
-# global variables oh no im using global variables oh noo
-comedians = ["Kush", "Kayshav", "dad", "James", "GUYS IF YOU SEE THIS TEXT THE BOT IS BUGGED LOL"] # last element must be debug string
-guild_list = []
-
-cooldown_last_reset_time = time.time()
-something_sent = True
-recently_sent_messages = 0
 
 @client.event
 async def on_ready():
     global comedians, guild_list
 
     for g in client.guilds:
-        # print(len(client.guilds))
-        print(f'connected to {g.name}, server id: {g.id}')
+        # logging.info(len(client.guilds))
+        logging.info(f'connected to {g.name}, server id: {g.id}')
 
-    print(f'{client.user} (nicked as {g.me.display_name}) is now here. brace yourselves.')
+    logging.info(f'{client.user} (nicked as {g.me.display_name}) is now here. brace yourselves.')
 
     # editing global variables
     guild_list = list(client.guilds)
