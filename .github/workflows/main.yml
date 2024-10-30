@@ -3,7 +3,7 @@ name: Run Code
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   run-code:
