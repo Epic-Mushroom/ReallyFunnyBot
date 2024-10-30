@@ -48,6 +48,7 @@ PRONOUNS = ['he', 'she', 'they']
 TYPOS = ['SOTP', 'HWO', 'HLEP', 'imdeed', 'DYHINF', 'EHLP', 'liek', 'sitpoo', 'cehap', 'parnets', 'paretns', 'vioolni', 'sotfp', 'tahnkss', 'sucj', 'kmagine', 'heah']
 SWEARING_RESPONSES = ["Bro chill out dude.", "Let's calm down bro.", "Dude swearing is not cool.", "Guys lets find our happy place.",
                       "Watch your fucking language.", "That's a no-no word"]
+KYS_RESPONSES = ["Let's be nice to each other ok.", "Let's all calm down guys.", "Guys lets find our happy place."]
 SPEECH_BUBBLES = ['https://cdn.discordapp.com/attachments/1087868146288951389/1285450220741726278/togif.gif?ex=6722580f&is=6721068f&hm=eae8f4b73914afeef14e09b34df7eca35865ce5b6ee517558325fba6c5fcf0fb&',
                   'https://tenor.com/view/manlet-speech-bubble-bobcat-gif-25293164',
                   'https://tenor.com/view/discord-speech-bubble-small-guy-with-a-sword-speech-bubble-gif-2288421216251484021',
@@ -345,6 +346,9 @@ async def on_message(message):
 
     if "FUCK" in message.content or "SHIT" in message.content or lowercase_message_content == "shut the fuck up":
         await reply_to_message(message, f"{random.choice(SWEARING_RESPONSES)}")
+
+    if find_isolated_word_bool(message.content, ['kys', 'kill yourself', 'kill your self']):
+        await send_message(message, f"{random.choice(KYS_RESPONSES)}")
     
     if "what is the time" in lowercase_message_content:
         await reply_to_message(message, f"It is <t:{current_time}:f>")
