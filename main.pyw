@@ -433,6 +433,9 @@ async def on_message(message):
         else:
             await reply_to_message(referred_message, random.choice(SPEECH_BUBBLES), ping=False)
 
+    if find_isolated_word_bool(message.content, ['brawl stars']):
+        await reply_to_message(message, 'https://tenor.com/view/wanna-play-brawl-stars-lonely-no-one-plays-brawl-stars-lmoa-gif-23811622')
+
     if find_word_bool(message.content, ['flip a coin']):
         if random.randrange(1, 3) == 1:
             await send_message(message, 'heads', bypass_cd=True)
