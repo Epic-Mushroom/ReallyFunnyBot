@@ -3,7 +3,7 @@ name: Run Code
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   run-code:
@@ -18,7 +18,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install -r requirements.txt
+          python -m pip install -r requirements.txt
 
       - name: Run script
         run: |
