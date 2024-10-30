@@ -20,7 +20,7 @@ intents.message_content = True
 client = discord.Client(intents=intents)
 
 # GLOBAL VARIABLES oh no im using global variables oh noo
-comedians = ["Kush", "Kayshav", "dad", "James", "GUYS IF YOU SEE THIS TEXT THE BOT IS BUGGED LOL"] # last element must be debug string
+comedians = ["Kush", "Kayshav", "dad", "James", 'Dad', "GUYS IF YOU SEE THIS TEXT THE BOT IS BUGGED LOL"] # last element must be debug string
 guild_list = []
 
 cooldown_last_reset_time = time.time()
