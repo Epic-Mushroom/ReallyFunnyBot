@@ -345,7 +345,7 @@ async def on_message(message):
     if find_word_bool(lowercase_message_content, THICK_OF_IT_TRIGGERS):
         await reply_to_message(message, "https://www.youtube.com/watch?v=At8v_Yc044Y")
 
-    if find_word_bool(lowercase_message_content, ['skibidi']):
+    if find_word_bool(lowercase_message_content, ['skibidi', 'hawk tuah', 'jelqing']):
         await send_message(message, "no", True)
 
     if "FUCK" in message.content or "SHIT" in message.content or lowercase_message_content == "shut the fuck up":
@@ -435,6 +435,9 @@ async def on_message(message):
 
     if find_isolated_word_bool(message.content, ['brawl stars']):
         await reply_to_message(message, 'https://tenor.com/view/wanna-play-brawl-stars-lonely-no-one-plays-brawl-stars-lmoa-gif-23811622')
+
+    if find_isolated_word_bool(message.content, ['sigma']):
+        await reply_to_message(message, 'https://tenor.com/view/not-a-sigma-sorry-you-are-not-a-sigma-sorry-you%27re-not-a-sigma-you-aren%27t-a-sigma-you-are-not-sigma-gif-337838532227751572')
 
     if find_word_bool(message.content, ['flip a coin']):
         if random.randrange(1, 3) == 1:
