@@ -35,8 +35,8 @@ jobs:
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
           git add .
-          git commit -m "Automated changes by GitHub Actions"
           git pull
+          git commit -m "Automated changes by GitHub Actions"
           git push
         env:
           GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
