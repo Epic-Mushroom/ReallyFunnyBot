@@ -5,6 +5,10 @@ on:
     branches:
       - master
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   run-code:
     runs-on: windows-latest
@@ -25,6 +29,7 @@ jobs:
           python main.pyw
           
       - name: Commit and push changes
+        if: always()
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
