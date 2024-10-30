@@ -251,13 +251,10 @@ try:
     TOKEN = os.environ['DISCORD_TOKEN']
 except KeyError:
     TOKEN = os.getenv('DISCORD_TOKEN')
-OPENAI_API_KEY = os.getenv('OPEN_AI_KEY')
 MY_GUILD = os.getenv('DISCORD_GUILD')
 intents = discord.Intents.default()
 intents.message_content = True
 client = discord.Client(intents=intents)
-
-ai_client = OpenAI(api_key=OPENAI_API_KEY)
 
 # global variables oh no im using global variables oh noo
 comedians = ["Kush", "Kayshav", "dad", "James", "GUYS IF YOU SEE THIS TEXT THE BOT IS BUGGED LOL"] # last element must be debug string
@@ -453,14 +450,6 @@ async def on_message(message):
 
     if find_word_bool(message.content, ['what is my name']):
         await reply_to_message(message, f"{message.author.display_name} *({message.author.name})*")
-
-    if find_isolated_word_bool(message.content, ['testingai']):
-        prompt = message.content[find_index_after_word(message.content, ['testingai']):].strip()
-        response = ai_client.completions.create(model="babbage-002",
-                                            prompt=prompt,
-                                            max_tokens=69, n=1, stop=None, temperature=0.7)
-
-        await send_message(message, response.choices[0].text.strip())
 
 # keep_awake()
 
