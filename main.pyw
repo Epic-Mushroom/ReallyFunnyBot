@@ -30,7 +30,7 @@ recently_sent_messages = 0
 # CONSTANTS
 FOLLOWING_CHARACTERS = ['', ' ', '.', '?', '!', '"', "'"]
 PRECEDING_CHARACTERS = [' ', '.', ':', '"', "'"]
-ENDING_CHARACTERS = ['.', '?', '!', ':', 'bruh'] # god forbid anyone other than me read this unholy mess of code oh my god
+ENDING_CHARACTERS = ['.', '?', '!', ':', 'bruh']
 POSSESSIVE_PERSONAL_PRONOUN_LIST = ['im', "i'm", 'i am', 'I’m']
 AMONG_US_TRIGGERS = ["among us", 'amongus', 'amogus', 'among sus', 'sussy', 'sus', 'baka']
 THICK_OF_IT_TRIGGERS = ['ksi', 'thick of it', 'from the screen', 'to the ring', 'this is how the story goes']
