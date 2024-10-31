@@ -385,7 +385,6 @@ async def on_message(message):
             await message.channel.send(f"The name of this guild is {current_guild.name} and my nick is {current_display_name}")
         except AttributeError:
             await message.channel.send(f"I am not in a guild. However, my display name is {current_display_name}")
-        # await message.channel.send(f"This message does not contribute to the total triggers txt file")
 
     if "debugcooldown" in lowercase_message_content:
         if on_cooldown():
