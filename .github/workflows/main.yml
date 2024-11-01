@@ -23,9 +23,6 @@ jobs:
         with:
           python-version: '3.12.7' # Specify your Python version here
 
-      - name: Waiting for previous workflow to commit and push changes
-        run: sleep 60
-
       - name: Install dependencies
         run: |
           python -m pip install -r requirements.txt
