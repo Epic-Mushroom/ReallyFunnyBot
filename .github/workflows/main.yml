@@ -29,7 +29,7 @@ jobs:
       
       - name: Pull changes made by previous run
         run: |
-          git pull
+          git pull origin master --allow-unrelated-histories
 
       - name: Run script
         run: |
@@ -42,6 +42,6 @@ jobs:
           git config --global user.email "github-actions@github.com"
           git add .
           git commit -m "Automated changes by GitHub Actions"
-          git push --force
+          git push
         env:
           GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
