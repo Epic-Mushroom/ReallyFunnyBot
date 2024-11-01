@@ -82,6 +82,10 @@ def on_cooldown():
     current_time = int(time.time())
     return recently_sent_messages >= COOLDOWN_LIMIT and (current_time - cooldown_last_reset_time) < COOLDOWN_LENGTH
 
+def random_range(start: int, stop: int) -> int:
+    """random.randrange but its inclusive so i don't keep forgetting the original function has an exclusive endpoint because i have fucking dementia"""
+    return random.randrange(start, stop + 1)
+
 def hours_since(current_time: int, considered_time: int) -> int:
     seconds_since = int(current_time - considered_time)
     return seconds_since // 3600
@@ -312,13 +316,13 @@ async def on_message(message):
         if len(interpreted_name) > 0:
             await send_message(message, f"Hi {interpreted_name}, I'm {random.choice(comedians)}!")
 
-    if find_isolated_word_bool(message.content, TYPOS) and random.randrange(1, 2) == 1:
+    if find_isolated_word_bool(message.content, TYPOS) and random_range(1, 1) == 1:
         await reply_to_message(message, "https://www.wikihow.com/Type")
 
     if "crazy" in lowercase_message_content.lower():
         await reply_to_message(message, f"{random.choice(CRAZY_RESPONSES)}")
 
-    if (message.author.id == PALIOPOLIS_ID or message.author.id == JADEN_ID) and random.randrange(1, 8) == 1:
+    if (message.author.id == PALIOPOLIS_ID or message.author.id == JADEN_ID) and random_range(1, 7) == 1:
         await message.add_reaction(random.choice(NEGATIVE_EMOJIS))
 
     if referred_message and referred_message.author == client.user:
@@ -442,24 +446,27 @@ async def on_message(message):
     if find_isolated_word_bool(message.content, ['sigma']):
         await reply_to_message(message, 'https://tenor.com/view/not-a-sigma-sorry-you-are-not-a-sigma-sorry-you%27re-not-a-sigma-you-aren%27t-a-sigma-you-are-not-sigma-gif-337838532227751572')
 
-    if random.randrange(1, 556) == 1:
+    if random_range(1, 555) == 1:
         await send_message(message, '🫠 (this message has a 1/555 chance to appear)', bypass_cd=True)
 
     if find_word_bool(message.content, ['flip a coin']):
-        if random.randrange(1, 3) == 1:
+        if random_range(1, 2) == 1:
             await send_message(message, 'heads', bypass_cd=True)
         else:
             await send_message(message, 'tails', bypass_cd=True)
 
     if find_word_bool(message.content, ['roll a die', 'roll a dice', 'diceroll']):
-        await send_message(message, random.randrange(1, 6), bypass_cd=True)
+        await send_message(message, random_range(1, 6), bypass_cd=True)
+
+    if find_word_bool(message.content, ['roll a d20']):
+        await send_message(message, random_range(1, 20), bypass_cd=True)
 
     if find_word_bool(message.content, ['what is my name']):
         await reply_to_message(message, f"{message.author.display_name} *({message.author.name})*")
 
-    if random.randrange(1, 51) == 1:
+    if random_range(1, 50) == 1:
         await reply_to_message(message, f"{random.choice(BAITS)}")
-    elif index_of_pronoun > -1 and random.randrange(1, 5) == 1:
+    elif index_of_pronoun > -1 and random_range(1, 4) == 1:
         await reply_to_message(message, f"{random.choice(BAITS[4:])}")
 
 # keep_awake()
