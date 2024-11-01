@@ -59,11 +59,12 @@ SPEECH_BUBBLES = ['https://cdn.discordapp.com/attachments/1087868146288951389/12
                   'https://cdn.discordapp.com/attachments/1154140211157143552/1252355713083244584/ummmm.gif?ex=672293a5&is=67214225&hm=3dd9e871971596e7398a2e4d6a0718ba431f7dfff266ac54643c43df6b0209b1&',
                   'https://cdn.discordapp.com/attachments/741568423485767725/1268793140609810544/attachment-12.gif?ex=672263f1&is=67211271&hm=b1fd6b96e8b6009bb814c081c51810f56461924e792ec20e2fa5f7d08bead232&',
                   'https://media.discordapp.net/attachments/920152531995353128/1014407060819021844/attachment.gif?width=322&height=430&ex=67226d72&is=67211bf2&hm=d85b77f8168891c001e0e70b8dde760ad6c2769eb8c90f9cbe93e54be5392258&']
-NEGATIVE_EMOJIS = ['🤥', '🩴', '🎐', '🚮', '👹', '⛽']
+NEGATIVE_EMOJIS = ['🤥', '🩴', '🎐', '🚮', '👹', '⛽', '🤓']
 FUNNY_EMOJIS = ['😹', '😂', '🤣']
 
 JADEN_18TH_BIRTHDAY_UNIX_TIME = 1709359200
 JAMES_18TH_BIRTHDAY_UNIX_TIME = 1707033600
+KUSH_BIRTHDAY_UNIX_TIME = 1137852000
 EPIC_MUSHROOM_ID = 456943500249006108
 PALIOPOLIS_ID = 873412148880089102
 JADEN_ID = 762393738676404224
@@ -364,6 +365,10 @@ async def on_message(message):
         time_tuple = days_and_hours_since(current_time, JAMES_18TH_BIRTHDAY_UNIX_TIME)
         await reply_to_message(message, f"James has been getting high for {time_tuple[0]} days and {time_tuple[1]} hours")
 
+    if find_word_index(lowercase_message_content, ['kush', 'hush b', 'hush']) > -1:
+        time_tuple = days_and_hours_since(current_time, KUSH_BIRTHDAY_UNIX_TIME)
+        await reply_to_message(message, f"Kush has been consuming brainrot for {time_tuple[0]} days and {time_tuple[1]} hours")
+
     if "totaltriggers" in lowercase_message_content:
         total_triggers_file = None
         current_count = None
@@ -436,6 +441,9 @@ async def on_message(message):
 
     if find_isolated_word_bool(message.content, ['sigma']):
         await reply_to_message(message, 'https://tenor.com/view/not-a-sigma-sorry-you-are-not-a-sigma-sorry-you%27re-not-a-sigma-you-aren%27t-a-sigma-you-are-not-sigma-gif-337838532227751572')
+
+    if random.randrange(1, 556) == 1:
+        await send_message(message, '🫠 (this message has a 1/555 chance to appear)', bypass_cd=True)
 
     if find_word_bool(message.content, ['flip a coin']):
         if random.randrange(1, 3) == 1:
