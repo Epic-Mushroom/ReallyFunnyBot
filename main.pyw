@@ -451,9 +451,9 @@ async def on_message(message):
 
     if find_word_bool(message.content, ['flip a coin']):
         if random_range(1, 2) == 1:
-            await send_message(message, 'heads', bypass_cd=True)
+            await send_message(message, 'Heads', bypass_cd=True)
         else:
-            await send_message(message, 'tails', bypass_cd=True)
+            await send_message(message, 'Tails', bypass_cd=True)
 
     if find_word_bool(message.content, ['roll a die', 'roll a dice', 'diceroll']):
         await send_message(message, random_range(1, 6), bypass_cd=True)
