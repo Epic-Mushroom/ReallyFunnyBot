@@ -302,7 +302,7 @@ async def on_message(message):
     if message.reference is not None:
         referred_message = await message.channel.fetch_message(message.reference.message_id)
 
-    # resets the cooldown
+    # Resets the cooldown
     if current_time - cooldown_last_reset_time >= COOLDOWN_LENGTH:
         cooldown_last_reset_time = current_time
         recently_sent_messages = 0
