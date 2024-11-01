@@ -380,7 +380,7 @@ async def on_message(message):
             if total_triggers_file:
                 total_triggers_file.close()
 
-        await reply_to_message(message, f'{current_count} times', bypass_cd=True)
+        await reply_to_message(message, f"this command doesn't work anymore lmfao", bypass_cd=True)
 
     if "debuggeneral" in lowercase_message_content:
         await reply_to_message(message, f"I am in {len(list(client.guilds))} servers")
