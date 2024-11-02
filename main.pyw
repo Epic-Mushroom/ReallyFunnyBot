@@ -73,8 +73,8 @@ USER_TRIGGERS = Path("trackers\\user_triggers.txt")
 IMAGES = list(Path("images").iterdir())
 VIDEOS = list(Path("videos").iterdir())
 
-COOLDOWN_LENGTH = 30
-COOLDOWN_LIMIT = 4 # how many messages that can be sent per COOLDOWN_LENGTH seconds
+COOLDOWN_LENGTH = 35
+COOLDOWN_LIMIT = 5 # how many messages that can be sent per COOLDOWN_LENGTH seconds
 
 def on_cooldown():
     global recently_sent_messages, cooldown_last_reset_time
