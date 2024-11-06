@@ -45,7 +45,7 @@ CRAZY_RESPONSES = ["https://tenor.com/view/crazy-rubber-room-gif-105244771741669
                    ME HCRANTZZyaYY""", "crazy? i was crazy once", "rats make me rubber"]
 BAITS = ["what", "What", 'when', 'When', 'who', 'Who']
 PRONOUNS = ['he', 'she', 'they']
-TYPOS = ['SOTP', 'HWO', 'HLEP', 'imdeed', 'DYHINF', 'EHLP', 'liek', 'sitpoo', 'cehap', 'parnets', 'paretns', 'vioolni', 'sotfp', 'tahnkss', 'sucj', 'kmagine', 'heah']
+TYPOS = ['SOTP', 'HWO', 'HLEP', 'imdeed', 'DYHINF', 'EHLP', 'liek', 'sitpoo', 'cehap', 'parnets', 'paretns', 'vioolni', 'sotfp', 'tahnkss', 'sucj', 'kmagine', 'heah', 'murser']
 SWEARING_RESPONSES = ["Bro chill out dude.", "Let's calm down bro.", "Dude swearing is not cool.", "Guys lets find our happy place.",
                       "Watch your fucking language.", "That's a no-no word"]
 KYS_RESPONSES = ["Let's be nice to each other ok.", "Let's all calm down guys.", "Guys lets find our happy place."]
@@ -445,6 +445,12 @@ async def on_message(message):
 
     if find_isolated_word_bool(message.content, ['sigma']):
         await reply_to_message(message, 'https://tenor.com/view/not-a-sigma-sorry-you-are-not-a-sigma-sorry-you%27re-not-a-sigma-you-aren%27t-a-sigma-you-are-not-sigma-gif-337838532227751572')
+
+    if find_isolated_word_bool(message.content, ['can i', 'can we']):
+        index_can = find_index_after_word(message.content, ['can i', 'can we'])
+        interpreted_text = strip_punctuation(message.content[index_can:])
+        if len(interpreted_text) > 0:
+            await send_message(message, f"idk can you {interpreted_text}")
 
     if random_range(1, 555) == 1:
         await send_message(message, '🫠 (this message has a 1/555 chance to appear)', bypass_cd=True)
