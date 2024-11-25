@@ -1,6 +1,8 @@
-import discord, os, random, time, logging, sys
+import discord, os, random, time, logging, sys, json_utils
 from dotenv import load_dotenv
 from pathlib import Path
+from string_utils import *
+# Yeah thats right prof thornton im using import * what are you gonna do about it
 
 # SETUP
 script_directory = Path(__file__).parent.resolve()
@@ -20,8 +22,8 @@ intents.message_content = True
 client = discord.Client(intents=intents)
 
 # GLOBAL VARIABLES oh no im using global variables oh noo
-comedians = ["Kush", "Kayshav", "dad", "James", 'Dad', "GUYS IF YOU SEE THIS TEXT THE BOT IS BUGGED LOL"] # last element must be debug string
 guild_list = []
+server_instance_list = []
 
 cooldown_last_reset_time = time.time()
 something_sent = True
@@ -45,7 +47,8 @@ CRAZY_RESPONSES = ["https://tenor.com/view/crazy-rubber-room-gif-105244771741669
                    ME HCRANTZZyaYY""", "crazy? i was crazy once", "rats make me rubber"]
 BAITS = ["what", "What", 'when', 'When', 'who', 'Who']
 PRONOUNS = ['he', 'she', 'they']
-TYPOS = ['SOTP', 'HWO', 'HLEP', 'imdeed', 'DYHINF', 'EHLP', 'liek', 'sitpoo', 'cehap', 'parnets', 'paretns', 'vioolni', 'sotfp', 'tahnkss', 'sucj', 'kmagine', 'heah', 'murser']
+TYPOS = ['SOTP', 'HWO', 'HLEP', 'imdeed', 'DYHINF', 'EHLP', 'liek', 'sitpoo', 'cehap', 'parnets', 'paretns', 'vioolni', 'sotfp', 'tahnkss', 'sucj', 'kmagine', 'heah', 'murser',
+         'go dish', 'gof ish', 'g ofish', 'go fesh', 'go fsih', 'gi fish', 'gi fsih', 'go fsh', 'ho fish']
 SWEARING_RESPONSES = ["Bro chill out dude.", "Let's calm down bro.", "Dude swearing is not cool.", "Guys lets find our happy place.",
                       "Watch your fucking language.", "That's a no-no word"]
 KYS_RESPONSES = ["Let's be nice to each other ok.", "Let's all calm down guys.", "Guys lets find our happy place."]
@@ -64,23 +67,121 @@ FUNNY_EMOJIS = ['😹', '😂', '🤣']
 
 JADEN_18TH_BIRTHDAY_UNIX_TIME = 1709359200
 JAMES_18TH_BIRTHDAY_UNIX_TIME = 1707033600
+ARAVIND_18TH_BIRTHDAY_UNIX_TIME = 1771135200
 KUSH_BIRTHDAY_UNIX_TIME = 1137852000
 EPIC_MUSHROOM_ID = 456943500249006108
 PALIOPOLIS_ID = 873412148880089102
 JADEN_ID = 762393738676404224
 
-USER_TRIGGERS = Path("trackers\\user_triggers.txt")
 IMAGES = list(Path("images").iterdir())
 VIDEOS = list(Path("videos").iterdir())
 
 COOLDOWN_LENGTH = 35
 COOLDOWN_LIMIT = 5 # how many messages that can be sent per COOLDOWN_LENGTH seconds
 
-def on_cooldown():
-    global recently_sent_messages, cooldown_last_reset_time
+class ServerSpecificInstance:
 
-    current_time = int(time.time())
-    return recently_sent_messages >= COOLDOWN_LIMIT and (current_time - cooldown_last_reset_time) < COOLDOWN_LENGTH
+    def __init__(self, guild: discord.Guild):
+        self.server = guild
+        try:
+            self.server_name = guild.name
+            self.nickname = guild.me.display_name
+        except AttributeError:
+            self.server_name = None
+            self.nickname = client.user.name
+
+        self.recently_sent_messages = 0
+        self.cd_last_reset_time = int(time.time())
+        self.something_sent = False
+        self.comedians = ["Kush", "Kayshav", "dad", "James", 'Dad',
+                          self.nickname]
+
+    def get_server(self):
+        return self.server
+
+    def get_server_name(self):
+        return self.server_name
+
+    def get_nickname(self) -> str:
+        return self.nickname
+
+    def on_cooldown(self) -> bool:
+        current_time = int(time.time())
+        return (self.recently_sent_messages >= COOLDOWN_LIMIT
+                and (current_time - self.cd_last_reset_time) < COOLDOWN_LENGTH)
+
+    def clear_message_cache(self) -> None:
+        self.something_sent = False
+
+    def reset_cooldown(self, force=False) -> None:
+        current_time = int(time.time())
+        if force or current_time - self.cd_last_reset_time >= COOLDOWN_LENGTH:
+            self.cd_last_reset_time = current_time
+            self.recently_sent_messages = 0
+
+    def time_since_cd_last_reset_time(self) -> int:
+        current_time = int(time.time())
+        return current_time - self.cd_last_reset_time
+
+    def get_comedians(self) -> list[str]:
+        return self.comedians
+
+    async def send_message(self, reference, text, bypass_cd=False, file_path=None) -> None:
+        file = None
+        if file_path:
+            file = discord.File(file_path)
+
+        if self.on_cooldown():
+            logging.info(f'On cooldown. Message withheld: {text}')
+
+        if bypass_cd or not (self.something_sent or self.on_cooldown()):
+            self.something_sent = True
+            self.recently_sent_messages += 1
+            if file:
+                await reference.channel.send(text, file=file)
+            else:
+                await reference.channel.send(text)
+
+            total_triggers_file = None
+
+            try:
+                total_triggers_file = Path("trackers\\total_triggers.txt").open('r+')
+                current_count = int(total_triggers_file.readline())
+                total_triggers_file.seek(0)
+                total_triggers_file.write(f"{current_count + 1}")
+            finally:
+                if total_triggers_file:
+                    total_triggers_file.close()
+
+            json_utils.update_user_database(reference.author.name)
+            
+        if file:
+            file.close()
+
+    async def reply_to_message(self, reference, text, bypass_cd=False, ping=True) -> None:
+        if self.on_cooldown():
+            logging.info(f'On cooldown. Message withheld: {text}')
+
+        if bypass_cd or not (self.something_sent or self.on_cooldown()):
+            self.something_sent = True
+            self.recently_sent_messages += 1
+            if ping:
+                await reference.reply(text)
+            else:
+                await reference.reply(text, allowed_mentions=discord.AllowedMentions.none())
+
+            total_triggers_file = None
+
+            try:
+                total_triggers_file = Path("trackers\\total_triggers.txt").open('r+')
+                current_count = int(total_triggers_file.readline())
+                total_triggers_file.seek(0)
+                total_triggers_file.write(f"{current_count + 1}")
+            finally:
+                if total_triggers_file:
+                    total_triggers_file.close()
+
+            json_utils.update_user_database(reference.author.name)
 
 def random_range(start: int, stop: int) -> int:
     """random.randrange but its inclusive so i don't keep forgetting the original function has an exclusive endpoint because i have fucking dementia"""
@@ -97,230 +198,80 @@ def days_and_hours_since(current_time: int, considered_time: int) -> tuple:
 
     return(days, hours)
 
-def strip_punctuation(text: str) -> str:
-    found_ending_index = find_word_index(text, ENDING_CHARACTERS)
+with open(Path('revenge.txt'), 'r') as lyrics:
+    REVENGE_LYRICS = []
 
-    if found_ending_index > -1:
-        text = text[:found_ending_index]
-
-    return text.strip()
-
-def find_word_bool(text: str, words: list[str]) -> bool:
-    """Returns False if none of the elements in words are in text, returns True otherwise"""
-    text = text.lower()
-
-    for w in words:
-        w = w.lower()
-        if text.find(w) > -1:
-            return True
-
-    return False
-
-def find_isolated_word_bool(text: str, words: list[str]) -> bool:
-    """Same thing as find_word_bool except it checks to see if the word is 'isolated' (meaning no Scunthorpe problem)"""
-    return find_index_after_word(text, words) > -1
-
-def find_word(text: str, words: list[str]) -> str:
-    """Returns the first occurrence in text of an element in words, returns None if none of the
-        elements in words are in text"""
-    text = text.lower()
-
-    for w in words:
-        w = w.lower()
-        if text.find(w) > -1:
-            return w
-
-    return None
-
-def find_word_index(text: str, words: list[str]) -> int:
-    """Returns the index of the first occurrence in text of an element in words, returns -1 if none of the
-    elements in words are in text"""
-    text = text.lower()
-
-    for w in words:
-        w = w.lower()
-        if text.find(w) > -1:
-            return text.find(w)
-
-    return -1
-
-def find_index_after_word(text: str, words: list[str]) -> int:
-    """Yeah"""
-
-    found_word_index = find_word_index(text, words)
-    index = found_word_index
-    found_word = find_word(text, words)
-
-    # probably the worst code i have ever written in my entire life what the fuck is this dudeee
-    if index == -1:
-        return -1
-    else:
-        check_beginning = (index - 1 != -1) and (text[index - 1] in PRECEDING_CHARACTERS)
-        check_end = False
-
-        if index - 1 == -1:
-            check_beginning = True
-
-        if check_beginning:
-            try:
-                check_end = text[index + len(found_word)] in FOLLOWING_CHARACTERS
-            except IndexError:
-                check_end = True
-
-        if check_end:
-            return index + len(found_word)
-        else:
-            return -1
-
-def update_user_database(path: Path, username: str, increment=1) -> None:
-    file = path.open('r+')
-    split_data = [] # should become formatted like ['username1', 'user1striggers', 'username2', 'user2striggers'...]
-    user_found = False
-    data_lines = file.readlines()
-
-    file.seek(0)
-
-    for line in data_lines:
-        if len(line.split(' ')) == 2:
-            split_data += line.split(' ')
-        else:
-            return
-
-    for i in split_data:
-        i = i.strip()
-
-    for i in range(0, len(split_data), 2):
-        if split_data[i] == username:
-            user_found = True
-
-            triggers = int(split_data[i + 1]) + increment
-            data_lines[i // 2] = f'{username} {triggers}\n'
-            break
-
-    if not user_found:
-        data_lines.append(f'{username} {increment}\n')
-
-    file.writelines(data_lines)
-    file.truncate()
-    file.close()
-
-async def send_message(reference, text, bypass_cd=False, file_path=None) -> None:
-    global something_sent, recently_sent_messages
-
-    file = None
-    if file_path:
-        file = discord.File(file_path)
-
-    if on_cooldown():
-        logging.info(f'On cooldown. Message withheld: {text}')
-
-    if bypass_cd or not (something_sent or on_cooldown()):
-        something_sent = True
-        recently_sent_messages += 1
-        if file:
-            await reference.channel.send(text, file=file)
-        else:
-            await reference.channel.send(text)
-
-        total_triggers_file = None
-
-        try:
-            total_triggers_file = Path("trackers\\total_triggers.txt").open('r+')
-            current_count = int(total_triggers_file.readline())
-            total_triggers_file.seek(0)
-            total_triggers_file.write(f"{current_count + 1}")
-        finally:
-            if total_triggers_file:
-                total_triggers_file.close()
-
-        update_user_database(USER_TRIGGERS, reference.author.name)
-
-async def reply_to_message(reference, text, bypass_cd=False, ping=True) -> None:
-    global something_sent, recently_sent_messages
-
-    if on_cooldown():
-        logging.info(f'On cooldown. Message withheld: {text}')
-
-    if bypass_cd or not (something_sent or on_cooldown()):
-        something_sent = True
-        recently_sent_messages += 1
-        if ping:
-            await reference.reply(text)
-        else:
-            await reference.reply(text, allowed_mentions=discord.AllowedMentions.none())
-
-        total_triggers_file = None
-
-        try:
-            total_triggers_file = Path("trackers\\total_triggers.txt").open('r+')
-            current_count = int(total_triggers_file.readline())
-            total_triggers_file.seek(0)
-            total_triggers_file.write(f"{current_count + 1}")
-        finally:
-            if total_triggers_file:
-                total_triggers_file.close()
-
-        update_user_database(USER_TRIGGERS, reference.author.name)
-
-
+    for line in lyrics:
+        REVENGE_LYRICS.append(strip_punctuation(line.strip().lower()))
 
 @client.event
 async def on_ready():
-    global comedians, guild_list
+    global guild_list
 
     for g in client.guilds:
         # logging.info(len(client.guilds))
         logging.info(f'connected to {g.name}, server id: {g.id}')
-
-    logging.info(f'{client.user} (nicked as {g.me.display_name}) is now here. brace yourselves.')
 
     # editing global variables
     guild_list = list(client.guilds)
 
 @client.event
 async def on_message(message):
-    global comedians, guild_list, cooldown_last_reset_time, something_sent, recently_sent_messages
+    global server_instance_list, guild_list
 
     referred_message = None
     lowercase_message_content = message.content.lower()
 
     current_time = int(time.time())
     current_guild = message.guild
-    try:
-        current_display_name = current_guild.me.display_name
-    except AttributeError:
-        current_display_name = client.user.name
 
-    comedians[-1] = current_display_name
+    server_instance = None
+    for instance in server_instance_list:
+        if instance.get_server() == current_guild:
+            server_instance = instance
+    if not server_instance:
+        server_instance_list.append(ServerSpecificInstance(current_guild))
+        server_instance = server_instance_list[-1]
 
-    # makes it so it doesn't reply to itself
+    current_display_name = server_instance.get_nickname()
+
+    # Makes it so it doesn't reply to itself
     if message.author == client.user:
         return
-
-    something_sent = False
 
     if message.reference is not None:
         referred_message = await message.channel.fetch_message(message.reference.message_id)
 
-    # Resets the cooldown
-    if current_time - cooldown_last_reset_time >= COOLDOWN_LENGTH:
-        cooldown_last_reset_time = current_time
-        recently_sent_messages = 0
+    # Resets the cooldown every COOLDOWN_LENGTH seconds and message cache
+    server_instance.reset_cooldown()
+    server_instance.clear_message_cache()
 
     # Triggers start here
     index_of_im = find_index_after_word(lowercase_message_content, POSSESSIVE_PERSONAL_PRONOUN_LIST)
     index_of_pronoun = find_index_after_word(lowercase_message_content, PRONOUNS)
 
+    if find_isolated_word_bool(message.content, REVENGE_LYRICS):
+        try:
+            lyric_found = find_word(message.content, REVENGE_LYRICS)
+            await server_instance.reply_to_message(message, REVENGE_LYRICS[REVENGE_LYRICS.index(lyric_found) + 1], bypass_cd=True)
+        except IndexError:
+            pass
+        except ValueError:
+            pass
+
+    if find_isolated_word_bool(message.content, ['allegro barbaro']):
+        await message.add_reaction('🖕')
+
     if find_isolated_word_bool(message.content, POSSESSIVE_PERSONAL_PRONOUN_LIST):
         interpreted_name = strip_punctuation(message.content[index_of_im:])
-        if len(interpreted_name) > 0:
-            await send_message(message, f"Hi {interpreted_name}, I'm {random.choice(comedians)}!")
+        if len(interpreted_name) > 0 and random_range(1, 4) == 1:
+            await server_instance.send_message(message, f"Hi {interpreted_name}, I'm {random.choice(server_instance.get_comedians())}!")
 
     if find_isolated_word_bool(message.content, TYPOS) and random_range(1, 1) == 1:
-        await reply_to_message(message, "https://www.wikihow.com/Type")
+        await server_instance.reply_to_message(message, "https://www.wikihow.com/Type")
 
     if "crazy" in lowercase_message_content.lower():
-        await reply_to_message(message, f"{random.choice(CRAZY_RESPONSES)}")
+        await server_instance.reply_to_message(message, f"{random.choice(CRAZY_RESPONSES)}")
 
     if (message.author.id == PALIOPOLIS_ID or message.author.id == JADEN_ID) and random_range(1, 7) == 1:
         await message.add_reaction(random.choice(NEGATIVE_EMOJIS))
@@ -328,50 +279,54 @@ async def on_message(message):
     if referred_message and referred_message.author == client.user:
         if referred_message.content.lower() == "who":
             if strip_punctuation(lowercase_message_content.lower()) != "asked":
-                await reply_to_message(message, "asked :rofl::rofl:", True)
+                await server_instance.reply_to_message(message, "asked :rofl::rofl:", True)
             else:
                 await message.add_reaction(random.choice(FUNNY_EMOJIS))
         elif referred_message.content.lower() == "what":
             if strip_punctuation(lowercase_message_content.lower()) != "ever":
-                await reply_to_message(message, "ever :joy::joy:", True)
+                await server_instance.reply_to_message(message, "ever :joy::joy:", True)
             else:
                 await message.add_reaction(random.choice(FUNNY_EMOJIS))
         elif referred_message.content.lower() == "when":
             if strip_punctuation(lowercase_message_content.lower()) != "did i ask" and strip_punctuation(lowercase_message_content.lower()) != "did you ask":
-                await reply_to_message(message, "did I ask :joy::joy::rofl:", True)
+                await server_instance.reply_to_message(message, "did I ask :joy::joy::rofl:", True)
             else:
                 await message.add_reaction(random.choice(FUNNY_EMOJIS))
 
 
     if find_word_bool(lowercase_message_content, THICK_OF_IT_TRIGGERS):
-        await reply_to_message(message, "https://www.youtube.com/watch?v=At8v_Yc044Y")
+        await server_instance.reply_to_message(message, "https://www.youtube.com/watch?v=At8v_Yc044Y")
 
     if find_word_bool(lowercase_message_content, ['skibidi', 'hawk tuah', 'jelqing']):
-        await send_message(message, "no", True)
+        await server_instance.send_message(message, "no", True)
 
     if "FUCK" in message.content or "SHIT" in message.content or lowercase_message_content == "shut the fuck up":
-        await reply_to_message(message, f"{random.choice(SWEARING_RESPONSES)}")
+        await server_instance.reply_to_message(message, f"{random.choice(SWEARING_RESPONSES)}")
 
     if find_isolated_word_bool(message.content, ['kys', 'kill yourself', 'kill your self']):
-        await send_message(message, f"{random.choice(KYS_RESPONSES)}")
+        await server_instance.send_message(message, f"{random.choice(KYS_RESPONSES)}")
     
     if "what is the time" in lowercase_message_content:
-        await reply_to_message(message, f"It is <t:{current_time}:f>")
+        await server_instance.reply_to_message(message, f"It is <t:{current_time}:f>")
 
     if "what is the unix time" in lowercase_message_content:
-        await reply_to_message(message, f"The unix time is {current_time}\nformatted, that's <t:{current_time}:f>")
+        await server_instance.reply_to_message(message, f"The unix time is {current_time}\nformatted, that's <t:{current_time}:f>")
 
     if find_word_index(lowercase_message_content, ['jaden', 'jedwin']) > -1:
         time_tuple = days_and_hours_since(current_time, JADEN_18TH_BIRTHDAY_UNIX_TIME)
-        await reply_to_message(message, f"Jaden has been stalking minors for {time_tuple[0]} days and {time_tuple[1]} hours")
+        await server_instance.reply_to_message(message, f"Jaden has been stalking minors for {time_tuple[0]} days and {time_tuple[1]} hours")
 
     if find_word_index(lowercase_message_content, ['jame', 'james', 'cheung']) > -1:
         time_tuple = days_and_hours_since(current_time, JAMES_18TH_BIRTHDAY_UNIX_TIME)
-        await reply_to_message(message, f"James has been getting high for {time_tuple[0]} days and {time_tuple[1]} hours")
+        await server_instance.reply_to_message(message, f"James has been getting high for {time_tuple[0]} days and {time_tuple[1]} hours")
 
-    if find_word_index(lowercase_message_content, ['kush', 'hush b', 'hush']) > -1:
+    if find_word_index(lowercase_message_content, ['aravind', 'arvind']) > -1:
+        time_tuple = days_and_hours_since(ARAVIND_18TH_BIRTHDAY_UNIX_TIME, current_time)
+        await server_instance.reply_to_message(message, f"Aravind will be legal in {time_tuple[0]} days and {time_tuple[1]} hours")
+
+    if find_index_after_word(lowercase_message_content, ['kush', 'hush b', 'hush']) > -1:
         time_tuple = days_and_hours_since(current_time, KUSH_BIRTHDAY_UNIX_TIME)
-        await reply_to_message(message, f"Kush has been consuming brainrot for {time_tuple[0]} days and {time_tuple[1]} hours")
+        await server_instance.reply_to_message(message, f"Kush has been consuming brainrot for {time_tuple[0]} days and {time_tuple[1]} hours")
 
     if "totaltriggers" in lowercase_message_content:
         total_triggers_file = None
@@ -384,11 +339,11 @@ async def on_message(message):
             if total_triggers_file:
                 total_triggers_file.close()
 
-        await reply_to_message(message, f"{current_count} triggers", bypass_cd=True)
+        await server_instance.reply_to_message(message, f"{current_count} triggers", bypass_cd=True)
 
     if "debuggeneral" in lowercase_message_content:
-        await reply_to_message(message, f"I am in {len(list(client.guilds))} servers")
-        await message.channel.send(f"{len(comedians)} is the length of the comedians list")
+        await server_instance.reply_to_message(message, f"I am in {len(list(client.guilds))} servers")
+        await message.channel.send(f"{len(server_instance.get_comedians())} is the length of the comedians list")
         await message.channel.send(f"{len(guild_list)} is the length of the guild_list list")
         try:
             await message.channel.send(f"The name of this guild is {current_guild.name} and my nick is {current_display_name}")
@@ -396,85 +351,125 @@ async def on_message(message):
             await message.channel.send(f"I am not in a guild. However, my display name is {current_display_name}")
 
     if "debugcooldown" in lowercase_message_content:
-        if on_cooldown():
-            await reply_to_message(message, f"I am on cooldown. Stop freaking spamming bro. (cooldown length is {COOLDOWN_LENGTH}, "
+        if server_instance.on_cooldown():
+            await server_instance.reply_to_message(message, f"I am on cooldown. Stop freaking spamming bro. (cooldown length is {COOLDOWN_LENGTH}, "
                                         f"max number of messages able to be sent per cooldown reset period is {COOLDOWN_LIMIT}, "
-                                            f"{recently_sent_messages+1} messages were sent during this period)", True)
+                                            f"{server_instance.recently_sent_messages+1} messages were sent during this period)", True)
         else:
-            await reply_to_message(message,
+            await server_instance.reply_to_message(message,
                                    f"I am not on cooldown. (cooldown length is {COOLDOWN_LENGTH}, "
                                    f"max number of messages able to be sent per cooldown reset is {COOLDOWN_LIMIT}, "
-                                   f"{recently_sent_messages+1} messages were sent during this period)",
+                                   f"{server_instance.recently_sent_messages+1} messages were sent during this period)",
                                    True)
 
+    if find_word_bool(message.content, ['resetcd']):
+        if message.author.id == EPIC_MUSHROOM_ID:
+            await server_instance.reply_to_message(message, 'Reset cooldown', bypass_cd=True)
+            server_instance.reset_cooldown(force=True)
+        else:
+            await server_instance.reply_to_message(message, 'Nah I don\'t feel like it', bypass_cd=True)
+
     if "HALOOLY BRIKTAY" == message.content:
-        await reply_to_message(message, message.content, True)
+        await server_instance.reply_to_message(message, message.content, bypass_cd=True)
 
     if find_word_bool(message.content, ['ur mom', 'your mom', 'ur dad', 'ur gae', 'ur gay', "you're gay"]):
         await message.add_reaction(random.choice(FUNNY_EMOJIS))
 
     if find_isolated_word_bool(lowercase_message_content, AMONG_US_TRIGGERS):
-        await send_message(message, random.choice(AMONG_US_RESPONSES))
+        await server_instance.send_message(message, random.choice(AMONG_US_RESPONSES))
 
     if find_word_bool(message.content, ['mind blowing', 'mindblowing', ":exploding_head:", "🤯"]):
         image_path = random.choice(IMAGES)
         try:
-            await send_message(message, "** **", file_path=image_path)
+            await server_instance.send_message(message, "** **", file_path=image_path)
         except FileNotFoundError:
-            await send_message(message, "file wasn't found (how the fuck did this happen bro)")
+            await server_instance.send_message(message, "file wasn't found (how the fuck did this happen bro)")
 
     if find_isolated_word_bool(message.content, ['persona', 'specialist']):
         video_path = random.choice(VIDEOS)
         try:
-            await send_message(message, "** **", file_path=video_path)
+            await server_instance.send_message(message, "** **", file_path=video_path)
         except FileNotFoundError:
-            await send_message(message, "file wasn't found (how the fuck did this happen bro)")
+            await server_instance.send_message(message, "file wasn't found (how the fuck did this happen bro)")
 
     if find_word_bool(message.content, ['testingmultmessages', 'testmultmessages']):
-        await send_message(message, 'test')
-        await send_message(message, 'test2', bypass_cd=True)
+        await server_instance.send_message(message, 'test')
+        await server_instance.send_message(message, 'test2', bypass_cd=True)
 
     if find_isolated_word_bool(message.content, ['speech bubble', 'speechbubble']) and referred_message:
         if not message.mentions:
-            await reply_to_message(referred_message, random.choice(SPEECH_BUBBLES))
+            await server_instance.reply_to_message(referred_message, random.choice(SPEECH_BUBBLES))
         else:
-            await reply_to_message(referred_message, random.choice(SPEECH_BUBBLES), ping=False)
+            await server_instance.reply_to_message(referred_message, random.choice(SPEECH_BUBBLES), ping=False)
 
-    if find_isolated_word_bool(message.content, ['brawl stars']):
-        await reply_to_message(message, 'https://tenor.com/view/wanna-play-brawl-stars-lonely-no-one-plays-brawl-stars-lmoa-gif-23811622')
+    if find_isolated_word_bool(message.content, ['brawl stars', 'hop on brawl']):
+        await server_instance.reply_to_message(message, 'https://tenor.com/view/wanna-play-brawl-stars-lonely-no-one-plays-brawl-stars-lmoa-gif-23811622')
 
     if find_isolated_word_bool(message.content, ['sigma']):
-        await reply_to_message(message, 'https://tenor.com/view/not-a-sigma-sorry-you-are-not-a-sigma-sorry-you%27re-not-a-sigma-you-aren%27t-a-sigma-you-are-not-sigma-gif-337838532227751572')
+        await server_instance.reply_to_message(message, 'https://tenor.com/view/not-a-sigma-sorry-you-are-not-a-sigma-sorry-you%27re-not-a-sigma-you-aren%27t-a-sigma-you-are-not-sigma-gif-337838532227751572')
 
     if find_isolated_word_bool(message.content, ['can i', 'can we']):
         index_can = find_index_after_word(message.content, ['can i', 'can we'])
         interpreted_text = strip_punctuation(message.content[index_can:])
         if len(interpreted_text) > 0:
-            await send_message(message, f"idk can you {interpreted_text}")
+            await server_instance.send_message(message, f"idk can you {interpreted_text}")
 
-    if random_range(1, 555) == 1:
-        await send_message(message, '🫠 (this message has a 1/555 chance to appear)', bypass_cd=True)
+    if random_range(1, 888) == 1:
+        await server_instance.send_message(message, '🫠 (this message has a 1/888 chance to appear)', bypass_cd=True)
+
+    if random_range(1, 6666) == 1:
+        await server_instance.send_message(message, '🐺 (this message has a 1/6,666 chance to appear)', bypass_cd=True)
 
     if find_word_bool(message.content, ['flip a coin']):
         if random_range(1, 2) == 1:
-            await send_message(message, 'Heads', bypass_cd=True)
+            await server_instance.send_message(message, 'Heads', bypass_cd=True)
         else:
-            await send_message(message, 'Tails', bypass_cd=True)
+            await server_instance.send_message(message, 'Tails', bypass_cd=True)
 
     if find_word_bool(message.content, ['roll a die', 'roll a dice', 'diceroll']):
-        await send_message(message, random_range(1, 6), bypass_cd=True)
+        await server_instance.send_message(message, random_range(1, 6), bypass_cd=True)
 
     if find_word_bool(message.content, ['roll a d20']):
-        await send_message(message, random_range(1, 20), bypass_cd=True)
+        await server_instance.send_message(message, random_range(1, 20), bypass_cd=True)
 
     if find_word_bool(message.content, ['what is my name']):
-        await reply_to_message(message, f"{message.author.display_name} *({message.author.name})*")
+        await server_instance.reply_to_message(message, f"{message.author.display_name} *({message.author.name})*")
 
-    if random_range(1, 50) == 1:
-        await reply_to_message(message, f"{random.choice(BAITS)}")
-    elif index_of_pronoun > -1 and random_range(1, 4) == 1:
-        await reply_to_message(message, f"{random.choice(BAITS[4:])}")
+    if find_word_bool(message.content, ['🐟', 'go fish', 'गो फिश', 'go gamble', 'jobless behavior', 'le fishe',
+                                        'quiero comer pescado', 'lets go gambling', 'let\'s go gambling',
+                                        '.fish', 'let’s go gambling', '去钓鱼']):
+        try:
+            await server_instance.reply_to_message(message, json_utils.fish_event(message.author.name),
+                                                   bypass_cd=True)
+        except json_utils.OnFishingCooldownError:
+            await server_instance.reply_to_message(message, f"You're on fishing cooldown ("
+                                                            f"{json_utils.FISHING_COOLDOWN - (current_time - json_utils.get_user_last_fish_time(
+                                                                message.author.name
+                                                            ))} seconds until you can fish again)", bypass_cd=True)
 
-# keep_awake()
+    if find_word_bool(message.content, ['show profile']):
+        username_temp = message.author.name
+        if lowercase_message_content.startswith('show profile '):
+            parts = message.content.split(' ')
+            username_temp = parts[-1]
+
+        await server_instance.send_message(message, json_utils.profile_to_string(username_temp), bypass_cd=True)
+
+    if find_word_bool(message.content, ['show leaderboard', 'show lb']):
+        await server_instance.send_message(message, json_utils.leaderboard_string(), bypass_cd=True)
+
+    if find_word_bool(message.content, ['all fish', 'global stats', 'global fish', 'all stats', 'combined profiles', 'combined joblessness',
+                                        'global joblessness', 'how jobless is everyone']):
+        await server_instance.send_message(message, json_utils.universal_profile_to_string(), bypass_cd=True)
+
+    if find_word_bool(message.content, ['catchjonklerfishdebug']):
+        await server_instance.send_message(message, "that doesn't work anymore dumbass",
+                                           bypass_cd=True)
+
+    if random_range(1, 55) == 1:
+        await server_instance.reply_to_message(message, f"{random.choice(BAITS)}")
+    elif index_of_pronoun > -1 and random_range(1, 6) == 1:
+        await server_instance.reply_to_message(message, f"{random.choice(BAITS[4:])}")
+
 
 client.run(TOKEN)
