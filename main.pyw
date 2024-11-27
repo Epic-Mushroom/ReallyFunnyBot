@@ -48,7 +48,7 @@ CRAZY_RESPONSES = ["https://tenor.com/view/crazy-rubber-room-gif-105244771741669
 BAITS = ["what", "What", 'when', 'When', 'who', 'Who']
 PRONOUNS = ['he', 'she', 'they']
 TYPOS = ['SOTP', 'HWO', 'HLEP', 'imdeed', 'DYHINF', 'EHLP', 'liek', 'sitpoo', 'cehap', 'parnets', 'paretns', 'vioolni', 'sotfp', 'tahnkss', 'sucj', 'kmagine', 'heah', 'murser',
-         'go dish', 'gof ish', 'g ofish', 'go fesh', 'go fsih', 'gi fish', 'gi fsih', 'go fsh', 'ho fish']
+         'go dish', 'gof ish', 'g ofish', 'go fesh', 'go fsih', 'gi fish', 'gi fsih', 'go fsh', 'ho fish', 'go fihs']
 SWEARING_RESPONSES = ["Bro chill out dude.", "Let's calm down bro.", "Dude swearing is not cool.", "Guys lets find our happy place.",
                       "Watch your fucking language.", "That's a no-no word"]
 KYS_RESPONSES = ["Let's be nice to each other ok.", "Let's all calm down guys.", "Guys lets find our happy place."]
@@ -435,9 +435,9 @@ async def on_message(message):
     if find_word_bool(message.content, ['what is my name']):
         await server_instance.reply_to_message(message, f"{message.author.display_name} *({message.author.name})*")
 
-    if find_word_bool(message.content, ['🐟', 'go fish', 'गो फिश', 'go gamble', 'jobless behavior', 'le fishe',
+    if find_word_bool(message.content, ['🐟', '🎣', '🐠', 'asdfghjkl', 'go fish', 'गो फिश', 'go gamble', 'jobless behavior', 'le fishe',
                                         'quiero comer pescado', 'lets go gambling', 'let\'s go gambling',
-                                        '.fish', 'let’s go gambling', '去钓鱼']):
+                                        '.fish', 'let’s go gambling', '去钓鱼', '><>', '<><', '2+2']):
         try:
             await server_instance.reply_to_message(message, json_utils.fish_event(message.author.name),
                                                    bypass_cd=True)
@@ -446,6 +446,18 @@ async def on_message(message):
                                                             f"{json_utils.FISHING_COOLDOWN - (current_time - json_utils.get_user_last_fish_time(
                                                                 message.author.name
                                                             ))} seconds until you can fish again)", bypass_cd=True)
+
+    if message.content.startswith('.fishtest'):
+        parts = message.content.split(' ')
+        for l in range(min(int(parts[-1] if len(parts) > 1 else 1), 12)):
+            try:
+                await server_instance.send_message(message, json_utils.fish_event('test_user', bypass_fish_cd=True),
+                                                       bypass_cd=True)
+            except json_utils.OnFishingCooldownError:
+                await server_instance.reply_to_message(message, f"You're on fishing cooldown ("
+                                                                f"{json_utils.FISHING_COOLDOWN - (current_time - json_utils.get_user_last_fish_time(
+                                                                    message.author.name
+                                                                ))} seconds until you can fish again)", bypass_cd=True)
 
     if find_word_bool(message.content, ['show profile']):
         username_temp = message.author.name
@@ -459,7 +471,7 @@ async def on_message(message):
         await server_instance.send_message(message, json_utils.leaderboard_string(), bypass_cd=True)
 
     if find_word_bool(message.content, ['all fish', 'global stats', 'global fish', 'all stats', 'combined profiles', 'combined joblessness',
-                                        'global joblessness', 'how jobless is everyone']):
+                                        'global joblessness', 'how jobless is everyone', '.allfish']):
         await server_instance.send_message(message, json_utils.universal_profile_to_string(), bypass_cd=True)
 
     if find_word_bool(message.content, ['catchjonklerfishdebug']):

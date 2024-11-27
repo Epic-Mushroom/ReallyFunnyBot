@@ -3,6 +3,7 @@ import json, time, random, os
 
 FISHING_COOLDOWN = 10
 RARE_ITEM_WEIGHT_THRESHOLD = 1.5
+SUPER_RARE_ITEM_WEIGHT_THRESHOLD = 0.501
 
 FISHING_ITEMS_PATH = Path("trackers\\fishing_items.json")
 FISHING_DATABASE_PATH = Path("trackers\\fishing.json")
@@ -11,8 +12,14 @@ GENERAL_DATABASE_PATH = Path("trackers\\user_triggers.json")
 class OnFishingCooldownError(Exception):
     pass
 
+class Profile:
+    def __init__(self, username, **kwargs):
+        self.username = username
+        for key, value in kwargs.items():
+            setattr(self, key, value)
+
 class FishingItem:
-    def __init__(self, name, value, weight):
+    def __init__(self, name, value, weight, **kwargs):
         self.name = name
         self.value = value
         self.weight = weight
@@ -21,18 +28,36 @@ def random_range(start: int, stop: int) -> int:
     """random.randrange but its inclusive so i don't keep forgetting the original function has an exclusive endpoint because i have fucking dementia"""
     return random.randrange(start, stop + 1)
 
-def fish_to_dict(fish: FishingItem) -> dict:
-    cock = dict()
-    cock['name'] = fish.name
-    cock['value'] = fish.value
-    cock['weight'] = fish.weight
+def manipulated_weights(factor=1) -> list:
+    fishing_items_sorted_by_weight = sorted(fishing_items, key=lambda item: item.weight)
+    weights = [fish.weight for fish in fishing_items_sorted_by_weight]
+    weight_sum = sum(weights)
+    chances = [(100 * weight / weight_sum) for weight in weights]
 
-    return cock
+    rarest_partition = []
+    most_common_partition = []
 
-def dict_to_fish(dick: dict) -> FishingItem:
-    return FishingItem(dick['name'],
-                       dick['value'],
-                       dick['weight'])
+    for i in range(len(chances)):
+        rarest_partition.append(fishing_items_sorted_by_weight[i])
+        if sum(chances[:i + 1]) >= 15:
+            break
+
+    for i in range(len(chances))[::-1]:
+        most_common_partition.append(fishing_items_sorted_by_weight[i])
+        if sum(chances[i:]) >= 30:
+            break
+
+    modified_weights = weights[:]
+    for i in range(len(rarest_partition)):
+        modified_weights[i] = factor * weights[i]
+    for i in range(len(weights) - len(most_common_partition), len(weights)):
+        modified_weights[i] = weights[i] / factor
+    new_weight_sum = sum(modified_weights)
+    new_chances = [(100 * weight / new_weight_sum) for weight in modified_weights]
+
+    return modified_weights
+    # print(chances)
+    # print(new_chances)
 
 def initialize_fishing_items() -> list[FishingItem]:
     all_da_fishies = []
@@ -41,7 +66,7 @@ def initialize_fishing_items() -> list[FishingItem]:
         list_of_fishies = json.load(file)
 
         for fishy in list_of_fishies:
-            all_da_fishies.append(dict_to_fish(fishy))
+            all_da_fishies.append(FishingItem(**fishy))
 
     return all_da_fishies
 
@@ -49,90 +74,187 @@ def initialize_rares():
     rares = []
 
     for fish in fishing_items:
-        if fish.weight <= RARE_ITEM_WEIGHT_THRESHOLD:
+        if 0 <= fish.weight <= RARE_ITEM_WEIGHT_THRESHOLD:
             rares.append(fish)
 
     return rares
 
-def fish_event(username: str, is_extra_fish=False, jonklerfish_debug=False) -> str:
+def get_fish_from_name(name: str):
+    the_fish = [fish for fish in fishing_items if fish.name == name][0]
+    return the_fish
+
+def fishing_database() -> list[dict]:
+    with open(FISHING_DATABASE_PATH, 'r') as file:
+        list_of_profiles = json.load(file)
+        return list_of_profiles
+
+def update_file(json_object: list | dict):
+    with open(FISHING_DATABASE_PATH, 'w') as file:
+        json.dump(json_object, file, indent=4)
+        file.truncate()
+    print("FILE CLOSED")
+
+def fish_event(username: str, is_extra_fish=False, jonklerfish_debug=False, bypass_fish_cd=False) -> str:
     all_users = get_all_users()
-    jonklerfish = [fish for fish in fishing_items if fish.name == 'Jonklerfish'][0]
+    is_test_user = username == 'test_user'
+
+    last_fish_time = get_user_last_fish_time(username)
+    current_time = int(time.time())
 
     random_num = random_range(1, 100)
-    caught_fish = go_fish(username)
 
     penalty = 0
     lucky = random_num <= 7 # 7% chance
     unlucky = random_num >= 95 and not is_extra_fish # 6% chance
 
-    output = ""
+    output = "(test_user)" if is_test_user else ""
 
-    if lucky:
-        output += '*You caught more stuff than usual*\n'
-    elif unlucky:
-        update_fish_database(username)
-        return 'Oops, your line broke'
+    if bypass_fish_cd or current_time - last_fish_time >= FISHING_COOLDOWN:
+        if username == 'jamescheung24578':
+            caught_fish = go_fish()
+        elif jonklerfish_debug:
+            caught_fish = go_fish(force_fish_name="Jonklerfish")
+        elif is_test_user:
+            caught_fish = go_fish(factor=18)
+        else:
+            caught_fish = go_fish()
 
-    if caught_fish.name == 'Cop Fish' and not is_extra_fish:
-        penalty = random_num + 19
-        output += f'You caught the Cop Fish! (next cooldown is {random_num + FISHING_COOLDOWN + 19} seconds)'
+        if lucky:
+            output += '*You caught more stuff than usual*\n'
+        elif unlucky:
+            update_fish_database(username)
+            return 'Oops, your line broke'
 
-    elif caught_fish.name == 'Jonklerfish' or jonklerfish_debug:
-        penalty = random_num + 39
-        output += (f'You caught the {caught_fish.name}! (+{caught_fish.value} moneys, everyone\'s cooldown '
-                   f'increased to {penalty + FISHING_COOLDOWN} seconds')
+        if caught_fish.name == 'Cop Fish' and not is_extra_fish:
+            penalty = random_num + 19
+            output += f'You caught the Cop Fish! (next cooldown is {random_num + FISHING_COOLDOWN + 19} seconds)'
 
-        for user in all_users:
-            update_fish_database(user, cd_penalty=penalty)
+        elif caught_fish.name == 'Fish Soap':
+            output += f'‼️ You caught: **Fish Soap** (all items with negative value removed)'
+            fish_soap(username)
 
-    elif caught_fish in rare_items:
-        output += f'‼️ You caught: **{caught_fish.name}** (worth {caught_fish.value} moneys)'
-    else:
-        output += f'You caught: **{caught_fish.name}** (worth {caught_fish.value} moneys)'
+        elif caught_fish.name == 'Jonklerfish' and not is_test_user:
+            penalty = random_num + 39
+            output += (f'You caught the {caught_fish.name}! (+{caught_fish.value} moneys, everyone\'s cooldown '
+                       f'increased to {penalty + FISHING_COOLDOWN} seconds)')
 
-    if lucky:
-        output += f'\n{fish_event(username, is_extra_fish=True)}'
+            for user in all_users:
+                update_fish_database(user, cd_penalty=penalty)
 
-    update_fish_database(username, fish=jonklerfish if jonklerfish_debug else caught_fish, cd_penalty=penalty)
-    return output
+        elif caught_fish.name == 'Mercenary Fish' and not is_test_user:
+            output += f'You caught the Mercenary Fish!'
 
-def go_fish(username: str, count=1) -> FishingItem:
-    weights = [fish.weight for fish in fishing_items]
-    last_fish_time = get_user_last_fish_time(username)
-    current_time = int(time.time())
+            for i in range(random_range(4, 6)):
+                heist_tuple = steal_fish_from_random(username)
+                temp_username = heist_tuple[0]
+                stolen_fish = heist_tuple[1]
 
-    if current_time - last_fish_time >= FISHING_COOLDOWN:
-        return random.choices(fishing_items, weights=weights, k=count)[0]
+                output += f'\nStole {stolen_fish.name} from {temp_username}'
+
+        elif caught_fish.name == 'CS:GO Fish' and not is_test_user:
+            output += f'You caught: **CS:GO Fish** ('
+
+            for i in range(random_range(1, 1)):
+                heist_tuple = steal_fish_from_random(username, shoot=True)
+                temp_username = heist_tuple[0]
+                stolen_fish = heist_tuple[1]
+
+                output += f'{temp_username}\'s {stolen_fish.name} was shot)'
+
+        elif caught_fish.name == 'Sea Bass':
+            output += f'You caught: **{caught_fish.name}**... no it\'s at least a C+ (worth {caught_fish.value} moneys)'
+
+        elif caught_fish.weight < SUPER_RARE_ITEM_WEIGHT_THRESHOLD:
+            output += f'‼️‼️ You caught: **{caught_fish.name}** (worth {caught_fish.value} moneys)'
+
+        elif caught_fish in rare_items:
+            output += f'‼️ You caught: **{caught_fish.name}** (worth {caught_fish.value} moneys)'
+
+        else:
+            output += f'You caught: **{caught_fish.name}** (worth {caught_fish.value} moneys)'
+
     else:
         raise OnFishingCooldownError
 
+    if lucky:
+        output += f'\n{fish_event(username, is_extra_fish=True, bypass_fish_cd=True)}'
+
+    update_fish_database(username, fish=caught_fish, cd_penalty=penalty)
+    return output
+
+def go_fish(factor=1, force_fish_name: str=None) -> FishingItem:
+    weights = manipulated_weights(factor=factor)
+    fishing_items_sorted_by_weight = sorted(fishing_items, key=lambda item: item.weight)
+
+    if not force_fish_name:
+        return random.choices(fishing_items_sorted_by_weight, weights=weights, k=1)[0]
+    else:
+        force_fish = [fish for fish in fishing_items if fish.name == force_fish_name][0]
+        return force_fish
+
+def fish_soap(username: str):
+    list_of_profiles = fishing_database()
+
+    for profile in list_of_profiles:
+        if profile['username'] == username:
+            player_inv = profile['items']
+            profile['items'] = [stack for stack in player_inv if stack['item']['value'] >= 0]
+
+    update_file(list_of_profiles)
+
+def steal_fish_from_random(thief_name: str, shoot=False) -> tuple[str, FishingItem]:
+    list_of_profiles = fishing_database()
+
+    while True:
+        weights = [profile['times_fished'] for profile in list_of_profiles]
+        player_profile = random.choices(list_of_profiles, weights=weights, k=1)[0]
+        player_inv = player_profile['items']
+        player_name = player_profile['username']
+
+        if (player_name != thief_name or shoot) and player_name != 'test_user':
+            break
+
+    weights = [stack['count'] for stack in player_inv]
+    stolen_fish = FishingItem(**random.choices(player_inv, weights=weights, k=1)[0]['item'])
+
+    update_inventory(player_inv, stolen_fish, -1) # remember. this only updates the inventory object. it's connected
+    # to list_of_profiles but DOES NOT actually update the file until you do it later
+
+    update_file(list_of_profiles)
+    if not shoot:
+        update_fish_database(thief_name, fish=stolen_fish)
+
+    return player_name, stolen_fish
+
 def get_user_last_fish_time(username: str) -> int:
-    with open(FISHING_DATABASE_PATH, 'r') as file:
-        list_of_profiles = json.load(file)
+    list_of_profiles = fishing_database()
 
-        for profile in list_of_profiles:
-            if profile['username'] == username:
-                return profile['last_fish_time']
+    for profile in list_of_profiles:
+        if profile['username'] == username:
+            return profile['last_fish_time']
 
-        return 0
+    return 0
 
 def get_all_users() -> list[str]:
-    with open(FISHING_DATABASE_PATH, 'r') as file:
-        list_of_profiles = json.load(file)
-        return [profile['username'] for profile in list_of_profiles]
+    list_of_profiles = fishing_database()
+    return [profile['username'] for profile in list_of_profiles]
 
-def update_inventory(inventory: list[dict], fish: FishingItem):
+def update_inventory(inventory: list[dict], fish: FishingItem, count=1):
+    """
+    This does not modify any files!
+    """
     item_found = False
 
     for stack in inventory:
         if stack['item']['name'] == fish.name:
-            stack['count'] += 1
+            stack['count'] += count
+            print(stack['count'])
             item_found = True
 
     if not item_found:
         stack = dict()
-        stack['item'] = fish_to_dict(fish)
-        stack['count'] = 1
+        stack['item'] = fish.__dict__
+        stack['count'] = count
 
         inventory.append(stack)
 
@@ -140,11 +262,12 @@ def update_inventory(inventory: list[dict], fish: FishingItem):
 
 def sort_inventory(inventory: list[dict]):
     inventory.sort(key=lambda stack: stack['item']['value'], reverse=True)
+    # print(inventory[0]['count'])
 
 def sort_fishing_items():
     with open(FISHING_ITEMS_PATH, 'r+') as file:
         items = json.load(file)
-        items.sort(key=lambda fish: fish['weight'])
+        items.sort(key=lambda fish: fish['value'], reverse=True)
 
         file.seek(0)
         json.dump(items, file, indent=4)
@@ -153,93 +276,89 @@ def sort_fishing_items():
 def profile_to_string(username: str) -> str:
     output: str = f"*{username}*\n"
 
-    with open(FISHING_DATABASE_PATH, 'r') as file:
-        list_of_profiles = json.load(file)
-        user_found = False
+    list_of_profiles = fishing_database()
 
-        for profile in list_of_profiles:
-            if profile['username'] == username:
-                output += (f"Moneys obtained: **{profile['value']}**\n"
-                           f"Times fished: **{profile['times_fished']}**\n\n")
+    for profile in list_of_profiles:
+        if profile['username'] == username:
+            output += (f"Moneys obtained: **{profile['value']}**\n"
+                       f"Items caught: **{profile['times_fished']}**\n\n")
 
-                for stack in profile['items']:
-                    output += f"**{stack['count']}x** *{stack['item']['name']}*\n"
+            for stack in profile['items']:
+                output += f"**{stack['count']}x** *{stack['item']['name']}*\n"
 
-                return output
+            return output
 
-    return output + f"Moneys obtained: **0**\nTimes fished: **0**\n\nNo fish caught"
+    return output + f"Moneys obtained: **0**\nItems caught: **0**\n\nNo fish caught"
 
 def universal_profile_to_string() -> str:
     output: str = f"*Universal Stats*\n"
 
-    with open(FISHING_DATABASE_PATH, 'r') as file:
-        list_of_profiles = json.load(file)
-        user_found = False
+    list_of_profiles = fishing_database()
 
-        output += (f"Moneys obtained: **{sum(profile['value'] for profile in list_of_profiles)}**\n"
-                   f"Times fished: **{sum(profile['times_fished'] for profile in list_of_profiles)}*"
-                   f"*\n\n")
+    output += (f"Moneys obtained: **{sum(profile['value'] for profile in list_of_profiles if profile['username'] != 'test_user')}**\n"
+               f"Items caught: **{sum(profile['times_fished'] for profile in list_of_profiles if profile['username'] != 'test_user')}*"
+               f"*\n\n")
 
-        for fish in fishing_items:
-            temp_name = fish.name
-            temp_total = 0
+    for fish in fishing_items:
+        temp_name = fish.name
+        temp_total = 0
 
-            for profile in list_of_profiles:
+        for profile in list_of_profiles:
+            if profile['username'] != 'test_user':
                 for stack in profile['items']:
                     if stack['item']['name'] == temp_name:
                         temp_total += stack['count']
 
-            if temp_total > 0:
-                output += f"**{temp_total}x** *{temp_name}*\n"
+        if temp_total > 0:
+            output += f"**{temp_total}x** *{temp_name}*\n"
 
-        return output
+    return output
 
 
 def leaderboard_string() -> str:
     output = '*Leaderboard*\n\n'
+    index = 1
 
-    with open(FISHING_DATABASE_PATH, 'r') as file:
-        list_of_profiles = json.load(file)
-        list_of_profiles.sort(key=lambda prof: prof['value'], reverse=True)
+    list_of_profiles = fishing_database()
+    list_of_profiles.sort(key=lambda prof: prof['value'], reverse=True)
 
-        for index in range(len(list_of_profiles)):
-            output += f'{index + 1}. {list_of_profiles[index]['username']}: **{
-                         list_of_profiles[index]['value']} moneys**\n'
+    for profile in [profile for profile in list_of_profiles if profile['username'] != 'test_user']:
+        output += f'{index}. {profile['username']}: **{
+                    profile['value']} moneys**\n'
+        index += 1
 
     return output
 
-def update_fish_database(username: str, fish: FishingItem=None, cd_penalty=0) -> None:
-    with open(FISHING_DATABASE_PATH, 'r+') as file:
-        list_of_profiles = json.load(file)
-        user_found = False
+def update_fish_database(username: str, fish: FishingItem=None, count=1, cd_penalty=0) -> None:
+    list_of_profiles = fishing_database()
+    user_found = False
 
-        for profile in list_of_profiles:
-            if profile['username'] == username:
-                if fish:
-                    update_inventory(profile['items'], fish)
-
-                profile['last_fish_time'] = int(time.time()) + cd_penalty
-                profile['value'] = sum(stack['item']['value'] * stack['count']
-                                       for stack in profile['items'])
-                profile['times_fished'] = sum(stack['count'] for stack in profile['items'])
-                user_found = True
-
-        if not user_found:
-            new_profile = dict()
-            new_profile['username'] = username
-            new_profile['times_fished'] = 1
-            new_profile['last_fish_time'] = int(time.time()) + cd_penalty
-            new_profile['items'] = []
-
+    for profile in list_of_profiles:
+        if profile['username'] == username:
             if fish:
-                update_inventory(new_profile['items'], fish)
-                new_profile['value'] = fish.value
+                update_inventory(profile['items'], fish, count=count)
 
-            list_of_profiles.append(new_profile)
+            profile['last_fish_time'] = int(time.time()) + cd_penalty
+            profile['value'] = sum(stack['item']['value'] * stack['count']
+                                   for stack in profile['items'])
+            profile['times_fished'] = sum(stack['count'] for stack in profile['items'])
+            user_found = True
 
-        file.seek(0)
-        json.dump(list_of_profiles, file, indent=4)
-        file.truncate()
+    if not user_found:
+        new_profile = dict()
+        new_profile['username'] = username
+        new_profile['times_fished'] = count
+        new_profile['last_fish_time'] = int(time.time()) + cd_penalty
+        new_profile['items'] = []
+
+        if fish:
+            update_inventory(new_profile['items'], fish, count=count)
+
+        list_of_profiles.append(new_profile)
+        update_file(list_of_profiles)
+
+
+    update_file(list_of_profiles)
 
 def update_user_database(username: str, increment=1) -> None:
     with open(GENERAL_DATABASE_PATH, 'r+') as file:
@@ -267,3 +386,9 @@ os.chdir(script_directory)
 fishing_items = initialize_fishing_items()
 sort_fishing_items()
 rare_items = initialize_rares()
+
+if __name__ == '__main__':
+    my_profile_list = fishing_database()
+    my_inv = my_profile_list[0]['items']
+    update_inventory(my_inv, get_fish_from_name('Salmon'), count=-3)
+    update_file(my_profile_list)
