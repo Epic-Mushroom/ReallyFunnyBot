@@ -408,6 +408,9 @@ async def on_message(message):
     if find_isolated_word_bool(message.content, ['sigma']):
         await server_instance.reply_to_message(message, 'https://tenor.com/view/not-a-sigma-sorry-you-are-not-a-sigma-sorry-you%27re-not-a-sigma-you-aren%27t-a-sigma-you-are-not-sigma-gif-337838532227751572')
 
+    if find_isolated_word_bool(message.content, ['uwu', 'owo']):
+        await server_instance.reply_to_message(message, 'https://tenor.com/view/kekw-gif-21672467')
+
     if find_isolated_word_bool(message.content, ['can i', 'can we']):
         index_can = find_index_after_word(message.content, ['can i', 'can we'])
         interpreted_text = strip_punctuation(message.content[index_can:])

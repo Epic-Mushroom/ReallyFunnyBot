@@ -7,6 +7,7 @@ SUPER_RARE_ITEM_WEIGHT_THRESHOLD = 0.501
 
 FISHING_ITEMS_PATH = Path("trackers\\fishing_items.json")
 FISHING_DATABASE_PATH = Path("trackers\\fishing.json")
+SPECIALS_DATABASE_PATH = Path("trackers\\specials.json")
 GENERAL_DATABASE_PATH = Path("trackers\\user_triggers.json")
 
 class OnFishingCooldownError(Exception):
@@ -88,13 +89,66 @@ def fishing_database() -> list[dict]:
         list_of_profiles = json.load(file)
         return list_of_profiles
 
-def update_file(json_object: list | dict):
+def update_fish_file(json_object: list | dict):
     with open(FISHING_DATABASE_PATH, 'w') as file:
         json.dump(json_object, file, indent=4)
         file.truncate()
-    print("FILE CLOSED")
 
-def fish_event(username: str, is_extra_fish=False, jonklerfish_debug=False, bypass_fish_cd=False) -> str:
+def specials_database() -> dict:
+    with open(SPECIALS_DATABASE_PATH, 'r') as file:
+        specials_dict = json.load(file)
+        return specials_dict
+
+def update_specials_file(json_object: list | dict):
+    with open(SPECIALS_DATABASE_PATH, 'w') as file:
+        json.dump(json_object, file, indent=4)
+        file.truncate()
+
+def get_active_specials(username: str) -> list[str]:
+    specials_dict = specials_database()
+    active_specials = []
+
+    for key in specials_dict.keys():
+        for user_status in specials_dict[key]:
+            if user_status['username'] == username and user_status['count'] > 0:
+                active_specials.append(key)
+                break
+
+    return active_specials
+
+def use_up_specials(username: str) -> None:
+    specials_dict = specials_database()
+    active_specials = get_active_specials(username)
+
+    for special in active_specials:
+        for user_status in specials_dict[special]:
+            if user_status['username'] == username and user_status['count'] > 0:
+                user_status['count'] -= 1
+                break
+
+    update_specials_file(specials_dict)
+
+def fish_event(username: str, is_extra_fish=False, force_fish_name=None, bypass_fish_cd=False) -> str:
+
+    def other_player_with_catfish() -> str:
+        specials_dict = specials_database()
+        catfish_list = specials_dict['catfish']
+
+        for user_status in catfish_list:
+            if user_status['username'] != username and user_status['count'] > 0:
+                return user_status['username']
+
+    def handle_specials():
+        nonlocal username, other_player_has_catfish
+        active_specials = get_active_specials(username)
+
+        if not is_test_user:
+            if other_player_with_catfish():
+                username = other_player_with_catfish()
+                other_player_has_catfish = True
+            elif ...:
+                pass
+
     all_users = get_all_users()
     is_test_user = username == 'test_user'
 
@@ -107,22 +161,22 @@ def fish_event(username: str, is_extra_fish=False, jonklerfish_debug=False, bypa
     lucky = random_num <= 7 # 7% chance
     unlucky = random_num >= 95 and not is_extra_fish # 6% chance
 
+    other_player_has_catfish = False
+
     output = "(test_user)" if is_test_user else ""
 
     if bypass_fish_cd or current_time - last_fish_time >= FISHING_COOLDOWN:
-        if username == 'jamescheung24578':
-            caught_fish = go_fish()
-        elif jonklerfish_debug:
-            caught_fish = go_fish(force_fish_name="Jonklerfish")
-        elif is_test_user:
+        if is_test_user:
             caught_fish = go_fish(factor=18)
-        else:
+        elif not force_fish_name:
             caught_fish = go_fish()
+        else:
+            caught_fish = go_fish(force_fish_name=force_fish_name)
 
         if lucky:
             output += '*You caught more stuff than usual*\n'
         elif unlucky:
-            update_fish_database(username)
+            update_fish_database(username, bypass_fish_cd=bypass_fish_cd)
             return 'Oops, your line broke'
 
         if caught_fish.name == 'Cop Fish' and not is_extra_fish:
@@ -144,7 +198,8 @@ def fish_event(username: str, is_extra_fish=False, jonklerfish_debug=False, bypa
         elif caught_fish.name == 'Mercenary Fish' and not is_test_user:
             output += f'You caught the Mercenary Fish!'
 
-            for i in range(random_range(4, 6)):
+            for i in range(random_range(5, 6)):
+                # steal_fish_from_random also updates the thief's profile with the fish that was stolen
                 heist_tuple = steal_fish_from_random(username)
                 temp_username = heist_tuple[0]
                 stolen_fish = heist_tuple[1]
@@ -179,7 +234,11 @@ def fish_event(username: str, is_extra_fish=False, jonklerfish_debug=False, bypa
     if lucky:
         output += f'\n{fish_event(username, is_extra_fish=True, bypass_fish_cd=True)}'
 
-    update_fish_database(username, fish=caught_fish, cd_penalty=penalty)
+    if other_player_has_catfish:
+        pass
+
+    update_fish_database(username, fish=caught_fish, cd_penalty=penalty, bypass_fish_cd=bypass_fish_cd)
+    use_up_specials(username)
     return output
 
 def go_fish(factor=1, force_fish_name: str=None) -> FishingItem:
@@ -200,7 +259,7 @@ def fish_soap(username: str):
             player_inv = profile['items']
             profile['items'] = [stack for stack in player_inv if stack['item']['value'] >= 0]
 
-    update_file(list_of_profiles)
+    update_fish_file(list_of_profiles)
 
 def steal_fish_from_random(thief_name: str, shoot=False) -> tuple[str, FishingItem]:
     list_of_profiles = fishing_database()
@@ -217,10 +276,9 @@ def steal_fish_from_random(thief_name: str, shoot=False) -> tuple[str, FishingIt
     weights = [stack['count'] for stack in player_inv]
     stolen_fish = FishingItem(**random.choices(player_inv, weights=weights, k=1)[0]['item'])
 
-    update_inventory(player_inv, stolen_fish, -1) # remember. this only updates the inventory object. it's connected
-    # to list_of_profiles but DOES NOT actually update the file until you do it later
+    # Removes the stolen fish from the player who was being stolen from, not modifying the time they last fished
+    update_fish_database(player_name, fish=stolen_fish, count=-1, bypass_fish_cd=True)
 
-    update_file(list_of_profiles)
     if not shoot:
         update_fish_database(thief_name, fish=stolen_fish)
 
@@ -323,13 +381,19 @@ def leaderboard_string() -> str:
     list_of_profiles.sort(key=lambda prof: prof['value'], reverse=True)
 
     for profile in [profile for profile in list_of_profiles if profile['username'] != 'test_user']:
-        output += f'{index}. {profile['username']}: **{
-                    profile['value']} moneys**\n'
-        index += 1
+        try:
+            output += f'{index}. {profile['username']}: **{
+                        profile['value']} moneys**\n'
+            index += 1
+        except KeyError:
+            pass
 
     return output
 
-def update_fish_database(username: str, fish: FishingItem=None, count=1, cd_penalty=0) -> None:
+def update_fish_database(username: str, fish: FishingItem=None, count=1, cd_penalty=0, bypass_fish_cd=False) -> None:
+    """
+    bypass_fish_cd: if True, does not modify the time the user last fished
+    """
     list_of_profiles = fishing_database()
     user_found = False
 
@@ -338,27 +402,33 @@ def update_fish_database(username: str, fish: FishingItem=None, count=1, cd_pena
             if fish:
                 update_inventory(profile['items'], fish, count=count)
 
-            profile['last_fish_time'] = int(time.time()) + cd_penalty
-            profile['value'] = sum(stack['item']['value'] * stack['count']
-                                   for stack in profile['items'])
+            profile['value'] = sum(stack['item']['value'] * stack['count'] for stack in profile['items'])
             profile['times_fished'] = sum(stack['count'] for stack in profile['items'])
+
+            if not bypass_fish_cd:
+                profile['last_fish_time'] = int(time.time()) + cd_penalty
+
             user_found = True
 
     if not user_found:
         new_profile = dict()
         new_profile['username'] = username
         new_profile['times_fished'] = count
-        new_profile['last_fish_time'] = int(time.time()) + cd_penalty
         new_profile['items'] = []
+
+        if not bypass_fish_cd:
+            new_profile['last_fish_time'] = int(time.time()) + cd_penalty
+        else:
+            new_profile['last_fish_time'] = int(time.time()) - FISHING_COOLDOWN
 
         if fish:
             update_inventory(new_profile['items'], fish, count=count)
 
+        new_profile['value'] = sum(stack['item']['value'] * stack['count'] for stack in new_profile['items'])
+
         list_of_profiles.append(new_profile)
-        update_file(list_of_profiles)
 
-
-    update_file(list_of_profiles)
+    update_fish_file(list_of_profiles)
 
 def update_user_database(username: str, increment=1) -> None:
     with open(GENERAL_DATABASE_PATH, 'r+') as file:
@@ -390,5 +460,5 @@ rare_items = initialize_rares()
 if __name__ == '__main__':
     my_profile_list = fishing_database()
     my_inv = my_profile_list[0]['items']
-    update_inventory(my_inv, get_fish_from_name('Salmon'), count=-3)
-    update_file(my_profile_list)
+    # update_inventory(my_inv, get_fish_from_name('Salmon'), count=-3)
+    update_fish_file(my_profile_list)
