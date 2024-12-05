@@ -116,21 +116,20 @@ def get_active_specials(username: str) -> list[str]:
 
     return active_specials
 
-def use_up_specials(username: str) -> None:
+def use_up_special(username: str, special: str) -> None:
     specials_dict = specials_database()
-    active_specials = get_active_specials(username)
 
-    for special in active_specials:
-        for user_status in specials_dict[special]:
-            if user_status['username'] == username and user_status['count'] > 0:
-                user_status['count'] -= 1
-                break
+    for user_status in specials_dict[special]:
+        if user_status['username'] == username and user_status['count'] > 0:
+            user_status['count'] -= 1
+            break
 
     update_specials_file(specials_dict)
 
 def fish_event(username: str, is_extra_fish=False, force_fish_name=None, bypass_fish_cd=False) -> str:
 
-    def other_player_with_catfish() -> str:
+    def other_player_with_catfish() -> str | None:
+
         specials_dict = specials_database()
         catfish_list = specials_dict['catfish']
 
@@ -138,19 +137,23 @@ def fish_event(username: str, is_extra_fish=False, force_fish_name=None, bypass_
             if user_status['username'] != username and user_status['count'] > 0:
                 return user_status['username']
 
+        return None
+
     def handle_specials():
-        nonlocal username, other_player_has_catfish
+        """
+        Not finished
+        """
         active_specials = get_active_specials(username)
 
         if not is_test_user:
             if other_player_with_catfish():
-                username = other_player_with_catfish()
-                other_player_has_catfish = True
+                ...
             elif ...:
                 pass
 
     all_users = get_all_users()
     is_test_user = username == 'test_user'
+    original_user = username
 
     last_fish_time = get_user_last_fish_time(username)
     current_time = int(time.time())
@@ -161,7 +164,10 @@ def fish_event(username: str, is_extra_fish=False, force_fish_name=None, bypass_
     lucky = random_num <= 7 # 7% chance
     unlucky = random_num >= 95 and not is_extra_fish # 6% chance
 
-    other_player_has_catfish = False
+    catfish_holder = other_player_with_catfish()
+    if catfish_holder:
+        username = catfish_holder
+        bypass_fish_cd = True
 
     output = "(test_user)" if is_test_user else ""
 
@@ -234,11 +240,19 @@ def fish_event(username: str, is_extra_fish=False, force_fish_name=None, bypass_
     if lucky:
         output += f'\n{fish_event(username, is_extra_fish=True, bypass_fish_cd=True)}'
 
-    if other_player_has_catfish:
-        pass
-
     update_fish_database(username, fish=caught_fish, cd_penalty=penalty, bypass_fish_cd=bypass_fish_cd)
-    use_up_specials(username)
+
+    # uses up all specials except the catfish because it should only be used up when
+    # another player fishes with the catfish active
+    for special in get_active_specials(username):
+        if special != 'catfish':
+            use_up_special(username, special)
+
+    if catfish_holder:
+        update_fish_database(original_user, bypass_fish_cd=False)
+        use_up_special(catfish_holder, 'catfish')
+        output += f'\n*Fish taken by {catfish_holder}*'
+
     return output
 
 def go_fish(factor=1, force_fish_name: str=None) -> FishingItem:
@@ -405,8 +419,9 @@ def update_fish_database(username: str, fish: FishingItem=None, count=1, cd_pena
             profile['value'] = sum(stack['item']['value'] * stack['count'] for stack in profile['items'])
             profile['times_fished'] = sum(stack['count'] for stack in profile['items'])
 
-            if not bypass_fish_cd:
-                profile['last_fish_time'] = int(time.time()) + cd_penalty
+            profile['last_fish_time'] = int(time.time()) + cd_penalty
+            if bypass_fish_cd:
+                profile['last_fish_time'] -= FISHING_COOLDOWN
 
             user_found = True
 
@@ -416,10 +431,9 @@ def update_fish_database(username: str, fish: FishingItem=None, count=1, cd_pena
         new_profile['times_fished'] = count
         new_profile['items'] = []
 
-        if not bypass_fish_cd:
-            new_profile['last_fish_time'] = int(time.time()) + cd_penalty
-        else:
-            new_profile['last_fish_time'] = int(time.time()) - FISHING_COOLDOWN
+        new_profile['last_fish_time'] = int(time.time()) + cd_penalty
+        if bypass_fish_cd:
+            new_profile['last_fish_time'] -= FISHING_COOLDOWN
 
         if fish:
             update_inventory(new_profile['items'], fish, count=count)
