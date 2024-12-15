@@ -438,6 +438,21 @@ async def on_message(message):
     if find_word_bool(message.content, ['what is my name']):
         await server_instance.reply_to_message(message, f"{message.author.display_name} *({message.author.name})*")
 
+    if find_word_bool(message.content, ['fortnite battle']):
+        fortnite_battle_pass = """Fortnite Battle Pass 🗣️🗣️
+I just shit out my ass 🗣️🗣️🗣️
+Booted up my PC 💻💻
+'Cause I need-need 🥴🥴🥴
+To get that Fortnite Battle Pass 🗣️🗣️
+I like Fortnite 👶👶
+Did I mention Fortnite?🗣️🗣️
+I like Fortnite 👶
+Its Nighttime🌃🌃
+I mean, it's 5 o'clock 🕔 🕔, that's basically nighttime 😴😴 🌃
+Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
+        """
+        await server_instance.send_message(message, fortnite_battle_pass)
+
     if find_word_bool(message.content, ['🐟', '🎣', '🐠', 'asdfghjkl', 'go fish', 'गो फिश', 'go gamble', 'jobless behavior', 'le fishe',
                                         'quiero comer pescado', 'lets go gambling', 'let\'s go gambling',
                                         '.fish', 'let’s go gambling', '去钓鱼', '><>', '<><', '2+2']):
@@ -468,18 +483,32 @@ async def on_message(message):
             parts = message.content.split(' ')
             username_temp = parts[-1]
 
-        await server_instance.send_message(message, json_utils.profile_to_string(username_temp), bypass_cd=True)
+        embed = discord.Embed(title=f'{username_temp}\'s Profile', description=json_utils.profile_to_string(username_temp))
+        await message.channel.send(embed=embed)
+        # await server_instance.send_message(message, json_utils.profile_to_string(username_temp), bypass_cd=True)
 
     if find_word_bool(message.content, ['show leaderboard', 'show lb']):
-        await server_instance.send_message(message, json_utils.leaderboard_string(), bypass_cd=True)
+        embed = discord.Embed(title='Leaderboard', description=json_utils.leaderboard_string())
+        await message.channel.send(embed=embed)
+        # await server_instance.send_message(message, json_utils.leaderboard_string(), bypass_cd=True)
+
+    if find_word_bool(message.content, ['show luck lb', 'luck lb']):
+        embed = discord.Embed(title='RNG Leaderboard', description=json_utils.leaderboard_string(sort_by_luck=True))
+        await message.channel.send(embed=embed)
 
     if find_word_bool(message.content, ['all fish', 'global stats', 'global fish', 'all stats', 'combined profiles', 'combined joblessness',
                                         'global joblessness', 'how jobless is everyone', '.allfish']):
-        await server_instance.send_message(message, json_utils.universal_profile_to_string(), bypass_cd=True)
+        embed = discord.Embed(title='Universal Stats', description=json_utils.universal_profile_to_string())
+        await message.channel.send(embed=embed)
+        # await server_instance.send_message(message, json_utils.universal_profile_to_string(), bypass_cd=True)
 
     if find_word_bool(message.content, ['catchjonklerfishdebug']):
         await server_instance.send_message(message, "that doesn't work anymore dumbass",
                                            bypass_cd=True)
+
+    if find_word_bool(message.content, ['embedtestingthing']):
+        embed = discord.Embed(description='Hello\nthis\nis\nsupposed\nto\nbe\na description')
+        await message.channel.send(embed=embed)
 
     if random_range(1, 55) == 1:
         await server_instance.reply_to_message(message, f"{random.choice(BAITS)}")
@@ -488,3 +517,5 @@ async def on_message(message):
 
 
 client.run(TOKEN)
+# this code. is so fucking atrocious. what th eufkae
+# hello github

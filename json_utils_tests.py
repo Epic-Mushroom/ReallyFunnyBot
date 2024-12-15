@@ -29,5 +29,10 @@ class FishingTests(unittest.TestCase):
         for fish in self.fishing_items:
             print(f'{fish.name}: {(100 * fish.weight / weight_sum):.3f}%')
 
+    def test_average_value(self):
+        weight_sum = sum(fish.weight for fish in self.fishing_items)
+        a_sum = sum(fish.weight * fish.value for fish in self.fishing_items)
+        print(f'AVERAGE EXPECTED VALUE: {a_sum / weight_sum:.3f}')
+
 if __name__ == '__main__':
     unittest.main()

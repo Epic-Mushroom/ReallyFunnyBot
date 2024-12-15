@@ -1,0 +1,111 @@
+{
+    "catfish": [
+        {
+            "username": "epicmushroom.",
+            "count": 0
+        },
+        {
+            "username": "test_user",
+            "count": 0
+        },
+        {
+            "username": "adityaxad",
+            "count": 0
+        },
+        {
+            "username": "zakkthecactus",
+            "count": 0
+        },
+        {
+            "username": "jamescheung24578",
+            "count": 0
+        }
+    ],
+    "mercenary_contract": [
+        {
+            "username": "epicmushroom.",
+            "count": 0
+        }
+    ],
+    "fishing_manifesto": [
+        {
+            "username": "epicmushroom.",
+            "count": 0
+        },
+        {
+            "username": "test_user",
+            "count": 86
+        },
+        {
+            "username": "zakkthecactus",
+            "count": 14
+        },
+        {
+            "username": "jamescheung24578",
+            "count": 0
+        }
+    ],
+    "bribe_fish": [
+        {
+            "username": "epicmushroom.",
+            "count": 0,
+            "effect": "immune to cop fish cooldown increases"
+        },
+        {
+            "username": "artemis3548",
+            "count": 39
+        },
+        {
+            "username": "jamescheung24578",
+            "count": 41
+        }
+    ],
+    "state_farm_insured_rod": [
+        {
+            "username": "epicmushroom.",
+            "count": 0
+        }
+    ],
+    "nemo": [
+        {
+            "username": "epicmushroom.",
+            "count": 0,
+            "effect": "9x fishing luck delete this"
+        },
+        {
+            "username": "test_user",
+            "count": 18
+        },
+        {
+            "username": "zakkthecactus",
+            "count": 20
+        }
+    ],
+    "mogfish": [
+        {
+            "username": "epicmushroom.",
+            "count": 0,
+            "effect": "nearly guaranteed trash items"
+        },
+        {
+            "username": "test_user",
+            "count": 53
+        },
+        {
+            "username": "jamescheung24578",
+            "count": 12
+        }
+    ],
+    "kahoot_battle_pass": [
+        {
+            "username": "test_user",
+            "count": 0
+        }
+    ],
+    "beel nye": [
+        {
+            "username": "test_user",
+            "count": 0
+        }
+    ]
+}
