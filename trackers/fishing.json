@@ -1,0 +1,4178 @@
+[
+    {
+        "username": "epicmushroom.",
+        "value": 43160,
+        "last_fish_time": 1734306157,
+        "times_fished": 2696,
+        "items": [
+            {
+                "item": {
+                    "name": "Gambling Addiction Diagnosis",
+                    "value": 1999,
+                    "weight": 0.32
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Adderall (1840 Limited Edition)",
+                    "value": 1299,
+                    "weight": 0.45
+                },
+                "count": 3
+            },
+            {
+                "item": {
+                    "name": "Bolivia",
+                    "value": 998,
+                    "weight": 0.6
+                },
+                "count": 2
+            },
+            {
+                "item": {
+                    "name": "Diamond Juice Box Peel",
+                    "value": 500,
+                    "weight": 1
+                },
+                "count": 4
+            },
+            {
+                "item": {
+                    "name": "Shiny Jadenfish",
+                    "value": 499,
+                    "weight": 1
+                },
+                "count": 5
+            },
+            {
+                "item": {
+                    "name": "God",
+                    "value": 249,
+                    "weight": 1.2
+                },
+                "count": 5
+            },
+            {
+                "item": {
+                    "name": "Used 1999 Toyota Tacoma",
+                    "value": 199,
+                    "weight": 1.5
+                },
+                "count": 8
+            },
+            {
+                "item": {
+                    "name": "Jonklerfish",
+                    "value": 120,
+                    "weight": 5
+                },
+                "count": 22
+            },
+            {
+                "item": {
+                    "name": "Floating Wood EX",
+                    "value": 120,
+                    "weight": 2
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "P-Wing Boys Bathroom Cocaine",
+                    "value": 99,
+                    "weight": 2.1
+                },
+                "count": 11
+            },
+            {
+                "item": {
+                    "name": "John Pork's Reincarnation",
+                    "value": 91,
+                    "weight": 2.4
+                },
+                "count": 18
+            },
+            {
+                "item": {
+                    "name": "KSI - Thick of It Vinyl Record",
+                    "value": 69,
+                    "weight": 4.5
+                },
+                "count": 39
+            },
+            {
+                "item": {
+                    "name": "Gold Goldfish",
+                    "value": 60,
+                    "weight": 5
+                },
+                "count": 31
+            },
+            {
+                "item": {
+                    "name": "Golden Juice Box Peel",
+                    "value": 50,
+                    "weight": 5.5
+                },
+                "count": 34
+            },
+            {
+                "item": {
+                    "name": "WD-40 Bottle",
+                    "value": 45,
+                    "weight": 6.5
+                },
+                "count": 56
+            },
+            {
+                "item": {
+                    "name": "Swordfish",
+                    "value": 40,
+                    "weight": 7.3
+                },
+                "count": 16
+            },
+            {
+                "item": {
+                    "name": "Zaky the Sea Urchin",
+                    "value": 32,
+                    "weight": 9
+                },
+                "count": 59
+            },
+            {
+                "item": {
+                    "name": "Bryce Beckeel",
+                    "value": 20,
+                    "weight": 10
+                },
+                "count": 62
+            },
+            {
+                "item": {
+                    "name": "Stingray (Zhao)",
+                    "value": 20,
+                    "weight": 10
+                },
+                "count": 54
+            },
+            {
+                "item": {
+                    "name": "Jadenfish",
+                    "value": 15,
+                    "weight": 13
+                },
+                "count": 77
+            },
+            {
+                "item": {
+                    "name": "Jamesfish",
+                    "value": 15,
+                    "weight": 13
+                },
+                "count": 77
+            },
+            {
+                "item": {
+                    "name": "Hamburger Fish",
+                    "value": 10,
+                    "weight": 15
+                },
+                "count": 77
+            },
+            {
+                "item": {
+                    "name": "Oyster",
+                    "value": 10,
+                    "weight": 15
+                },
+                "count": 93
+            },
+            {
+                "item": {
+                    "name": "Sotp Sign",
+                    "value": 10,
+                    "weight": 15
+                },
+                "count": 92
+            },
+            {
+                "item": {
+                    "name": "Salmon",
+                    "value": 8,
+                    "weight": 20
+                },
+                "count": 128
+            },
+            {
+                "item": {
+                    "name": "Sea Bass",
+                    "value": 5,
+                    "weight": 26
+                },
+                "count": 146
+            },
+            {
+                "item": {
+                    "name": "Goldfish",
+                    "value": 4,
+                    "weight": 28
+                },
+                "count": 203
+            },
+            {
+                "item": {
+                    "name": "Seaweed",
+                    "value": 2,
+                    "weight": 32
+                },
+                "count": 181
+            },
+            {
+                "item": {
+                    "name": "Old Ass Boot",
+                    "value": 1,
+                    "weight": 35
+                },
+                "count": 294
+            },
+            {
+                "item": {
+                    "name": "Hook",
+                    "value": 1,
+                    "weight": 35
+                },
+                "count": 298
+            },
+            {
+                "item": {
+                    "name": "Floating Wood",
+                    "value": 1,
+                    "weight": 38
+                },
+                "count": 93
+            },
+            {
+                "item": {
+                    "name": "Empty McNuggets Box",
+                    "value": 1,
+                    "weight": 37
+                },
+                "count": 112
+            },
+            {
+                "item": {
+                    "name": "Soda Can",
+                    "value": 1,
+                    "weight": 37
+                },
+                "count": 110
+            },
+            {
+                "item": {
+                    "name": "Plastic Straw",
+                    "value": 1,
+                    "weight": 30
+                },
+                "count": 55
+            },
+            {
+                "item": {
+                    "name": "Small Fry",
+                    "value": 0.5,
+                    "weight": 35
+                },
+                "count": 26
+            },
+            {
+                "item": {
+                    "name": "Cop Fish",
+                    "value": 0,
+                    "weight": 12
+                },
+                "count": 77
+            },
+            {
+                "item": {
+                    "name": "CS:GO Fish",
+                    "value": 0,
+                    "weight": 9
+                },
+                "count": 30
+            },
+            {
+                "item": {
+                    "name": "Mercenary Fish",
+                    "value": 0,
+                    "weight": 7.6
+                },
+                "count": 38
+            },
+            {
+                "item": {
+                    "name": "Fish Soap",
+                    "value": 0,
+                    "weight": 1.2
+                },
+                "count": 7
+            },
+            {
+                "item": {
+                    "name": "Catfish",
+                    "value": 0,
+                    "weight": 8
+                },
+                "count": 26
+            },
+            {
+                "item": {
+                    "name": "Nemo",
+                    "value": 0,
+                    "weight": 2
+                },
+                "count": 4
+            },
+            {
+                "item": {
+                    "name": "Mogfish",
+                    "value": 0,
+                    "weight": 4
+                },
+                "count": 7
+            },
+            {
+                "item": {
+                    "name": "Fishing Manifesto",
+                    "value": 0,
+                    "weight": 6.2
+                },
+                "count": 10
+            },
+            {
+                "item": {
+                    "name": "Mercenary Contract",
+                    "value": 0,
+                    "weight": 1.6
+                },
+                "count": 2
+            },
+            {
+                "item": {
+                    "name": "Viola",
+                    "value": -1,
+                    "weight": 20
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Brawl Starfish",
+                    "value": -2,
+                    "weight": 19
+                },
+                "count": 1
+            }
+        ]
+    },
+    {
+        "username": "phospholipase_c",
+        "value": 1968,
+        "times_fished": 194,
+        "last_fish_time": 1734305010,
+        "items": [
+            {
+                "item": {
+                    "name": "Used 1999 Toyota Tacoma",
+                    "value": 199,
+                    "weight": 1.5
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Jonklerfish",
+                    "value": 120,
+                    "weight": 5
+                },
+                "count": 3
+            },
+            {
+                "item": {
+                    "name": "P-Wing Boys Bathroom Cocaine",
+                    "value": 99,
+                    "weight": 2.1
+                },
+                "count": 2
+            },
+            {
+                "item": {
+                    "name": "John Pork's Reincarnation",
+                    "value": 91,
+                    "weight": 2.4
+                },
+                "count": 2
+            },
+            {
+                "item": {
+                    "name": "Gold Goldfish",
+                    "value": 60,
+                    "weight": 5
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Golden Juice Box Peel",
+                    "value": 50,
+                    "weight": 5.5
+                },
+                "count": 5
+            },
+            {
+                "item": {
+                    "name": "WD-40 Bottle",
+                    "value": 45,
+                    "weight": 6.5
+                },
+                "count": 3
+            },
+            {
+                "item": {
+                    "name": "Swordfish",
+                    "value": 40,
+                    "weight": 7.3
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Zaky the Sea Urchin",
+                    "value": 32,
+                    "weight": 9
+                },
+                "count": 2
+            },
+            {
+                "item": {
+                    "name": "Bryce Beckeel",
+                    "value": 20,
+                    "weight": 10
+                },
+                "count": 6
+            },
+            {
+                "item": {
+                    "name": "Jamesfish",
+                    "value": 15,
+                    "weight": 13
+                },
+                "count": 4
+            },
+            {
+                "item": {
+                    "name": "Jadenfish",
+                    "value": 15,
+                    "weight": 13
+                },
+                "count": 2
+            },
+            {
+                "item": {
+                    "name": "Hamburger Fish",
+                    "value": 10,
+                    "weight": 15
+                },
+                "count": 7
+            },
+            {
+                "item": {
+                    "name": "Sotp Sign",
+                    "value": 10,
+                    "weight": 15
+                },
+                "count": 11
+            },
+            {
+                "item": {
+                    "name": "Oyster",
+                    "value": 10,
+                    "weight": 15
+                },
+                "count": 6
+            },
+            {
+                "item": {
+                    "name": "Salmon",
+                    "value": 8,
+                    "weight": 20
+                },
+                "count": 7
+            },
+            {
+                "item": {
+                    "name": "Sea Bass",
+                    "value": 5,
+                    "weight": 26
+                },
+                "count": 9
+            },
+            {
+                "item": {
+                    "name": "Goldfish",
+                    "value": 4,
+                    "weight": 28
+                },
+                "count": 11
+            },
+            {
+                "item": {
+                    "name": "Seaweed",
+                    "value": 2,
+                    "weight": 32
+                },
+                "count": 17
+            },
+            {
+                "item": {
+                    "name": "Hook",
+                    "value": 1,
+                    "weight": 35
+                },
+                "count": 21
+            },
+            {
+                "item": {
+                    "name": "Old Ass Boot",
+                    "value": 1,
+                    "weight": 35
+                },
+                "count": 18
+            },
+            {
+                "item": {
+                    "name": "Empty McNuggets Box",
+                    "value": 1,
+                    "weight": 37
+                },
+                "count": 5
+            },
+            {
+                "item": {
+                    "name": "Plastic Straw",
+                    "value": 1,
+                    "weight": 30
+                },
+                "count": 5
+            },
+            {
+                "item": {
+                    "name": "Floating Wood",
+                    "value": 1,
+                    "weight": 38
+                },
+                "count": 4
+            },
+            {
+                "item": {
+                    "name": "Soda Can",
+                    "value": 1,
+                    "weight": 37
+                },
+                "count": 5
+            },
+            {
+                "item": {
+                    "name": "Small Fry",
+                    "value": 0.5,
+                    "weight": 35
+                },
+                "count": 5
+            },
+            {
+                "item": {
+                    "name": "Mercenary Fish",
+                    "value": 0,
+                    "weight": 7.6
+                },
+                "count": 2
+            },
+            {
+                "item": {
+                    "name": "Cop Fish",
+                    "value": 0,
+                    "weight": 12
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Mogfish",
+                    "value": 0,
+                    "weight": 4
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Viola",
+                    "value": -1,
+                    "weight": 20
+                },
+                "count": 7
+            },
+            {
+                "item": {
+                    "name": "Brawl Starfish",
+                    "value": -2,
+                    "weight": 19
+                },
+                "count": 13
+            },
+            {
+                "item": {
+                    "name": "Homeless Guy's Underwear",
+                    "value": -2,
+                    "weight": 17
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Thief Fish",
+                    "value": -25,
+                    "weight": 7
+                },
+                "count": 5
+            },
+            {
+                "item": {
+                    "name": "Bribe Fish",
+                    "value": -50,
+                    "weight": 2.1
+                },
+                "count": 1
+            }
+        ]
+    },
+    {
+        "username": "potatochipbag",
+        "value": 295,
+        "times_fished": 49,
+        "last_fish_time": 1734305010,
+        "items": [
+            {
+                "item": {
+                    "name": "KSI - Thick of It Vinyl Record",
+                    "value": 69,
+                    "weight": 4.5
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Bryce Beckeel",
+                    "value": 20,
+                    "weight": 10
+                },
+                "count": 4
+            },
+            {
+                "item": {
+                    "name": "Jadenfish",
+                    "value": 15,
+                    "weight": 13
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Oyster",
+                    "value": 10,
+                    "weight": 15
+                },
+                "count": 3
+            },
+            {
+                "item": {
+                    "name": "Sotp Sign",
+                    "value": 10,
+                    "weight": 15
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Hamburger Fish",
+                    "value": 10,
+                    "weight": 15
+                },
+                "count": 2
+            },
+            {
+                "item": {
+                    "name": "Salmon",
+                    "value": 8,
+                    "weight": 20
+                },
+                "count": 3
+            },
+            {
+                "item": {
+                    "name": "Sea Bass",
+                    "value": 5,
+                    "weight": 26
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Goldfish",
+                    "value": 4,
+                    "weight": 28
+                },
+                "count": 4
+            },
+            {
+                "item": {
+                    "name": "Seaweed",
+                    "value": 2,
+                    "weight": 32
+                },
+                "count": 4
+            },
+            {
+                "item": {
+                    "name": "Old Ass Boot",
+                    "value": 1,
+                    "weight": 35
+                },
+                "count": 9
+            },
+            {
+                "item": {
+                    "name": "Hook",
+                    "value": 1,
+                    "weight": 35
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Plastic Straw",
+                    "value": 1,
+                    "weight": 30
+                },
+                "count": 4
+            },
+            {
+                "item": {
+                    "name": "Soda Can",
+                    "value": 1,
+                    "weight": 37
+                },
+                "count": 4
+            },
+            {
+                "item": {
+                    "name": "Floating Wood",
+                    "value": 1,
+                    "weight": 38
+                },
+                "count": 2
+            },
+            {
+                "item": {
+                    "name": "Small Fry",
+                    "value": 0.5,
+                    "weight": 35
+                },
+                "count": 2
+            },
+            {
+                "item": {
+                    "name": "CS:GO Fish",
+                    "value": 0,
+                    "weight": 9
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Viola",
+                    "value": -1,
+                    "weight": 20
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Brawl Starfish",
+                    "value": -2,
+                    "weight": 19
+                },
+                "count": 1
+            }
+        ]
+    },
+    {
+        "username": "artemis3548",
+        "value": 2996,
+        "times_fished": 320,
+        "last_fish_time": 1734305021,
+        "items": [
+            {
+                "item": {
+                    "name": "God",
+                    "value": 249,
+                    "weight": 1.2
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Used 1999 Toyota Tacoma",
+                    "value": 199,
+                    "weight": 1.5
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Jonklerfish",
+                    "value": 120,
+                    "weight": 5
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Floating Wood EX",
+                    "value": 120,
+                    "weight": 2
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "P-Wing Boys Bathroom Cocaine",
+                    "value": 99,
+                    "weight": 2.1
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "John Pork's Reincarnation",
+                    "value": 91,
+                    "weight": 2.4
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "KSI - Thick of It Vinyl Record",
+                    "value": 69,
+                    "weight": 4.5
+                },
+                "count": 4
+            },
+            {
+                "item": {
+                    "name": "Gold Goldfish",
+                    "value": 60,
+                    "weight": 5
+                },
+                "count": 2
+            },
+            {
+                "item": {
+                    "name": "Golden Juice Box Peel",
+                    "value": 50,
+                    "weight": 5.5
+                },
+                "count": 4
+            },
+            {
+                "item": {
+                    "name": "WD-40 Bottle",
+                    "value": 45,
+                    "weight": 6.5
+                },
+                "count": 6
+            },
+            {
+                "item": {
+                    "name": "Swordfish",
+                    "value": 40,
+                    "weight": 7.3
+                },
+                "count": 2
+            },
+            {
+                "item": {
+                    "name": "Zaky the Sea Urchin",
+                    "value": 32,
+                    "weight": 9
+                },
+                "count": 3
+            },
+            {
+                "item": {
+                    "name": "Bryce Beckeel",
+                    "value": 20,
+                    "weight": 10
+                },
+                "count": 6
+            },
+            {
+                "item": {
+                    "name": "Stingray (Zhao)",
+                    "value": 20,
+                    "weight": 10
+                },
+                "count": 5
+            },
+            {
+                "item": {
+                    "name": "Jadenfish",
+                    "value": 15,
+                    "weight": 13
+                },
+                "count": 11
+            },
+            {
+                "item": {
+                    "name": "Jamesfish",
+                    "value": 15,
+                    "weight": 13
+                },
+                "count": 5
+            },
+            {
+                "item": {
+                    "name": "Hamburger Fish",
+                    "value": 10,
+                    "weight": 15
+                },
+                "count": 14
+            },
+            {
+                "item": {
+                    "name": "Sotp Sign",
+                    "value": 10,
+                    "weight": 15
+                },
+                "count": 10
+            },
+            {
+                "item": {
+                    "name": "Oyster",
+                    "value": 10,
+                    "weight": 15
+                },
+                "count": 13
+            },
+            {
+                "item": {
+                    "name": "Salmon",
+                    "value": 8,
+                    "weight": 20
+                },
+                "count": 12
+            },
+            {
+                "item": {
+                    "name": "Sea Bass",
+                    "value": 5,
+                    "weight": 26
+                },
+                "count": 15
+            },
+            {
+                "item": {
+                    "name": "Goldfish",
+                    "value": 4,
+                    "weight": 28
+                },
+                "count": 23
+            },
+            {
+                "item": {
+                    "name": "Seaweed",
+                    "value": 2,
+                    "weight": 32
+                },
+                "count": 23
+            },
+            {
+                "item": {
+                    "name": "Old Ass Boot",
+                    "value": 1,
+                    "weight": 35
+                },
+                "count": 44
+            },
+            {
+                "item": {
+                    "name": "Hook",
+                    "value": 1,
+                    "weight": 35
+                },
+                "count": 32
+            },
+            {
+                "item": {
+                    "name": "Soda Can",
+                    "value": 1,
+                    "weight": 37
+                },
+                "count": 9
+            },
+            {
+                "item": {
+                    "name": "Empty McNuggets Box",
+                    "value": 1,
+                    "weight": 37
+                },
+                "count": 7
+            },
+            {
+                "item": {
+                    "name": "Plastic Straw",
+                    "value": 1,
+                    "weight": 30
+                },
+                "count": 5
+            },
+            {
+                "item": {
+                    "name": "Floating Wood",
+                    "value": 1,
+                    "weight": 38
+                },
+                "count": 2
+            },
+            {
+                "item": {
+                    "name": "Small Fry",
+                    "value": 0.5,
+                    "weight": 35
+                },
+                "count": 2
+            },
+            {
+                "item": {
+                    "name": "Cop Fish",
+                    "value": 0,
+                    "weight": 12
+                },
+                "count": 10
+            },
+            {
+                "item": {
+                    "name": "CS:GO Fish",
+                    "value": 0,
+                    "weight": 9
+                },
+                "count": 2
+            },
+            {
+                "item": {
+                    "name": "Mercenary Fish",
+                    "value": 0,
+                    "weight": 7.6
+                },
+                "count": 5
+            },
+            {
+                "item": {
+                    "name": "Catfish",
+                    "value": 0,
+                    "weight": 8
+                },
+                "count": 5
+            },
+            {
+                "item": {
+                    "name": "Fishing Manifesto",
+                    "value": 0,
+                    "weight": 6.2
+                },
+                "count": 2
+            },
+            {
+                "item": {
+                    "name": "Nemo",
+                    "value": 0,
+                    "weight": 2
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Mogfish",
+                    "value": 0,
+                    "weight": 4
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Viola",
+                    "value": -1,
+                    "weight": 20
+                },
+                "count": 12
+            },
+            {
+                "item": {
+                    "name": "Brawl Starfish",
+                    "value": -2,
+                    "weight": 19
+                },
+                "count": 12
+            },
+            {
+                "item": {
+                    "name": "Homeless Guy's Underwear",
+                    "value": -2,
+                    "weight": 17
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Thief Fish",
+                    "value": -25,
+                    "weight": 7
+                },
+                "count": 3
+            },
+            {
+                "item": {
+                    "name": "Bribe Fish",
+                    "value": -50,
+                    "weight": 2.1
+                },
+                "count": 1
+            }
+        ]
+    },
+    {
+        "username": "bongohead0258",
+        "value": 6436,
+        "times_fished": 426,
+        "last_fish_time": 1734305010,
+        "items": [
+            {
+                "item": {
+                    "name": "Shiny Jadenfish",
+                    "value": 499,
+                    "weight": 1
+                },
+                "count": 3
+            },
+            {
+                "item": {
+                    "name": "God",
+                    "value": 249,
+                    "weight": 1.2
+                },
+                "count": 2
+            },
+            {
+                "item": {
+                    "name": "Used 1999 Toyota Tacoma",
+                    "value": 199,
+                    "weight": 1.5
+                },
+                "count": 2
+            },
+            {
+                "item": {
+                    "name": "Jonklerfish",
+                    "value": 120,
+                    "weight": 5
+                },
+                "count": 2
+            },
+            {
+                "item": {
+                    "name": "P-Wing Boys Bathroom Cocaine",
+                    "value": 99,
+                    "weight": 2.1
+                },
+                "count": 7
+            },
+            {
+                "item": {
+                    "name": "KSI - Thick of It Vinyl Record",
+                    "value": 69,
+                    "weight": 4.5
+                },
+                "count": 6
+            },
+            {
+                "item": {
+                    "name": "Gold Goldfish",
+                    "value": 60,
+                    "weight": 5
+                },
+                "count": 5
+            },
+            {
+                "item": {
+                    "name": "Golden Juice Box Peel",
+                    "value": 50,
+                    "weight": 5.5
+                },
+                "count": 8
+            },
+            {
+                "item": {
+                    "name": "WD-40 Bottle",
+                    "value": 45,
+                    "weight": 6.5
+                },
+                "count": 6
+            },
+            {
+                "item": {
+                    "name": "Zaky the Sea Urchin",
+                    "value": 32,
+                    "weight": 9
+                },
+                "count": 5
+            },
+            {
+                "item": {
+                    "name": "Bryce Beckeel",
+                    "value": 20,
+                    "weight": 10
+                },
+                "count": 7
+            },
+            {
+                "item": {
+                    "name": "Stingray (Zhao)",
+                    "value": 20,
+                    "weight": 10
+                },
+                "count": 8
+            },
+            {
+                "item": {
+                    "name": "Jadenfish",
+                    "value": 15,
+                    "weight": 13
+                },
+                "count": 14
+            },
+            {
+                "item": {
+                    "name": "Jamesfish",
+                    "value": 15,
+                    "weight": 13
+                },
+                "count": 2
+            },
+            {
+                "item": {
+                    "name": "Hamburger Fish",
+                    "value": 10,
+                    "weight": 15
+                },
+                "count": 17
+            },
+            {
+                "item": {
+                    "name": "Oyster",
+                    "value": 10,
+                    "weight": 15
+                },
+                "count": 13
+            },
+            {
+                "item": {
+                    "name": "Sotp Sign",
+                    "value": 10,
+                    "weight": 15
+                },
+                "count": 13
+            },
+            {
+                "item": {
+                    "name": "Salmon",
+                    "value": 8,
+                    "weight": 20
+                },
+                "count": 32
+            },
+            {
+                "item": {
+                    "name": "Sea Bass",
+                    "value": 5,
+                    "weight": 26
+                },
+                "count": 39
+            },
+            {
+                "item": {
+                    "name": "Goldfish",
+                    "value": 4,
+                    "weight": 28
+                },
+                "count": 7
+            },
+            {
+                "item": {
+                    "name": "Seaweed",
+                    "value": 2,
+                    "weight": 32
+                },
+                "count": 38
+            },
+            {
+                "item": {
+                    "name": "Hook",
+                    "value": 1,
+                    "weight": 35
+                },
+                "count": 69
+            },
+            {
+                "item": {
+                    "name": "Old Ass Boot",
+                    "value": 1,
+                    "weight": 35
+                },
+                "count": 70
+            },
+            {
+                "item": {
+                    "name": "Soda Can",
+                    "value": 1,
+                    "weight": 37
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Floating Wood",
+                    "value": 1,
+                    "weight": 38
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Empty McNuggets Box",
+                    "value": 1,
+                    "weight": 37
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Small Fry",
+                    "value": 0.5,
+                    "weight": 35
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Mercenary Fish",
+                    "value": 0,
+                    "weight": 7.6
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Cop Fish",
+                    "value": 0,
+                    "weight": 12
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "CS:GO Fish",
+                    "value": 0,
+                    "weight": 9
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Viola",
+                    "value": -1,
+                    "weight": 20
+                },
+                "count": 32
+            },
+            {
+                "item": {
+                    "name": "Brawl Starfish",
+                    "value": -2,
+                    "weight": 19
+                },
+                "count": 10
+            },
+            {
+                "item": {
+                    "name": "Thief Fish",
+                    "value": -25,
+                    "weight": 7
+                },
+                "count": 2
+            }
+        ]
+    },
+    {
+        "username": "zakkthecactus",
+        "value": 13750,
+        "times_fished": 683,
+        "last_fish_time": 1734305010,
+        "items": [
+            {
+                "item": {
+                    "name": "Adderall (1840 Limited Edition)",
+                    "value": 1299,
+                    "weight": 0.45
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Bolivia",
+                    "value": 998,
+                    "weight": 0.6
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Diamond Juice Box Peel",
+                    "value": 500,
+                    "weight": 1
+                },
+                "count": 2
+            },
+            {
+                "item": {
+                    "name": "Shiny Jadenfish",
+                    "value": 499,
+                    "weight": 1
+                },
+                "count": 0
+            },
+            {
+                "item": {
+                    "name": "God",
+                    "value": 249,
+                    "weight": 1.2
+                },
+                "count": 6
+            },
+            {
+                "item": {
+                    "name": "Used 1999 Toyota Tacoma",
+                    "value": 199,
+                    "weight": 1.5
+                },
+                "count": 7
+            },
+            {
+                "item": {
+                    "name": "Jonklerfish",
+                    "value": 120,
+                    "weight": 5
+                },
+                "count": 6
+            },
+            {
+                "item": {
+                    "name": "Floating Wood EX",
+                    "value": 120,
+                    "weight": 2
+                },
+                "count": 3
+            },
+            {
+                "item": {
+                    "name": "P-Wing Boys Bathroom Cocaine",
+                    "value": 99,
+                    "weight": 2.1
+                },
+                "count": 3
+            },
+            {
+                "item": {
+                    "name": "John Pork's Reincarnation",
+                    "value": 91,
+                    "weight": 2.4
+                },
+                "count": 5
+            },
+            {
+                "item": {
+                    "name": "KSI - Thick of It Vinyl Record",
+                    "value": 69,
+                    "weight": 4.5
+                },
+                "count": 11
+            },
+            {
+                "item": {
+                    "name": "Gold Goldfish",
+                    "value": 60,
+                    "weight": 5
+                },
+                "count": 10
+            },
+            {
+                "item": {
+                    "name": "Golden Juice Box Peel",
+                    "value": 50,
+                    "weight": 5.5
+                },
+                "count": 7
+            },
+            {
+                "item": {
+                    "name": "WD-40 Bottle",
+                    "value": 45,
+                    "weight": 6.5
+                },
+                "count": 8
+            },
+            {
+                "item": {
+                    "name": "Swordfish",
+                    "value": 40,
+                    "weight": 7.3
+                },
+                "count": 13
+            },
+            {
+                "item": {
+                    "name": "Zaky the Sea Urchin",
+                    "value": 32,
+                    "weight": 9
+                },
+                "count": 23
+            },
+            {
+                "item": {
+                    "name": "Stingray (Zhao)",
+                    "value": 20,
+                    "weight": 10
+                },
+                "count": 12
+            },
+            {
+                "item": {
+                    "name": "Bryce Beckeel",
+                    "value": 20,
+                    "weight": 10
+                },
+                "count": 16
+            },
+            {
+                "item": {
+                    "name": "Jadenfish",
+                    "value": 15,
+                    "weight": 13
+                },
+                "count": 6
+            },
+            {
+                "item": {
+                    "name": "Jamesfish",
+                    "value": 15,
+                    "weight": 13
+                },
+                "count": 15
+            },
+            {
+                "item": {
+                    "name": "Sotp Sign",
+                    "value": 10,
+                    "weight": 15
+                },
+                "count": 28
+            },
+            {
+                "item": {
+                    "name": "Hamburger Fish",
+                    "value": 10,
+                    "weight": 15
+                },
+                "count": 21
+            },
+            {
+                "item": {
+                    "name": "Oyster",
+                    "value": 10,
+                    "weight": 15
+                },
+                "count": 15
+            },
+            {
+                "item": {
+                    "name": "Salmon",
+                    "value": 8,
+                    "weight": 20
+                },
+                "count": 33
+            },
+            {
+                "item": {
+                    "name": "Sea Bass",
+                    "value": 5,
+                    "weight": 26
+                },
+                "count": 55
+            },
+            {
+                "item": {
+                    "name": "Goldfish",
+                    "value": 4,
+                    "weight": 28
+                },
+                "count": 37
+            },
+            {
+                "item": {
+                    "name": "Seaweed",
+                    "value": 2,
+                    "weight": 32
+                },
+                "count": 54
+            },
+            {
+                "item": {
+                    "name": "Hook",
+                    "value": 1,
+                    "weight": 35
+                },
+                "count": 80
+            },
+            {
+                "item": {
+                    "name": "Old Ass Boot",
+                    "value": 1,
+                    "weight": 35
+                },
+                "count": 58
+            },
+            {
+                "item": {
+                    "name": "Empty McNuggets Box",
+                    "value": 1,
+                    "weight": 37
+                },
+                "count": 12
+            },
+            {
+                "item": {
+                    "name": "Plastic Straw",
+                    "value": 1,
+                    "weight": 30
+                },
+                "count": 18
+            },
+            {
+                "item": {
+                    "name": "Floating Wood",
+                    "value": 1,
+                    "weight": 38
+                },
+                "count": 16
+            },
+            {
+                "item": {
+                    "name": "Soda Can",
+                    "value": 1,
+                    "weight": 37
+                },
+                "count": 23
+            },
+            {
+                "item": {
+                    "name": "Small Fry",
+                    "value": 0.5,
+                    "weight": 35
+                },
+                "count": 5
+            },
+            {
+                "item": {
+                    "name": "Cop Fish",
+                    "value": 0,
+                    "weight": 12
+                },
+                "count": 8
+            },
+            {
+                "item": {
+                    "name": "Mercenary Fish",
+                    "value": 0,
+                    "weight": 7.6
+                },
+                "count": 22
+            },
+            {
+                "item": {
+                    "name": "CS:GO Fish",
+                    "value": 0,
+                    "weight": 9
+                },
+                "count": 9
+            },
+            {
+                "item": {
+                    "name": "Catfish",
+                    "value": 0,
+                    "weight": 8
+                },
+                "count": 6
+            },
+            {
+                "item": {
+                    "name": "Fishing Manifesto",
+                    "value": 0,
+                    "weight": 6.2
+                },
+                "count": 9
+            },
+            {
+                "item": {
+                    "name": "Nemo",
+                    "value": 0,
+                    "weight": 2
+                },
+                "count": 4
+            },
+            {
+                "item": {
+                    "name": "Mercenary Contract",
+                    "value": 0,
+                    "weight": 1.6
+                },
+                "count": 2
+            },
+            {
+                "item": {
+                    "name": "Mogfish",
+                    "value": 0,
+                    "weight": 4
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Fish Soap",
+                    "value": 0,
+                    "weight": 1.2
+                },
+                "count": 2
+            },
+            {
+                "item": {
+                    "name": "Viola",
+                    "value": -1,
+                    "weight": 20
+                },
+                "count": 3
+            },
+            {
+                "item": {
+                    "name": "Homeless Guy's Underwear",
+                    "value": -2,
+                    "weight": 17
+                },
+                "count": 3
+            },
+            {
+                "item": {
+                    "name": "Brawl Starfish",
+                    "value": -2,
+                    "weight": 19
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Thief Fish",
+                    "value": -25,
+                    "weight": 7
+                },
+                "count": 2
+            },
+            {
+                "item": {
+                    "name": "Bribe Fish",
+                    "value": -50,
+                    "weight": 2.1
+                },
+                "count": 1
+            }
+        ]
+    },
+    {
+        "username": "oh.noes",
+        "value": 23878,
+        "times_fished": 1547,
+        "last_fish_time": 1734305010,
+        "items": [
+            {
+                "item": {
+                    "name": "Bolivia",
+                    "value": 998,
+                    "weight": 0.6
+                },
+                "count": 2
+            },
+            {
+                "item": {
+                    "name": "Diamond Juice Box Peel",
+                    "value": 500,
+                    "weight": 1
+                },
+                "count": 3
+            },
+            {
+                "item": {
+                    "name": "Shiny Jadenfish",
+                    "value": 499,
+                    "weight": 1
+                },
+                "count": 4
+            },
+            {
+                "item": {
+                    "name": "God",
+                    "value": 249,
+                    "weight": 1.2
+                },
+                "count": 4
+            },
+            {
+                "item": {
+                    "name": "Used 1999 Toyota Tacoma",
+                    "value": 199,
+                    "weight": 1.5
+                },
+                "count": 7
+            },
+            {
+                "item": {
+                    "name": "Jonklerfish",
+                    "value": 120,
+                    "weight": 5
+                },
+                "count": 9
+            },
+            {
+                "item": {
+                    "name": "Floating Wood EX",
+                    "value": 120,
+                    "weight": 2
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "P-Wing Boys Bathroom Cocaine",
+                    "value": 99,
+                    "weight": 2.1
+                },
+                "count": 18
+            },
+            {
+                "item": {
+                    "name": "John Pork's Reincarnation",
+                    "value": 91,
+                    "weight": 2.4
+                },
+                "count": 9
+            },
+            {
+                "item": {
+                    "name": "KSI - Thick of It Vinyl Record",
+                    "value": 69,
+                    "weight": 4.5
+                },
+                "count": 19
+            },
+            {
+                "item": {
+                    "name": "Gold Goldfish",
+                    "value": 60,
+                    "weight": 5
+                },
+                "count": 16
+            },
+            {
+                "item": {
+                    "name": "Golden Juice Box Peel",
+                    "value": 50,
+                    "weight": 5.5
+                },
+                "count": 28
+            },
+            {
+                "item": {
+                    "name": "WD-40 Bottle",
+                    "value": 45,
+                    "weight": 6.5
+                },
+                "count": 24
+            },
+            {
+                "item": {
+                    "name": "Swordfish",
+                    "value": 40,
+                    "weight": 7.3
+                },
+                "count": 4
+            },
+            {
+                "item": {
+                    "name": "Zaky the Sea Urchin",
+                    "value": 32,
+                    "weight": 9
+                },
+                "count": 18
+            },
+            {
+                "item": {
+                    "name": "Bryce Beckeel",
+                    "value": 20,
+                    "weight": 10
+                },
+                "count": 28
+            },
+            {
+                "item": {
+                    "name": "Stingray (Zhao)",
+                    "value": 20,
+                    "weight": 10
+                },
+                "count": 36
+            },
+            {
+                "item": {
+                    "name": "Jadenfish",
+                    "value": 15,
+                    "weight": 13
+                },
+                "count": 44
+            },
+            {
+                "item": {
+                    "name": "Jamesfish",
+                    "value": 15,
+                    "weight": 13
+                },
+                "count": 35
+            },
+            {
+                "item": {
+                    "name": "Hamburger Fish",
+                    "value": 10,
+                    "weight": 15
+                },
+                "count": 66
+            },
+            {
+                "item": {
+                    "name": "Oyster",
+                    "value": 10,
+                    "weight": 15
+                },
+                "count": 49
+            },
+            {
+                "item": {
+                    "name": "Sotp Sign",
+                    "value": 10,
+                    "weight": 15
+                },
+                "count": 63
+            },
+            {
+                "item": {
+                    "name": "Salmon",
+                    "value": 8,
+                    "weight": 20
+                },
+                "count": 92
+            },
+            {
+                "item": {
+                    "name": "Sea Bass",
+                    "value": 5,
+                    "weight": 26
+                },
+                "count": 121
+            },
+            {
+                "item": {
+                    "name": "Goldfish",
+                    "value": 4,
+                    "weight": 28
+                },
+                "count": 105
+            },
+            {
+                "item": {
+                    "name": "Seaweed",
+                    "value": 2,
+                    "weight": 32
+                },
+                "count": 172
+            },
+            {
+                "item": {
+                    "name": "Hook",
+                    "value": 1,
+                    "weight": 35
+                },
+                "count": 193
+            },
+            {
+                "item": {
+                    "name": "Old Ass Boot",
+                    "value": 1,
+                    "weight": 35
+                },
+                "count": 222
+            },
+            {
+                "item": {
+                    "name": "Floating Wood",
+                    "value": 1,
+                    "weight": 38
+                },
+                "count": 23
+            },
+            {
+                "item": {
+                    "name": "Empty McNuggets Box",
+                    "value": 1,
+                    "weight": 37
+                },
+                "count": 15
+            },
+            {
+                "item": {
+                    "name": "Soda Can",
+                    "value": 1,
+                    "weight": 37
+                },
+                "count": 23
+            },
+            {
+                "item": {
+                    "name": "Plastic Straw",
+                    "value": 1,
+                    "weight": 30
+                },
+                "count": 11
+            },
+            {
+                "item": {
+                    "name": "Small Fry",
+                    "value": 0.5,
+                    "weight": 35
+                },
+                "count": 13
+            },
+            {
+                "item": {
+                    "name": "Cop Fish",
+                    "value": 0,
+                    "weight": 12
+                },
+                "count": 32
+            },
+            {
+                "item": {
+                    "name": "CS:GO Fish",
+                    "value": 0,
+                    "weight": 9
+                },
+                "count": 8
+            },
+            {
+                "item": {
+                    "name": "Mercenary Fish",
+                    "value": 0,
+                    "weight": 7.6
+                },
+                "count": 5
+            },
+            {
+                "item": {
+                    "name": "Fishing Manifesto",
+                    "value": 0,
+                    "weight": 6.2
+                },
+                "count": 4
+            },
+            {
+                "item": {
+                    "name": "Mogfish",
+                    "value": 0,
+                    "weight": 4
+                },
+                "count": 4
+            },
+            {
+                "item": {
+                    "name": "Catfish",
+                    "value": 0,
+                    "weight": 8
+                },
+                "count": 5
+            },
+            {
+                "item": {
+                    "name": "Fish Soap",
+                    "value": 0,
+                    "weight": 1.2
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Nemo",
+                    "value": 0,
+                    "weight": 2
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Viola",
+                    "value": -1,
+                    "weight": 20
+                },
+                "count": 3
+            },
+            {
+                "item": {
+                    "name": "Brawl Starfish",
+                    "value": -2,
+                    "weight": 19
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Homeless Guy's Underwear",
+                    "value": -2,
+                    "weight": 17
+                },
+                "count": 2
+            },
+            {
+                "item": {
+                    "name": "Thief Fish",
+                    "value": -25,
+                    "weight": 7
+                },
+                "count": 3
+            },
+            {
+                "item": {
+                    "name": "Bribe Fish",
+                    "value": -50,
+                    "weight": 2.1
+                },
+                "count": 1
+            }
+        ]
+    },
+    {
+        "username": "jamescheung24578",
+        "value": 47818,
+        "times_fished": 2907,
+        "last_fish_time": 1734305010,
+        "items": [
+            {
+                "item": {
+                    "name": "Gambling Addiction Diagnosis",
+                    "value": 1999,
+                    "weight": 0.32
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Adderall (1840 Limited Edition)",
+                    "value": 1299,
+                    "weight": 0.45
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Bolivia",
+                    "value": 998,
+                    "weight": 0.6
+                },
+                "count": 4
+            },
+            {
+                "item": {
+                    "name": "Diamond Juice Box Peel",
+                    "value": 500,
+                    "weight": 1
+                },
+                "count": 3
+            },
+            {
+                "item": {
+                    "name": "Shiny Jadenfish",
+                    "value": 499,
+                    "weight": 1
+                },
+                "count": 6
+            },
+            {
+                "item": {
+                    "name": "God",
+                    "value": 249,
+                    "weight": 1.2
+                },
+                "count": 11
+            },
+            {
+                "item": {
+                    "name": "Used 1999 Toyota Tacoma",
+                    "value": 199,
+                    "weight": 1.5
+                },
+                "count": 13
+            },
+            {
+                "item": {
+                    "name": "Jonklerfish",
+                    "value": 120,
+                    "weight": 5
+                },
+                "count": 36
+            },
+            {
+                "item": {
+                    "name": "Floating Wood EX",
+                    "value": 120,
+                    "weight": 2
+                },
+                "count": 14
+            },
+            {
+                "item": {
+                    "name": "P-Wing Boys Bathroom Cocaine",
+                    "value": 99,
+                    "weight": 2.1
+                },
+                "count": 15
+            },
+            {
+                "item": {
+                    "name": "John Pork's Reincarnation",
+                    "value": 91,
+                    "weight": 2.4
+                },
+                "count": 12
+            },
+            {
+                "item": {
+                    "name": "KSI - Thick of It Vinyl Record",
+                    "value": 69,
+                    "weight": 4.5
+                },
+                "count": 29
+            },
+            {
+                "item": {
+                    "name": "Gold Goldfish",
+                    "value": 60,
+                    "weight": 5
+                },
+                "count": 42
+            },
+            {
+                "item": {
+                    "name": "Golden Juice Box Peel",
+                    "value": 50,
+                    "weight": 5.5
+                },
+                "count": 40
+            },
+            {
+                "item": {
+                    "name": "WD-40 Bottle",
+                    "value": 45,
+                    "weight": 6.5
+                },
+                "count": 51
+            },
+            {
+                "item": {
+                    "name": "Swordfish",
+                    "value": 40,
+                    "weight": 7.3
+                },
+                "count": 31
+            },
+            {
+                "item": {
+                    "name": "Zaky the Sea Urchin",
+                    "value": 32,
+                    "weight": 9
+                },
+                "count": 43
+            },
+            {
+                "item": {
+                    "name": "Bryce Beckeel",
+                    "value": 20,
+                    "weight": 10
+                },
+                "count": 60
+            },
+            {
+                "item": {
+                    "name": "Stingray (Zhao)",
+                    "value": 20,
+                    "weight": 10
+                },
+                "count": 51
+            },
+            {
+                "item": {
+                    "name": "Jadenfish",
+                    "value": 15,
+                    "weight": 13
+                },
+                "count": 84
+            },
+            {
+                "item": {
+                    "name": "Jamesfish",
+                    "value": 15,
+                    "weight": 13
+                },
+                "count": 68
+            },
+            {
+                "item": {
+                    "name": "Sotp Sign",
+                    "value": 10,
+                    "weight": 15
+                },
+                "count": 94
+            },
+            {
+                "item": {
+                    "name": "Hamburger Fish",
+                    "value": 10,
+                    "weight": 15
+                },
+                "count": 83
+            },
+            {
+                "item": {
+                    "name": "Oyster",
+                    "value": 10,
+                    "weight": 15
+                },
+                "count": 79
+            },
+            {
+                "item": {
+                    "name": "Salmon",
+                    "value": 8,
+                    "weight": 20
+                },
+                "count": 125
+            },
+            {
+                "item": {
+                    "name": "Sea Bass",
+                    "value": 5,
+                    "weight": 26
+                },
+                "count": 167
+            },
+            {
+                "item": {
+                    "name": "Goldfish",
+                    "value": 4,
+                    "weight": 28
+                },
+                "count": 156
+            },
+            {
+                "item": {
+                    "name": "Seaweed",
+                    "value": 2,
+                    "weight": 32
+                },
+                "count": 194
+            },
+            {
+                "item": {
+                    "name": "Old Ass Boot",
+                    "value": 1,
+                    "weight": 35
+                },
+                "count": 263
+            },
+            {
+                "item": {
+                    "name": "Hook",
+                    "value": 1,
+                    "weight": 35
+                },
+                "count": 259
+            },
+            {
+                "item": {
+                    "name": "Floating Wood",
+                    "value": 1,
+                    "weight": 38
+                },
+                "count": 130
+            },
+            {
+                "item": {
+                    "name": "Soda Can",
+                    "value": 1,
+                    "weight": 37
+                },
+                "count": 128
+            },
+            {
+                "item": {
+                    "name": "Plastic Straw",
+                    "value": 1,
+                    "weight": 30
+                },
+                "count": 88
+            },
+            {
+                "item": {
+                    "name": "Empty McNuggets Box",
+                    "value": 1,
+                    "weight": 37
+                },
+                "count": 139
+            },
+            {
+                "item": {
+                    "name": "Small Fry",
+                    "value": 0.5,
+                    "weight": 35
+                },
+                "count": 85
+            },
+            {
+                "item": {
+                    "name": "Cop Fish",
+                    "value": 0,
+                    "weight": 12
+                },
+                "count": 62
+            },
+            {
+                "item": {
+                    "name": "Mercenary Fish",
+                    "value": 0,
+                    "weight": 7.6
+                },
+                "count": 45
+            },
+            {
+                "item": {
+                    "name": "Fish Soap",
+                    "value": 0,
+                    "weight": 1.2
+                },
+                "count": 8
+            },
+            {
+                "item": {
+                    "name": "CS:GO Fish",
+                    "value": 0,
+                    "weight": 9
+                },
+                "count": 37
+            },
+            {
+                "item": {
+                    "name": "Catfish",
+                    "value": 0,
+                    "weight": 8
+                },
+                "count": 37
+            },
+            {
+                "item": {
+                    "name": "Fishing Manifesto",
+                    "value": 0,
+                    "weight": 6.2
+                },
+                "count": 40
+            },
+            {
+                "item": {
+                    "name": "Mogfish",
+                    "value": 0,
+                    "weight": 4
+                },
+                "count": 20
+            },
+            {
+                "item": {
+                    "name": "Nemo",
+                    "value": 0,
+                    "weight": 2
+                },
+                "count": 7
+            },
+            {
+                "item": {
+                    "name": "Mercenary Contract",
+                    "value": 0,
+                    "weight": 1.6
+                },
+                "count": 5
+            },
+            {
+                "item": {
+                    "name": "Viola",
+                    "value": -1,
+                    "weight": 20
+                },
+                "count": 10
+            },
+            {
+                "item": {
+                    "name": "Brawl Starfish",
+                    "value": -2,
+                    "weight": 19
+                },
+                "count": 10
+            },
+            {
+                "item": {
+                    "name": "Homeless Guy's Underwear",
+                    "value": -2,
+                    "weight": 17
+                },
+                "count": 14
+            },
+            {
+                "item": {
+                    "name": "Thief Fish",
+                    "value": -25,
+                    "weight": 7
+                },
+                "count": 6
+            },
+            {
+                "item": {
+                    "name": "Bribe Fish",
+                    "value": -50,
+                    "weight": 2.1
+                },
+                "count": 1
+            }
+        ]
+    },
+    {
+        "username": "chaoticmoons",
+        "value": 10,
+        "times_fished": 1,
+        "last_fish_time": 1734305010,
+        "items": [
+            {
+                "item": {
+                    "name": "Sotp Sign",
+                    "value": 10,
+                    "weight": 15
+                },
+                "count": 1
+            }
+        ]
+    },
+    {
+        "username": "mee.5",
+        "value": 240,
+        "times_fished": 56,
+        "last_fish_time": 1734305010,
+        "items": [
+            {
+                "item": {
+                    "name": "John Pork's Reincarnation",
+                    "value": 91,
+                    "weight": 2.4
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Bryce Beckeel",
+                    "value": 20,
+                    "weight": 10
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Stingray (Zhao)",
+                    "value": 20,
+                    "weight": 10
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Jadenfish",
+                    "value": 15,
+                    "weight": 13
+                },
+                "count": 3
+            },
+            {
+                "item": {
+                    "name": "Jamesfish",
+                    "value": 15,
+                    "weight": 13
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Sotp Sign",
+                    "value": 10,
+                    "weight": 15
+                },
+                "count": 2
+            },
+            {
+                "item": {
+                    "name": "Hamburger Fish",
+                    "value": 10,
+                    "weight": 15
+                },
+                "count": 2
+            },
+            {
+                "item": {
+                    "name": "Oyster",
+                    "value": 10,
+                    "weight": 15
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Sea Bass",
+                    "value": 5,
+                    "weight": 26
+                },
+                "count": 4
+            },
+            {
+                "item": {
+                    "name": "Goldfish",
+                    "value": 4,
+                    "weight": 28
+                },
+                "count": 2
+            },
+            {
+                "item": {
+                    "name": "Seaweed",
+                    "value": 2,
+                    "weight": 32
+                },
+                "count": 3
+            },
+            {
+                "item": {
+                    "name": "Hook",
+                    "value": 1,
+                    "weight": 35
+                },
+                "count": 13
+            },
+            {
+                "item": {
+                    "name": "Old Ass Boot",
+                    "value": 1,
+                    "weight": 35
+                },
+                "count": 11
+            },
+            {
+                "item": {
+                    "name": "Soda Can",
+                    "value": 1,
+                    "weight": 37
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Plastic Straw",
+                    "value": 1,
+                    "weight": 30
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Viola",
+                    "value": -1,
+                    "weight": 20
+                },
+                "count": 3
+            },
+            {
+                "item": {
+                    "name": "Homeless Guy's Underwear",
+                    "value": -2,
+                    "weight": 17
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Brawl Starfish",
+                    "value": -2,
+                    "weight": 19
+                },
+                "count": 3
+            },
+            {
+                "item": {
+                    "name": "Thief Fish",
+                    "value": -25,
+                    "weight": 7
+                },
+                "count": 2
+            }
+        ]
+    },
+    {
+        "username": "hiyakabi",
+        "value": 87,
+        "times_fished": 12,
+        "last_fish_time": 1734305010,
+        "items": [
+            {
+                "item": {
+                    "name": "Bryce Beckeel",
+                    "value": 20,
+                    "weight": 10
+                },
+                "count": 2
+            },
+            {
+                "item": {
+                    "name": "Jadenfish",
+                    "value": 15,
+                    "weight": 13
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Oyster",
+                    "value": 10,
+                    "weight": 15
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Salmon",
+                    "value": 8,
+                    "weight": 20
+                },
+                "count": 2
+            },
+            {
+                "item": {
+                    "name": "Sea Bass",
+                    "value": 5,
+                    "weight": 26
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Old Ass Boot",
+                    "value": 1,
+                    "weight": 35
+                },
+                "count": 2
+            },
+            {
+                "item": {
+                    "name": "Hook",
+                    "value": 1,
+                    "weight": 35
+                },
+                "count": 0
+            },
+            {
+                "item": {
+                    "name": "Empty McNuggets Box",
+                    "value": 1,
+                    "weight": 37
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Viola",
+                    "value": -1,
+                    "weight": 20
+                },
+                "count": 2
+            }
+        ]
+    },
+    {
+        "username": "m05hp0t",
+        "value": 29,
+        "times_fished": 5,
+        "last_fish_time": 1734305010,
+        "items": [
+            {
+                "item": {
+                    "name": "Hamburger Fish",
+                    "value": 10,
+                    "weight": 15
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Salmon",
+                    "value": 8,
+                    "weight": 20
+                },
+                "count": 2
+            },
+            {
+                "item": {
+                    "name": "Seaweed",
+                    "value": 2,
+                    "weight": 32
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Old Ass Boot",
+                    "value": 1,
+                    "weight": 35
+                },
+                "count": 1
+            }
+        ]
+    },
+    {
+        "username": "skits__",
+        "value": 293,
+        "times_fished": 4,
+        "last_fish_time": 1734305010,
+        "items": [
+            {
+                "item": {
+                    "name": "God",
+                    "value": 249,
+                    "weight": 1.2
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "WD-40 Bottle",
+                    "value": 45,
+                    "weight": 6.5
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Seaweed",
+                    "value": 2,
+                    "weight": 32
+                },
+                "count": 0
+            },
+            {
+                "item": {
+                    "name": "Cop Fish",
+                    "value": 0,
+                    "weight": 12
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Viola",
+                    "value": -1,
+                    "weight": 20
+                },
+                "count": 1
+            }
+        ]
+    },
+    {
+        "username": "paliopolis",
+        "value": 21666,
+        "times_fished": 835,
+        "last_fish_time": 1734305010,
+        "items": [
+            {
+                "item": {
+                    "name": "Gambling Addiction Diagnosis",
+                    "value": 1999,
+                    "weight": 0.32
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Adderall (1840 Limited Edition)",
+                    "value": 1299,
+                    "weight": 0.45
+                },
+                "count": 3
+            },
+            {
+                "item": {
+                    "name": "Bolivia",
+                    "value": 998,
+                    "weight": 0.6
+                },
+                "count": 3
+            },
+            {
+                "item": {
+                    "name": "Diamond Juice Box Peel",
+                    "value": 500,
+                    "weight": 1
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Shiny Jadenfish",
+                    "value": 499,
+                    "weight": 1
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "God",
+                    "value": 249,
+                    "weight": 1.2
+                },
+                "count": 5
+            },
+            {
+                "item": {
+                    "name": "Used 1999 Toyota Tacoma",
+                    "value": 199,
+                    "weight": 1.5
+                },
+                "count": 4
+            },
+            {
+                "item": {
+                    "name": "Jonklerfish",
+                    "value": 120,
+                    "weight": 5
+                },
+                "count": 12
+            },
+            {
+                "item": {
+                    "name": "Floating Wood EX",
+                    "value": 120,
+                    "weight": 2
+                },
+                "count": 5
+            },
+            {
+                "item": {
+                    "name": "P-Wing Boys Bathroom Cocaine",
+                    "value": 99,
+                    "weight": 2.1
+                },
+                "count": 3
+            },
+            {
+                "item": {
+                    "name": "John Pork's Reincarnation",
+                    "value": 91,
+                    "weight": 2.4
+                },
+                "count": 5
+            },
+            {
+                "item": {
+                    "name": "KSI - Thick of It Vinyl Record",
+                    "value": 69,
+                    "weight": 4.5
+                },
+                "count": 18
+            },
+            {
+                "item": {
+                    "name": "Gold Goldfish",
+                    "value": 60,
+                    "weight": 5
+                },
+                "count": 10
+            },
+            {
+                "item": {
+                    "name": "Golden Juice Box Peel",
+                    "value": 50,
+                    "weight": 5.5
+                },
+                "count": 9
+            },
+            {
+                "item": {
+                    "name": "WD-40 Bottle",
+                    "value": 45,
+                    "weight": 6.5
+                },
+                "count": 14
+            },
+            {
+                "item": {
+                    "name": "Swordfish",
+                    "value": 40,
+                    "weight": 7.3
+                },
+                "count": 10
+            },
+            {
+                "item": {
+                    "name": "Zaky the Sea Urchin",
+                    "value": 32,
+                    "weight": 9
+                },
+                "count": 9
+            },
+            {
+                "item": {
+                    "name": "Stingray (Zhao)",
+                    "value": 20,
+                    "weight": 10
+                },
+                "count": 26
+            },
+            {
+                "item": {
+                    "name": "Bryce Beckeel",
+                    "value": 20,
+                    "weight": 10
+                },
+                "count": 19
+            },
+            {
+                "item": {
+                    "name": "Jadenfish",
+                    "value": 15,
+                    "weight": 13
+                },
+                "count": 25
+            },
+            {
+                "item": {
+                    "name": "Jamesfish",
+                    "value": 15,
+                    "weight": 13
+                },
+                "count": 19
+            },
+            {
+                "item": {
+                    "name": "Oyster",
+                    "value": 10,
+                    "weight": 15
+                },
+                "count": 26
+            },
+            {
+                "item": {
+                    "name": "Hamburger Fish",
+                    "value": 10,
+                    "weight": 15
+                },
+                "count": 27
+            },
+            {
+                "item": {
+                    "name": "Sotp Sign",
+                    "value": 10,
+                    "weight": 15
+                },
+                "count": 31
+            },
+            {
+                "item": {
+                    "name": "Salmon",
+                    "value": 8,
+                    "weight": 20
+                },
+                "count": 40
+            },
+            {
+                "item": {
+                    "name": "Sea Bass",
+                    "value": 5,
+                    "weight": 26
+                },
+                "count": 59
+            },
+            {
+                "item": {
+                    "name": "Goldfish",
+                    "value": 4,
+                    "weight": 28
+                },
+                "count": 31
+            },
+            {
+                "item": {
+                    "name": "Seaweed",
+                    "value": 2,
+                    "weight": 32
+                },
+                "count": 80
+            },
+            {
+                "item": {
+                    "name": "Old Ass Boot",
+                    "value": 1,
+                    "weight": 35
+                },
+                "count": 100
+            },
+            {
+                "item": {
+                    "name": "Hook",
+                    "value": 1,
+                    "weight": 35
+                },
+                "count": 98
+            },
+            {
+                "item": {
+                    "name": "Floating Wood",
+                    "value": 1,
+                    "weight": 38
+                },
+                "count": 14
+            },
+            {
+                "item": {
+                    "name": "Empty McNuggets Box",
+                    "value": 1,
+                    "weight": 37
+                },
+                "count": 12
+            },
+            {
+                "item": {
+                    "name": "Soda Can",
+                    "value": 1,
+                    "weight": 37
+                },
+                "count": 17
+            },
+            {
+                "item": {
+                    "name": "Plastic Straw",
+                    "value": 1,
+                    "weight": 30
+                },
+                "count": 15
+            },
+            {
+                "item": {
+                    "name": "Small Fry",
+                    "value": 0.5,
+                    "weight": 35
+                },
+                "count": 6
+            },
+            {
+                "item": {
+                    "name": "Cop Fish",
+                    "value": 0,
+                    "weight": 12
+                },
+                "count": 16
+            },
+            {
+                "item": {
+                    "name": "Mercenary Fish",
+                    "value": 0,
+                    "weight": 7.6
+                },
+                "count": 13
+            },
+            {
+                "item": {
+                    "name": "Fishing Manifesto",
+                    "value": 0,
+                    "weight": 6.2
+                },
+                "count": 9
+            },
+            {
+                "item": {
+                    "name": "Nemo",
+                    "value": 0,
+                    "weight": 2
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "CS:GO Fish",
+                    "value": 0,
+                    "weight": 9
+                },
+                "count": 10
+            },
+            {
+                "item": {
+                    "name": "Mogfish",
+                    "value": 0,
+                    "weight": 4
+                },
+                "count": 2
+            },
+            {
+                "item": {
+                    "name": "Catfish",
+                    "value": 0,
+                    "weight": 8
+                },
+                "count": 4
+            },
+            {
+                "item": {
+                    "name": "Fish Soap",
+                    "value": 0,
+                    "weight": 1.2
+                },
+                "count": 2
+            },
+            {
+                "item": {
+                    "name": "Viola",
+                    "value": -1,
+                    "weight": 20
+                },
+                "count": 6
+            },
+            {
+                "item": {
+                    "name": "Brawl Starfish",
+                    "value": -2,
+                    "weight": 19
+                },
+                "count": 7
+            },
+            {
+                "item": {
+                    "name": "Homeless Guy's Underwear",
+                    "value": -2,
+                    "weight": 17
+                },
+                "count": 2
+            },
+            {
+                "item": {
+                    "name": "Thief Fish",
+                    "value": -25,
+                    "weight": 7
+                },
+                "count": 2
+            },
+            {
+                "item": {
+                    "name": "Bribe Fish",
+                    "value": -50,
+                    "weight": 2.1
+                },
+                "count": 3
+            }
+        ]
+    },
+    {
+        "username": "adityaxad",
+        "times_fished": 150,
+        "last_fish_time": 1734305010,
+        "items": [
+            {
+                "item": {
+                    "name": "Gambling Addiction Diagnosis",
+                    "value": 1999,
+                    "weight": 0.32
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Bolivia",
+                    "value": 998,
+                    "weight": 0.6
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Jonklerfish",
+                    "value": 120,
+                    "weight": 5
+                },
+                "count": 2
+            },
+            {
+                "item": {
+                    "name": "P-Wing Boys Bathroom Cocaine",
+                    "value": 99,
+                    "weight": 2.1
+                },
+                "count": 2
+            },
+            {
+                "item": {
+                    "name": "John Pork's Reincarnation",
+                    "value": 91,
+                    "weight": 2.4
+                },
+                "count": 2
+            },
+            {
+                "item": {
+                    "name": "KSI - Thick of It Vinyl Record",
+                    "value": 69,
+                    "weight": 4.5
+                },
+                "count": 2
+            },
+            {
+                "item": {
+                    "name": "Gold Goldfish",
+                    "value": 60,
+                    "weight": 5
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Golden Juice Box Peel",
+                    "value": 50,
+                    "weight": 5.5
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "WD-40 Bottle",
+                    "value": 45,
+                    "weight": 6.5
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Swordfish",
+                    "value": 40,
+                    "weight": 7.3
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Zaky the Sea Urchin",
+                    "value": 32,
+                    "weight": 9
+                },
+                "count": 5
+            },
+            {
+                "item": {
+                    "name": "Bryce Beckeel",
+                    "value": 20,
+                    "weight": 10
+                },
+                "count": 2
+            },
+            {
+                "item": {
+                    "name": "Stingray (Zhao)",
+                    "value": 20,
+                    "weight": 10
+                },
+                "count": 2
+            },
+            {
+                "item": {
+                    "name": "Jadenfish",
+                    "value": 15,
+                    "weight": 13
+                },
+                "count": 2
+            },
+            {
+                "item": {
+                    "name": "Jamesfish",
+                    "value": 15,
+                    "weight": 13
+                },
+                "count": 3
+            },
+            {
+                "item": {
+                    "name": "Hamburger Fish",
+                    "value": 10,
+                    "weight": 15
+                },
+                "count": 3
+            },
+            {
+                "item": {
+                    "name": "Oyster",
+                    "value": 10,
+                    "weight": 15
+                },
+                "count": 6
+            },
+            {
+                "item": {
+                    "name": "Sotp Sign",
+                    "value": 10,
+                    "weight": 15
+                },
+                "count": 3
+            },
+            {
+                "item": {
+                    "name": "Salmon",
+                    "value": 8,
+                    "weight": 20
+                },
+                "count": 7
+            },
+            {
+                "item": {
+                    "name": "Sea Bass",
+                    "value": 5,
+                    "weight": 26
+                },
+                "count": 9
+            },
+            {
+                "item": {
+                    "name": "Goldfish",
+                    "value": 4,
+                    "weight": 28
+                },
+                "count": 13
+            },
+            {
+                "item": {
+                    "name": "Seaweed",
+                    "value": 2,
+                    "weight": 32
+                },
+                "count": 8
+            },
+            {
+                "item": {
+                    "name": "Hook",
+                    "value": 1,
+                    "weight": 35
+                },
+                "count": 13
+            },
+            {
+                "item": {
+                    "name": "Old Ass Boot",
+                    "value": 1,
+                    "weight": 35
+                },
+                "count": 13
+            },
+            {
+                "item": {
+                    "name": "Soda Can",
+                    "value": 1,
+                    "weight": 37
+                },
+                "count": 3
+            },
+            {
+                "item": {
+                    "name": "Floating Wood",
+                    "value": 1,
+                    "weight": 38
+                },
+                "count": 6
+            },
+            {
+                "item": {
+                    "name": "Empty McNuggets Box",
+                    "value": 1,
+                    "weight": 37
+                },
+                "count": 8
+            },
+            {
+                "item": {
+                    "name": "Plastic Straw",
+                    "value": 1,
+                    "weight": 30
+                },
+                "count": 3
+            },
+            {
+                "item": {
+                    "name": "Small Fry",
+                    "value": 0.5,
+                    "weight": 35
+                },
+                "count": 5
+            },
+            {
+                "item": {
+                    "name": "Cop Fish",
+                    "value": 0,
+                    "weight": 12
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Mercenary Fish",
+                    "value": 0,
+                    "weight": 7.6
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "CS:GO Fish",
+                    "value": 0,
+                    "weight": 9
+                },
+                "count": 4
+            },
+            {
+                "item": {
+                    "name": "Catfish",
+                    "value": 0,
+                    "weight": 8
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Fishing Manifesto",
+                    "value": 0,
+                    "weight": 6.2
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Mogfish",
+                    "value": 0,
+                    "weight": 4
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Viola",
+                    "value": -1,
+                    "weight": 20
+                },
+                "count": 4
+            },
+            {
+                "item": {
+                    "name": "Brawl Starfish",
+                    "value": -2,
+                    "weight": 19
+                },
+                "count": 5
+            },
+            {
+                "item": {
+                    "name": "Homeless Guy's Underwear",
+                    "value": -2,
+                    "weight": 17
+                },
+                "count": 2
+            },
+            {
+                "item": {
+                    "name": "Thief Fish",
+                    "value": -25,
+                    "weight": 7
+                },
+                "count": 2
+            }
+        ],
+        "value": 4534
+    },
+    {
+        "username": "test_user",
+        "times_fished": 375,
+        "last_fish_time": 1734305010,
+        "items": [
+            {
+                "item": {
+                    "name": "Gambling Addiction Diagnosis",
+                    "value": 1999,
+                    "weight": 0.32
+                },
+                "count": 2
+            },
+            {
+                "item": {
+                    "name": "Diamond Juice Box Peel",
+                    "value": 500,
+                    "weight": 1
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Shiny Jadenfish",
+                    "value": 499,
+                    "weight": 1
+                },
+                "count": 2
+            },
+            {
+                "item": {
+                    "name": "God",
+                    "value": 249,
+                    "weight": 1.2
+                },
+                "count": 9
+            },
+            {
+                "item": {
+                    "name": "Used 1999 Toyota Tacoma",
+                    "value": 199,
+                    "weight": 1.5
+                },
+                "count": 5
+            },
+            {
+                "item": {
+                    "name": "Jonklerfish",
+                    "value": 120,
+                    "weight": 5
+                },
+                "count": 17
+            },
+            {
+                "item": {
+                    "name": "Floating Wood EX",
+                    "value": 120,
+                    "weight": 2
+                },
+                "count": 2
+            },
+            {
+                "item": {
+                    "name": "P-Wing Boys Bathroom Cocaine",
+                    "value": 99,
+                    "weight": 2.1
+                },
+                "count": 7
+            },
+            {
+                "item": {
+                    "name": "John Pork's Reincarnation",
+                    "value": 91,
+                    "weight": 2.4
+                },
+                "count": 11
+            },
+            {
+                "item": {
+                    "name": "KSI - Thick of It Vinyl Record",
+                    "value": 69,
+                    "weight": 4.5
+                },
+                "count": 24
+            },
+            {
+                "item": {
+                    "name": "Gold Goldfish",
+                    "value": 60,
+                    "weight": 5
+                },
+                "count": 29
+            },
+            {
+                "item": {
+                    "name": "Golden Juice Box Peel",
+                    "value": 50,
+                    "weight": 5.5
+                },
+                "count": 18
+            },
+            {
+                "item": {
+                    "name": "WD-40 Bottle",
+                    "value": 45,
+                    "weight": 6.5
+                },
+                "count": 24
+            },
+            {
+                "item": {
+                    "name": "Swordfish",
+                    "value": 40,
+                    "weight": 7.3
+                },
+                "count": 4
+            },
+            {
+                "item": {
+                    "name": "Zaky the Sea Urchin",
+                    "value": 32,
+                    "weight": 9
+                },
+                "count": 9
+            },
+            {
+                "item": {
+                    "name": "Stingray (Zhao)",
+                    "value": 20,
+                    "weight": 10
+                },
+                "count": 34
+            },
+            {
+                "item": {
+                    "name": "Bryce Beckeel",
+                    "value": 20,
+                    "weight": 10
+                },
+                "count": 28
+            },
+            {
+                "item": {
+                    "name": "Jamesfish",
+                    "value": 15,
+                    "weight": 13
+                },
+                "count": 5
+            },
+            {
+                "item": {
+                    "name": "Jadenfish",
+                    "value": 15,
+                    "weight": 13
+                },
+                "count": 5
+            },
+            {
+                "item": {
+                    "name": "Hamburger Fish",
+                    "value": 10,
+                    "weight": 15
+                },
+                "count": 7
+            },
+            {
+                "item": {
+                    "name": "Oyster",
+                    "value": 10,
+                    "weight": 15
+                },
+                "count": 9
+            },
+            {
+                "item": {
+                    "name": "Sotp Sign",
+                    "value": 10,
+                    "weight": 15
+                },
+                "count": 5
+            },
+            {
+                "item": {
+                    "name": "Salmon",
+                    "value": 8,
+                    "weight": 20
+                },
+                "count": 7
+            },
+            {
+                "item": {
+                    "name": "Sea Bass",
+                    "value": 5,
+                    "weight": 26
+                },
+                "count": 8
+            },
+            {
+                "item": {
+                    "name": "Goldfish",
+                    "value": 4,
+                    "weight": 28
+                },
+                "count": 9
+            },
+            {
+                "item": {
+                    "name": "Seaweed",
+                    "value": 2,
+                    "weight": 32
+                },
+                "count": 5
+            },
+            {
+                "item": {
+                    "name": "Old Ass Boot",
+                    "value": 1,
+                    "weight": 35
+                },
+                "count": 2
+            },
+            {
+                "item": {
+                    "name": "Soda Can",
+                    "value": 1,
+                    "weight": 37
+                },
+                "count": 5
+            },
+            {
+                "item": {
+                    "name": "Plastic Straw",
+                    "value": 1,
+                    "weight": 30
+                },
+                "count": 2
+            },
+            {
+                "item": {
+                    "name": "Empty McNuggets Box",
+                    "value": 1,
+                    "weight": 37
+                },
+                "count": 3
+            },
+            {
+                "item": {
+                    "name": "Floating Wood",
+                    "value": 1,
+                    "weight": 38
+                },
+                "count": 7
+            },
+            {
+                "item": {
+                    "name": "Hook",
+                    "value": 1,
+                    "weight": 35
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Mercenary Fish",
+                    "value": 0,
+                    "weight": 7.6
+                },
+                "count": 18
+            },
+            {
+                "item": {
+                    "name": "Fish Soap",
+                    "value": 0,
+                    "weight": 1.2
+                },
+                "count": 4
+            },
+            {
+                "item": {
+                    "name": "Cop Fish",
+                    "value": 0,
+                    "weight": 12
+                },
+                "count": 7
+            },
+            {
+                "item": {
+                    "name": "CS:GO Fish",
+                    "value": 0,
+                    "weight": 9
+                },
+                "count": 15
+            },
+            {
+                "item": {
+                    "name": "Catfish",
+                    "value": 0,
+                    "weight": 8
+                },
+                "count": 3
+            },
+            {
+                "item": {
+                    "name": "Fishing Manifesto",
+                    "value": 0,
+                    "weight": 6.2
+                },
+                "count": 7
+            },
+            {
+                "item": {
+                    "name": "Mogfish",
+                    "value": 0,
+                    "weight": 4
+                },
+                "count": 3
+            },
+            {
+                "item": {
+                    "name": "Nemo",
+                    "value": 0,
+                    "weight": 2
+                },
+                "count": 2
+            },
+            {
+                "item": {
+                    "name": "Viola",
+                    "value": -1,
+                    "weight": 20
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Homeless Guy's Underwear",
+                    "value": -2,
+                    "weight": 17
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Brawl Starfish",
+                    "value": -2,
+                    "weight": 19
+                },
+                "count": 2
+            },
+            {
+                "item": {
+                    "name": "Thief Fish",
+                    "value": -25,
+                    "weight": 7
+                },
+                "count": 6
+            }
+        ],
+        "value": 20135
+    },
+    {
+        "username": "jesusfreak72",
+        "times_fished": 42,
+        "items": [
+            {
+                "item": {
+                    "name": "Jonklerfish",
+                    "value": 120,
+                    "weight": 5
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "KSI - Thick of It Vinyl Record",
+                    "value": 69,
+                    "weight": 4.5
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Gold Goldfish",
+                    "value": 60,
+                    "weight": 5
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Golden Juice Box Peel",
+                    "value": 50,
+                    "weight": 5.5
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "WD-40 Bottle",
+                    "value": 45,
+                    "weight": 6.5
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Bryce Beckeel",
+                    "value": 20,
+                    "weight": 10
+                },
+                "count": 3
+            },
+            {
+                "item": {
+                    "name": "Stingray (Zhao)",
+                    "value": 20,
+                    "weight": 10
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Jamesfish",
+                    "value": 15,
+                    "weight": 13
+                },
+                "count": 4
+            },
+            {
+                "item": {
+                    "name": "Hamburger Fish",
+                    "value": 10,
+                    "weight": 15
+                },
+                "count": 2
+            },
+            {
+                "item": {
+                    "name": "Oyster",
+                    "value": 10,
+                    "weight": 15
+                },
+                "count": 2
+            },
+            {
+                "item": {
+                    "name": "Salmon",
+                    "value": 8,
+                    "weight": 20
+                },
+                "count": 3
+            },
+            {
+                "item": {
+                    "name": "Sea Bass",
+                    "value": 5,
+                    "weight": 26
+                },
+                "count": 2
+            },
+            {
+                "item": {
+                    "name": "Goldfish",
+                    "value": 4,
+                    "weight": 28
+                },
+                "count": 2
+            },
+            {
+                "item": {
+                    "name": "Seaweed",
+                    "value": 2,
+                    "weight": 32
+                },
+                "count": 3
+            },
+            {
+                "item": {
+                    "name": "Old Ass Boot",
+                    "value": 1,
+                    "weight": 35
+                },
+                "count": 5
+            },
+            {
+                "item": {
+                    "name": "Hook",
+                    "value": 1,
+                    "weight": 35
+                },
+                "count": 7
+            },
+            {
+                "item": {
+                    "name": "Small Fry",
+                    "value": 0.5,
+                    "weight": 35
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Fish Soap",
+                    "value": 0,
+                    "weight": 1.2
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Mercenary Fish",
+                    "value": 0,
+                    "weight": 7.6
+                },
+                "count": 1
+            }
+        ],
+        "last_fish_time": 1734305010,
+        "value": 584
+    }
+]
