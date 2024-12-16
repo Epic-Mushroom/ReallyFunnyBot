@@ -185,7 +185,7 @@ def fish_event(username: str, is_extra_fish=False, force_fish_name=None, factor=
         if active_special == 'fishing_manifesto':
             factor = fishing_manifesto_factor(username)
         elif active_special == 'nemo':
-            factor = 9
+            factor = 9.9
         elif active_special == 'mogfish':
             factor = 0.04
         elif active_special == 'mercenary_contract':
@@ -294,8 +294,8 @@ def fish_event(username: str, is_extra_fish=False, force_fish_name=None, factor=
                 add_special(username, 'mercenary_contract', count=4)
     
             elif one_fish.name == 'Nemo':
-                output += f'You caught: **Nemo** (next 10 fish caught by you are much more likely to be rare items)'
-                add_special(username, 'nemo', count=10)
+                output += f'You caught: **Nemo** (next 11 fish caught by you are much more likely to be rare items)'
+                add_special(username, 'nemo', count=11)
 
             elif one_fish.name == 'Bribe Fish':
                 output += f'You caught: **{one_fish.name}** (-50 moneys, but immune to Cop Fish for next 40 fish)'
