@@ -528,6 +528,7 @@ def universal_profile_to_string() -> str:
 def leaderboard_string(sort_by_luck=False) -> str:
     output = ''
     index = 1
+    unshown = 0
 
     list_of_profiles = fishing_database()
 
@@ -540,15 +541,24 @@ def leaderboard_string(sort_by_luck=False) -> str:
     for profile in [profile for profile in list_of_profiles if profile['username'] != 'test_user']:
         try:
             trophy = '🥇 ' if index == 1 else '🥈 ' if index == 2 else '🥉 ' if index == 3 else ''
-            output += (f'{index}. {trophy}{profile['username']}: **{
-                        profile['value'] if not sort_by_luck else
-                        round(profile['value'] / profile['times_fished'], 2)} moneys'
-                       f'{'/catch' if sort_by_luck else ''}**\n')
-            index += 1
+
+            if not sort_by_luck or (sort_by_luck and profile['times_fished'] >= 10):
+                output += (f'{index}. {trophy}{profile['username']}: **{
+                            profile['value'] if not sort_by_luck else
+                            round(profile['value'] / profile['times_fished'], 2)} moneys'
+                           f'{'/catch' if sort_by_luck else ''}**\n')
+
+                index += 1
+            else:
+                unshown += 1
+
         except KeyError:
             pass
         except ZeroDivisionError:
             pass
+
+    if unshown > 0:
+        output += f'\n*{unshown} players not counted*'
 
     return output
 

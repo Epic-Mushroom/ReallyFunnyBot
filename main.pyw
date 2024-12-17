@@ -269,7 +269,7 @@ async def on_message(message):
 
     if find_isolated_word_bool(message.content, POSSESSIVE_PERSONAL_PRONOUN_LIST):
         interpreted_name = strip_punctuation(message.content[index_of_im:])
-        if len(interpreted_name) > 0 and random_range(1, 4) == 1:
+        if len(interpreted_name) > 0 and random_range(1, 1) == 1:
             await server_instance.send_message(message, f"Hi {interpreted_name}, I'm {random.choice(server_instance.get_comedians())}!")
 
     if find_isolated_word_bool(message.content, TYPOS) and random_range(1, 1) == 1:
@@ -460,7 +460,7 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
 
     if find_word_bool(message.content, ['🐟', '🎣', '🐠', 'asdfghjkl', 'go fish', 'गो फिश', 'go gamble', 'jobless behavior', 'le fishe',
                                         'quiero comer pescado', 'lets go gambling', 'let\'s go gambling',
-                                        '.fish', 'let’s go gambling', '去钓鱼', '><>', '<><', '2+2']):
+                                        '.fish', 'let’s go gambling', '去钓鱼', '><>', '<><', '2+2', 'godfisa']):
         try:
             await server_instance.reply_to_message(message, json_utils.fish_event(message.author.name),
                                                    bypass_cd=True)
@@ -470,7 +470,7 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
                                                                 message.author.name
                                                             ))} seconds until you can fish again)", bypass_cd=True)
 
-    if message.content.startswith('.fishtest'):
+    if message.content.startswith('>fishtest'):
         parts = message.content.split(' ')
         for l in range(min(int(parts[-1] if len(parts) > 1 else 1), 12)):
             try:
@@ -497,7 +497,7 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
         await message.channel.send(embed=embed)
         # await server_instance.send_message(message, json_utils.leaderboard_string(), bypass_cd=True)
 
-    if find_word_bool(message.content, ['show luck lb', 'luck lb']):
+    if find_word_bool(message.content, ['luck lb', 'rng lb']):
         embed = discord.Embed(title='RNG Leaderboard', description=json_utils.leaderboard_string(sort_by_luck=True))
         await message.channel.send(embed=embed)
 

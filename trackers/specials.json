@@ -2,7 +2,7 @@
     "catfish": [
         {
             "username": "epicmushroom.",
-            "count": 7
+            "count": 0
         },
         {
             "username": "test_user",
@@ -84,12 +84,16 @@
         {
             "username": "zakkthecactus",
             "count": 0
+        },
+        {
+            "username": "adityaxad",
+            "count": 0
         }
     ],
     "fishing_manifesto": [
         {
             "username": "epicmushroom.",
-            "count": 0
+            "count": 1
         },
         {
             "username": "test_user",
@@ -117,7 +121,7 @@
         },
         {
             "username": "artemis3548",
-            "count": 5
+            "count": 0
         }
     ],
     "bribe_fish": [
@@ -128,7 +132,7 @@
         },
         {
             "username": "artemis3548",
-            "count": 0
+            "count": 27
         },
         {
             "username": "jamescheung24578",
@@ -136,7 +140,7 @@
         },
         {
             "username": "paliopolis",
-            "count": 111
+            "count": 108
         },
         {
             "username": "oh.noes",
@@ -144,11 +148,11 @@
         },
         {
             "username": "phospholipase_c",
-            "count": 33
+            "count": 32
         },
         {
             "username": "zakkthecactus",
-            "count": 32
+            "count": 8
         }
     ],
     "state_farm_insured_rod": [
@@ -169,7 +173,7 @@
         },
         {
             "username": "zakkthecactus",
-            "count": 0
+            "count": 11
         },
         {
             "username": "paliopolis",
