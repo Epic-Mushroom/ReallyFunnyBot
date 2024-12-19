@@ -1,9 +1,9 @@
 [
     {
         "username": "epicmushroom.",
-        "value": 57468,
-        "last_fish_time": 1734644155,
-        "times_fished": 3601,
+        "value": 57488,
+        "last_fish_time": 1734644474,
+        "times_fished": 3603,
         "items": [
             {
                 "item": {
@@ -155,7 +155,7 @@
                     "value": 20,
                     "weight": 10
                 },
-                "count": 75
+                "count": 76
             },
             {
                 "item": {
@@ -363,7 +363,7 @@
                     "value": 0,
                     "weight": 6.2
                 },
-                "count": 28
+                "count": 29
             },
             {
                 "item": {
@@ -977,8 +977,8 @@
     },
     {
         "username": "artemis3548",
-        "value": 7771,
-        "times_fished": 663,
+        "value": 7803,
+        "times_fished": 664,
         "last_fish_time": 1734643245,
         "items": [
             {
@@ -1091,7 +1091,7 @@
                     "value": 32,
                     "weight": 9
                 },
-                "count": 8
+                "count": 9
             },
             {
                 "item": {
@@ -2033,8 +2033,8 @@
     },
     {
         "username": "oh.noes",
-        "value": 26292,
-        "times_fished": 1770,
+        "value": 26302,
+        "times_fished": 1771,
         "last_fish_time": 1734642153,
         "items": [
             {
@@ -2203,7 +2203,7 @@
                     "value": 10,
                     "weight": 15
                 },
-                "count": 59
+                "count": 60
             },
             {
                 "item": {
@@ -3090,8 +3090,8 @@
     {
         "username": "m05hp0t",
         "value": 18254,
-        "times_fished": 981,
-        "last_fish_time": 1734642920,
+        "times_fished": 982,
+        "last_fish_time": 1734644527,
         "items": [
             {
                 "item": {
@@ -3355,7 +3355,7 @@
                     "value": 1,
                     "weight": 38
                 },
-                "count": 55
+                "count": 56
             },
             {
                 "item": {
