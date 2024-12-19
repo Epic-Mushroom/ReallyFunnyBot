@@ -145,8 +145,10 @@ class ServerSpecificInstance:
             logging.info(f'On cooldown. Message withheld: {text}')
 
         if bypass_cd or not (self.something_sent or self.on_cooldown()):
-            self.something_sent = True
-            self.recently_sent_messages += 1
+            if not bypass_cd:
+                self.something_sent = True
+                self.recently_sent_messages += 1
+
             if file:
                 await reference.channel.send(text, file=file)
             else:
@@ -173,8 +175,10 @@ class ServerSpecificInstance:
             logging.info(f'On cooldown. Message withheld: {text}')
 
         if bypass_cd or not (self.something_sent or self.on_cooldown()):
-            self.something_sent = True
-            self.recently_sent_messages += 1
+            if not bypass_cd:
+                self.something_sent = True
+                self.recently_sent_messages += 1
+
             if ping:
                 await reference.reply(text)
             else:

@@ -32,7 +32,7 @@ if __name__ == '__main__':
     avg_val = get_average_value()
 
     total = 0
-    iterations = 3100000
+    iterations = 30000
     for i in range(iterations):
         total += catch_count()
 
@@ -40,7 +40,6 @@ if __name__ == '__main__':
     w_line_snaps = avg_val * total / iterations
 
     total = 0
-    iterations = 3100000
     for i in range(iterations):
         total += catch_count(boost=True)
 

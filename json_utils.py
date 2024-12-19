@@ -368,7 +368,7 @@ def fish_event(username: str, is_extra_fish=False, force_fish_name=None, factor=
                 add_special(username, 'mercenary_contract', count=4)
 
             elif one_fish.name == 'Unregistered Firearm':
-                output += f'You caught: **{one_fish.name}** (+177.6 moneys, next 4 catches are guaranteed to include CS:GO Fish)'
+                output += f'You caught: **{one_fish.name}** (+177.6 moneys, next 3 catches are guaranteed to include CS:GO Fish)'
                 add_special(username, 'unregistered_firearm', count=3)
     
             elif one_fish.name == 'Nemo':
