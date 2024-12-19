@@ -1,9 +1,9 @@
 [
     {
         "username": "epicmushroom.",
-        "value": 56266,
-        "last_fish_time": 1734571535,
-        "times_fished": 3445,
+        "value": 56246,
+        "last_fish_time": 1734570245,
+        "times_fished": 3443,
         "items": [
             {
                 "item": {
@@ -147,7 +147,7 @@
                     "value": 20,
                     "weight": 10
                 },
-                "count": 72
+                "count": 71
             },
             {
                 "item": {
@@ -243,7 +243,7 @@
                     "value": 1,
                     "weight": 35
                 },
-                "count": 336
+                "count": 335
             },
             {
                 "item": {
@@ -401,9 +401,9 @@
     },
     {
         "username": "phospholipase_c",
-        "value": 2358,
-        "times_fished": 222,
-        "last_fish_time": 1734571664,
+        "value": 2357,
+        "times_fished": 220,
+        "last_fish_time": 1734567773,
         "items": [
             {
                 "item": {
@@ -587,7 +587,7 @@
                     "value": 1,
                     "weight": 37
                 },
-                "count": 8
+                "count": 7
             },
             {
                 "item": {
@@ -643,7 +643,7 @@
                     "value": 0,
                     "weight": 4
                 },
-                "count": 2
+                "count": 1
             },
             {
                 "item": {
@@ -1298,7 +1298,7 @@
     {
         "username": "bongohead0258",
         "value": 6178,
-        "times_fished": 409,
+        "times_fished": 408,
         "last_fish_time": 1734565132,
         "items": [
             {
@@ -1475,7 +1475,7 @@
                     "value": 1,
                     "weight": 35
                 },
-                "count": 64
+                "count": 63
             },
             {
                 "item": {
@@ -1970,7 +1970,7 @@
     {
         "username": "oh.noes",
         "value": 25380,
-        "times_fished": 1746,
+        "times_fished": 1745,
         "last_fish_time": 1734570695,
         "items": [
             {
@@ -2235,7 +2235,7 @@
                     "value": 0.5,
                     "weight": 35
                 },
-                "count": 29
+                "count": 28
             },
             {
                 "item": {
@@ -2353,9 +2353,9 @@
     },
     {
         "username": "jamescheung24578",
-        "value": 48049,
-        "times_fished": 2855,
-        "last_fish_time": 1734571679,
+        "value": 48036,
+        "times_fished": 2851,
+        "last_fish_time": 1734566074,
         "items": [
             {
                 "item": {
@@ -2547,7 +2547,7 @@
                     "value": 10,
                     "weight": 15
                 },
-                "count": 77
+                "count": 76
             },
             {
                 "item": {
@@ -2571,7 +2571,7 @@
                     "value": 4,
                     "weight": 28
                 },
-                "count": 160
+                "count": 159
             },
             {
                 "item": {
@@ -2611,7 +2611,7 @@
                     "value": 1,
                     "weight": 37
                 },
-                "count": 127
+                "count": 126
             },
             {
                 "item": {
@@ -2723,7 +2723,7 @@
                     "value": -2,
                     "weight": 19
                 },
-                "count": 14
+                "count": 13
             },
             {
                 "item": {
@@ -3873,7 +3873,7 @@
     },
     {
         "username": "adityaxad",
-        "times_fished": 255,
+        "times_fished": 253,
         "last_fish_time": 1734565132,
         "items": [
             {
@@ -4082,7 +4082,7 @@
                     "value": 1,
                     "weight": 35
                 },
-                "count": 18
+                "count": 17
             },
             {
                 "item": {
@@ -4090,7 +4090,7 @@
                     "value": 1,
                     "weight": 37
                 },
-                "count": 11
+                "count": 10
             },
             {
                 "item": {
@@ -4213,7 +4213,7 @@
                 "count": 3
             }
         ],
-        "value": 6544
+        "value": 6542
     },
     {
         "username": "test_user",
@@ -4577,7 +4577,7 @@
     },
     {
         "username": "jesusfreak72",
-        "times_fished": 53,
+        "times_fished": 51,
         "items": [
             {
                 "item": {
@@ -4729,7 +4729,7 @@
                     "value": 1,
                     "weight": 38
                 },
-                "count": 2
+                "count": 1
             },
             {
                 "item": {
@@ -4737,7 +4737,7 @@
                     "value": 0.5,
                     "weight": 35
                 },
-                "count": 2
+                "count": 1
             },
             {
                 "item": {
@@ -4765,6 +4765,6 @@
             }
         ],
         "last_fish_time": 1734565132,
-        "value": 762
+        "value": 760
     }
 ]

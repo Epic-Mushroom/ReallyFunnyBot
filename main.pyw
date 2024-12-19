@@ -53,7 +53,7 @@ CRAZY_RESPONSES = ["https://tenor.com/view/crazy-rubber-room-gif-105244771741669
 BAITS = ["what", "What", 'when', 'When', 'who', 'Who']
 PRONOUNS = ['he', 'she', 'they']
 TYPOS = ['SOTP', 'HWO', 'HLEP', 'imdeed', 'DYHINF', 'EHLP', 'liek', 'sitpoo', 'cehap', 'parnets', 'paretns', 'vioolni', 'sotfp', 'tahnkss', 'sucj', 'kmagine', 'heah', 'murser',
-         'go dish', 'gof ish', 'g ofish', 'go fesh', 'go fsih', 'gi fish', 'gi fsih', 'go fsh', 'ho fish', 'go fihs']
+         'go dish', 'gof ish', 'g ofish', 'go fesh', 'go fsih', 'gi fish', 'gi fsih', 'go fsh', 'ho fish', 'go fihs', 'go fidh']
 SWEARING_RESPONSES = ["Bro chill out dude.", "Let's calm down bro.", "Dude swearing is not cool.", "Guys lets find our happy place.",
                       "Watch your fucking language.", "That's a no-no word"]
 KYS_RESPONSES = ["Let's be nice to each other ok.", "Let's all calm down guys.", "Guys lets find our happy place."]
@@ -82,7 +82,7 @@ IMAGES = list(Path("images").iterdir())
 VIDEOS = list(Path("videos").iterdir())
 
 COOLDOWN_LENGTH = 35
-COOLDOWN_LIMIT = 5 # how many messages that can be sent per COOLDOWN_LENGTH seconds
+COOLDOWN_LIMIT = 8 # how many messages that can be sent per COOLDOWN_LENGTH seconds
 
 class ServerSpecificInstance:
 
@@ -278,7 +278,7 @@ async def on_message(message):
     if "crazy" in lowercase_message_content.lower():
         await server_instance.reply_to_message(message, f"{random.choice(CRAZY_RESPONSES)}")
 
-    if (message.author.id == PALIOPOLIS_ID or message.author.id == JADEN_ID) and random_range(1, 7) == 1:
+    if (message.author.id == PALIOPOLIS_ID or message.author.id == JADEN_ID) and random_range(1, 1000) == 1:
         await message.add_reaction(random.choice(NEGATIVE_EMOJIS))
 
     if referred_message and referred_message.author == client.user:
@@ -413,7 +413,7 @@ async def on_message(message):
     if find_isolated_word_bool(message.content, ['sigma']):
         await server_instance.reply_to_message(message, 'https://tenor.com/view/not-a-sigma-sorry-you-are-not-a-sigma-sorry-you%27re-not-a-sigma-you-aren%27t-a-sigma-you-are-not-sigma-gif-337838532227751572')
 
-    if find_isolated_word_bool(message.content, ['uwu', 'owo']):
+    if find_isolated_word_bool(message.content, ['uwu', 'owo', ':3']):
         await server_instance.reply_to_message(message, 'https://tenor.com/view/kekw-gif-21672467')
 
     if find_isolated_word_bool(message.content, ['can i', 'can we']):
@@ -460,7 +460,8 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
 
     if find_word_bool(message.content, ['🐟', '🎣', '🐠', 'asdfghjkl', 'go fish', 'गो फिश', 'go gamble', 'jobless behavior', 'le fishe',
                                         'quiero comer pescado', 'lets go gambling', 'let\'s go gambling',
-                                        '.fish', 'let’s go gambling', '去钓鱼', '><>', '<><', '2+2', 'godfisa']):
+                                        '.fish', 'let’s go gambling', '去钓鱼', '><>', '<><', '2+2', 'godfisa',
+                                        'zxcvbnm', 'qwertyuiop']):
         try:
             await server_instance.reply_to_message(message, json_utils.fish_event(message.author.name),
                                                    bypass_cd=True)
@@ -469,6 +470,9 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
                                                             f"{json_utils.FISHING_COOLDOWN - (current_time - json_utils.get_user_last_fish_time(
                                                                 message.author.name
                                                             ))} seconds until you can fish again)", bypass_cd=True)
+
+        except json_utils.MaintenanceError:
+            await server_instance.reply_to_message(message, f'fishing is currently disabled, go do college apps in the meantime or some shit')
 
     if message.content.startswith('>fishtest'):
         parts = message.content.split(' ')
@@ -515,9 +519,9 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
         embed = discord.Embed(description='Hello\nthis\nis\nsupposed\nto\nbe\na description')
         await message.channel.send(embed=embed)
 
-    if random_range(1, 55) == 1:
+    if random_range(1, 110) == 1:
         await server_instance.reply_to_message(message, f"{random.choice(BAITS)}")
-    elif index_of_pronoun > -1 and random_range(1, 6) == 1:
+    elif index_of_pronoun > -1 and random_range(1, 18) == 1:
         await server_instance.reply_to_message(message, f"{random.choice(BAITS[4:])}")
 
 

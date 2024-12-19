@@ -1,5 +1,7 @@
 from pathlib import Path
-import json, time, random, os
+import json, time, random, os, math
+
+FISHING_ENABLED = True
 
 FISHING_COOLDOWN = 10
 RARE_ITEM_WEIGHT_THRESHOLD = 1.6
@@ -12,6 +14,9 @@ SPECIALS_DATABASE_PATH = Path("trackers\\specials.json")
 GENERAL_DATABASE_PATH = Path("trackers\\user_triggers.json")
 
 class OnFishingCooldownError(Exception):
+    pass
+
+class MaintenanceError(Exception):
     pass
 
 class Profile:
@@ -175,23 +180,62 @@ def fish_event(username: str, is_extra_fish=False, force_fish_name=None, factor=
 
         return None
 
-    def activate_special() -> str | None:
-        active_specials = [special for special in get_active_specials(username) if special != 'catfish']
-        return active_specials[0] if len(active_specials) > 0 else None
+    def find_random_user_to_donate_to():
+        undonatable = ['test_user', original_user]
+
+        list_of_profiles = fishing_database()
+        list_of_profiles = [profile for profile in list_of_profiles if not profile['username'] in undonatable]
+        weights = [max(profile['value'], 0) ** 0.25 for profile in list_of_profiles if not profile['username'] in undonatable]
+
+        return random.choices(list_of_profiles, weights=weights, k=1)[0]['username']
+
+    def activate_special() -> list[str | None]:
+        groups = [['catfish'],
+                  ['mrbeast_fish'],
+                  ['mogfish', 'fishing_manifesto', 'nemo'],
+                  ['bribe_fish'],
+                  ['unregistered_firearm', 'mercenary_contract']]
+
+        user_specials = [special for special in get_active_specials(username) if special != 'catfish']
+        activated_specials = []
+        # return user_specials[0] if len(user_specials) > 0 else None
+
+        for n in range(len(groups)):
+            for special in groups[n]:
+                if special in user_specials:
+                    activated_specials.append(special)
+                    break
+
+                if special == groups[n][-1]:
+                    # checks if no powerups from this group was found for the user
+                    activated_specials.append(None)
+
+        if activated_specials[4] is not None:
+            activated_specials[2] = None
+            activated_specials[3] = None
+
+        if other_player_with_catfish():
+            activated_specials[1] = None
+
+        return activated_specials
 
     def handle_specials() -> None:
-        nonlocal factor, force_fish_name, bribe_active
+        nonlocal factor, force_fish_name, bribe_active, username, bypass_fish_cd
 
-        if active_special == 'fishing_manifesto':
-            factor = fishing_manifesto_factor(username)
-        elif active_special == 'nemo':
-            factor = 9.9
-        elif active_special == 'mogfish':
-            factor = 0.04
-        elif active_special == 'mercenary_contract':
-            force_fish_name = 'Mercenary Fish'
-        elif active_special == 'bribe_fish':
-            bribe_active = True
+        for active_special in active_specials:
+            if active_special == 'mrbeast_fish':
+                username = find_random_user_to_donate_to()
+                bypass_fish_cd = True
+            elif active_special == 'fishing_manifesto':
+                factor = fishing_manifesto_factor(username)
+            elif active_special == 'nemo':
+                factor = 9.5
+            elif active_special == 'mogfish':
+                factor = 0.04
+            elif active_special == 'mercenary_contract':
+                force_fish_name = 'Mercenary Fish'
+            elif active_special == 'bribe_fish':
+                bribe_active = True
 
     def catch_count() -> int:
         random_num = random_range(1, 500)
@@ -215,6 +259,9 @@ def fish_event(username: str, is_extra_fish=False, force_fish_name=None, factor=
 
         return count
 
+    if username != 'epicmushroom.' and FISHING_ENABLED == False:
+        raise MaintenanceError
+
     all_users = get_all_users()
     is_test_user = username == 'test_user'
     original_user = username
@@ -229,13 +276,14 @@ def fish_event(username: str, is_extra_fish=False, force_fish_name=None, factor=
     output = "(test_user)" if is_test_user else ""
 
     bribe_active = False
+
+    active_specials = activate_special()
+    handle_specials()
+
     catfish_holder = other_player_with_catfish()
     if catfish_holder:
         username = catfish_holder
         bypass_fish_cd = True
-
-    active_special = activate_special()
-    handle_specials()
 
     if is_test_user or current_time - last_fish_time >= FISHING_COOLDOWN:
         caught_fish = []
@@ -247,7 +295,7 @@ def fish_event(username: str, is_extra_fish=False, force_fish_name=None, factor=
 
         for j in range(caught_fish_count):
             if is_test_user:
-                caught_fish.append(go_fish(factor=factor * 1.3, force_fish_name=force_fish_name))
+                caught_fish.append(go_fish(factor=factor * 1.9, force_fish_name=force_fish_name))
             else:
                 caught_fish.append(go_fish(factor=factor, force_fish_name=force_fish_name))
 
@@ -289,13 +337,18 @@ def fish_event(username: str, is_extra_fish=False, force_fish_name=None, factor=
                            f' the luck boost is more if you are lower on the leaderboard)')
                 add_special(username, 'fishing_manifesto', count=7)
 
+            elif one_fish.name == 'Mr. Beast Fish':
+                output += (
+                    f'You caught: **{one_fish.name}** (next 4 fish caught by you will be donated to a random player)')
+                add_special(username, 'mrbeast_fish', count=4)
+
             elif one_fish.name == 'Mercenary Contract':
                 output += f'You caught: **{one_fish.name}** (next 4 fish are guaranteed Mercenary Fish)'
                 add_special(username, 'mercenary_contract', count=4)
     
             elif one_fish.name == 'Nemo':
-                output += f'You caught: **Nemo** (next 11 fish caught by you are much more likely to be rare items)'
-                add_special(username, 'nemo', count=11)
+                output += f'You caught: **Nemo** (next 10 fish caught by you are much more likely to be rare items)'
+                add_special(username, 'nemo', count=10)
 
             elif one_fish.name == 'Bribe Fish':
                 output += f'You caught: **{one_fish.name}** (-50 moneys, but immune to Cop Fish for next 40 fish)'
@@ -356,13 +409,19 @@ def fish_event(username: str, is_extra_fish=False, force_fish_name=None, factor=
 
     # uses up all specials except the catfish because it should only be used up when
     # another player fishes with the catfish active
-    if active_special and caught_fish_count > 0:
-        add_special(username, active_special, count=-1)
+    if caught_fish_count > 0:
+        for active_special in active_specials:
+            if active_special is not None:
+                add_special(original_user, active_special, count=-1)
 
     if catfish_holder and caught_fish_count > 0:
         update_fish_database(original_user, cd_penalty=penalty, bypass_fish_cd=False)
         add_special(catfish_holder, 'catfish', count=-1)
         output += f'\n*Fish taken by {catfish_holder} (Catfish powerup)*'
+    elif username != original_user:
+        # this should only happen if mr beast fish is used
+        update_fish_database(original_user, cd_penalty=penalty, bypass_fish_cd=False)
+        output += f'\n*Fish donated to {username} (Mr. Beast powerup)*'
 
     return output
 
@@ -621,22 +680,22 @@ def recalculate_fish_database() -> int:
 
 def update_user_database(username: str, increment=1) -> None:
     with open(GENERAL_DATABASE_PATH, 'r+') as file:
-        list_of_dickshunarys = json.load(file)
+        list_of_dicts = json.load(file)
         user_found = False
 
-        for dickshunary in list_of_dickshunarys:
-            if dickshunary['username'] == username:
+        for one_dict in list_of_dicts:
+            if one_dict['username'] == username:
                 user_found = True
-                dickshunary['value'] += increment
+                one_dict['value'] += increment
 
         if not user_found:
-            cock = dict()
-            cock['username'] = username
-            cock['value'] = increment
-            list_of_dickshunarys.append(cock)
+            new_dict = dict()
+            new_dict['username'] = username
+            new_dict['value'] = increment
+            list_of_dicts.append(new_dict)
 
         file.seek(0)
-        json.dump(list_of_dickshunarys, file, indent=4)
+        json.dump(list_of_dicts, file, indent=4)
         file.truncate()
 
 script_directory = Path(__file__).parent.resolve()
