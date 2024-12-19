@@ -1,9 +1,9 @@
 [
     {
         "username": "epicmushroom.",
-        "value": 56256,
-        "last_fish_time": 1734573465,
-        "times_fished": 3444,
+        "value": 56394,
+        "last_fish_time": 1734574114,
+        "times_fished": 3473,
         "items": [
             {
                 "item": {
@@ -99,7 +99,7 @@
                     "value": 69,
                     "weight": 4.5
                 },
-                "count": 49
+                "count": 50
             },
             {
                 "item": {
@@ -107,7 +107,7 @@
                     "value": 60,
                     "weight": 5
                 },
-                "count": 41
+                "count": 42
             },
             {
                 "item": {
@@ -147,7 +147,7 @@
                     "value": 20,
                     "weight": 10
                 },
-                "count": 72
+                "count": 73
             },
             {
                 "item": {
@@ -187,7 +187,7 @@
                     "value": 10,
                     "weight": 15
                 },
-                "count": 102
+                "count": 103
             },
             {
                 "item": {
@@ -211,7 +211,7 @@
                     "value": 5,
                     "weight": 26
                 },
-                "count": 183
+                "count": 185
             },
             {
                 "item": {
@@ -219,7 +219,7 @@
                     "value": 4,
                     "weight": 28
                 },
-                "count": 232
+                "count": 234
             },
             {
                 "item": {
@@ -227,7 +227,7 @@
                     "value": 2,
                     "weight": 32
                 },
-                "count": 202
+                "count": 203
             },
             {
                 "item": {
@@ -235,7 +235,7 @@
                     "value": 1,
                     "weight": 35
                 },
-                "count": 342
+                "count": 344
             },
             {
                 "item": {
@@ -251,7 +251,7 @@
                     "value": 1,
                     "weight": 38
                 },
-                "count": 153
+                "count": 155
             },
             {
                 "item": {
@@ -259,7 +259,7 @@
                     "value": 1,
                     "weight": 35
                 },
-                "count": 160
+                "count": 161
             },
             {
                 "item": {
@@ -275,7 +275,7 @@
                     "value": 1,
                     "weight": 30
                 },
-                "count": 87
+                "count": 88
             },
             {
                 "item": {
@@ -283,7 +283,7 @@
                     "value": 0.5,
                     "weight": 35
                 },
-                "count": 79
+                "count": 83
             },
             {
                 "item": {
@@ -291,13 +291,13 @@
                     "value": 0,
                     "weight": 12
                 },
-                "count": 88
+                "count": 89
             },
             {
                 "item": {
                     "name": "CS:GO Fish",
                     "value": 0,
-                    "weight": 9
+                    "weight": 9.5
                 },
                 "count": 41
             },
@@ -305,15 +305,15 @@
                 "item": {
                     "name": "Mercenary Fish",
                     "value": 0,
-                    "weight": 7.6
+                    "weight": 7.8
                 },
-                "count": 54
+                "count": 56
             },
             {
                 "item": {
                     "name": "Fish Soap",
                     "value": 0,
-                    "weight": 1.4
+                    "weight": 1.45
                 },
                 "count": 8
             },
@@ -321,23 +321,23 @@
                 "item": {
                     "name": "Catfish",
                     "value": 0,
-                    "weight": 8
+                    "weight": 6.3
                 },
-                "count": 37
+                "count": 38
             },
             {
                 "item": {
                     "name": "Nemo",
                     "value": 0,
-                    "weight": 1.6
+                    "weight": 1.62
                 },
-                "count": 8
+                "count": 9
             },
             {
                 "item": {
                     "name": "Mogfish",
                     "value": 0,
-                    "weight": 3.2
+                    "weight": 3.3
                 },
                 "count": 12
             },
@@ -347,15 +347,23 @@
                     "value": 0,
                     "weight": 6.2
                 },
-                "count": 25
+                "count": 26
             },
             {
                 "item": {
                     "name": "Mercenary Contract",
                     "value": 0,
-                    "weight": 1.6
+                    "weight": 1.62
                 },
                 "count": 4
+            },
+            {
+                "item": {
+                    "name": "Mr. Beast Fish",
+                    "value": 0,
+                    "weight": 6.3
+                },
+                "count": 2
             },
             {
                 "item": {
@@ -387,13 +395,13 @@
                     "value": -25,
                     "weight": 6.5
                 },
-                "count": 8
+                "count": 10
             },
             {
                 "item": {
                     "name": "Bribe Fish",
                     "value": -50,
-                    "weight": 2.1
+                    "weight": 2.3
                 },
                 "count": 0
             }
@@ -401,9 +409,9 @@
     },
     {
         "username": "phospholipase_c",
-        "value": 2359,
-        "times_fished": 223,
-        "last_fish_time": 1734573465,
+        "value": 2360,
+        "times_fished": 224,
+        "last_fish_time": 1734573661,
         "items": [
             {
                 "item": {
@@ -587,7 +595,7 @@
                     "value": 1,
                     "weight": 35
                 },
-                "count": 9
+                "count": 10
             },
             {
                 "item": {
@@ -625,7 +633,7 @@
                 "item": {
                     "name": "Mercenary Fish",
                     "value": 0,
-                    "weight": 7.6
+                    "weight": 7.8
                 },
                 "count": 2
             },
@@ -641,7 +649,7 @@
                 "item": {
                     "name": "Mogfish",
                     "value": 0,
-                    "weight": 3.2
+                    "weight": 3.3
                 },
                 "count": 2
             },
@@ -681,7 +689,7 @@
                 "item": {
                     "name": "Bribe Fish",
                     "value": -50,
-                    "weight": 2.1
+                    "weight": 2.3
                 },
                 "count": 1
             }
@@ -689,9 +697,9 @@
     },
     {
         "username": "potatochipbag",
-        "value": 933,
-        "times_fished": 104,
-        "last_fish_time": 1734573465,
+        "value": 954,
+        "times_fished": 107,
+        "last_fish_time": 1734573579,
         "items": [
             {
                 "item": {
@@ -739,7 +747,7 @@
                     "value": 20,
                     "weight": 10
                 },
-                "count": 5
+                "count": 6
             },
             {
                 "item": {
@@ -827,7 +835,7 @@
                     "value": 1,
                     "weight": 35
                 },
-                "count": 8
+                "count": 9
             },
             {
                 "item": {
@@ -867,13 +875,13 @@
                     "value": 0.5,
                     "weight": 35
                 },
-                "count": 6
+                "count": 7
             },
             {
                 "item": {
                     "name": "CS:GO Fish",
                     "value": 0,
-                    "weight": 9
+                    "weight": 9.5
                 },
                 "count": 2
             },
@@ -889,7 +897,7 @@
                 "item": {
                     "name": "Mercenary Fish",
                     "value": 0,
-                    "weight": 7.6
+                    "weight": 7.8
                 },
                 "count": 1
             },
@@ -897,7 +905,7 @@
                 "item": {
                     "name": "Catfish",
                     "value": 0,
-                    "weight": 8
+                    "weight": 6.3
                 },
                 "count": 1
             },
@@ -905,7 +913,7 @@
                 "item": {
                     "name": "Mogfish",
                     "value": 0,
-                    "weight": 3.2
+                    "weight": 3.3
                 },
                 "count": 1
             },
@@ -937,9 +945,9 @@
     },
     {
         "username": "artemis3548",
-        "value": 6772,
-        "times_fished": 606,
-        "last_fish_time": 1734573465,
+        "value": 6834,
+        "times_fished": 613,
+        "last_fish_time": 1734573761,
         "items": [
             {
                 "item": {
@@ -1059,7 +1067,7 @@
                     "value": 20,
                     "weight": 10
                 },
-                "count": 13
+                "count": 14
             },
             {
                 "item": {
@@ -1079,11 +1087,19 @@
             },
             {
                 "item": {
+                    "name": "Kushfish",
+                    "value": 15,
+                    "weight": 13
+                },
+                "count": 1
+            },
+            {
+                "item": {
                     "name": "Hamburger Fish",
                     "value": 10,
                     "weight": 15
                 },
-                "count": 18
+                "count": 19
             },
             {
                 "item": {
@@ -1099,7 +1115,7 @@
                     "value": 10,
                     "weight": 15
                 },
-                "count": 20
+                "count": 21
             },
             {
                 "item": {
@@ -1115,7 +1131,7 @@
                     "value": 5,
                     "weight": 26
                 },
-                "count": 27
+                "count": 28
             },
             {
                 "item": {
@@ -1147,7 +1163,7 @@
                     "value": 1,
                     "weight": 35
                 },
-                "count": 46
+                "count": 47
             },
             {
                 "item": {
@@ -1155,7 +1171,7 @@
                     "value": 1,
                     "weight": 35
                 },
-                "count": 26
+                "count": 27
             },
             {
                 "item": {
@@ -1201,7 +1217,7 @@
                 "item": {
                     "name": "CS:GO Fish",
                     "value": 0,
-                    "weight": 9
+                    "weight": 9.5
                 },
                 "count": 5
             },
@@ -1209,7 +1225,7 @@
                 "item": {
                     "name": "Mercenary Fish",
                     "value": 0,
-                    "weight": 7.6
+                    "weight": 7.8
                 },
                 "count": 13
             },
@@ -1217,7 +1233,7 @@
                 "item": {
                     "name": "Catfish",
                     "value": 0,
-                    "weight": 8
+                    "weight": 6.3
                 },
                 "count": 8
             },
@@ -1233,7 +1249,7 @@
                 "item": {
                     "name": "Nemo",
                     "value": 0,
-                    "weight": 1.6
+                    "weight": 1.62
                 },
                 "count": 1
             },
@@ -1241,7 +1257,7 @@
                 "item": {
                     "name": "Mogfish",
                     "value": 0,
-                    "weight": 3.2
+                    "weight": 3.3
                 },
                 "count": 4
             },
@@ -1249,7 +1265,7 @@
                 "item": {
                     "name": "Mercenary Contract",
                     "value": 0,
-                    "weight": 1.6
+                    "weight": 1.62
                 },
                 "count": 1
             },
@@ -1289,7 +1305,7 @@
                 "item": {
                     "name": "Bribe Fish",
                     "value": -50,
-                    "weight": 2.1
+                    "weight": 2.3
                 },
                 "count": 5
             }
@@ -1297,7 +1313,7 @@
     },
     {
         "username": "bongohead0258",
-        "value": 6178,
+        "value": 6214,
         "times_fished": 409,
         "last_fish_time": 1734573465,
         "items": [
@@ -1372,6 +1388,14 @@
                     "weight": 6.5
                 },
                 "count": 6
+            },
+            {
+                "item": {
+                    "name": "Swordfish",
+                    "value": 40,
+                    "weight": 7.3
+                },
+                "count": 1
             },
             {
                 "item": {
@@ -1451,7 +1475,7 @@
                     "value": 5,
                     "weight": 26
                 },
-                "count": 36
+                "count": 35
             },
             {
                 "item": {
@@ -1521,7 +1545,7 @@
                 "item": {
                     "name": "Mercenary Fish",
                     "value": 0,
-                    "weight": 7.6
+                    "weight": 7.8
                 },
                 "count": 0
             },
@@ -1537,7 +1561,7 @@
                 "item": {
                     "name": "CS:GO Fish",
                     "value": 0,
-                    "weight": 9
+                    "weight": 9.5
                 },
                 "count": 1
             },
@@ -1570,7 +1594,7 @@
     {
         "username": "zakkthecactus",
         "value": 16402,
-        "times_fished": 834,
+        "times_fished": 835,
         "last_fish_time": 1734573465,
         "items": [
             {
@@ -1859,13 +1883,13 @@
                     "value": 0,
                     "weight": 12
                 },
-                "count": 11
+                "count": 12
             },
             {
                 "item": {
                     "name": "Mercenary Fish",
                     "value": 0,
-                    "weight": 7.6
+                    "weight": 7.8
                 },
                 "count": 21
             },
@@ -1873,7 +1897,7 @@
                 "item": {
                     "name": "CS:GO Fish",
                     "value": 0,
-                    "weight": 9
+                    "weight": 9.5
                 },
                 "count": 10
             },
@@ -1881,7 +1905,7 @@
                 "item": {
                     "name": "Catfish",
                     "value": 0,
-                    "weight": 8
+                    "weight": 6.3
                 },
                 "count": 10
             },
@@ -1897,7 +1921,7 @@
                 "item": {
                     "name": "Nemo",
                     "value": 0,
-                    "weight": 1.6
+                    "weight": 1.62
                 },
                 "count": 7
             },
@@ -1905,7 +1929,7 @@
                 "item": {
                     "name": "Mercenary Contract",
                     "value": 0,
-                    "weight": 1.6
+                    "weight": 1.62
                 },
                 "count": 2
             },
@@ -1913,7 +1937,7 @@
                 "item": {
                     "name": "Mogfish",
                     "value": 0,
-                    "weight": 3.2
+                    "weight": 3.3
                 },
                 "count": 1
             },
@@ -1921,7 +1945,7 @@
                 "item": {
                     "name": "Fish Soap",
                     "value": 0,
-                    "weight": 1.4
+                    "weight": 1.45
                 },
                 "count": 2
             },
@@ -1961,7 +1985,7 @@
                 "item": {
                     "name": "Bribe Fish",
                     "value": -50,
-                    "weight": 2.1
+                    "weight": 2.3
                 },
                 "count": 2
             }
@@ -1969,8 +1993,8 @@
     },
     {
         "username": "oh.noes",
-        "value": 25378,
-        "times_fished": 1744,
+        "value": 25372,
+        "times_fished": 1741,
         "last_fish_time": 1734573465,
         "items": [
             {
@@ -2171,7 +2195,7 @@
                     "value": 4,
                     "weight": 28
                 },
-                "count": 108
+                "count": 107
             },
             {
                 "item": {
@@ -2195,7 +2219,7 @@
                     "value": 1,
                     "weight": 35
                 },
-                "count": 232
+                "count": 231
             },
             {
                 "item": {
@@ -2235,7 +2259,7 @@
                     "value": 0.5,
                     "weight": 35
                 },
-                "count": 29
+                "count": 28
             },
             {
                 "item": {
@@ -2249,7 +2273,7 @@
                 "item": {
                     "name": "CS:GO Fish",
                     "value": 0,
-                    "weight": 9
+                    "weight": 9.5
                 },
                 "count": 10
             },
@@ -2257,7 +2281,7 @@
                 "item": {
                     "name": "Mercenary Fish",
                     "value": 0,
-                    "weight": 7.6
+                    "weight": 7.8
                 },
                 "count": 12
             },
@@ -2273,7 +2297,7 @@
                 "item": {
                     "name": "Mogfish",
                     "value": 0,
-                    "weight": 3.2
+                    "weight": 3.3
                 },
                 "count": 6
             },
@@ -2281,7 +2305,7 @@
                 "item": {
                     "name": "Catfish",
                     "value": 0,
-                    "weight": 8
+                    "weight": 6.3
                 },
                 "count": 9
             },
@@ -2289,7 +2313,7 @@
                 "item": {
                     "name": "Fish Soap",
                     "value": 0,
-                    "weight": 1.4
+                    "weight": 1.45
                 },
                 "count": 1
             },
@@ -2297,7 +2321,7 @@
                 "item": {
                     "name": "Nemo",
                     "value": 0,
-                    "weight": 1.6
+                    "weight": 1.62
                 },
                 "count": 2
             },
@@ -2305,7 +2329,7 @@
                 "item": {
                     "name": "Mercenary Contract",
                     "value": 0,
-                    "weight": 1.6
+                    "weight": 1.62
                 },
                 "count": 1
             },
@@ -2345,7 +2369,7 @@
                 "item": {
                     "name": "Bribe Fish",
                     "value": -50,
-                    "weight": 2.1
+                    "weight": 2.3
                 },
                 "count": 3
             }
@@ -2353,9 +2377,9 @@
     },
     {
         "username": "jamescheung24578",
-        "value": 48035,
+        "value": 48148,
         "times_fished": 2852,
-        "last_fish_time": 1734573465,
+        "last_fish_time": 1734573739,
         "items": [
             {
                 "item": {
@@ -2459,7 +2483,7 @@
                     "value": 60,
                     "weight": 5
                 },
-                "count": 41
+                "count": 42
             },
             {
                 "item": {
@@ -2467,7 +2491,7 @@
                     "value": 50,
                     "weight": 5.5
                 },
-                "count": 39
+                "count": 40
             },
             {
                 "item": {
@@ -2571,7 +2595,7 @@
                     "value": 4,
                     "weight": 28
                 },
-                "count": 160
+                "count": 161
             },
             {
                 "item": {
@@ -2579,7 +2603,7 @@
                     "value": 2,
                     "weight": 32
                 },
-                "count": 192
+                "count": 193
             },
             {
                 "item": {
@@ -2603,7 +2627,7 @@
                     "value": 1,
                     "weight": 38
                 },
-                "count": 126
+                "count": 125
             },
             {
                 "item": {
@@ -2627,7 +2651,7 @@
                     "value": 1,
                     "weight": 35
                 },
-                "count": 135
+                "count": 134
             },
             {
                 "item": {
@@ -2635,7 +2659,7 @@
                     "value": 0.5,
                     "weight": 35
                 },
-                "count": 82
+                "count": 81
             },
             {
                 "item": {
@@ -2643,13 +2667,13 @@
                     "value": 0,
                     "weight": 12
                 },
-                "count": 63
+                "count": 62
             },
             {
                 "item": {
                     "name": "Mercenary Fish",
                     "value": 0,
-                    "weight": 7.6
+                    "weight": 7.8
                 },
                 "count": 43
             },
@@ -2657,7 +2681,7 @@
                 "item": {
                     "name": "Fish Soap",
                     "value": 0,
-                    "weight": 1.4
+                    "weight": 1.45
                 },
                 "count": 8
             },
@@ -2665,7 +2689,7 @@
                 "item": {
                     "name": "CS:GO Fish",
                     "value": 0,
-                    "weight": 9
+                    "weight": 9.5
                 },
                 "count": 37
             },
@@ -2673,7 +2697,7 @@
                 "item": {
                     "name": "Catfish",
                     "value": 0,
-                    "weight": 8
+                    "weight": 6.3
                 },
                 "count": 38
             },
@@ -2683,13 +2707,13 @@
                     "value": 0,
                     "weight": 6.2
                 },
-                "count": 37
+                "count": 36
             },
             {
                 "item": {
                     "name": "Mogfish",
                     "value": 0,
-                    "weight": 3.2
+                    "weight": 3.3
                 },
                 "count": 20
             },
@@ -2697,7 +2721,7 @@
                 "item": {
                     "name": "Nemo",
                     "value": 0,
-                    "weight": 1.6
+                    "weight": 1.62
                 },
                 "count": 7
             },
@@ -2705,9 +2729,17 @@
                 "item": {
                     "name": "Mercenary Contract",
                     "value": 0,
-                    "weight": 1.6
+                    "weight": 1.62
                 },
                 "count": 5
+            },
+            {
+                "item": {
+                    "name": "Mr. Beast Fish",
+                    "value": 0,
+                    "weight": 6.3
+                },
+                "count": 1
             },
             {
                 "item": {
@@ -2745,7 +2777,7 @@
                 "item": {
                     "name": "Bribe Fish",
                     "value": -50,
-                    "weight": 2.1
+                    "weight": 2.3
                 },
                 "count": 1
             }
@@ -2769,8 +2801,8 @@
     },
     {
         "username": "mee.5",
-        "value": 250,
-        "times_fished": 59,
+        "value": 248,
+        "times_fished": 58,
         "last_fish_time": 1734573465,
         "items": [
             {
@@ -2883,7 +2915,7 @@
                     "value": 1,
                     "weight": 35
                 },
-                "count": 11
+                "count": 10
             },
             {
                 "item": {
@@ -2945,8 +2977,8 @@
     },
     {
         "username": "hiyakabi",
-        "value": 101,
-        "times_fished": 14,
+        "value": 102,
+        "times_fished": 15,
         "last_fish_time": 1734573465,
         "items": [
             {
@@ -3031,6 +3063,14 @@
             },
             {
                 "item": {
+                    "name": "Floating Wood",
+                    "value": 1,
+                    "weight": 38
+                },
+                "count": 1
+            },
+            {
+                "item": {
                     "name": "Viola",
                     "value": -1,
                     "weight": 20
@@ -3041,9 +3081,9 @@
     },
     {
         "username": "m05hp0t",
-        "value": 16604,
-        "times_fished": 868,
-        "last_fish_time": 1734573465,
+        "value": 16612,
+        "times_fished": 870,
+        "last_fish_time": 1734573543,
         "items": [
             {
                 "item": {
@@ -3243,7 +3283,7 @@
                     "value": 8,
                     "weight": 20
                 },
-                "count": 29
+                "count": 30
             },
             {
                 "item": {
@@ -3299,7 +3339,7 @@
                     "value": 1,
                     "weight": 35
                 },
-                "count": 54
+                "count": 55
             },
             {
                 "item": {
@@ -3329,7 +3369,7 @@
                 "item": {
                     "name": "Mercenary Fish",
                     "value": 0,
-                    "weight": 7.6
+                    "weight": 7.8
                 },
                 "count": 24
             },
@@ -3337,7 +3377,7 @@
                 "item": {
                     "name": "Mogfish",
                     "value": 0,
-                    "weight": 3.2
+                    "weight": 3.3
                 },
                 "count": 7
             },
@@ -3345,7 +3385,7 @@
                 "item": {
                     "name": "CS:GO Fish",
                     "value": 0,
-                    "weight": 9
+                    "weight": 9.5
                 },
                 "count": 12
             },
@@ -3369,7 +3409,7 @@
                 "item": {
                     "name": "Mercenary Contract",
                     "value": 0,
-                    "weight": 1.6
+                    "weight": 1.62
                 },
                 "count": 4
             },
@@ -3377,7 +3417,7 @@
                 "item": {
                     "name": "Catfish",
                     "value": 0,
-                    "weight": 8
+                    "weight": 6.3
                 },
                 "count": 9
             },
@@ -3385,7 +3425,7 @@
                 "item": {
                     "name": "Nemo",
                     "value": 0,
-                    "weight": 1.6
+                    "weight": 1.62
                 },
                 "count": 3
             },
@@ -3393,7 +3433,7 @@
                 "item": {
                     "name": "Mr. Beast Fish",
                     "value": 0,
-                    "weight": 8
+                    "weight": 6.3
                 },
                 "count": 1
             },
@@ -3433,7 +3473,7 @@
                 "item": {
                     "name": "Bribe Fish",
                     "value": -50,
-                    "weight": 2.1
+                    "weight": 2.3
                 },
                 "count": 2
             }
@@ -3489,7 +3529,7 @@
     },
     {
         "username": "paliopolis",
-        "value": 20658,
+        "value": 20686,
         "times_fished": 867,
         "last_fish_time": 1734573465,
         "items": [
@@ -3619,7 +3659,7 @@
                     "value": 40,
                     "weight": 7.3
                 },
-                "count": 13
+                "count": 14
             },
             {
                 "item": {
@@ -3667,7 +3707,7 @@
                     "value": 10,
                     "weight": 15
                 },
-                "count": 29
+                "count": 28
             },
             {
                 "item": {
@@ -3715,7 +3755,7 @@
                     "value": 2,
                     "weight": 32
                 },
-                "count": 80
+                "count": 79
             },
             {
                 "item": {
@@ -3747,7 +3787,7 @@
                     "value": 1,
                     "weight": 35
                 },
-                "count": 14
+                "count": 15
             },
             {
                 "item": {
@@ -3785,7 +3825,7 @@
                 "item": {
                     "name": "Mercenary Fish",
                     "value": 0,
-                    "weight": 7.6
+                    "weight": 7.8
                 },
                 "count": 13
             },
@@ -3801,7 +3841,7 @@
                 "item": {
                     "name": "Nemo",
                     "value": 0,
-                    "weight": 1.6
+                    "weight": 1.62
                 },
                 "count": 1
             },
@@ -3809,7 +3849,7 @@
                 "item": {
                     "name": "CS:GO Fish",
                     "value": 0,
-                    "weight": 9
+                    "weight": 9.5
                 },
                 "count": 11
             },
@@ -3817,7 +3857,7 @@
                 "item": {
                     "name": "Mogfish",
                     "value": 0,
-                    "weight": 3.2
+                    "weight": 3.3
                 },
                 "count": 2
             },
@@ -3825,7 +3865,7 @@
                 "item": {
                     "name": "Catfish",
                     "value": 0,
-                    "weight": 8
+                    "weight": 6.3
                 },
                 "count": 3
             },
@@ -3833,7 +3873,7 @@
                 "item": {
                     "name": "Fish Soap",
                     "value": 0,
-                    "weight": 1.4
+                    "weight": 1.45
                 },
                 "count": 2
             },
@@ -3873,7 +3913,7 @@
                 "item": {
                     "name": "Bribe Fish",
                     "value": -50,
-                    "weight": 2.1
+                    "weight": 2.3
                 },
                 "count": 3
             }
@@ -3881,7 +3921,7 @@
     },
     {
         "username": "adityaxad",
-        "times_fished": 256,
+        "times_fished": 258,
         "last_fish_time": 1734573465,
         "items": [
             {
@@ -4098,7 +4138,7 @@
                     "value": 1,
                     "weight": 35
                 },
-                "count": 11
+                "count": 12
             },
             {
                 "item": {
@@ -4144,7 +4184,7 @@
                 "item": {
                     "name": "Mercenary Fish",
                     "value": 0,
-                    "weight": 7.6
+                    "weight": 7.8
                 },
                 "count": 5
             },
@@ -4152,7 +4192,7 @@
                 "item": {
                     "name": "CS:GO Fish",
                     "value": 0,
-                    "weight": 9
+                    "weight": 9.5
                 },
                 "count": 7
             },
@@ -4160,7 +4200,7 @@
                 "item": {
                     "name": "Catfish",
                     "value": 0,
-                    "weight": 8
+                    "weight": 6.3
                 },
                 "count": 3
             },
@@ -4176,7 +4216,7 @@
                 "item": {
                     "name": "Mogfish",
                     "value": 0,
-                    "weight": 3.2
+                    "weight": 3.3
                 },
                 "count": 2
             },
@@ -4184,7 +4224,15 @@
                 "item": {
                     "name": "Mercenary Contract",
                     "value": 0,
-                    "weight": 1.6
+                    "weight": 1.62
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Mr. Beast Fish",
+                    "value": 0,
+                    "weight": 6.3
                 },
                 "count": 1
             },
@@ -4488,7 +4536,7 @@
                 "item": {
                     "name": "Mercenary Fish",
                     "value": 0,
-                    "weight": 7.6
+                    "weight": 7.8
                 },
                 "count": 18
             },
@@ -4496,7 +4544,7 @@
                 "item": {
                     "name": "Fish Soap",
                     "value": 0,
-                    "weight": 1.4
+                    "weight": 1.45
                 },
                 "count": 4
             },
@@ -4512,7 +4560,7 @@
                 "item": {
                     "name": "CS:GO Fish",
                     "value": 0,
-                    "weight": 9
+                    "weight": 9.5
                 },
                 "count": 15
             },
@@ -4520,7 +4568,7 @@
                 "item": {
                     "name": "Catfish",
                     "value": 0,
-                    "weight": 8
+                    "weight": 6.3
                 },
                 "count": 3
             },
@@ -4536,7 +4584,7 @@
                 "item": {
                     "name": "Mogfish",
                     "value": 0,
-                    "weight": 3.2
+                    "weight": 3.3
                 },
                 "count": 3
             },
@@ -4544,7 +4592,7 @@
                 "item": {
                     "name": "Nemo",
                     "value": 0,
-                    "weight": 1.6
+                    "weight": 1.62
                 },
                 "count": 2
             },
@@ -4751,7 +4799,7 @@
                 "item": {
                     "name": "Fish Soap",
                     "value": 0,
-                    "weight": 1.4
+                    "weight": 1.45
                 },
                 "count": 1
             },
@@ -4759,7 +4807,7 @@
                 "item": {
                     "name": "Mercenary Fish",
                     "value": 0,
-                    "weight": 7.6
+                    "weight": 7.8
                 },
                 "count": 1
             },
@@ -4775,7 +4823,7 @@
                 "item": {
                     "name": "Bribe Fish",
                     "value": -50,
-                    "weight": 2.1
+                    "weight": 2.3
                 },
                 "count": 1
             }
