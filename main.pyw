@@ -1,4 +1,4 @@
-import discord, os, random, time, logging, sys, json_utils
+import discord, os, random, time, logging, sys, json_utils, asyncio
 from dotenv import load_dotenv
 from pathlib import Path
 from string_utils import *
@@ -66,7 +66,11 @@ SPEECH_BUBBLES = ['https://cdn.discordapp.com/attachments/1087868146288951389/12
                   'https://media.discordapp.net/attachments/953024451132407838/1062386011348414485/attachment-1.gif?ex=67224a93&is=6720f913&hm=71741513abd15a477e945630c388f5bc93fc91e4882838211f86eb402666fe50&',
                   'https://cdn.discordapp.com/attachments/1154140211157143552/1252355713083244584/ummmm.gif?ex=672293a5&is=67214225&hm=3dd9e871971596e7398a2e4d6a0718ba431f7dfff266ac54643c43df6b0209b1&',
                   'https://cdn.discordapp.com/attachments/741568423485767725/1268793140609810544/attachment-12.gif?ex=672263f1&is=67211271&hm=b1fd6b96e8b6009bb814c081c51810f56461924e792ec20e2fa5f7d08bead232&',
-                  'https://media.discordapp.net/attachments/920152531995353128/1014407060819021844/attachment.gif?width=322&height=430&ex=67226d72&is=67211bf2&hm=d85b77f8168891c001e0e70b8dde760ad6c2769eb8c90f9cbe93e54be5392258&']
+                  'https://media.discordapp.net/attachments/920152531995353128/1014407060819021844/attachment.gif?width=322&height=430&ex=67226d72&is=67211bf2&hm=d85b77f8168891c001e0e70b8dde760ad6c2769eb8c90f9cbe93e54be5392258&',
+                  'https://media.discordapp.net/attachments/1160028122205401138/1301791814751096885/watermark.gif?ex=676462da&is=6763115a&hm=e3961936b46d361a6e4ee485cb11e770ca020e41f32a332b2bc4885c9e4a2c6c&=&width=1440&height=623',
+                  'https://media.discordapp.net/attachments/1036326207748325508/1098787163832864798/attachment.gif?ex=6764ccca&is=67637b4a&hm=773ef5c0cc72752926e2c696f598154db794db496a6b099bfac02fa679647fc4&=&width=640&height=647',
+                  'https://media.discordapp.net/attachments/820388124001173516/1111589025573261404/attachment-9-1.gif?ex=67649234&is=676340b4&hm=c44ab4beb02a7dc12700ca1c86ae2d1e8e8903ce8a759af53fdf06cb6c4e32e1&=&width=480&height=535',
+                  'https://media.discordapp.net/attachments/1024047864864833647/1084661598775431178/unknown-1-1.gif?ex=6764d3d5&is=67638255&hm=fa8c4d0b2d3426e14adaa6ed2da10014519fc6c5263ff9f73f33975ee7575b2e&=&width=513&height=700']
 NEGATIVE_EMOJIS = ['🤥', '🩴', '🎐', '🚮', '👹', '⛽', '🤓']
 FUNNY_EMOJIS = ['😹', '😂', '🤣']
 
@@ -466,6 +470,12 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
                                         'quiero comer pescado', 'lets go gambling', 'let\'s go gambling',
                                         '.fish', 'let’s go gambling', '去钓鱼', '><>', '<><', '2+2', 'godfisa',
                                         'zxcvbnm', 'qwertyuiop']):
+        if random_range(1, 350) == 1:
+            jumpscare = await message.channel.send('https://tenor.com/view/oceanmam-fnaf-jumpscare-gif-22911379')
+            await asyncio.sleep(0.27)
+            await jumpscare.delete()
+            await asyncio.sleep(0.5)
+
         try:
             await server_instance.reply_to_message(message, json_utils.fish_event(message.author.name),
                                                    bypass_cd=True)

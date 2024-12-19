@@ -6,7 +6,8 @@ FISHING_ENABLED = True
 FISHING_COOLDOWN = 10
 RARE_ITEM_WEIGHT_THRESHOLD = 1.62
 SUPER_RARE_ITEM_WEIGHT_THRESHOLD = 0.501
-TRASH_CUTOFF = 10
+TRASH_CUTOFF = 10 # for highlighting items in inventory
+WEIGHT_CUTOFF = 13 # for highlighting items in inventory
 
 FISHING_ITEMS_PATH = Path("trackers\\fishing_items.json")
 FISHING_DATABASE_PATH = Path("trackers\\fishing.json")
@@ -204,7 +205,6 @@ def fish_event(username: str, is_extra_fish=False, force_fish_name=None, factor=
 
         user_specials = [special for special in get_active_specials(username) if special != 'catfish']
         activated_specials = []
-        # return user_specials[0] if len(user_specials) > 0 else None
 
         for n in range(len(groups)):
             for special in groups[n]:
@@ -217,16 +217,20 @@ def fish_event(username: str, is_extra_fish=False, force_fish_name=None, factor=
                     activated_specials.append(None)
 
         if activated_specials[4] is not None:
+            # force fish powerups cannot use up powerups of another kind unless it is mrbeast
             activated_specials[2] = None
             activated_specials[3] = None
 
         if other_player_with_catfish():
+            # mrbeast fish and bribe fish cannot be used if the user is being catfished
             activated_specials[1] = None
+            activated_specials[3] = None
 
         return activated_specials
 
     def handle_specials() -> None:
         nonlocal factor, force_fish_name, bribe_active, username, bypass_fish_cd
+        # i should really put this into a class or something but ehhh lazy
 
         for active_special in active_specials:
             if active_special == 'mrbeast_fish':
@@ -536,7 +540,7 @@ def profile_to_string(username: str) -> str:
                        f"Items caught: **{profile['times_fished']}**\n\n")
 
             for stack in profile['items']:
-                if stack['item']['value'] > TRASH_CUTOFF:
+                if stack['item']['weight'] <= WEIGHT_CUTOFF:
                     output += f"**{stack['count']}x** *{stack['item']['name']}*"
                 else:
                     output += f"{stack['count']}x {stack['item']['name']}"
@@ -583,7 +587,7 @@ def universal_profile_to_string() -> str:
                         temp_total += stack['count']
 
         if temp_total > 0:
-            if fish.value > TRASH_CUTOFF:
+            if fish.weight <= WEIGHT_CUTOFF:
                 output += f"**{temp_total}x** *{temp_name}*"
             else:
                 output += f"{temp_total}x {temp_name}"

@@ -44,7 +44,7 @@
     "mrbeast_fish": [
         {
             "username": "epicmushroom.",
-            "count": 3
+            "count": 0
         },
         {
             "username": "m05hp0t",
@@ -97,11 +97,11 @@
         },
         {
             "username": "zakkthecactus",
-            "count": 11
+            "count": 8
         },
         {
             "username": "phospholipase_c",
-            "count": 8
+            "count": 7
         },
         {
             "username": "artemis3548",
@@ -149,7 +149,7 @@
     "fishing_manifesto": [
         {
             "username": "epicmushroom.",
-            "count": 5
+            "count": 0
         },
         {
             "username": "test_user",
@@ -177,22 +177,26 @@
         },
         {
             "username": "artemis3548",
-            "count": 1
+            "count": 0
         },
         {
             "username": "m05hp0t",
             "count": 0
+        },
+        {
+            "username": "jesusfreak72",
+            "count": 8
         }
     ],
     "bribe_fish": [
         {
             "username": "epicmushroom.",
-            "count": 67,
+            "count": 43,
             "effect": "immune to cop fish cooldown increases"
         },
         {
             "username": "artemis3548",
-            "count": 32
+            "count": 28
         },
         {
             "username": "jamescheung24578",
@@ -204,7 +208,7 @@
         },
         {
             "username": "oh.noes",
-            "count": 31
+            "count": 11
         },
         {
             "username": "phospholipase_c",
