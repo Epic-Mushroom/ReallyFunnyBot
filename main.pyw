@@ -470,7 +470,7 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
                                         'quiero comer pescado', 'lets go gambling', 'let\'s go gambling',
                                         '.fish', 'let’s go gambling', '去钓鱼', '><>', '<><', '2+2', 'godfisa',
                                         'zxcvbnm', 'qwertyuiop']):
-        if random_range(1, 350) == 1:
+        if random_range(1, 750) == 1:
             jumpscare = await message.channel.send('https://tenor.com/view/oceanmam-fnaf-jumpscare-gif-22911379')
             await asyncio.sleep(0.27)
             await jumpscare.delete()
@@ -556,9 +556,9 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
         embed = discord.Embed(description='Hello\nthis\nis\nsupposed\nto\nbe\na description')
         await message.channel.send(embed=embed)
 
-    if random_range(1, 110) == 1:
+    if random_range(1, 210) == 1:
         await server_instance.reply_to_message(message, f"{random.choice(BAITS)}")
-    elif index_of_pronoun > -1 and random_range(1, 18) == 1:
+    elif index_of_pronoun > -1 and random_range(1, 27) == 1:
         await server_instance.reply_to_message(message, f"{random.choice(BAITS[4:])}")
 
 

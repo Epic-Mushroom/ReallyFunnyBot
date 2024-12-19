@@ -182,7 +182,7 @@ def fish_event(username: str, is_extra_fish=False, force_fish_name=None, factor=
         catfish_list = specials_dict['catfish']
 
         for user_status in catfish_list:
-            if user_status['username'] != username and user_status['count'] > 0:
+            if user_status['username'] != original_user and user_status['count'] > 0:
                 return user_status['username']
 
         return None
