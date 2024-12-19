@@ -191,7 +191,7 @@ def fish_event(username: str, is_extra_fish=False, force_fish_name=None, factor=
 
         list_of_profiles = fishing_database()
         list_of_profiles = [profile for profile in list_of_profiles if not profile['username'] in undonatable]
-        weights = [max(profile['value'], 0) ** 0.25 for profile in list_of_profiles if not profile['username'] in undonatable]
+        weights = [max(profile['value'], 0) ** 0.37 for profile in list_of_profiles if not profile['username'] in undonatable]
 
         return random.choices(list_of_profiles, weights=weights, k=1)[0]['username']
 
