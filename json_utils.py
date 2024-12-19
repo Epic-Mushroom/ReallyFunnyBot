@@ -201,7 +201,8 @@ def fish_event(username: str, is_extra_fish=False, force_fish_name=None, factor=
                   ['mrbeast_fish'],
                   ['mogfish', 'fishing_manifesto', 'nemo'],
                   ['bribe_fish'],
-                  ['unregistered_firearm', 'mercenary_contract']]
+                  ['unregistered_firearm', 'mercenary_contract'],
+                  ['caffeine_bait']]
 
         user_specials = [special for special in get_active_specials(username) if special != 'catfish']
         activated_specials = []
@@ -217,7 +218,7 @@ def fish_event(username: str, is_extra_fish=False, force_fish_name=None, factor=
                     activated_specials.append(None)
 
         if activated_specials[4] is not None:
-            # force fish powerups cannot use up powerups of another kind unless it is mrbeast
+            # force fish powerups cannot use up powerups of another kind unless it is mrbeast or caffeine
             activated_specials[2] = None
             activated_specials[3] = None
 
@@ -229,7 +230,7 @@ def fish_event(username: str, is_extra_fish=False, force_fish_name=None, factor=
         return activated_specials
 
     def handle_specials() -> None:
-        nonlocal factor, force_fish_name, bribe_active, username, bypass_fish_cd
+        nonlocal factor, force_fish_name, bribe_active, caffeine_active, username, bypass_fish_cd
         # i should really put this into a class or something but ehhh lazy
 
         for active_special in active_specials:
@@ -244,17 +245,21 @@ def fish_event(username: str, is_extra_fish=False, force_fish_name=None, factor=
                 factor = 0.04
             elif active_special == 'mercenary_contract':
                 force_fish_name = 'Mercenary Fish'
+            elif active_special == 'unregistered_firearm':
+                force_fish_name = 'CS:GO Fish'
             elif active_special == 'bribe_fish':
                 bribe_active = True
+            elif active_special == 'caffeine_bait':
+                caffeine_active = True
 
-    def catch_count() -> int:
+    def catch_count(boost=False) -> int:
         random_num = random_range(1, 500)
         count = 1
 
-        insanely_lucky = random_num <= 2 # 0.4% chance
-        super_lucky = random_num <= 8 # 1.6% chance
-        lucky = random_num <= 45  # 9% chance
-        unlucky = random_num >= 471  # 6% chance
+        insanely_lucky = random_num <= 2  # 0.4% chance
+        super_lucky = random_num <= 8  # 1.6% chance
+        lucky = random_num <= (150 if boost else 45)  # 9% chance without boost, 30% with
+        unlucky = random_num >= 471 and not boost  # 6% chance
 
         if insanely_lucky:
             for j in range(4):
@@ -286,6 +291,7 @@ def fish_event(username: str, is_extra_fish=False, force_fish_name=None, factor=
     output = "(test_user)" if is_test_user else ""
 
     bribe_active = False
+    caffeine_active = False
 
     active_specials = activate_special()
     handle_specials()
@@ -297,7 +303,7 @@ def fish_event(username: str, is_extra_fish=False, force_fish_name=None, factor=
 
     if is_test_user or current_time - last_fish_time >= FISHING_COOLDOWN:
         caught_fish = []
-        caught_fish_count = catch_count()
+        caught_fish_count = catch_count(boost=caffeine_active)
 
         very_lucky = caught_fish_count >= 4
         lucky = caught_fish_count >= 2
@@ -339,41 +345,46 @@ def fish_event(username: str, is_extra_fish=False, force_fish_name=None, factor=
                 output += f'You caught the Cop Fish! ({random_num + 19} seconds added to next cooldown)'
     
             elif one_fish.name == 'Catfish' and not is_test_user:
-                output += f'You caught: **Catfish** (next 4 fish caught by other players will be transferred to you)'
+                output += f'You caught: **Catfish** (next 4 catches by other players will be transferred to you)'
                 add_special(username, 'catfish', count=4)
 
             elif one_fish.name == 'Fishing Manifesto':
-                output += (f'You caught: **{one_fish.name}** (next 8 fish caught by you are more likely to be rare items;'
+                output += (f'You caught: **{one_fish.name}** (next 8 catches by you are more likely to include rare items;'
                            f' the luck boost is more if you are lower on the leaderboard)')
                 add_special(username, 'fishing_manifesto', count=8)
 
             elif one_fish.name == 'Mr. Beast Fish':
                 output += (
-                    f'You caught: **{one_fish.name}** (next 4 fish caught by you will be donated to a random player)')
+                    f'You caught: **{one_fish.name}** (next 4 catches by you will be donated to a random player)')
                 add_special(username, 'mrbeast_fish', count=4)
 
+            elif one_fish.name == 'Caffeinated Worms':
+                output += (
+                    f'You caught: **{one_fish.name}** (next 30 catches are more likely to reel up multiple items)')
+                add_special(username, 'caffeine_bait', count=30)
+
             elif one_fish.name == 'Mercenary Contract':
-                output += f'You caught: **{one_fish.name}** (next 4 fish are guaranteed Mercenary Fish)'
+                output += f'You caught: **{one_fish.name}** (next 4 catches are guaranteed to include Mercenary Fish)'
                 add_special(username, 'mercenary_contract', count=4)
 
             elif one_fish.name == 'Unregistered Firearm':
-                output += f'You caught: **{one_fish.name}** (+177.6 moneys, next 3 fish are guaranteed CS:GO Fish)'
+                output += f'You caught: **{one_fish.name}** (+177.6 moneys, next 4 catches are guaranteed to include CS:GO Fish)'
                 add_special(username, 'unregistered_firearm', count=3)
     
             elif one_fish.name == 'Nemo':
-                output += f'You caught: **Nemo** (next 12 fish caught by you are much more likely to be rare items)'
+                output += f'You caught: **Nemo** (next 12 catches by you are much more likely to include rare items)'
                 add_special(username, 'nemo', count=12)
 
             elif one_fish.name == 'Bribe Fish':
-                output += f'You caught: **{one_fish.name}** (-50 moneys, but immune to Cop Fish for next 40 fish)'
+                output += f'You caught: **{one_fish.name}** (-50 moneys, but immune to Cop Fish for next 40 catches)'
                 add_special(username, 'bribe_fish', count=40)
 
             elif one_fish.name == 'Mogfish':
-                output += f'You caught: **{one_fish.name}** (next 12 fish caught by you are nearly guaranteed to be trash items)'
+                output += f'You caught: **{one_fish.name}** (next 12 catches by you are nearly guaranteed to include trash items)'
                 add_special(username, 'mogfish', count=12)
     
             elif one_fish.name == 'Fish Soap':
-                output += f'You caught: **Fish Soap** (all items with negative value removed)'
+                output += f'You caught: **Fish Soap** (all items with negative value in your inventory removed)'
                 fish_soap(username)
     
             elif one_fish.name == 'Jonklerfish' and not is_test_user:

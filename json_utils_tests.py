@@ -1,8 +1,11 @@
 import json_utils
 import unittest
 
-from json_utils import update_inventory
-
+def get_average_value() -> float:
+    fish_items = json_utils.fishing_items[:]
+    weight_sum = sum(fish.weight for fish in fish_items)
+    a_sum = sum(fish.weight * fish.value for fish in fish_items)
+    return a_sum / weight_sum
 
 class FishingTests(unittest.TestCase):
     def setUp(self):
@@ -19,10 +22,6 @@ class FishingTests(unittest.TestCase):
         ]
         self.fishing_items = json_utils.fishing_items[:]
         self.old_boot = self.fishing_items[1]
-
-    def test_add_fish_to_inv(self):
-        update_inventory(self.nonempty_inv, self.old_boot)
-        # print(self.nonempty_inv)
 
     def test_percents_of_each_fish(self):
         weight_sum = sum(fish.weight for fish in self.fishing_items)

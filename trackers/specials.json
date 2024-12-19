@@ -52,7 +52,7 @@
         },
         {
             "username": "jamescheung24578",
-            "count": 0
+            "count": 4
         },
         {
             "username": "adityaxad",
@@ -61,11 +61,23 @@
         {
             "username": "potatochipbag",
             "count": 0
+        },
+        {
+            "username": "paliopolis",
+            "count": 0
         }
     ],
     "unregistered_firearm": [
         {
             "username": "test_user",
+            "count": 0
+        },
+        {
+            "username": "artemis3548",
+            "count": 0
+        },
+        {
+            "username": "paliopolis",
             "count": 0
         }
     ],
@@ -85,7 +97,7 @@
         },
         {
             "username": "paliopolis",
-            "count": 0
+            "count": 11
         },
         {
             "username": "oh.noes",
@@ -109,7 +121,7 @@
         },
         {
             "username": "m05hp0t",
-            "count": 0
+            "count": 11
         },
         {
             "username": "potatochipbag",
@@ -144,6 +156,10 @@
         {
             "username": "oh.noes",
             "count": 0
+        },
+        {
+            "username": "paliopolis",
+            "count": 0
         }
     ],
     "fishing_manifesto": [
@@ -165,11 +181,11 @@
         },
         {
             "username": "paliopolis",
-            "count": 9
+            "count": 0
         },
         {
             "username": "oh.noes",
-            "count": 13
+            "count": 12
         },
         {
             "username": "adityaxad",
@@ -181,7 +197,7 @@
         },
         {
             "username": "m05hp0t",
-            "count": 0
+            "count": 2
         },
         {
             "username": "jesusfreak72",
@@ -191,12 +207,12 @@
     "bribe_fish": [
         {
             "username": "epicmushroom.",
-            "count": 18,
+            "count": 0,
             "effect": "immune to cop fish cooldown increases"
         },
         {
             "username": "artemis3548",
-            "count": 18
+            "count": 11
         },
         {
             "username": "jamescheung24578",
@@ -204,7 +220,7 @@
         },
         {
             "username": "paliopolis",
-            "count": 81
+            "count": 69
         },
         {
             "username": "oh.noes",
@@ -227,7 +243,7 @@
             "count": 40
         }
     ],
-    "state_farm_insured_rod": [
+    "caffeine_bait": [
         {
             "username": "epicmushroom.",
             "count": 0
@@ -249,7 +265,7 @@
         },
         {
             "username": "paliopolis",
-            "count": 4
+            "count": 14
         },
         {
             "username": "jamescheung24578",

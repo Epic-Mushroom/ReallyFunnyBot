@@ -205,6 +205,11 @@
         "weight": 35
     },
     {
+        "name": "Caffeinated Worms",
+        "value": 0,
+        "weight": 1.1
+    },
+    {
         "name": "Mercenary Contract",
         "value": 0,
         "weight": 1.62
