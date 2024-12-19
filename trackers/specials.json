@@ -57,6 +57,10 @@
         {
             "username": "adityaxad",
             "count": 4
+        },
+        {
+            "username": "potatochipbag",
+            "count": 0
         }
     ],
     "unregistered_firearm": [
@@ -68,7 +72,7 @@
     "mogfish": [
         {
             "username": "epicmushroom.",
-            "count": 8,
+            "count": 0,
             "effect": "nearly guaranteed trash items"
         },
         {
@@ -85,7 +89,7 @@
         },
         {
             "username": "oh.noes",
-            "count": 4
+            "count": 0
         },
         {
             "username": "adityaxad",
@@ -183,12 +187,12 @@
     "bribe_fish": [
         {
             "username": "epicmushroom.",
-            "count": 0,
+            "count": 39,
             "effect": "immune to cop fish cooldown increases"
         },
         {
             "username": "artemis3548",
-            "count": 40
+            "count": 39
         },
         {
             "username": "jamescheung24578",
@@ -200,7 +204,7 @@
         },
         {
             "username": "oh.noes",
-            "count": 37
+            "count": 33
         },
         {
             "username": "phospholipase_c",
@@ -237,7 +241,7 @@
         },
         {
             "username": "zakkthecactus",
-            "count": 13
+            "count": 12
         },
         {
             "username": "paliopolis",

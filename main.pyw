@@ -76,6 +76,7 @@ ARAVIND_18TH_BIRTHDAY_UNIX_TIME = 1771135200
 KUSH_BIRTHDAY_UNIX_TIME = 1137852000
 EPIC_MUSHROOM_ID = 456943500249006108
 PALIOPOLIS_ID = 873412148880089102
+KUSH_ID = 873411125633491024
 JADEN_ID = 762393738676404224
 
 IMAGES = list(Path("images").iterdir())
@@ -529,6 +530,17 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
     if find_word_bool(message.content, ['catchjonklerfishdebug']):
         await server_instance.send_message(message, "that doesn't work anymore dumbass",
                                            bypass_cd=True)
+
+    if message.content.startswith('!spam '):
+        parts = message.content.split(' ')
+        times = int(parts[1])
+        kush = await client.fetch_user(KUSH_ID)
+
+        for i in range(times):
+            if len(parts) >= 3:
+                await kush.send(f'{parts[2]}')
+            else:
+                await kush.send('Hi')
 
     if find_word_bool(message.content, ['embedtestingthing']):
         embed = discord.Embed(description='Hello\nthis\nis\nsupposed\nto\nbe\na description')

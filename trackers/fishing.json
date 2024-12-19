@@ -1,9 +1,9 @@
 [
     {
         "username": "epicmushroom.",
-        "value": 56511,
-        "last_fish_time": 1734575422,
-        "times_fished": 3495,
+        "value": 56480,
+        "last_fish_time": 1734576403,
+        "times_fished": 3509,
         "items": [
             {
                 "item": {
@@ -195,7 +195,7 @@
                     "value": 10,
                     "weight": 15
                 },
-                "count": 104
+                "count": 105
             },
             {
                 "item": {
@@ -235,7 +235,7 @@
                     "value": 1,
                     "weight": 35
                 },
-                "count": 345
+                "count": 346
             },
             {
                 "item": {
@@ -243,7 +243,7 @@
                     "value": 1,
                     "weight": 35
                 },
-                "count": 339
+                "count": 342
             },
             {
                 "item": {
@@ -251,7 +251,7 @@
                     "value": 1,
                     "weight": 38
                 },
-                "count": 158
+                "count": 160
             },
             {
                 "item": {
@@ -259,7 +259,7 @@
                     "value": 1,
                     "weight": 35
                 },
-                "count": 164
+                "count": 166
             },
             {
                 "item": {
@@ -267,7 +267,7 @@
                     "value": 1,
                     "weight": 35
                 },
-                "count": 157
+                "count": 159
             },
             {
                 "item": {
@@ -283,7 +283,7 @@
                     "value": 0.5,
                     "weight": 35
                 },
-                "count": 84
+                "count": 85
             },
             {
                 "item": {
@@ -379,7 +379,7 @@
                     "value": -2,
                     "weight": 17
                 },
-                "count": 13
+                "count": 14
             },
             {
                 "item": {
@@ -403,7 +403,7 @@
                     "value": -50,
                     "weight": 2.3
                 },
-                "count": 0
+                "count": 1
             }
         ]
     },
@@ -697,9 +697,9 @@
     },
     {
         "username": "potatochipbag",
-        "value": 1002,
-        "times_fished": 115,
-        "last_fish_time": 1734574747,
+        "value": 1007,
+        "times_fished": 117,
+        "last_fish_time": 1734576879,
         "items": [
             {
                 "item": {
@@ -811,7 +811,7 @@
                     "value": 5,
                     "weight": 26
                 },
-                "count": 5
+                "count": 6
             },
             {
                 "item": {
@@ -927,6 +927,14 @@
             },
             {
                 "item": {
+                    "name": "Mr. Beast Fish",
+                    "value": 0,
+                    "weight": 6.3
+                },
+                "count": 1
+            },
+            {
+                "item": {
                     "name": "Viola",
                     "value": -1,
                     "weight": 20
@@ -954,8 +962,8 @@
     {
         "username": "artemis3548",
         "value": 6842,
-        "times_fished": 617,
-        "last_fish_time": 1734575164,
+        "times_fished": 618,
+        "last_fish_time": 1734576788,
         "items": [
             {
                 "item": {
@@ -1187,7 +1195,7 @@
                     "value": 1,
                     "weight": 35
                 },
-                "count": 23
+                "count": 24
             },
             {
                 "item": {
@@ -1321,8 +1329,8 @@
     },
     {
         "username": "bongohead0258",
-        "value": 6214,
-        "times_fished": 409,
+        "value": 6264,
+        "times_fished": 411,
         "last_fish_time": 1734574748,
         "items": [
             {
@@ -1387,7 +1395,7 @@
                     "value": 50,
                     "weight": 5.5
                 },
-                "count": 8
+                "count": 9
             },
             {
                 "item": {
@@ -1547,7 +1555,7 @@
                     "value": 0.5,
                     "weight": 35
                 },
-                "count": 1
+                "count": 2
             },
             {
                 "item": {
@@ -1601,9 +1609,9 @@
     },
     {
         "username": "zakkthecactus",
-        "value": 17486,
-        "times_fished": 836,
-        "last_fish_time": 1734575108,
+        "value": 17759,
+        "times_fished": 846,
+        "last_fish_time": 1734576866,
         "items": [
             {
                 "item": {
@@ -1675,7 +1683,7 @@
                     "value": 120,
                     "weight": 2
                 },
-                "count": 5
+                "count": 6
             },
             {
                 "item": {
@@ -1723,7 +1731,7 @@
                     "value": 45,
                     "weight": 6.5
                 },
-                "count": 11
+                "count": 13
             },
             {
                 "item": {
@@ -1731,7 +1739,7 @@
                     "value": 40,
                     "weight": 7.3
                 },
-                "count": 15
+                "count": 16
             },
             {
                 "item": {
@@ -1763,7 +1771,7 @@
                     "value": 15,
                     "weight": 13
                 },
-                "count": 13
+                "count": 14
             },
             {
                 "item": {
@@ -1803,7 +1811,7 @@
                     "value": 8,
                     "weight": 20
                 },
-                "count": 39
+                "count": 40
             },
             {
                 "item": {
@@ -1835,7 +1843,7 @@
                     "value": 1,
                     "weight": 35
                 },
-                "count": 92
+                "count": 93
             },
             {
                 "item": {
@@ -1859,7 +1867,7 @@
                     "value": 1,
                     "weight": 30
                 },
-                "count": 26
+                "count": 27
             },
             {
                 "item": {
@@ -1923,7 +1931,7 @@
                     "value": 0,
                     "weight": 6.2
                 },
-                "count": 10
+                "count": 11
             },
             {
                 "item": {
@@ -1956,14 +1964,22 @@
                     "weight": 1.45
                 },
                 "count": 3
+            },
+            {
+                "item": {
+                    "name": "Brawl Starfish",
+                    "value": -2,
+                    "weight": 19
+                },
+                "count": 1
             }
         ]
     },
     {
         "username": "oh.noes",
-        "value": 25379,
-        "times_fished": 1744,
-        "last_fish_time": 1734575382,
+        "value": 25384,
+        "times_fished": 1750,
+        "last_fish_time": 1734576687,
         "items": [
             {
                 "item": {
@@ -2187,7 +2203,7 @@
                     "value": 1,
                     "weight": 35
                 },
-                "count": 231
+                "count": 233
             },
             {
                 "item": {
@@ -2195,7 +2211,7 @@
                     "value": 1,
                     "weight": 38
                 },
-                "count": 43
+                "count": 44
             },
             {
                 "item": {
@@ -2203,7 +2219,7 @@
                     "value": 1,
                     "weight": 35
                 },
-                "count": 35
+                "count": 36
             },
             {
                 "item": {
@@ -2227,7 +2243,7 @@
                     "value": 0.5,
                     "weight": 35
                 },
-                "count": 28
+                "count": 30
             },
             {
                 "item": {
@@ -2345,9 +2361,9 @@
     },
     {
         "username": "jamescheung24578",
-        "value": 48251,
-        "times_fished": 2864,
-        "last_fish_time": 1734575509,
+        "value": 48360,
+        "times_fished": 2884,
+        "last_fish_time": 1734575764,
         "items": [
             {
                 "item": {
@@ -2475,7 +2491,7 @@
                     "value": 40,
                     "weight": 7.3
                 },
-                "count": 32
+                "count": 33
             },
             {
                 "item": {
@@ -2491,7 +2507,7 @@
                     "value": 20,
                     "weight": 10
                 },
-                "count": 57
+                "count": 58
             },
             {
                 "item": {
@@ -2515,7 +2531,7 @@
                     "value": 15,
                     "weight": 13
                 },
-                "count": 67
+                "count": 68
             },
             {
                 "item": {
@@ -2531,7 +2547,7 @@
                     "value": 10,
                     "weight": 15
                 },
-                "count": 92
+                "count": 93
             },
             {
                 "item": {
@@ -2539,7 +2555,7 @@
                     "value": 10,
                     "weight": 15
                 },
-                "count": 84
+                "count": 85
             },
             {
                 "item": {
@@ -2555,7 +2571,7 @@
                     "value": 8,
                     "weight": 20
                 },
-                "count": 115
+                "count": 116
             },
             {
                 "item": {
@@ -2571,7 +2587,7 @@
                     "value": 4,
                     "weight": 28
                 },
-                "count": 162
+                "count": 163
             },
             {
                 "item": {
@@ -2587,7 +2603,7 @@
                     "value": 1,
                     "weight": 35
                 },
-                "count": 256
+                "count": 257
             },
             {
                 "item": {
@@ -2595,7 +2611,7 @@
                     "value": 1,
                     "weight": 35
                 },
-                "count": 255
+                "count": 258
             },
             {
                 "item": {
@@ -2603,7 +2619,7 @@
                     "value": 1,
                     "weight": 38
                 },
-                "count": 127
+                "count": 128
             },
             {
                 "item": {
@@ -2611,7 +2627,7 @@
                     "value": 1,
                     "weight": 35
                 },
-                "count": 127
+                "count": 128
             },
             {
                 "item": {
@@ -2619,7 +2635,7 @@
                     "value": 1,
                     "weight": 30
                 },
-                "count": 87
+                "count": 88
             },
             {
                 "item": {
@@ -2627,7 +2643,7 @@
                     "value": 1,
                     "weight": 35
                 },
-                "count": 135
+                "count": 136
             },
             {
                 "item": {
@@ -2635,7 +2651,7 @@
                     "value": 0.5,
                     "weight": 35
                 },
-                "count": 84
+                "count": 85
             },
             {
                 "item": {
@@ -2723,7 +2739,7 @@
                     "value": -1,
                     "weight": 20
                 },
-                "count": 11
+                "count": 12
             },
             {
                 "item": {
@@ -2731,7 +2747,7 @@
                     "value": -2,
                     "weight": 19
                 },
-                "count": 14
+                "count": 15
             },
             {
                 "item": {
@@ -2739,7 +2755,7 @@
                     "value": -2,
                     "weight": 17
                 },
-                "count": 14
+                "count": 16
             },
             {
                 "item": {
@@ -3057,9 +3073,9 @@
     },
     {
         "username": "m05hp0t",
-        "value": 16616,
-        "times_fished": 871,
-        "last_fish_time": 1734575337,
+        "value": 16618,
+        "times_fished": 872,
+        "last_fish_time": 1734576563,
         "items": [
             {
                 "item": {
@@ -3331,7 +3347,7 @@
                     "value": 1,
                     "weight": 35
                 },
-                "count": 39
+                "count": 40
             },
             {
                 "item": {
@@ -4609,7 +4625,7 @@
     },
     {
         "username": "jesusfreak72",
-        "times_fished": 54,
+        "times_fished": 55,
         "items": [
             {
                 "item": {
@@ -4705,7 +4721,7 @@
                     "value": 8,
                     "weight": 20
                 },
-                "count": 3
+                "count": 4
             },
             {
                 "item": {
@@ -4805,12 +4821,20 @@
             }
         ],
         "last_fish_time": 1734574748,
-        "value": 712
+        "value": 720
     },
     {
         "username": "xss0482",
-        "times_fished": 4,
+        "times_fished": 9,
         "items": [
+            {
+                "item": {
+                    "name": "Bryce Beckeel",
+                    "value": 20,
+                    "weight": 10
+                },
+                "count": 1
+            },
             {
                 "item": {
                     "name": "Sotp Sign",
@@ -4842,9 +4866,33 @@
                     "weight": 35
                 },
                 "count": 1
+            },
+            {
+                "item": {
+                    "name": "Hook",
+                    "value": 1,
+                    "weight": 35
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Small Fry",
+                    "value": 0.5,
+                    "weight": 35
+                },
+                "count": 2
+            },
+            {
+                "item": {
+                    "name": "Brawl Starfish",
+                    "value": -2,
+                    "weight": 19
+                },
+                "count": 1
             }
         ],
-        "last_fish_time": 1734574748,
-        "value": 13
+        "last_fish_time": 1734575585,
+        "value": 33
     }
 ]

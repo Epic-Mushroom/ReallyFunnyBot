@@ -22,7 +22,7 @@ class FishingTests(unittest.TestCase):
 
     def test_add_fish_to_inv(self):
         update_inventory(self.nonempty_inv, self.old_boot)
-        print(self.nonempty_inv)
+        # print(self.nonempty_inv)
 
     def test_percents_of_each_fish(self):
         weight_sum = sum(fish.weight for fish in self.fishing_items)
