@@ -45,6 +45,11 @@
         "weight": 1.5
     },
     {
+        "name": "Unregistered Firearm",
+        "value": 177.6,
+        "weight": 1.5
+    },
+    {
         "name": "Jonklerfish",
         "value": 120,
         "weight": 5
@@ -167,12 +172,12 @@
     {
         "name": "Soda Can",
         "value": 1,
-        "weight": 37
+        "weight": 35
     },
     {
         "name": "Empty McNuggets Box",
         "value": 1,
-        "weight": 37
+        "weight": 35
     },
     {
         "name": "Plastic Straw",
@@ -202,7 +207,7 @@
     {
         "name": "Mogfish",
         "value": 0,
-        "weight": 4
+        "weight": 3.2
     },
     {
         "name": "Catfish",
@@ -217,7 +222,7 @@
     {
         "name": "Fish Soap",
         "value": 0,
-        "weight": 1.2
+        "weight": 1.4
     },
     {
         "name": "Mercenary Fish",
@@ -257,7 +262,7 @@
     {
         "name": "Thief Fish",
         "value": -25,
-        "weight": 7
+        "weight": 6.5
     },
     {
         "name": "Bribe Fish",

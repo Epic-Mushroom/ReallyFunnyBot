@@ -251,6 +251,9 @@ async def on_message(message):
     server_instance.reset_cooldown()
     server_instance.clear_message_cache()
 
+    # Enables admin commands
+    is_admin = message.author.id == EPIC_MUSHROOM_ID
+
     # Triggers start here
     index_of_im = find_index_after_word(lowercase_message_content, POSSESSIVE_PERSONAL_PRONOUN_LIST)
     index_of_pronoun = find_index_after_word(lowercase_message_content, PRONOUNS)
@@ -474,17 +477,29 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
         except json_utils.MaintenanceError:
             await server_instance.reply_to_message(message, f'fishing is currently disabled, go do college apps in the meantime or some shit')
 
-    if message.content.startswith('>fishtest'):
-        parts = message.content.split(' ')
-        for l in range(min(int(parts[-1] if len(parts) > 1 else 1), 12)):
-            try:
-                await server_instance.send_message(message, json_utils.fish_event('test_user', bypass_fish_cd=True),
-                                                       bypass_cd=True)
-            except json_utils.OnFishingCooldownError:
-                await server_instance.reply_to_message(message, f"You're on fishing cooldown ("
-                                                                f"{json_utils.FISHING_COOLDOWN - (current_time - json_utils.get_user_last_fish_time(
-                                                                    message.author.name
-                                                                ))} seconds until you can fish again)", bypass_cd=True)
+    if message.content.startswith('admin:') and len(message.content) > 6:
+        if is_admin:
+            if message.content.startswith('admin:fishtest'):
+                parts = message.content.split(' ')
+                for l in range(min(int(parts[-1] if len(parts) > 1 else 1), 12)):
+                    try:
+                        await server_instance.send_message(message, json_utils.fish_event('test_user', bypass_fish_cd=True),
+                                                               bypass_cd=True)
+                    except json_utils.OnFishingCooldownError:
+                        await server_instance.reply_to_message(message, f"You're on fishing cooldown ("
+                                                                        f"{json_utils.FISHING_COOLDOWN - (current_time - json_utils.get_user_last_fish_time(
+                                                                            message.author.name
+                                                                        ))} seconds until you can fish again)", bypass_cd=True)
+
+            elif message.content.startswith('admin:switch'):
+                if json_utils.switch_fishing():
+                    await server_instance.send_message(message, 'Fishing sim turned on. let the brainrot begin')
+                else:
+                    await server_instance.send_message(message, 'Fishing sim turned off. go outside everyone')
+
+        else:
+            await server_instance.reply_to_message(message, 'you can\'t do that (reference to 1984 by George Orwell)',
+                                                   bypass_cd=True)
 
     if find_word_bool(message.content, ['show profile']):
         username_temp = message.author.name

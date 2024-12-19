@@ -1,9 +1,9 @@
 [
     {
         "username": "epicmushroom.",
-        "value": 56266,
-        "last_fish_time": 1734571535,
-        "times_fished": 3445,
+        "value": 56256,
+        "last_fish_time": 1734573465,
+        "times_fished": 3444,
         "items": [
             {
                 "item": {
@@ -195,7 +195,7 @@
                     "value": 10,
                     "weight": 15
                 },
-                "count": 105
+                "count": 104
             },
             {
                 "item": {
@@ -257,7 +257,7 @@
                 "item": {
                     "name": "Empty McNuggets Box",
                     "value": 1,
-                    "weight": 37
+                    "weight": 35
                 },
                 "count": 160
             },
@@ -265,7 +265,7 @@
                 "item": {
                     "name": "Soda Can",
                     "value": 1,
-                    "weight": 37
+                    "weight": 35
                 },
                 "count": 156
             },
@@ -313,7 +313,7 @@
                 "item": {
                     "name": "Fish Soap",
                     "value": 0,
-                    "weight": 1.2
+                    "weight": 1.4
                 },
                 "count": 8
             },
@@ -337,7 +337,7 @@
                 "item": {
                     "name": "Mogfish",
                     "value": 0,
-                    "weight": 4
+                    "weight": 3.2
                 },
                 "count": 12
             },
@@ -385,7 +385,7 @@
                 "item": {
                     "name": "Thief Fish",
                     "value": -25,
-                    "weight": 7
+                    "weight": 6.5
                 },
                 "count": 8
             },
@@ -401,9 +401,9 @@
     },
     {
         "username": "phospholipase_c",
-        "value": 2358,
-        "times_fished": 222,
-        "last_fish_time": 1734571664,
+        "value": 2359,
+        "times_fished": 223,
+        "last_fish_time": 1734573465,
         "items": [
             {
                 "item": {
@@ -585,9 +585,9 @@
                 "item": {
                     "name": "Empty McNuggets Box",
                     "value": 1,
-                    "weight": 37
+                    "weight": 35
                 },
-                "count": 8
+                "count": 9
             },
             {
                 "item": {
@@ -609,7 +609,7 @@
                 "item": {
                     "name": "Soda Can",
                     "value": 1,
-                    "weight": 37
+                    "weight": 35
                 },
                 "count": 6
             },
@@ -641,7 +641,7 @@
                 "item": {
                     "name": "Mogfish",
                     "value": 0,
-                    "weight": 4
+                    "weight": 3.2
                 },
                 "count": 2
             },
@@ -673,7 +673,7 @@
                 "item": {
                     "name": "Thief Fish",
                     "value": -25,
-                    "weight": 7
+                    "weight": 6.5
                 },
                 "count": 5
             },
@@ -691,7 +691,7 @@
         "username": "potatochipbag",
         "value": 933,
         "times_fished": 104,
-        "last_fish_time": 1734567952,
+        "last_fish_time": 1734573465,
         "items": [
             {
                 "item": {
@@ -841,7 +841,7 @@
                 "item": {
                     "name": "Soda Can",
                     "value": 1,
-                    "weight": 37
+                    "weight": 35
                 },
                 "count": 8
             },
@@ -857,7 +857,7 @@
                 "item": {
                     "name": "Empty McNuggets Box",
                     "value": 1,
-                    "weight": 37
+                    "weight": 35
                 },
                 "count": 4
             },
@@ -905,7 +905,7 @@
                 "item": {
                     "name": "Mogfish",
                     "value": 0,
-                    "weight": 4
+                    "weight": 3.2
                 },
                 "count": 1
             },
@@ -937,9 +937,9 @@
     },
     {
         "username": "artemis3548",
-        "value": 6482,
-        "times_fished": 604,
-        "last_fish_time": 1734568020,
+        "value": 6772,
+        "times_fished": 606,
+        "last_fish_time": 1734573465,
         "items": [
             {
                 "item": {
@@ -955,7 +955,7 @@
                     "value": 249,
                     "weight": 1.2
                 },
-                "count": 1
+                "count": 2
             },
             {
                 "item": {
@@ -1051,7 +1051,7 @@
                     "value": 20,
                     "weight": 10
                 },
-                "count": 11
+                "count": 12
             },
             {
                 "item": {
@@ -1059,7 +1059,7 @@
                     "value": 20,
                     "weight": 10
                 },
-                "count": 12
+                "count": 13
             },
             {
                 "item": {
@@ -1153,7 +1153,7 @@
                 "item": {
                     "name": "Soda Can",
                     "value": 1,
-                    "weight": 37
+                    "weight": 35
                 },
                 "count": 26
             },
@@ -1161,7 +1161,7 @@
                 "item": {
                     "name": "Empty McNuggets Box",
                     "value": 1,
-                    "weight": 37
+                    "weight": 35
                 },
                 "count": 23
             },
@@ -1195,7 +1195,7 @@
                     "value": 0,
                     "weight": 12
                 },
-                "count": 13
+                "count": 12
             },
             {
                 "item": {
@@ -1241,7 +1241,7 @@
                 "item": {
                     "name": "Mogfish",
                     "value": 0,
-                    "weight": 4
+                    "weight": 3.2
                 },
                 "count": 4
             },
@@ -1281,7 +1281,7 @@
                 "item": {
                     "name": "Thief Fish",
                     "value": -25,
-                    "weight": 7
+                    "weight": 6.5
                 },
                 "count": 7
             },
@@ -1299,7 +1299,7 @@
         "username": "bongohead0258",
         "value": 6178,
         "times_fished": 409,
-        "last_fish_time": 1734565132,
+        "last_fish_time": 1734573465,
         "items": [
             {
                 "item": {
@@ -1489,7 +1489,7 @@
                 "item": {
                     "name": "Soda Can",
                     "value": 1,
-                    "weight": 37
+                    "weight": 35
                 },
                 "count": 1
             },
@@ -1505,7 +1505,7 @@
                 "item": {
                     "name": "Empty McNuggets Box",
                     "value": 1,
-                    "weight": 37
+                    "weight": 35
                 },
                 "count": 1
             },
@@ -1561,7 +1561,7 @@
                 "item": {
                     "name": "Thief Fish",
                     "value": -25,
-                    "weight": 7
+                    "weight": 6.5
                 },
                 "count": 2
             }
@@ -1569,9 +1569,9 @@
     },
     {
         "username": "zakkthecactus",
-        "value": 16202,
-        "times_fished": 821,
-        "last_fish_time": 1734570862,
+        "value": 16402,
+        "times_fished": 834,
+        "last_fish_time": 1734573465,
         "items": [
             {
                 "item": {
@@ -1635,7 +1635,7 @@
                     "value": 120,
                     "weight": 5
                 },
-                "count": 5
+                "count": 6
             },
             {
                 "item": {
@@ -1683,7 +1683,7 @@
                     "value": 50,
                     "weight": 5.5
                 },
-                "count": 8
+                "count": 9
             },
             {
                 "item": {
@@ -1763,7 +1763,7 @@
                     "value": 10,
                     "weight": 15
                 },
-                "count": 22
+                "count": 23
             },
             {
                 "item": {
@@ -1771,7 +1771,7 @@
                     "value": 8,
                     "weight": 20
                 },
-                "count": 37
+                "count": 39
             },
             {
                 "item": {
@@ -1787,7 +1787,7 @@
                     "value": 4,
                     "weight": 28
                 },
-                "count": 37
+                "count": 38
             },
             {
                 "item": {
@@ -1795,7 +1795,7 @@
                     "value": 2,
                     "weight": 32
                 },
-                "count": 59
+                "count": 60
             },
             {
                 "item": {
@@ -1817,7 +1817,7 @@
                 "item": {
                     "name": "Empty McNuggets Box",
                     "value": 1,
-                    "weight": 37
+                    "weight": 35
                 },
                 "count": 22
             },
@@ -1835,13 +1835,13 @@
                     "value": 1,
                     "weight": 38
                 },
-                "count": 26
+                "count": 28
             },
             {
                 "item": {
                     "name": "Soda Can",
                     "value": 1,
-                    "weight": 37
+                    "weight": 35
                 },
                 "count": 30
             },
@@ -1899,7 +1899,7 @@
                     "value": 0,
                     "weight": 1.6
                 },
-                "count": 5
+                "count": 7
             },
             {
                 "item": {
@@ -1913,7 +1913,7 @@
                 "item": {
                     "name": "Mogfish",
                     "value": 0,
-                    "weight": 4
+                    "weight": 3.2
                 },
                 "count": 1
             },
@@ -1921,7 +1921,7 @@
                 "item": {
                     "name": "Fish Soap",
                     "value": 0,
-                    "weight": 1.2
+                    "weight": 1.4
                 },
                 "count": 2
             },
@@ -1947,13 +1947,13 @@
                     "value": -2,
                     "weight": 19
                 },
-                "count": 5
+                "count": 7
             },
             {
                 "item": {
                     "name": "Thief Fish",
                     "value": -25,
-                    "weight": 7
+                    "weight": 6.5
                 },
                 "count": 4
             },
@@ -1969,9 +1969,9 @@
     },
     {
         "username": "oh.noes",
-        "value": 25380,
-        "times_fished": 1746,
-        "last_fish_time": 1734570695,
+        "value": 25378,
+        "times_fished": 1744,
+        "last_fish_time": 1734573465,
         "items": [
             {
                 "item": {
@@ -2171,7 +2171,7 @@
                     "value": 4,
                     "weight": 28
                 },
-                "count": 109
+                "count": 108
             },
             {
                 "item": {
@@ -2209,7 +2209,7 @@
                 "item": {
                     "name": "Empty McNuggets Box",
                     "value": 1,
-                    "weight": 37
+                    "weight": 35
                 },
                 "count": 35
             },
@@ -2217,7 +2217,7 @@
                 "item": {
                     "name": "Soda Can",
                     "value": 1,
-                    "weight": 37
+                    "weight": 35
                 },
                 "count": 34
             },
@@ -2273,7 +2273,7 @@
                 "item": {
                     "name": "Mogfish",
                     "value": 0,
-                    "weight": 4
+                    "weight": 3.2
                 },
                 "count": 6
             },
@@ -2289,7 +2289,7 @@
                 "item": {
                     "name": "Fish Soap",
                     "value": 0,
-                    "weight": 1.2
+                    "weight": 1.4
                 },
                 "count": 1
             },
@@ -2315,7 +2315,7 @@
                     "value": -1,
                     "weight": 20
                 },
-                "count": 12
+                "count": 11
             },
             {
                 "item": {
@@ -2337,7 +2337,7 @@
                 "item": {
                     "name": "Thief Fish",
                     "value": -25,
-                    "weight": 7
+                    "weight": 6.5
                 },
                 "count": 5
             },
@@ -2353,9 +2353,9 @@
     },
     {
         "username": "jamescheung24578",
-        "value": 48049,
-        "times_fished": 2855,
-        "last_fish_time": 1734571679,
+        "value": 48035,
+        "times_fished": 2852,
+        "last_fish_time": 1734573465,
         "items": [
             {
                 "item": {
@@ -2555,7 +2555,7 @@
                     "value": 8,
                     "weight": 20
                 },
-                "count": 116
+                "count": 115
             },
             {
                 "item": {
@@ -2563,7 +2563,7 @@
                     "value": 5,
                     "weight": 26
                 },
-                "count": 159
+                "count": 158
             },
             {
                 "item": {
@@ -2609,7 +2609,7 @@
                 "item": {
                     "name": "Soda Can",
                     "value": 1,
-                    "weight": 37
+                    "weight": 35
                 },
                 "count": 127
             },
@@ -2625,9 +2625,9 @@
                 "item": {
                     "name": "Empty McNuggets Box",
                     "value": 1,
-                    "weight": 37
+                    "weight": 35
                 },
-                "count": 136
+                "count": 135
             },
             {
                 "item": {
@@ -2657,7 +2657,7 @@
                 "item": {
                     "name": "Fish Soap",
                     "value": 0,
-                    "weight": 1.2
+                    "weight": 1.4
                 },
                 "count": 8
             },
@@ -2689,7 +2689,7 @@
                 "item": {
                     "name": "Mogfish",
                     "value": 0,
-                    "weight": 4
+                    "weight": 3.2
                 },
                 "count": 20
             },
@@ -2737,7 +2737,7 @@
                 "item": {
                     "name": "Thief Fish",
                     "value": -25,
-                    "weight": 7
+                    "weight": 6.5
                 },
                 "count": 7
             },
@@ -2755,7 +2755,7 @@
         "username": "chaoticmoons",
         "value": 10,
         "times_fished": 1,
-        "last_fish_time": 1734565132,
+        "last_fish_time": 1734573465,
         "items": [
             {
                 "item": {
@@ -2771,7 +2771,7 @@
         "username": "mee.5",
         "value": 250,
         "times_fished": 59,
-        "last_fish_time": 1734565132,
+        "last_fish_time": 1734573465,
         "items": [
             {
                 "item": {
@@ -2889,7 +2889,7 @@
                 "item": {
                     "name": "Soda Can",
                     "value": 1,
-                    "weight": 37
+                    "weight": 35
                 },
                 "count": 1
             },
@@ -2937,7 +2937,7 @@
                 "item": {
                     "name": "Thief Fish",
                     "value": -25,
-                    "weight": 7
+                    "weight": 6.5
                 },
                 "count": 2
             }
@@ -2947,7 +2947,7 @@
         "username": "hiyakabi",
         "value": 101,
         "times_fished": 14,
-        "last_fish_time": 1734565132,
+        "last_fish_time": 1734573465,
         "items": [
             {
                 "item": {
@@ -3025,7 +3025,7 @@
                 "item": {
                     "name": "Empty McNuggets Box",
                     "value": 1,
-                    "weight": 37
+                    "weight": 35
                 },
                 "count": 1
             },
@@ -3041,9 +3041,9 @@
     },
     {
         "username": "m05hp0t",
-        "value": 15926,
-        "times_fished": 827,
-        "last_fish_time": 1734570781,
+        "value": 16604,
+        "times_fished": 868,
+        "last_fish_time": 1734573465,
         "items": [
             {
                 "item": {
@@ -3091,7 +3091,7 @@
                     "value": 249,
                     "weight": 1.2
                 },
-                "count": 2
+                "count": 3
             },
             {
                 "item": {
@@ -3107,7 +3107,7 @@
                     "value": 120,
                     "weight": 2
                 },
-                "count": 6
+                "count": 7
             },
             {
                 "item": {
@@ -3155,7 +3155,7 @@
                     "value": 50,
                     "weight": 5.5
                 },
-                "count": 6
+                "count": 7
             },
             {
                 "item": {
@@ -3163,7 +3163,7 @@
                     "value": 45,
                     "weight": 6.5
                 },
-                "count": 12
+                "count": 13
             },
             {
                 "item": {
@@ -3171,7 +3171,7 @@
                     "value": 40,
                     "weight": 7.3
                 },
-                "count": 7
+                "count": 9
             },
             {
                 "item": {
@@ -3179,7 +3179,7 @@
                     "value": 32,
                     "weight": 9
                 },
-                "count": 12
+                "count": 13
             },
             {
                 "item": {
@@ -3187,7 +3187,7 @@
                     "value": 20,
                     "weight": 10
                 },
-                "count": 16
+                "count": 17
             },
             {
                 "item": {
@@ -3211,7 +3211,7 @@
                     "value": 15,
                     "weight": 13
                 },
-                "count": 20
+                "count": 21
             },
             {
                 "item": {
@@ -3227,7 +3227,7 @@
                     "value": 10,
                     "weight": 15
                 },
-                "count": 18
+                "count": 19
             },
             {
                 "item": {
@@ -3235,7 +3235,7 @@
                     "value": 10,
                     "weight": 15
                 },
-                "count": 24
+                "count": 27
             },
             {
                 "item": {
@@ -3243,7 +3243,7 @@
                     "value": 8,
                     "weight": 20
                 },
-                "count": 28
+                "count": 29
             },
             {
                 "item": {
@@ -3251,7 +3251,7 @@
                     "value": 5,
                     "weight": 26
                 },
-                "count": 40
+                "count": 41
             },
             {
                 "item": {
@@ -3259,7 +3259,7 @@
                     "value": 4,
                     "weight": 28
                 },
-                "count": 46
+                "count": 49
             },
             {
                 "item": {
@@ -3275,15 +3275,15 @@
                     "value": 1,
                     "weight": 35
                 },
-                "count": 65
+                "count": 68
             },
             {
                 "item": {
                     "name": "Soda Can",
                     "value": 1,
-                    "weight": 37
+                    "weight": 35
                 },
-                "count": 48
+                "count": 51
             },
             {
                 "item": {
@@ -3307,15 +3307,15 @@
                     "value": 1,
                     "weight": 30
                 },
-                "count": 24
+                "count": 26
             },
             {
                 "item": {
                     "name": "Empty McNuggets Box",
                     "value": 1,
-                    "weight": 37
+                    "weight": 35
                 },
-                "count": 37
+                "count": 39
             },
             {
                 "item": {
@@ -3323,7 +3323,7 @@
                     "value": 0.5,
                     "weight": 35
                 },
-                "count": 45
+                "count": 47
             },
             {
                 "item": {
@@ -3331,13 +3331,13 @@
                     "value": 0,
                     "weight": 7.6
                 },
-                "count": 23
+                "count": 24
             },
             {
                 "item": {
                     "name": "Mogfish",
                     "value": 0,
-                    "weight": 4
+                    "weight": 3.2
                 },
                 "count": 7
             },
@@ -3347,7 +3347,7 @@
                     "value": 0,
                     "weight": 9
                 },
-                "count": 11
+                "count": 12
             },
             {
                 "item": {
@@ -3355,7 +3355,7 @@
                     "value": 0,
                     "weight": 12
                 },
-                "count": 10
+                "count": 11
             },
             {
                 "item": {
@@ -3363,7 +3363,7 @@
                     "value": 0,
                     "weight": 6.2
                 },
-                "count": 4
+                "count": 5
             },
             {
                 "item": {
@@ -3387,7 +3387,15 @@
                     "value": 0,
                     "weight": 1.6
                 },
-                "count": 2
+                "count": 3
+            },
+            {
+                "item": {
+                    "name": "Mr. Beast Fish",
+                    "value": 0,
+                    "weight": 8
+                },
+                "count": 1
             },
             {
                 "item": {
@@ -3395,7 +3403,7 @@
                     "value": -1,
                     "weight": 20
                 },
-                "count": 19
+                "count": 20
             },
             {
                 "item": {
@@ -3403,7 +3411,7 @@
                     "value": -2,
                     "weight": 19
                 },
-                "count": 23
+                "count": 26
             },
             {
                 "item": {
@@ -3411,13 +3419,13 @@
                     "value": -2,
                     "weight": 17
                 },
-                "count": 17
+                "count": 18
             },
             {
                 "item": {
                     "name": "Thief Fish",
                     "value": -25,
-                    "weight": 7
+                    "weight": 6.5
                 },
                 "count": 5
             },
@@ -3435,7 +3443,7 @@
         "username": "skits__",
         "value": 293,
         "times_fished": 4,
-        "last_fish_time": 1734565132,
+        "last_fish_time": 1734573465,
         "items": [
             {
                 "item": {
@@ -3481,9 +3489,9 @@
     },
     {
         "username": "paliopolis",
-        "value": 20670,
+        "value": 20658,
         "times_fished": 867,
-        "last_fish_time": 1734568231,
+        "last_fish_time": 1734573465,
         "items": [
             {
                 "item": {
@@ -3635,7 +3643,7 @@
                     "value": 20,
                     "weight": 10
                 },
-                "count": 20
+                "count": 19
             },
             {
                 "item": {
@@ -3683,7 +3691,7 @@
                     "value": 8,
                     "weight": 20
                 },
-                "count": 39
+                "count": 40
             },
             {
                 "item": {
@@ -3737,7 +3745,7 @@
                 "item": {
                     "name": "Empty McNuggets Box",
                     "value": 1,
-                    "weight": 37
+                    "weight": 35
                 },
                 "count": 14
             },
@@ -3745,7 +3753,7 @@
                 "item": {
                     "name": "Soda Can",
                     "value": 1,
-                    "weight": 37
+                    "weight": 35
                 },
                 "count": 18
             },
@@ -3809,7 +3817,7 @@
                 "item": {
                     "name": "Mogfish",
                     "value": 0,
-                    "weight": 4
+                    "weight": 3.2
                 },
                 "count": 2
             },
@@ -3825,7 +3833,7 @@
                 "item": {
                     "name": "Fish Soap",
                     "value": 0,
-                    "weight": 1.2
+                    "weight": 1.4
                 },
                 "count": 2
             },
@@ -3857,7 +3865,7 @@
                 "item": {
                     "name": "Thief Fish",
                     "value": -25,
-                    "weight": 7
+                    "weight": 6.5
                 },
                 "count": 3
             },
@@ -3873,8 +3881,8 @@
     },
     {
         "username": "adityaxad",
-        "times_fished": 255,
-        "last_fish_time": 1734565132,
+        "times_fished": 256,
+        "last_fish_time": 1734573465,
         "items": [
             {
                 "item": {
@@ -4088,7 +4096,7 @@
                 "item": {
                     "name": "Soda Can",
                     "value": 1,
-                    "weight": 37
+                    "weight": 35
                 },
                 "count": 11
             },
@@ -4104,7 +4112,7 @@
                 "item": {
                     "name": "Empty McNuggets Box",
                     "value": 1,
-                    "weight": 37
+                    "weight": 35
                 },
                 "count": 14
             },
@@ -4114,7 +4122,7 @@
                     "value": 1,
                     "weight": 30
                 },
-                "count": 5
+                "count": 6
             },
             {
                 "item": {
@@ -4168,7 +4176,7 @@
                 "item": {
                     "name": "Mogfish",
                     "value": 0,
-                    "weight": 4
+                    "weight": 3.2
                 },
                 "count": 2
             },
@@ -4208,17 +4216,17 @@
                 "item": {
                     "name": "Thief Fish",
                     "value": -25,
-                    "weight": 7
+                    "weight": 6.5
                 },
                 "count": 3
             }
         ],
-        "value": 6544
+        "value": 6546
     },
     {
         "username": "test_user",
         "times_fished": 376,
-        "last_fish_time": 1734565132,
+        "last_fish_time": 1734573465,
         "items": [
             {
                 "item": {
@@ -4440,7 +4448,7 @@
                 "item": {
                     "name": "Soda Can",
                     "value": 1,
-                    "weight": 37
+                    "weight": 35
                 },
                 "count": 5
             },
@@ -4456,7 +4464,7 @@
                 "item": {
                     "name": "Empty McNuggets Box",
                     "value": 1,
-                    "weight": 37
+                    "weight": 35
                 },
                 "count": 3
             },
@@ -4488,7 +4496,7 @@
                 "item": {
                     "name": "Fish Soap",
                     "value": 0,
-                    "weight": 1.2
+                    "weight": 1.4
                 },
                 "count": 4
             },
@@ -4528,7 +4536,7 @@
                 "item": {
                     "name": "Mogfish",
                     "value": 0,
-                    "weight": 4
+                    "weight": 3.2
                 },
                 "count": 3
             },
@@ -4568,7 +4576,7 @@
                 "item": {
                     "name": "Thief Fish",
                     "value": -25,
-                    "weight": 7
+                    "weight": 6.5
                 },
                 "count": 6
             }
@@ -4577,7 +4585,7 @@
     },
     {
         "username": "jesusfreak72",
-        "times_fished": 53,
+        "times_fished": 54,
         "items": [
             {
                 "item": {
@@ -4719,7 +4727,7 @@
                 "item": {
                     "name": "Soda Can",
                     "value": 1,
-                    "weight": 37
+                    "weight": 35
                 },
                 "count": 1
             },
@@ -4743,7 +4751,7 @@
                 "item": {
                     "name": "Fish Soap",
                     "value": 0,
-                    "weight": 1.2
+                    "weight": 1.4
                 },
                 "count": 1
             },
@@ -4762,9 +4770,17 @@
                     "weight": 20
                 },
                 "count": 1
+            },
+            {
+                "item": {
+                    "name": "Bribe Fish",
+                    "value": -50,
+                    "weight": 2.1
+                },
+                "count": 1
             }
         ],
-        "last_fish_time": 1734565132,
-        "value": 762
+        "last_fish_time": 1734573465,
+        "value": 712
     }
 ]

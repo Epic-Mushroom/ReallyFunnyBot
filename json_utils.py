@@ -31,6 +31,12 @@ class FishingItem:
         self.value = value
         self.weight = weight
 
+def switch_fishing() -> bool:
+    global FISHING_ENABLED
+
+    FISHING_ENABLED = not FISHING_ENABLED
+    return FISHING_ENABLED
+
 def random_range(start: int, stop: int) -> int:
     """random.randrange but its inclusive so i don't keep forgetting the original function has an exclusive endpoint because i have fucking dementia"""
     return random.randrange(start, stop + 1)
@@ -345,6 +351,10 @@ def fish_event(username: str, is_extra_fish=False, force_fish_name=None, factor=
             elif one_fish.name == 'Mercenary Contract':
                 output += f'You caught: **{one_fish.name}** (next 4 fish are guaranteed Mercenary Fish)'
                 add_special(username, 'mercenary_contract', count=4)
+
+            elif one_fish.name == 'Unregistered Firearm':
+                output += f'You caught: **{one_fish.name}** (+177.6 moneys, next 3 fish are guaranteed CS:GO Fish)'
+                add_special(username, 'unregistered_firearm', count=3)
     
             elif one_fish.name == 'Nemo':
                 output += f'You caught: **Nemo** (next 10 fish caught by you are much more likely to be rare items)'
