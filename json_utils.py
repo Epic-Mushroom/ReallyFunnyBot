@@ -339,9 +339,9 @@ def fish_event(username: str, is_extra_fish=False, force_fish_name=None, factor=
                 add_special(username, 'catfish', count=4)
 
             elif one_fish.name == 'Fishing Manifesto':
-                output += (f'You caught: **{one_fish.name}** (next 7 fish caught by you are more likely to be rare items;'
+                output += (f'You caught: **{one_fish.name}** (next 8 fish caught by you are more likely to be rare items;'
                            f' the luck boost is more if you are lower on the leaderboard)')
-                add_special(username, 'fishing_manifesto', count=7)
+                add_special(username, 'fishing_manifesto', count=8)
 
             elif one_fish.name == 'Mr. Beast Fish':
                 output += (
@@ -357,8 +357,8 @@ def fish_event(username: str, is_extra_fish=False, force_fish_name=None, factor=
                 add_special(username, 'unregistered_firearm', count=3)
     
             elif one_fish.name == 'Nemo':
-                output += f'You caught: **Nemo** (next 10 fish caught by you are much more likely to be rare items)'
-                add_special(username, 'nemo', count=10)
+                output += f'You caught: **Nemo** (next 12 fish caught by you are much more likely to be rare items)'
+                add_special(username, 'nemo', count=12)
 
             elif one_fish.name == 'Bribe Fish':
                 output += f'You caught: **{one_fish.name}** (-50 moneys, but immune to Cop Fish for next 40 fish)'
@@ -414,7 +414,7 @@ def fish_event(username: str, is_extra_fish=False, force_fish_name=None, factor=
     else:
         raise OnFishingCooldownError
 
-    # adds cooldown to the user, unless the user is being catfished
+    # adds cooldown to the user, unless the user is being catfished or donated from
     update_fish_database(username, cd_penalty=penalty, bypass_fish_cd=bypass_fish_cd)
 
     # uses up all specials except the catfish because it should only be used up when

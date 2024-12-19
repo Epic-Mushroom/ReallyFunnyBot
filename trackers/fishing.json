@@ -1,9 +1,9 @@
 [
     {
         "username": "epicmushroom.",
-        "value": 56480,
-        "last_fish_time": 1734576403,
-        "times_fished": 3509,
+        "value": 56477,
+        "last_fish_time": 1734578832,
+        "times_fished": 3517,
         "items": [
             {
                 "item": {
@@ -115,7 +115,7 @@
                     "value": 50,
                     "weight": 5.5
                 },
-                "count": 39
+                "count": 40
             },
             {
                 "item": {
@@ -131,7 +131,7 @@
                     "value": 40,
                     "weight": 7.3
                 },
-                "count": 34
+                "count": 33
             },
             {
                 "item": {
@@ -147,7 +147,7 @@
                     "value": 20,
                     "weight": 10
                 },
-                "count": 74
+                "count": 75
             },
             {
                 "item": {
@@ -175,6 +175,14 @@
             },
             {
                 "item": {
+                    "name": "Kayshavfish",
+                    "value": 15,
+                    "weight": 13
+                },
+                "count": 1
+            },
+            {
+                "item": {
                     "name": "Hamburger Fish",
                     "value": 10,
                     "weight": 15
@@ -187,7 +195,7 @@
                     "value": 10,
                     "weight": 15
                 },
-                "count": 104
+                "count": 105
             },
             {
                 "item": {
@@ -203,7 +211,7 @@
                     "value": 8,
                     "weight": 20
                 },
-                "count": 156
+                "count": 155
             },
             {
                 "item": {
@@ -235,7 +243,7 @@
                     "value": 1,
                     "weight": 35
                 },
-                "count": 346
+                "count": 345
             },
             {
                 "item": {
@@ -243,7 +251,7 @@
                     "value": 1,
                     "weight": 35
                 },
-                "count": 342
+                "count": 341
             },
             {
                 "item": {
@@ -259,7 +267,7 @@
                     "value": 1,
                     "weight": 35
                 },
-                "count": 166
+                "count": 167
             },
             {
                 "item": {
@@ -267,7 +275,7 @@
                     "value": 1,
                     "weight": 35
                 },
-                "count": 159
+                "count": 160
             },
             {
                 "item": {
@@ -275,7 +283,7 @@
                     "value": 1,
                     "weight": 30
                 },
-                "count": 89
+                "count": 90
             },
             {
                 "item": {
@@ -283,7 +291,7 @@
                     "value": 0.5,
                     "weight": 35
                 },
-                "count": 85
+                "count": 86
             },
             {
                 "item": {
@@ -347,7 +355,7 @@
                     "value": 0,
                     "weight": 6.2
                 },
-                "count": 26
+                "count": 27
             },
             {
                 "item": {
@@ -363,7 +371,7 @@
                     "value": 0,
                     "weight": 6.3
                 },
-                "count": 2
+                "count": 3
             },
             {
                 "item": {
@@ -371,7 +379,7 @@
                     "value": -1,
                     "weight": 20
                 },
-                "count": 21
+                "count": 22
             },
             {
                 "item": {
@@ -403,15 +411,15 @@
                     "value": -50,
                     "weight": 2.3
                 },
-                "count": 1
+                "count": 2
             }
         ]
     },
     {
         "username": "phospholipase_c",
-        "value": 2360,
-        "times_fished": 224,
-        "last_fish_time": 1734574747,
+        "value": 2361,
+        "times_fished": 225,
+        "last_fish_time": 1734578658,
         "items": [
             {
                 "item": {
@@ -587,7 +595,7 @@
                     "value": 1,
                     "weight": 35
                 },
-                "count": 19
+                "count": 20
             },
             {
                 "item": {
@@ -697,9 +705,9 @@
     },
     {
         "username": "potatochipbag",
-        "value": 1007,
-        "times_fished": 117,
-        "last_fish_time": 1734576879,
+        "value": 1131,
+        "times_fished": 130,
+        "last_fish_time": 1734578975,
         "items": [
             {
                 "item": {
@@ -723,7 +731,7 @@
                     "value": 69,
                     "weight": 4.5
                 },
-                "count": 1
+                "count": 2
             },
             {
                 "item": {
@@ -739,7 +747,7 @@
                     "value": 40,
                     "weight": 7.3
                 },
-                "count": 1
+                "count": 2
             },
             {
                 "item": {
@@ -787,7 +795,7 @@
                     "value": 10,
                     "weight": 15
                 },
-                "count": 3
+                "count": 4
             },
             {
                 "item": {
@@ -827,7 +835,7 @@
                     "value": 2,
                     "weight": 32
                 },
-                "count": 5
+                "count": 6
             },
             {
                 "item": {
@@ -835,7 +843,7 @@
                     "value": 1,
                     "weight": 35
                 },
-                "count": 12
+                "count": 14
             },
             {
                 "item": {
@@ -843,7 +851,7 @@
                     "value": 1,
                     "weight": 35
                 },
-                "count": 10
+                "count": 11
             },
             {
                 "item": {
@@ -859,7 +867,7 @@
                     "value": 1,
                     "weight": 35
                 },
-                "count": 10
+                "count": 11
             },
             {
                 "item": {
@@ -867,7 +875,7 @@
                     "value": 1,
                     "weight": 38
                 },
-                "count": 5
+                "count": 6
             },
             {
                 "item": {
@@ -875,7 +883,7 @@
                     "value": 1,
                     "weight": 35
                 },
-                "count": 4
+                "count": 5
             },
             {
                 "item": {
@@ -907,7 +915,7 @@
                     "value": 0,
                     "weight": 7.8
                 },
-                "count": 1
+                "count": 2
             },
             {
                 "item": {
@@ -939,7 +947,7 @@
                     "value": -1,
                     "weight": 20
                 },
-                "count": 3
+                "count": 4
             },
             {
                 "item": {
@@ -955,15 +963,15 @@
                     "value": -2,
                     "weight": 17
                 },
-                "count": 1
+                "count": 2
             }
         ]
     },
     {
         "username": "artemis3548",
-        "value": 6842,
-        "times_fished": 618,
-        "last_fish_time": 1734576788,
+        "value": 7076,
+        "times_fished": 626,
+        "last_fish_time": 1734578792,
         "items": [
             {
                 "item": {
@@ -987,7 +995,7 @@
                     "value": 199,
                     "weight": 1.5
                 },
-                "count": 2
+                "count": 3
             },
             {
                 "item": {
@@ -1091,7 +1099,7 @@
                     "value": 15,
                     "weight": 13
                 },
-                "count": 16
+                "count": 17
             },
             {
                 "item": {
@@ -1139,7 +1147,7 @@
                     "value": 8,
                     "weight": 20
                 },
-                "count": 22
+                "count": 23
             },
             {
                 "item": {
@@ -1147,7 +1155,7 @@
                     "value": 5,
                     "weight": 26
                 },
-                "count": 28
+                "count": 30
             },
             {
                 "item": {
@@ -1203,7 +1211,7 @@
                     "value": 1,
                     "weight": 30
                 },
-                "count": 14
+                "count": 15
             },
             {
                 "item": {
@@ -1219,7 +1227,7 @@
                     "value": 0.5,
                     "weight": 35
                 },
-                "count": 21
+                "count": 22
             },
             {
                 "item": {
@@ -1259,7 +1267,7 @@
                     "value": 0,
                     "weight": 6.2
                 },
-                "count": 7
+                "count": 8
             },
             {
                 "item": {
@@ -1609,9 +1617,9 @@
     },
     {
         "username": "zakkthecactus",
-        "value": 17759,
-        "times_fished": 846,
-        "last_fish_time": 1734576866,
+        "value": 18429,
+        "times_fished": 861,
+        "last_fish_time": 1734578639,
         "items": [
             {
                 "item": {
@@ -1651,7 +1659,7 @@
                     "value": 499,
                     "weight": 1
                 },
-                "count": 2
+                "count": 3
             },
             {
                 "item": {
@@ -1715,7 +1723,7 @@
                     "value": 60,
                     "weight": 5
                 },
-                "count": 9
+                "count": 10
             },
             {
                 "item": {
@@ -1723,7 +1731,7 @@
                     "value": 50,
                     "weight": 5.5
                 },
-                "count": 10
+                "count": 12
             },
             {
                 "item": {
@@ -1783,6 +1791,14 @@
             },
             {
                 "item": {
+                    "name": "Kayshavfish",
+                    "value": 15,
+                    "weight": 13
+                },
+                "count": 1
+            },
+            {
+                "item": {
                     "name": "Sotp Sign",
                     "value": 10,
                     "weight": 15
@@ -1795,7 +1811,7 @@
                     "value": 10,
                     "weight": 15
                 },
-                "count": 24
+                "count": 25
             },
             {
                 "item": {
@@ -1811,7 +1827,7 @@
                     "value": 8,
                     "weight": 20
                 },
-                "count": 40
+                "count": 41
             },
             {
                 "item": {
@@ -1827,7 +1843,7 @@
                     "value": 4,
                     "weight": 28
                 },
-                "count": 38
+                "count": 39
             },
             {
                 "item": {
@@ -1835,7 +1851,7 @@
                     "value": 2,
                     "weight": 32
                 },
-                "count": 62
+                "count": 63
             },
             {
                 "item": {
@@ -1867,7 +1883,7 @@
                     "value": 1,
                     "weight": 30
                 },
-                "count": 27
+                "count": 28
             },
             {
                 "item": {
@@ -1931,7 +1947,7 @@
                     "value": 0,
                     "weight": 6.2
                 },
-                "count": 11
+                "count": 12
             },
             {
                 "item": {
@@ -1955,7 +1971,7 @@
                     "value": 0,
                     "weight": 3.3
                 },
-                "count": 2
+                "count": 3
             },
             {
                 "item": {
@@ -1971,15 +1987,31 @@
                     "value": -2,
                     "weight": 19
                 },
+                "count": 2
+            },
+            {
+                "item": {
+                    "name": "Homeless Guy's Underwear",
+                    "value": -2,
+                    "weight": 17
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Thief Fish",
+                    "value": -25,
+                    "weight": 6.5
+                },
                 "count": 1
             }
         ]
     },
     {
         "username": "oh.noes",
-        "value": 25384,
-        "times_fished": 1750,
-        "last_fish_time": 1734576687,
+        "value": 25386,
+        "times_fished": 1751,
+        "last_fish_time": 1734577305,
         "items": [
             {
                 "item": {
@@ -2195,7 +2227,7 @@
                     "value": 1,
                     "weight": 35
                 },
-                "count": 202
+                "count": 203
             },
             {
                 "item": {
@@ -2219,7 +2251,7 @@
                     "value": 1,
                     "weight": 35
                 },
-                "count": 36
+                "count": 37
             },
             {
                 "item": {
@@ -2251,7 +2283,7 @@
                     "value": 0,
                     "weight": 12
                 },
-                "count": 36
+                "count": 35
             },
             {
                 "item": {
@@ -2361,8 +2393,8 @@
     },
     {
         "username": "jamescheung24578",
-        "value": 48360,
-        "times_fished": 2884,
+        "value": 48338,
+        "times_fished": 2882,
         "last_fish_time": 1734575764,
         "items": [
             {
@@ -2507,7 +2539,7 @@
                     "value": 20,
                     "weight": 10
                 },
-                "count": 58
+                "count": 57
             },
             {
                 "item": {
@@ -2603,7 +2635,7 @@
                     "value": 1,
                     "weight": 35
                 },
-                "count": 257
+                "count": 256
             },
             {
                 "item": {
@@ -3073,9 +3105,9 @@
     },
     {
         "username": "m05hp0t",
-        "value": 16618,
-        "times_fished": 872,
-        "last_fish_time": 1734576563,
+        "value": 16979,
+        "times_fished": 889,
+        "last_fish_time": 1734578773,
         "items": [
             {
                 "item": {
@@ -3123,7 +3155,7 @@
                     "value": 249,
                     "weight": 1.2
                 },
-                "count": 3
+                "count": 4
             },
             {
                 "item": {
@@ -3187,7 +3219,7 @@
                     "value": 50,
                     "weight": 5.5
                 },
-                "count": 7
+                "count": 8
             },
             {
                 "item": {
@@ -3219,7 +3251,7 @@
                     "value": 20,
                     "weight": 10
                 },
-                "count": 17
+                "count": 19
             },
             {
                 "item": {
@@ -3275,7 +3307,7 @@
                     "value": 8,
                     "weight": 20
                 },
-                "count": 30
+                "count": 31
             },
             {
                 "item": {
@@ -3283,7 +3315,7 @@
                     "value": 5,
                     "weight": 26
                 },
-                "count": 41
+                "count": 42
             },
             {
                 "item": {
@@ -3291,7 +3323,7 @@
                     "value": 4,
                     "weight": 28
                 },
-                "count": 50
+                "count": 51
             },
             {
                 "item": {
@@ -3299,7 +3331,7 @@
                     "value": 2,
                     "weight": 32
                 },
-                "count": 51
+                "count": 52
             },
             {
                 "item": {
@@ -3307,7 +3339,7 @@
                     "value": 1,
                     "weight": 35
                 },
-                "count": 68
+                "count": 69
             },
             {
                 "item": {
@@ -3323,7 +3355,7 @@
                     "value": 1,
                     "weight": 38
                 },
-                "count": 47
+                "count": 48
             },
             {
                 "item": {
@@ -3331,7 +3363,7 @@
                     "value": 1,
                     "weight": 35
                 },
-                "count": 55
+                "count": 58
             },
             {
                 "item": {
@@ -3355,7 +3387,7 @@
                     "value": 0.5,
                     "weight": 35
                 },
-                "count": 47
+                "count": 48
             },
             {
                 "item": {
@@ -3363,7 +3395,7 @@
                     "value": 0,
                     "weight": 7.8
                 },
-                "count": 24
+                "count": 25
             },
             {
                 "item": {
@@ -3387,7 +3419,7 @@
                     "value": 0,
                     "weight": 12
                 },
-                "count": 11
+                "count": 12
             },
             {
                 "item": {
@@ -3451,7 +3483,7 @@
                     "value": -2,
                     "weight": 17
                 },
-                "count": 18
+                "count": 19
             },
             {
                 "item": {
@@ -3521,8 +3553,8 @@
     },
     {
         "username": "paliopolis",
-        "value": 20686,
-        "times_fished": 866,
+        "value": 20424,
+        "times_fished": 865,
         "last_fish_time": 1734574748,
         "items": [
             {
@@ -3571,7 +3603,7 @@
                     "value": 249,
                     "weight": 1.2
                 },
-                "count": 4
+                "count": 3
             },
             {
                 "item": {
@@ -3715,7 +3747,7 @@
                     "value": 10,
                     "weight": 15
                 },
-                "count": 32
+                "count": 31
             },
             {
                 "item": {
@@ -3891,7 +3923,7 @@
                     "value": -2,
                     "weight": 17
                 },
-                "count": 4
+                "count": 5
             },
             {
                 "item": {
