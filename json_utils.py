@@ -434,7 +434,7 @@ def fish_event(username: str, is_extra_fish=False, force_fish_name=None, factor=
     else:
         raise OnFishingCooldownError
 
-    # adds cooldown to the user, unless the user is being catfished or donated from
+    # adds cooldown to the user, unless the user is being catfished or have donated
     update_fish_database(username, cd_penalty=penalty, bypass_fish_cd=bypass_fish_cd)
 
     # uses up all specials except the catfish because it should only be used up when
@@ -444,14 +444,16 @@ def fish_event(username: str, is_extra_fish=False, force_fish_name=None, factor=
             if active_special is not None:
                 add_special(original_user, active_special, count=-1)
 
-    if catfish_holder and caught_fish_count > 0:
+    # adds cooldown to the original user if they are being catfished or have donated
+    if username != original_user:
+        if caught_fish_count > 0:
+            if catfish_holder:
+                add_special(catfish_holder, 'catfish', count=-1)
+                output += f'\n*Fish taken by {catfish_holder} (Catfish powerup)*'
+            else:
+                output += f'\n*Fish donated to {username} (Mr. Beast powerup)*'
+
         update_fish_database(original_user, cd_penalty=penalty, bypass_fish_cd=False)
-        add_special(catfish_holder, 'catfish', count=-1)
-        output += f'\n*Fish taken by {catfish_holder} (Catfish powerup)*'
-    elif username != original_user:
-        # this should only happen if mr beast fish is used
-        update_fish_database(original_user, cd_penalty=penalty, bypass_fish_cd=False)
-        output += f'\n*Fish donated to {username} (Mr. Beast powerup)*'
 
     return output
 
