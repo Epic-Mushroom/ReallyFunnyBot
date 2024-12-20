@@ -803,8 +803,15 @@ if __name__ == '__main__':
             print(fishing_manifesto_factor('jamescheung24578'))
         elif user_input == 'e':
             print(fishing_manifesto_factor('epicmushroom.'))
-        elif user_input.startswith('>fishtest '):
+        elif user_input.startswith('>fishtest'):
             parts = user_input.split(' ')
-            print(fish_event('test_user2', force_fish_name='Absolute Value Fish'))
+
+            if len(parts) > 1:
+                if parts[1] == 'absolute':
+                    print(fish_event('test_user2', force_fish_name='Absolute Value Fish'))
+
+            else:
+                print(fish_event('test_user2'))
+
         elif user_input == 'exit':
             break
