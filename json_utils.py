@@ -520,7 +520,7 @@ def update_inventory(inventory: list[dict], fish: FishingItem, count=1):
     for stack in inventory:
         if stack['item']['name'] == fish.name:
             stack['count'] += count
-            print(stack['count'])
+            # print(stack['count'])
             item_found = True
 
     if not item_found:
