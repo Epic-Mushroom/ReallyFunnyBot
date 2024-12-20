@@ -1,5 +1,6 @@
 .idea
 testing
+__pycache__
 trackers
 secrets
 .zip

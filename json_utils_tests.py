@@ -3,7 +3,7 @@ import unittest
 
 from json_utils import manipulated_weights
 
-TEST_FACTOR = 1.0
+TEST_FACTOR = 0.04
 
 def get_average_value(factor=1.0) -> float:
     fish_items = json_utils.fishing_items[:]

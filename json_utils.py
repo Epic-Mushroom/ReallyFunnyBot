@@ -26,6 +26,17 @@ class Profile:
         for key, value in kwargs.items():
             setattr(self, key, value)
 
+class Stack:
+    def __init__(self, item, count=1, **kwargs):
+        if isinstance(item, dict):
+            self.item = FishingItem(**item)
+        elif isinstance(item, FishingItem):
+            self.item = item
+        else:
+            raise ValueError
+
+        self.count = count
+
 class FishingItem:
     def __init__(self, name, value, weight, **kwargs):
         self.name = name
@@ -79,7 +90,7 @@ def manipulated_weights(factor=1.0) -> list:
 
     for i in range(len(chances))[::-1]:
         most_common_partition.append(fishing_items_sorted_by_weight[i])
-        if sum(chances[i:]) >= common_cutoff_b:
+        if sum(chances[i:]) >= max([common_cutoff_a, common_cutoff_b]):
             break
 
     modified_weights = weights[:]
