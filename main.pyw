@@ -26,6 +26,18 @@ try:
 except FileNotFoundError:
     TOKEN = os.environ['BOT_TOKEN']
 
+# for local testing purposes
+ADMIN_ONLY = False
+test_file = None
+try:
+    test_file = open(Path("testing", "test_file.txt"))
+    ADMIN_ONLY = True
+except FileNotFoundError:
+    ADMIN_ONLY = False
+finally:
+    if test_file:
+        test_file.close()
+
 # GLOBAL VARIABLES oh no im using global variables oh noo
 guild_list = []
 server_instance_list = []
@@ -263,6 +275,11 @@ async def on_message(message):
     # Enables admin commands
     is_admin = message.author.id == EPIC_MUSHROOM_ID
 
+    # Makes the bot only respond if ADMIN_ONLY is enabled
+    if ADMIN_ONLY and not is_admin:
+        print("Non-admin message detected")
+        return
+
     # Triggers start here
     index_of_im = find_index_after_word(lowercase_message_content, POSSESSIVE_PERSONAL_PRONOUN_LIST)
     index_of_pronoun = find_index_after_word(lowercase_message_content, PRONOUNS)
@@ -314,7 +331,7 @@ async def on_message(message):
     if find_word_bool(lowercase_message_content, THICK_OF_IT_TRIGGERS):
         await server_instance.reply_to_message(message, "https://www.youtube.com/watch?v=At8v_Yc044Y")
 
-    if find_word_bool(lowercase_message_content, ['skibidi', 'hawk tuah', 'jelqing']):
+    if find_word_bool(lowercase_message_content, ['skibidi', 'hawk tuah', 'jelqing', 'lv 100 gyatt']):
         await server_instance.send_message(message, "no", True)
 
     if "FUCK" in message.content or "SHIT" in message.content or lowercase_message_content == "shut the fuck up":
@@ -384,7 +401,7 @@ async def on_message(message):
                                    True)
 
     if find_word_bool(message.content, ['resetcd']):
-        if message.author.id == EPIC_MUSHROOM_ID:
+        if is_admin:
             await server_instance.reply_to_message(message, 'Reset cooldown', bypass_cd=True)
             server_instance.reset_cooldown(force=True)
         else:
@@ -485,7 +502,8 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
             await asyncio.sleep(0.5)
 
         try:
-            await server_instance.reply_to_message(message, json_utils.fish_event(message.author.name),
+            await server_instance.reply_to_message(message, f'{'[TESTING ONLY] ' if not json_utils.FISHING_ENABLED else ''}' +
+                                                            f'{json_utils.fish_event(message.author.name)}',
                                                    bypass_cd=True)
         except json_utils.OnFishingCooldownError:
             await server_instance.reply_to_message(message, f"You're on fishing cooldown (" +
@@ -517,30 +535,31 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
             await server_instance.reply_to_message(message, 'you can\'t do that (reference to 1984 by George Orwell)',
                                                    bypass_cd=True)
 
-    if find_word_bool(message.content, ['show profile', 'show pf']):
-        username_temp = message.author.name
-        if lowercase_message_content.startswith('show profile '):
-            parts = message.content.split(' ')
-            username_temp = parts[-1]
+    if is_admin or json_utils.FISHING_ENABLED:
+        if find_word_bool(message.content, ['show profile', 'show pf']):
+            username_temp = message.author.name
+            if lowercase_message_content.startswith('show profile '):
+                parts = message.content.split(' ')
+                username_temp = parts[-1]
 
-        embed = discord.Embed(title=f'{username_temp}\'s Profile', description=json_utils.profile_to_string(username_temp))
-        await message.channel.send(embed=embed)
-        # await server_instance.send_message(message, json_utils.profile_to_string(username_temp), bypass_cd=True)
+            embed = discord.Embed(title=f'{username_temp}\'s Profile', description=json_utils.profile_to_string(username_temp))
+            await message.channel.send(embed=embed)
+            # await server_instance.send_message(message, json_utils.profile_to_string(username_temp), bypass_cd=True)
 
-    if find_word_bool(message.content, ['show leaderboard', 'show lb']):
-        embed = discord.Embed(title='Leaderboard', description=json_utils.leaderboard_string())
-        await message.channel.send(embed=embed)
-        # await server_instance.send_message(message, json_utils.leaderboard_string(), bypass_cd=True)
+        if find_word_bool(message.content, ['show leaderboard', 'show lb']):
+            embed = discord.Embed(title='Leaderboard', description=json_utils.leaderboard_string())
+            await message.channel.send(embed=embed)
+            # await server_instance.send_message(message, json_utils.leaderboard_string(), bypass_cd=True)
 
-    if find_word_bool(message.content, ['luck lb', 'rng lb', 'show luck']):
-        embed = discord.Embed(title='RNG Leaderboard', description=json_utils.leaderboard_string(sort_by_luck=True))
-        await message.channel.send(embed=embed)
+        if find_word_bool(message.content, ['luck lb', 'rng lb', 'show luck']):
+            embed = discord.Embed(title='RNG Leaderboard', description=json_utils.leaderboard_string(sort_by_luck=True))
+            await message.channel.send(embed=embed)
 
-    if find_word_bool(message.content, ['all fish', 'global stats', 'global fish', 'all stats', 'combined profiles', 'combined joblessness',
-                                        'global joblessness', 'how jobless is everyone', '.allfish']):
-        embed = discord.Embed(title='Universal Stats', description=json_utils.universal_profile_to_string())
-        await message.channel.send(embed=embed)
-        # await server_instance.send_message(message, json_utils.universal_profile_to_string(), bypass_cd=True)
+        if find_word_bool(message.content, ['all fish', 'global stats', 'global fish', 'all stats', 'combined profiles', 'combined joblessness',
+                                            'global joblessness', 'how jobless is everyone', '.allfish']):
+            embed = discord.Embed(title='Universal Stats', description=json_utils.universal_profile_to_string())
+            await message.channel.send(embed=embed)
+            # await server_instance.send_message(message, json_utils.universal_profile_to_string(), bypass_cd=True)
 
     if find_word_bool(message.content, ['catchjonklerfishdebug']):
         await server_instance.send_message(message, "that doesn't work anymore dumbass",

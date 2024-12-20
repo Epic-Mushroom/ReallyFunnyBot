@@ -9,7 +9,7 @@ SUPER_RARE_ITEM_WEIGHT_THRESHOLD = 0.501
 TRASH_CUTOFF = 10 # for highlighting items in inventory
 WEIGHT_CUTOFF = 13 # for highlighting items in inventory
 
-FISHING_ITEMS_PATH = Path("trackers", "fishing_items.json")
+FISHING_ITEMS_PATH = Path("values", "fishing_items.json")
 FISHING_DATABASE_PATH = Path("trackers", "fishing.json")
 SPECIALS_DATABASE_PATH = Path("trackers", "specials.json")
 GENERAL_DATABASE_PATH = Path("trackers", "user_triggers.json")
@@ -290,7 +290,9 @@ def fish_event(username: str, is_extra_fish=False, force_fish_name=None, factor=
 
         return count
 
-    if username != 'epicmushroom.' and FISHING_ENABLED == False:
+    higher_beings = ['epicmushroom.', 'test_user', 'test_user2', 'test_user3']
+
+    if not username in higher_beings and FISHING_ENABLED == False:
         raise MaintenanceError
 
     all_users = get_all_users()
@@ -402,6 +404,10 @@ def fish_event(username: str, is_extra_fish=False, force_fish_name=None, factor=
             elif one_fish.name == 'Fish Soap':
                 output += f'You caught: **Fish Soap** (all items with negative value in your inventory removed)'
                 fish_soap(username)
+
+            elif one_fish.name == 'Absolute Value Fish':
+                output += f'You caught: **{one_fish.name}** (all items with negative value turned to positive value)'
+                fish_soap(username, absolute=True)
     
             elif one_fish.name == 'Jonklerfish' and not is_test_user:
                 penalty = random_num + 39
@@ -478,13 +484,33 @@ def go_fish(factor=1.0, force_fish_name: str=None) -> FishingItem:
         force_fish = [fish for fish in fishing_items if fish.name == force_fish_name][0]
         return force_fish
 
-def fish_soap(username: str):
+def fish_soap(username: str, absolute=False):
     list_of_profiles = fishing_database()
 
     for profile in list_of_profiles:
         if profile['username'] == username:
             player_inv = profile['items']
-            profile['items'] = [stack for stack in player_inv if stack['item']['value'] >= 0]
+
+            if absolute:
+                negatives = ['trollface.png', 'Negative Jamesfish', 'Bribe Fish',
+                             'Thief Fish', 'Homeless Guy\'s Underwear', 'Brawl Starfish']
+                positives = ["Anti-Cyberbullying Pocket Guide",
+                             "This Item Should Be Unobtainable",
+                             'Illegal Refund Fish',
+                             'Contributing Member of Society Fish',
+                             'Homeless Guy\'s Bank Account',
+                             'Clam Royale']
+
+                for stack in player_inv:
+                    if stack['item']['name'] in negatives:
+                        temp_index = negatives.index(stack['item']['name'])
+
+                        stack['item']['name'] = positives[temp_index]
+                        stack['item']['value'] = 0 - stack['item']['value']
+                        stack['item']['weight'] = 0
+
+            else:
+                profile['items'] = [stack for stack in player_inv if stack['item']['value'] >= 0]
 
     update_fish_file(list_of_profiles)
 
@@ -757,6 +783,16 @@ rare_items = initialize_rares()
 
 recalculate_fish_database()
 
+test_file = None
+try:
+    test_file = open(Path("testing", "test_file.txt"))
+    FISHING_ENABLED = False
+except FileNotFoundError:
+    FISHING_ENABLED = True
+finally:
+    if test_file:
+        test_file.close()
+
 if __name__ == '__main__':
     while True:
         user_input = input()
@@ -767,5 +803,8 @@ if __name__ == '__main__':
             print(fishing_manifesto_factor('jamescheung24578'))
         elif user_input == 'e':
             print(fishing_manifesto_factor('epicmushroom.'))
+        elif user_input.startswith('>fishtest '):
+            parts = user_input.split(' ')
+            print(fish_event('test_user2', force_fish_name='Absolute Value Fish'))
         elif user_input == 'exit':
             break

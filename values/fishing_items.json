@@ -5,6 +5,36 @@
         "weight": 0
     },
     {
+        "name": "This Item Should Be Unobtainable",
+        "value": 0.5,
+        "weight": 0
+    },
+    {
+        "name": "Illegal Refund Fish",
+        "value": 50,
+        "weight": 0
+    },
+    {
+        "name": "Contributing Member of Society Fish",
+        "value": 25,
+        "weight": 0
+    },
+    {
+        "name": "Homeless Guy's Bank Account",
+        "value": 2,
+        "weight": 0
+    },
+    {
+        "name": "Clam Royale",
+        "value": 2,
+        "weight": 0
+    },
+    {
+        "name": "Anti-Cyberbullying Pocket Guide",
+        "value": 100,
+        "weight": 0
+    },
+    {
         "name": "Reminder to Go Outside",
         "value": 26999,
         "weight": 0.03
@@ -30,6 +60,11 @@
         "weight": 0.6
     },
     {
+        "name": "Absolute Value Fish",
+        "value": 0,
+        "weight": 0.75
+    },
+    {
         "name": "Catalytic Converter",
         "value": 501,
         "weight": 0.99
@@ -45,11 +80,6 @@
         "weight": 1
     },
     {
-        "name": "Caffeinated Worms",
-        "value": 0,
-        "weight": 1.1
-    },
-    {
         "name": "God",
         "value": 249,
         "weight": 1.2
@@ -57,7 +87,7 @@
     {
         "name": "Fish Soap",
         "value": 0,
-        "weight": 1.45
+        "weight": 1.5
     },
     {
         "name": "Used 1999 Toyota Tacoma",
@@ -68,6 +98,16 @@
         "name": "Unregistered Firearm",
         "value": 177.6,
         "weight": 1.5
+    },
+    {
+        "name": "trollface.png",
+        "value": -100,
+        "weight": 1.5
+    },
+    {
+        "name": "Caffeinated Worms",
+        "value": 0,
+        "weight": 1.6
     },
     {
         "name": "Mercenary Contract",
@@ -117,16 +157,21 @@
     {
         "name": "Gold Goldfish",
         "value": 60,
-        "weight": 5
+        "weight": 5.2
     },
     {
         "name": "Golden Juice Box Peel",
         "value": 50,
-        "weight": 5.5
+        "weight": 5.7
     },
     {
         "name": "Fishing Manifesto",
         "value": 0,
+        "weight": 6.2
+    },
+    {
+        "name": "Thief Fish",
+        "value": -25,
         "weight": 6.2
     },
     {
@@ -142,22 +187,17 @@
     {
         "name": "WD-40 Bottle",
         "value": 45,
-        "weight": 6.5
-    },
-    {
-        "name": "Thief Fish",
-        "value": -25,
-        "weight": 6.5
+        "weight": 6.7
     },
     {
         "name": "Swordfish",
         "value": 40,
-        "weight": 7.3
+        "weight": 7.2
     },
     {
         "name": "Mercenary Fish",
         "value": 0,
-        "weight": 7.8
+        "weight": 7.7
     },
     {
         "name": "Zaky the Sea Urchin",

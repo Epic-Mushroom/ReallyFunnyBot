@@ -4,3 +4,4 @@ __pycache__
 trackers
 secrets
 .zip
+/__pycache__
