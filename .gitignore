@@ -1,7 +1,8 @@
 .idea
 testing
+.venv
 __pycache__
-trackers
-secrets
 .zip
+secrets
+trackers
 keep_up.py
