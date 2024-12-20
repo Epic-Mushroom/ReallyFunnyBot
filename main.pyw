@@ -590,6 +590,8 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
         await server_instance.reply_to_message(message, f"{random.choice(BAITS[4:])}", ping=False)
 
 if __name__ == '__main__':
+    print("!!!!TYPE EXIT TO START THE BOT!!!!")
+
     user_input = None
     while user_input != "exit":
         user_input = input("shell command: ")
@@ -600,7 +602,7 @@ if __name__ == '__main__':
         else:
             try:
                 command = user_input.strip().lower().split(' ')
-                output = subprocess.run(command, capture_output=True, text=True)
+                output = subprocess.run(command, capture_output=True, text=True, shell=True)
                 print(output.stdout)
 
             except Exception as err:
