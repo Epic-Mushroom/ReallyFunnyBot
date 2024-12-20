@@ -1,9 +1,9 @@
 [
     {
         "username": "epicmushroom.",
-        "value": 87657,
-        "last_fish_time": 1734661169,
-        "times_fished": 3743,
+        "value": 87662,
+        "last_fish_time": 1734661632,
+        "times_fished": 3744,
         "items": [
             {
                 "item": {
@@ -243,7 +243,7 @@
                     "value": 5,
                     "weight": 26
                 },
-                "count": 190
+                "count": 191
             },
             {
                 "item": {
@@ -1049,9 +1049,9 @@
     },
     {
         "username": "artemis3548",
-        "value": 8654,
-        "times_fished": 654,
-        "last_fish_time": 1734661145,
+        "value": 8655,
+        "times_fished": 655,
+        "last_fish_time": 1734662017,
         "items": [
             {
                 "item": {
@@ -1283,7 +1283,7 @@
                     "value": 1,
                     "weight": 35
                 },
-                "count": 52
+                "count": 53
             },
             {
                 "item": {
@@ -1713,9 +1713,9 @@
     },
     {
         "username": "zakkthecactus",
-        "value": 20361,
-        "times_fished": 933,
-        "last_fish_time": 1734661108,
+        "value": 20363,
+        "times_fished": 935,
+        "last_fish_time": 1734662163,
         "items": [
             {
                 "item": {
@@ -1979,7 +1979,7 @@
                     "value": 1,
                     "weight": 35
                 },
-                "count": 26
+                "count": 27
             },
             {
                 "item": {
@@ -2003,7 +2003,7 @@
                     "value": 1,
                     "weight": 35
                 },
-                "count": 36
+                "count": 37
             },
             {
                 "item": {
@@ -2497,9 +2497,9 @@
     },
     {
         "username": "jamescheung24578",
-        "value": 48698,
-        "times_fished": 2961,
-        "last_fish_time": 1734659473,
+        "value": 48714,
+        "times_fished": 2962,
+        "last_fish_time": 1734661858,
         "items": [
             {
                 "item": {
@@ -2659,7 +2659,7 @@
                     "value": 15,
                     "weight": 13
                 },
-                "count": 84
+                "count": 85
             },
             {
                 "item": {

@@ -13,7 +13,7 @@ logging.basicConfig(level=logging.INFO, stream=sys.stdout)
 load_dotenv()
 
 # TOKEN = os.getenv('DISCORD_TOKEN')
-SECRET_FILE_PATH = Path('C:\\Users\\malro\\OneDrive\\Documents\\kajsdflkadjlsfk\\discord bot token.txt')
+SECRET_FILE_PATH = Path('secrets\\discord bot token.txt')
 TOKEN = None
 MY_GUILD = os.getenv('DISCORD_GUILD')
 intents = discord.Intents.default()
@@ -24,7 +24,7 @@ try:
     with open(SECRET_FILE_PATH) as file1:
         TOKEN = file1.readline()
 except FileNotFoundError:
-    TOKEN = os.environ['DISCORD_TOKEN']
+    TOKEN = os.environ['BOT_TOKEN']
 
 # GLOBAL VARIABLES oh no im using global variables oh noo
 guild_list = []
