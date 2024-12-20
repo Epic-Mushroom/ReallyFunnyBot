@@ -9,10 +9,10 @@ SUPER_RARE_ITEM_WEIGHT_THRESHOLD = 0.501
 TRASH_CUTOFF = 10 # for highlighting items in inventory
 WEIGHT_CUTOFF = 13 # for highlighting items in inventory
 
-FISHING_ITEMS_PATH = Path("trackers\\fishing_items.json")
-FISHING_DATABASE_PATH = Path("trackers\\fishing.json")
-SPECIALS_DATABASE_PATH = Path("trackers\\specials.json")
-GENERAL_DATABASE_PATH = Path("trackers\\user_triggers.json")
+FISHING_ITEMS_PATH = Path("trackers", "fishing_items.json")
+FISHING_DATABASE_PATH = Path("trackers", "fishing.json")
+SPECIALS_DATABASE_PATH = Path("trackers", "specials.json")
+GENERAL_DATABASE_PATH = Path("trackers", "user_triggers.json")
 
 class OnFishingCooldownError(Exception):
     pass
@@ -354,7 +354,7 @@ def fish_event(username: str, is_extra_fish=False, force_fish_name=None, factor=
                 add_special(username, 'catfish', count=4)
 
             elif one_fish.name == 'Fishing Manifesto':
-                output += (f'You caught: **{one_fish.name}** (next 8 catches by you are more likely to include rare items;'
+                output += (f'You caught: **{one_fish.name}** (next 8 catches by you are more likely to include rare items;' +
                            f' the luck boost is more if you are lower on the leaderboard)')
                 add_special(username, 'fishing_manifesto', count=8)
 
@@ -394,7 +394,7 @@ def fish_event(username: str, is_extra_fish=False, force_fish_name=None, factor=
     
             elif one_fish.name == 'Jonklerfish' and not is_test_user:
                 penalty = random_num + 39
-                output += (f'You caught the {one_fish.name}! (+{one_fish.value} moneys, everyone\'s next cooldown '
+                output += (f'You caught the {one_fish.name}! (+{one_fish.value} moneys, everyone\'s next cooldown ' +
                            f'set to {penalty + FISHING_COOLDOWN} seconds)')
     
                 for user in all_users:
@@ -561,7 +561,7 @@ def profile_to_string(username: str) -> str:
 
     for profile in list_of_profiles:
         if profile['username'] == username:
-            output += (f"Moneys obtained: **{profile['value']}**\n"
+            output += (f"Moneys obtained: **{profile['value']}**\n" +
                        f"Items caught: **{profile['times_fished']}**\n\n")
 
             for stack in profile['items']:
@@ -597,8 +597,8 @@ def universal_profile_to_string() -> str:
 
     list_of_profiles = fishing_database()
 
-    output += (f"Moneys obtained: **{round(sum(profile['value'] for profile in list_of_profiles if profile['username'] != 'test_user'))}**\n"
-               f"Items caught: **{sum(profile['times_fished'] for profile in list_of_profiles if profile['username'] != 'test_user')}*"
+    output += (f"Moneys obtained: **{round(sum(profile['value'] for profile in list_of_profiles if profile['username'] != 'test_user'))}**\n" +
+               f"Items caught: **{sum(profile['times_fished'] for profile in list_of_profiles if profile['username'] != 'test_user')}*" +
                f"*\n\n")
 
     for fish in fishing_items:
@@ -641,10 +641,8 @@ def leaderboard_string(sort_by_luck=False) -> str:
             trophy = '🥇 ' if index == 1 else '🥈 ' if index == 2 else '🥉 ' if index == 3 else ''
 
             if not sort_by_luck or (sort_by_luck and profile['times_fished'] >= 10):
-                output += (f'{index}. {trophy}{profile['username']}: **{
-                            profile['value'] if not sort_by_luck else
-                            round(profile['value'] / profile['times_fished'], 2)} moneys'
-                           f'{'/catch' if sort_by_luck else ''}**\n')
+                output += (f'{index}. {trophy}{profile['username']}: **{(profile['value'] if not sort_by_luck else round(profile['value'] / profile['times_fished'], 2))} '
+                           f'moneys{'/catch' if sort_by_luck else ''}**\n')
 
                 index += 1
             else:

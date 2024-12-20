@@ -13,7 +13,7 @@ logging.basicConfig(level=logging.INFO, stream=sys.stdout)
 load_dotenv()
 
 # TOKEN = os.getenv('DISCORD_TOKEN')
-SECRET_FILE_PATH = Path('secrets\\discord bot token.txt')
+SECRET_FILE_PATH = Path('secrets', 'discord bot token.txt')
 TOKEN = None
 MY_GUILD = os.getenv('DISCORD_GUILD')
 intents = discord.Intents.default()
@@ -157,7 +157,7 @@ class ServerSpecificInstance:
             total_triggers_file = None
 
             try:
-                total_triggers_file = Path("trackers\\total_triggers.txt").open('r+')
+                total_triggers_file = Path("trackers", "total_triggers.txt").open('r+')
                 current_count = int(total_triggers_file.readline())
                 total_triggers_file.seek(0)
                 total_triggers_file.write(f"{current_count + 1}")
@@ -187,7 +187,7 @@ class ServerSpecificInstance:
             total_triggers_file = None
 
             try:
-                total_triggers_file = Path("trackers\\total_triggers.txt").open('r+')
+                total_triggers_file = Path("trackers", "total_triggers.txt").open('r+')
                 current_count = int(total_triggers_file.readline())
                 total_triggers_file.seek(0)
                 total_triggers_file.write(f"{current_count + 1}")
@@ -350,7 +350,7 @@ async def on_message(message):
         current_count = None
 
         try:
-            total_triggers_file = Path("trackers\\total_triggers.txt").open('r')
+            total_triggers_file = Path("trackers", "total_triggers.txt").open('r')
             current_count = int(total_triggers_file.readline())
         finally:
             if total_triggers_file:
@@ -484,10 +484,8 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
             await server_instance.reply_to_message(message, json_utils.fish_event(message.author.name),
                                                    bypass_cd=True)
         except json_utils.OnFishingCooldownError:
-            await server_instance.reply_to_message(message, f"You're on fishing cooldown ("
-                                                            f"{json_utils.FISHING_COOLDOWN - (current_time - json_utils.get_user_last_fish_time(
-                                                                message.author.name
-                                                            ))} seconds until you can fish again)", bypass_cd=True)
+            await server_instance.reply_to_message(message, f"You're on fishing cooldown (" +
+                                                            f"{json_utils.FISHING_COOLDOWN - (current_time - json_utils.get_user_last_fish_time(message.author.name))} seconds until you can fish again)", bypass_cd=True)
 
         except json_utils.MaintenanceError:
             await server_instance.reply_to_message(message, f'fishing is currently disabled, go do college apps in the meantime or some shit')
@@ -501,10 +499,9 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
                         await server_instance.send_message(message, json_utils.fish_event('test_user', bypass_fish_cd=True),
                                                                bypass_cd=True)
                     except json_utils.OnFishingCooldownError:
-                        await server_instance.reply_to_message(message, f"You're on fishing cooldown ("
-                                                                        f"{json_utils.FISHING_COOLDOWN - (current_time - json_utils.get_user_last_fish_time(
-                                                                            message.author.name
-                                                                        ))} seconds until you can fish again)", bypass_cd=True)
+                        await server_instance.reply_to_message(message, f"You're on fishing cooldown (" +
+                                                                        f"{json_utils.FISHING_COOLDOWN - (current_time - json_utils.get_user_last_fish_time(message.author.name))}"
+                                                                        f"seconds until you can fish again)", bypass_cd=True)
 
             elif message.content.startswith('admin:switch'):
                 if json_utils.switch_fishing():
@@ -557,13 +554,13 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
                 await kush.send('Hi')
 
     if find_word_bool(message.content, ['embedtestingthing']):
-        embed = discord.Embed(description='Hello\nthis\nis\nsupposed\nto\nbe\na description')
+        embed = discord.Embed(description='Hello\nthis\nis\nsupposed\nto\nbe\na\ndescription')
         await message.channel.send(embed=embed)
 
     if random_range(1, 210) == 1:
-        await server_instance.reply_to_message(message, f"{random.choice(BAITS)}")
+        await server_instance.reply_to_message(message, f"{random.choice(BAITS)}", ping=False)
     elif index_of_pronoun > -1 and random_range(1, 27) == 1:
-        await server_instance.reply_to_message(message, f"{random.choice(BAITS[4:])}")
+        await server_instance.reply_to_message(message, f"{random.choice(BAITS[4:])}", ping=False)
 
 
 client.run(TOKEN)
