@@ -1,4 +1,4 @@
-import discord, os, random, time, logging, sys, json_utils, asyncio
+import discord, os, random, time, logging, sys, json_utils, asyncio, subprocess
 from dotenv import load_dotenv
 from pathlib import Path
 from string_utils import *
@@ -589,7 +589,21 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
     elif index_of_pronoun > -1 and random_range(1, 27) == 1:
         await server_instance.reply_to_message(message, f"{random.choice(BAITS[4:])}", ping=False)
 
+if __name__ == '__main__':
+    client.run(TOKEN)
 
-client.run(TOKEN)
-# this code. is so fucking atrocious. what th eufkae
-# hello github
+    user_input = None
+    while user_input != "exit":
+        user_input = input("shell command: ")
+
+        if user_input == "exit":
+            break
+
+        else:
+            try:
+                command = user_input.strip().lower().split(' ')
+                output = subprocess.run(command, capture_output=True, text=True)
+                print(output.stdout)
+
+            except Exception as err:
+                print(f'exception: {err}')
