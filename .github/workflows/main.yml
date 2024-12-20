@@ -1,12 +1,12 @@
 name: Run Code
 
 on:
-  schedule:
-  - cron: "30 */5 * * *"
+  # schedule:
+  # - cron: "30 */5 * * *"
   workflow_dispatch:
-  push:
-    branches:
-      - master
+  # push:
+  #   branches:
+  #     - master
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
