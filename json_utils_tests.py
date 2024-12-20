@@ -1,10 +1,16 @@
 import json_utils
 import unittest
 
-def get_average_value() -> float:
+from json_utils import manipulated_weights
+
+TEST_FACTOR = 1.0
+
+def get_average_value(factor=1.0) -> float:
     fish_items = json_utils.fishing_items[:]
-    weight_sum = sum(fish.weight for fish in fish_items)
-    a_sum = sum(fish.weight * fish.value for fish in fish_items)
+    weights = manipulated_weights(factor=factor)
+
+    weight_sum = sum(weights)
+    a_sum = sum(weights[i] * fish_items[i].value for i in range(len(fish_items)))
     return a_sum / weight_sum
 
 class FishingTests(unittest.TestCase):
@@ -24,14 +30,13 @@ class FishingTests(unittest.TestCase):
         self.old_boot = self.fishing_items[1]
 
     def test_percents_of_each_fish(self):
-        weight_sum = sum(fish.weight for fish in self.fishing_items)
-        for fish in self.fishing_items:
-            print(f'{fish.name}: {(100 * fish.weight / weight_sum):.3f}%')
+        weights = manipulated_weights(factor=TEST_FACTOR)
+        weight_sum = sum(weights)
+        for i in range(len(self.fishing_items)):
+            print(f'{self.fishing_items[i].name}: {(100 * weights[i] / weight_sum):.3f}%')
 
     def test_average_value(self):
-        weight_sum = sum(fish.weight for fish in self.fishing_items)
-        a_sum = sum(fish.weight * fish.value for fish in self.fishing_items)
-        print(f'AVERAGE EXPECTED VALUE: {a_sum / weight_sum:.3f}')
+        print(f'AVERAGE EXPECTED VALUE: {get_average_value(TEST_FACTOR):.3f}')
 
 if __name__ == '__main__':
     unittest.main()

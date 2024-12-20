@@ -1,5 +1,7 @@
 import json
 from pathlib import Path
+
+import json_utils_tests
 from json_utils import random_range
 from json_utils_tests import get_average_value
 
@@ -29,21 +31,23 @@ def catch_count(boost=False) -> int:
     return count
 
 if __name__ == '__main__':
-    avg_val = get_average_value()
+    avg_val = get_average_value(factor=json_utils_tests.TEST_FACTOR)
 
     total = 0
-    iterations = 30000
+    iterations = 300000
     for i in range(iterations):
         total += catch_count()
 
-    print("Average (with line snaps):", avg_val * total / iterations)
+    print("FACTOR APPLIED: ", json_utils_tests.TEST_FACTOR, '\n')
+
+    print("Average (without boost):", avg_val * total / iterations)
     w_line_snaps = avg_val * total / iterations
 
     total = 0
     for i in range(iterations):
         total += catch_count(boost=True)
 
-    print("Average (without line snaps+boost):", avg_val * total / iterations)
+    print("Average (with boost):", avg_val * total / iterations)
     wo_line_snaps = avg_val * total / iterations
 
     print("Percent increase with boost: ", wo_line_snaps / w_line_snaps * 100 - 100, "%")

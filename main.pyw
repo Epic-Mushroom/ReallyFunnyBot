@@ -516,7 +516,7 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
             await server_instance.reply_to_message(message, 'you can\'t do that (reference to 1984 by George Orwell)',
                                                    bypass_cd=True)
 
-    if find_word_bool(message.content, ['show profile']):
+    if find_word_bool(message.content, ['show profile', 'show pf']):
         username_temp = message.author.name
         if lowercase_message_content.startswith('show profile '):
             parts = message.content.split(' ')
@@ -531,7 +531,7 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
         await message.channel.send(embed=embed)
         # await server_instance.send_message(message, json_utils.leaderboard_string(), bypass_cd=True)
 
-    if find_word_bool(message.content, ['luck lb', 'rng lb']):
+    if find_word_bool(message.content, ['luck lb', 'rng lb', 'show luck']):
         embed = discord.Embed(title='RNG Leaderboard', description=json_utils.leaderboard_string(sort_by_luck=True))
         await message.channel.send(embed=embed)
 

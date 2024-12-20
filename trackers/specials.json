@@ -52,7 +52,7 @@
         },
         {
             "username": "jamescheung24578",
-            "count": 4
+            "count": 1
         },
         {
             "username": "adityaxad",
@@ -64,6 +64,14 @@
         },
         {
             "username": "paliopolis",
+            "count": 0
+        },
+        {
+            "username": "zakkthecactus",
+            "count": 2
+        },
+        {
+            "username": "artemis3548",
             "count": 0
         }
     ],
@@ -117,7 +125,7 @@
         },
         {
             "username": "phospholipase_c",
-            "count": 4
+            "count": 1
         },
         {
             "username": "artemis3548",
@@ -169,7 +177,7 @@
     "fishing_manifesto": [
         {
             "username": "epicmushroom.",
-            "count": 8
+            "count": 0
         },
         {
             "username": "test_user",
@@ -189,7 +197,7 @@
         },
         {
             "username": "oh.noes",
-            "count": 11
+            "count": 10
         },
         {
             "username": "adityaxad",
@@ -206,6 +214,10 @@
         {
             "username": "jesusfreak72",
             "count": 8
+        },
+        {
+            "username": "potatochipbag",
+            "count": 0
         }
     ],
     "bribe_fish": [
@@ -216,7 +228,7 @@
         },
         {
             "username": "artemis3548",
-            "count": 10
+            "count": 0
         },
         {
             "username": "jamescheung24578",
@@ -245,6 +257,10 @@
         {
             "username": "jesusfreak72",
             "count": 40
+        },
+        {
+            "username": "potatochipbag",
+            "count": 36
         }
     ],
     "caffeine_bait": [

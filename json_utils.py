@@ -67,14 +67,19 @@ def manipulated_weights(factor=1.0) -> list:
     rarest_partition = []
     most_common_partition = []
 
+    rarest_cutoff_a = 15
+    rarest_cutoff_b = 50 - factor * 4
+    common_cutoff_a = 30
+    common_cutoff_b = factor * 3
+
     for i in range(len(chances)):
         rarest_partition.append(fishing_items_sorted_by_weight[i])
-        if sum(chances[:i + 1]) >= 15:
+        if sum(chances[:i + 1]) >= rarest_cutoff_a:
             break
 
     for i in range(len(chances))[::-1]:
         most_common_partition.append(fishing_items_sorted_by_weight[i])
-        if sum(chances[i:]) >= 30:
+        if sum(chances[i:]) >= common_cutoff_b:
             break
 
     modified_weights = weights[:]
@@ -94,7 +99,7 @@ def fishing_manifesto_factor(username: str) -> float:
     x = next((profile['value'] for profile in list_of_profiles if profile['username'] == username), 0)
     m = max([profile['value'] for profile in list_of_profiles if profile['username'] != 'test_user'])
 
-    return 21 * ((420 * x / m) + 1) ** -0.2 - 4.55
+    return 21 * ((420 * x / m) + 1) ** -0.2 - 4.45
 
 def initialize_fishing_items() -> list[FishingItem]:
     all_da_fishies = []
@@ -525,16 +530,25 @@ def update_inventory(inventory: list[dict], fish: FishingItem, count=1):
 
         inventory.append(stack)
 
-    sort_inventory(inventory)
+    sort_inventory_by_value(inventory)
 
-def sort_inventory(inventory: list[dict]):
+def sort_inventory_by_value(inventory: list[dict]):
     inventory.sort(key=lambda stack: stack['item']['value'], reverse=True)
     # print(inventory[0]['count'])
 
-def sort_fishing_items():
+def sort_fishing_items_by_value():
     with open(FISHING_ITEMS_PATH, 'r+') as file:
         items = json.load(file)
         items.sort(key=lambda fish: fish['value'], reverse=True)
+
+        file.seek(0)
+        json.dump(items, file, indent=4)
+        file.truncate()
+
+def sort_fishing_items_by_weight():
+    with open(FISHING_ITEMS_PATH, 'r+') as file:
+        items = json.load(file)
+        items.sort(key=lambda fish: fish['weight'])
 
         file.seek(0)
         json.dump(items, file, indent=4)
@@ -727,7 +741,7 @@ script_directory = Path(__file__).parent.resolve()
 os.chdir(script_directory)
 
 fishing_items = initialize_fishing_items()
-sort_fishing_items()
+sort_fishing_items_by_weight()
 rare_items = initialize_rares()
 
 recalculate_fish_database()
@@ -738,7 +752,9 @@ if __name__ == '__main__':
 
         if user_input == 'recalc':
             print(recalculate_fish_database())
-        elif user_input == 'e':
+        elif user_input == 'j':
             print(fishing_manifesto_factor('jamescheung24578'))
+        elif user_input == 'e':
+            print(fishing_manifesto_factor('epicmushroom.'))
         elif user_input == 'exit':
             break
