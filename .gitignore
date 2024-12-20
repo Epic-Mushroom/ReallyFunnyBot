@@ -3,7 +3,7 @@ testing
 .venv
 __pycache__
 .zip
-secrets
 trackers
+secrets
 keep_up.py
 desktop.ini
