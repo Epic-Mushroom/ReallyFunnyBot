@@ -345,6 +345,10 @@ async def on_message(message):
         time_tuple = days_and_hours_since(current_time, KUSH_BIRTHDAY_UNIX_TIME)
         await server_instance.reply_to_message(message, f"Kush has been consuming brainrot for {time_tuple[0]} days and {time_tuple[1]} hours")
 
+    if find_index_after_word(lowercase_message_content, ['kayshav']) > -1:
+        time_tuple = days_and_hours_since(current_time, KUSH_BIRTHDAY_UNIX_TIME)
+        await server_instance.reply_to_message(message, f"Kayshav has been consuming brainrot for {time_tuple[0]} days and {time_tuple[1]} hours")
+
     if "totaltriggers" in lowercase_message_content:
         total_triggers_file = None
         current_count = None
