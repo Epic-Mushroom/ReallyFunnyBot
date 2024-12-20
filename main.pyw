@@ -531,6 +531,10 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
                 else:
                     await server_instance.send_message(message, 'Fishing sim turned off. go outside everyone')
 
+            elif message.content.startswith('admin:shutdown'):
+                await server_instance.send_message(message, "Shutting down bot :(", bypass_cd=True)
+                exit(2)
+
         else:
             await server_instance.reply_to_message(message, 'you can\'t do that (reference to 1984 by George Orwell)',
                                                    bypass_cd=True)
