@@ -120,6 +120,8 @@ class ServerSpecificInstance:
         self.comedians = ["Kush", "Kayshav", "dad", "James", 'Dad',
                           self.nickname]
 
+        self.lockdown = 0 # unix time when lockdown expires
+
     def get_server(self):
         return self.server
 
@@ -158,6 +160,10 @@ class ServerSpecificInstance:
         if self.on_cooldown():
             logging.info(f'On cooldown. Message withheld: {text}')
 
+        if self.on_lockdown():
+            logging.info(f'On lockdown. Message withheld: {text}')
+            return
+
         if bypass_cd or not (self.something_sent or self.on_cooldown()):
             if not bypass_cd:
                 self.something_sent = True
@@ -188,6 +194,10 @@ class ServerSpecificInstance:
         if self.on_cooldown():
             logging.info(f'On cooldown. Message withheld: {text}')
 
+        if self.on_lockdown():
+            logging.info(f'On lockdown. Message withheld: {text}')
+            return
+
         if bypass_cd or not (self.something_sent or self.on_cooldown()):
             if not bypass_cd:
                 self.something_sent = True
@@ -210,6 +220,12 @@ class ServerSpecificInstance:
                     total_triggers_file.close()
 
             fish_utils.update_user_database(reference.author.name)
+
+    def set_lockdown(self, seconds):
+        self.lockdown = int(time.time()) + seconds
+
+    def on_lockdown(self):
+        return int(time.time()) < self.lockdown
 
 def random_range(start: int, stop: int) -> int:
     """random.randrange but its inclusive so i don't keep forgetting the original function has an exclusive endpoint because i have fucking dementia"""
@@ -548,6 +564,9 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
                 # backup_utils.commit_and_push_backups()
                 # await server_instance.reply_to_message(message, 'Backups sent to github... probably')
                 await server_instance.reply_to_message(message, 'this command is disabled')
+
+            elif message.content.startswith('admin:mutebot '):
+                pass
 
         else:
             await server_instance.reply_to_message(message, 'you can\'t do that (reference to 1984 by George Orwell)',

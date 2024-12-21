@@ -3,6 +3,8 @@ work on shop:
 - fix values not calculating properly
 - display shop with page numbers
 
+work on command to mute the bot/ lockdown
+
 grim reaper fish and god 2 fish (deletes stack and dupes stack respectively
 
 add beel nye ???? what would this do idk prolly just make it another random fish
