@@ -724,6 +724,7 @@ def update_fish_database(username: str, fish: FishingItem=None, count=1, cd_pena
         new_profile['username'] = username
         new_profile['times_fished'] = count
         new_profile['items'] = []
+        new_profile['upgrades'] = []
         new_profile['last_fish_time'] = 0
 
         if not bypass_fish_cd:
@@ -739,11 +740,18 @@ def update_fish_database(username: str, fish: FishingItem=None, count=1, cd_pena
     update_fish_file(list_of_profiles)
 
 def recalculate_fish_database() -> int:
+    """
+    Modifies value/weights of fish already in fishing.json to reflect those in fishing_items.json
+    Also adds the upgrades key/value pair to profiles without it
+    """
     list_of_profiles = fishing_database()
     items_changed = 0
 
     for profile in list_of_profiles:
         temp_inv = profile['items']
+
+        if not 'upgrades' in profile.keys():
+            profile['upgrades'] = []
 
         for stack in temp_inv:
             fish_in_file = FishingItem(**stack['item'])
@@ -810,8 +818,10 @@ if __name__ == '__main__':
             parts = user_input.split(' ')
 
             if len(parts) > 1:
-                if parts[1] == 'absolute':
-                    print(fish_event('test_user2', force_fish_name='Absolute Value Fish'))
+                iterations = int(parts[1])
+
+                for j in range(iterations):
+                    print(fish_event('test_user2', bypass_fish_cd=True))
 
             else:
                 print(fish_event('test_user2'))

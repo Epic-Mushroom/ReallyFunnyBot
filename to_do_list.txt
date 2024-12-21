@@ -1,6 +1,6 @@
 work on shop:
-- need to display descriptions as part of __str__
-- tweak Profile object and fishing.json to store shop items (the permanent upgrades)
+- fix buying specials buying twice as much
+- fix values not calculating properly
 - display shop with page numbers
 
 grim reaper fish and god 2 fish (deletes stack and dupes stack respectively

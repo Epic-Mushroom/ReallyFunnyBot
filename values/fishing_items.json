@@ -25,6 +25,11 @@
         "weight": 0
     },
     {
+        "name": "Credit",
+        "value": 1,
+        "weight": 0
+    },
+    {
         "name": "Clam Royale",
         "value": 2,
         "weight": 0

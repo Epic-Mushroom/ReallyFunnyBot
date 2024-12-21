@@ -1,8 +1,9 @@
 [
   {
     "item_type": "consumable",
-    "name": "140x Caffeinated Worms",
+    "name": "Can of Caffeinated Worms",
     "description": "Next 140 catches are more likely to reel up multiple items at once",
+    "special": ["caffeine_bait", 140],
     "money_price": 0,
     "item_price": [
             {
@@ -17,7 +18,7 @@
     "page": 1
   },
   {
-    "item_type": "perm_upgrade",
+    "item_type": "upgrade",
     "name": "State Farm Fishing Insurance I",
     "description": "-33% chance to get no items in a catch",
     "money_price": 0,
@@ -43,7 +44,7 @@
     "page": 1
   },
   {
-    "item_type": "perm_upgrade",
+    "item_type": "upgrade",
     "name": "State Farm Fishing Insurance II",
     "description": "-33% chance to get no items in a catch",
     "money_price": 6666,
@@ -61,7 +62,7 @@
     "page": 1
   },
   {
-    "item_type": "perm_upgrade",
+    "item_type": "upgrade",
     "name": "State Farm Fishing Insurance III",
     "description": "-33% chance to get no items in a catch",
     "money_price": 16666,
