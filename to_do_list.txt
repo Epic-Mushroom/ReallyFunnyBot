@@ -1,5 +1,4 @@
 work on shop:
-- fix buying specials buying twice as much
 - fix values not calculating properly
 - display shop with page numbers
 

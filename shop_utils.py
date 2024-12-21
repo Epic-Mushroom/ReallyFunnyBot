@@ -115,11 +115,13 @@ class ShopItem:
         elif self.item_type == 'misc':
             raise ValueError
 
+        # writes upgrades to fishing.json
+        update_fish_file(list_of_profiles)
+
         update_fish_database(username, fish=get_fish_from_name('Credit'), count=0 - self.money_price, bypass_fish_cd=True)
         for stack in self.item_price:
             update_fish_database(username, fish=get_fish_from_name(stack.item.name), count=0 - stack.count, bypass_fish_cd=True)
-
-        update_fish_file(list_of_profiles)
+            # print(0 - stack.count, "of item was deleted from inv")
 
 def get_list_of_shop_items() -> list[ShopItem]:
     shop = shop_database()
@@ -136,10 +138,7 @@ def display_shop_page(page=1) -> str:
 
 if __name__ == '__main__':
     # TESTING
-    shop = shop_database()
-
-    for item in shop:
-        item_obj = ShopItem(**item)
+    for item_obj in get_list_of_shop_items():
         print(item_obj)
 
         print("buy this item? (y/n)")

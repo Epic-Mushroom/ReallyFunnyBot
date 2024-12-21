@@ -100,8 +100,8 @@ JADEN_ID = 762393738676404224
 IMAGES = list(Path("images").iterdir())
 VIDEOS = list(Path("videos").iterdir())
 
-COOLDOWN_LENGTH = 35
-COOLDOWN_LIMIT = 8 # how many messages that can be sent per COOLDOWN_LENGTH seconds
+COOLDOWN_LENGTH = 40
+COOLDOWN_LIMIT = 7 # how many messages that can be sent per COOLDOWN_LENGTH seconds
 
 class ServerSpecificInstance:
 

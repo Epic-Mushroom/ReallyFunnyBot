@@ -630,6 +630,16 @@ def profile_to_string(username: str) -> str:
                             output += f'{user_status['count']}x {special}\n'
                             break
 
+            output += '\n'
+
+            if len(profile['upgrades']) > 0:
+                output += '**Upgrades purchased:**\n'
+
+                for upgrade in profile['upgrades']:
+                    output += f'{upgrade}\n'
+            else:
+                output += '*No upgrades purchased*\n'
+
             return output
 
     return output + f"Moneys obtained: **0**\nItems caught: **0**\n\nNo fish caught"
