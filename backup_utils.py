@@ -19,7 +19,7 @@ def shell_command(input: str) -> None:
 
 def make_backup() -> None:
     folder_name = str(datetime.datetime.now().strftime("%m-%d-%Y %I.%M.%S %p"))
-    if not json_utils.FISHING_ENABLED:
+    if not fish_utils.FISHING_ENABLED:
         folder_name = f'TESTDATA {folder_name}'
 
     os.mkdir(Path("trackers_backup", folder_name))
