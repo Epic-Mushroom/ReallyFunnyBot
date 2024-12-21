@@ -365,26 +365,6 @@ async def on_message(message):
     if "what is the unix time" in lowercase_message_content:
         await server_instance.reply_to_message(message, f"The unix time is {current_time}\nformatted, that's <t:{current_time}:f>")
 
-    if find_word_index(lowercase_message_content, ['jaden', 'jedwin']) > -1:
-        time_tuple = days_and_hours_since(current_time, JADEN_18TH_BIRTHDAY_UNIX_TIME)
-        await server_instance.reply_to_message(message, f"Jaden has been stalking minors for {time_tuple[0]} days and {time_tuple[1]} hours")
-
-    if find_word_index(lowercase_message_content, ['jame', 'james', 'cheung']) > -1:
-        time_tuple = days_and_hours_since(current_time, JAMES_18TH_BIRTHDAY_UNIX_TIME)
-        await server_instance.reply_to_message(message, f"James has been getting high for {time_tuple[0]} days and {time_tuple[1]} hours")
-
-    if find_word_index(lowercase_message_content, ['aravind', 'arvind']) > -1:
-        time_tuple = days_and_hours_since(ARAVIND_18TH_BIRTHDAY_UNIX_TIME, current_time)
-        await server_instance.reply_to_message(message, f"Aravind will be legal in {time_tuple[0]} days and {time_tuple[1]} hours")
-
-    if find_index_after_word(lowercase_message_content, ['kush', 'hush b', 'hush']) > -1:
-        time_tuple = days_and_hours_since(current_time, KUSH_BIRTHDAY_UNIX_TIME)
-        await server_instance.reply_to_message(message, f"Kush has been consuming brainrot for {time_tuple[0]} days and {time_tuple[1]} hours")
-
-    if find_index_after_word(lowercase_message_content, ['kayshav']) > -1:
-        time_tuple = days_and_hours_since(current_time, KUSH_BIRTHDAY_UNIX_TIME)
-        await server_instance.reply_to_message(message, f"Kayshav has been consuming brainrot for {time_tuple[0]} days and {time_tuple[1]} hours")
-
     if "totaltriggers" in lowercase_message_content:
         total_triggers_file = None
         current_count = None
@@ -436,18 +416,39 @@ async def on_message(message):
         await server_instance.send_message(message, random.choice(AMONG_US_RESPONSES))
 
     if find_word_bool(message.content, ['mind blowing', 'mindblowing', ":exploding_head:", "🤯"]):
-        image_path = random.choice(IMAGES)
+        image_path = Path("images", "emoji483.png")
         try:
             await server_instance.send_message(message, "** **", file_path=image_path)
         except FileNotFoundError:
-            await server_instance.send_message(message, "file wasn't found (how the fuck did this happen bro)")
+            print(f"'{str(image_path)} wasn't found'")
+
+    if find_word_bool(message.content, ["kachow"]):
+        image_path = Path("images", "jedwin", "kachow.png")
+        try:
+            await server_instance.send_message(message, "** **", file_path=image_path)
+        except FileNotFoundError:
+            print(f"'{str(image_path)} wasn't found'")
+
+    if find_word_bool(message.content, ["slavery"]):
+        image_path = Path("images", "jedwin", "Jailed_Jedgar.jpg")
+        try:
+            await server_instance.send_message(message, "** **", file_path=image_path)
+        except FileNotFoundError:
+            print(f"'{str(image_path)} wasn't found'")
+
+    if find_word_bool(message.content, ["jaden christian edwin"]):
+        image_path = random.choice(list(Path("images", "jedwin").iterdir()))
+        try:
+            await server_instance.send_message(message, "** **", file_path=image_path)
+        except FileNotFoundError:
+            print(f"'{str(image_path)} wasn't found'")
 
     if find_isolated_word_bool(message.content, ['persona', 'specialist']):
-        video_path = random.choice(VIDEOS)
+        video_path = Path("videos", "p4 specialist compressed.mp4")
         try:
             await server_instance.send_message(message, "** **", file_path=video_path)
         except FileNotFoundError:
-            await server_instance.send_message(message, "file wasn't found (how the fuck did this happen bro)")
+            print(f"'{str(video_path)} wasn't found'")
 
     if find_word_bool(message.content, ['testingmultmessages', 'testmultmessages']):
         await server_instance.send_message(message, 'test')
@@ -622,6 +623,26 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
                 await kush.send(f'{parts[2]}')
             else:
                 await kush.send('Hi')
+
+    if find_word_index(lowercase_message_content, ['jaden', 'jedwin']) > -1:
+        time_tuple = days_and_hours_since(current_time, JADEN_18TH_BIRTHDAY_UNIX_TIME)
+        await server_instance.reply_to_message(message, f"Jaden has been stalking minors for {time_tuple[0]} days and {time_tuple[1]} hours")
+
+    if find_word_index(lowercase_message_content, ['jame', 'james', 'cheung']) > -1:
+        time_tuple = days_and_hours_since(current_time, JAMES_18TH_BIRTHDAY_UNIX_TIME)
+        await server_instance.reply_to_message(message, f"James has been getting high for {time_tuple[0]} days and {time_tuple[1]} hours")
+
+    if find_word_index(lowercase_message_content, ['aravind', 'arvind']) > -1:
+        time_tuple = days_and_hours_since(ARAVIND_18TH_BIRTHDAY_UNIX_TIME, current_time)
+        await server_instance.reply_to_message(message, f"Aravind will be legal in {time_tuple[0]} days and {time_tuple[1]} hours")
+
+    if find_index_after_word(lowercase_message_content, ['kush', 'hush b', 'hush']) > -1:
+        time_tuple = days_and_hours_since(current_time, KUSH_BIRTHDAY_UNIX_TIME)
+        await server_instance.reply_to_message(message, f"Kush has been consuming brainrot for {time_tuple[0]} days and {time_tuple[1]} hours")
+
+    if find_index_after_word(lowercase_message_content, ['kayshav']) > -1:
+        time_tuple = days_and_hours_since(current_time, KUSH_BIRTHDAY_UNIX_TIME)
+        await server_instance.reply_to_message(message, f"Kayshav has been consuming brainrot for {time_tuple[0]} days and {time_tuple[1]} hours")
 
     if random_range(1, 210) == 1:
         await server_instance.reply_to_message(message, f"{random.choice(BAITS)}", ping=False)
