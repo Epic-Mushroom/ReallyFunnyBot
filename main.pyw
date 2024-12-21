@@ -1,4 +1,4 @@
-import discord, os, random, time, logging, sys, json_utils, backup_utils, asyncio, subprocess
+import discord, os, random, time, logging, sys, fish_utils, backup_utils, asyncio, subprocess
 from dotenv import load_dotenv
 from pathlib import Path
 from string_utils import *
@@ -179,7 +179,7 @@ class ServerSpecificInstance:
                 if total_triggers_file:
                     total_triggers_file.close()
 
-            json_utils.update_user_database(reference.author.name)
+            fish_utils.update_user_database(reference.author.name)
             
         if file:
             file.close()
@@ -209,7 +209,7 @@ class ServerSpecificInstance:
                 if total_triggers_file:
                     total_triggers_file.close()
 
-            json_utils.update_user_database(reference.author.name)
+            fish_utils.update_user_database(reference.author.name)
 
 def random_range(start: int, stop: int) -> int:
     """random.randrange but its inclusive so i don't keep forgetting the original function has an exclusive endpoint because i have fucking dementia"""
@@ -504,14 +504,14 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
             await asyncio.sleep(0.5)
 
         try:
-            await server_instance.reply_to_message(message, f'{'[TESTING ONLY] ' if not json_utils.FISHING_ENABLED else ''}' +
-                                                            f'{json_utils.fish_event(message.author.name)}',
+            await server_instance.reply_to_message(message, f'{'[TESTING ONLY] ' if not fish_utils.FISHING_ENABLED else ''}' +
+                                                            f'{fish_utils.fish_event(message.author.name)}',
                                                    bypass_cd=True)
-        except json_utils.OnFishingCooldownError:
+        except fish_utils.OnFishingCooldownError:
             await server_instance.reply_to_message(message, f"You're on fishing cooldown (" +
-                                                            f"{json_utils.FISHING_COOLDOWN - (current_time - json_utils.get_user_last_fish_time(message.author.name))} seconds until you can fish again)", bypass_cd=True)
+                                                            f"{fish_utils.FISHING_COOLDOWN - (current_time - fish_utils.get_user_last_fish_time(message.author.name))} seconds until you can fish again)", bypass_cd=True)
 
-        except json_utils.MaintenanceError:
+        except fish_utils.MaintenanceError:
             await server_instance.reply_to_message(message, f'fishing is currently disabled, go do college apps in the meantime or some shit')
 
     if message.content.startswith('admin:') and len(message.content) > 6:
@@ -520,15 +520,15 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
                 parts = message.content.split(' ')
                 for l in range(min(int(parts[-1] if len(parts) > 1 else 1), 12)):
                     try:
-                        await server_instance.send_message(message, json_utils.fish_event('test_user', bypass_fish_cd=True),
-                                                               bypass_cd=True)
-                    except json_utils.OnFishingCooldownError:
+                        await server_instance.send_message(message, fish_utils.fish_event('test_user', bypass_fish_cd=True),
+                                                           bypass_cd=True)
+                    except fish_utils.OnFishingCooldownError:
                         await server_instance.reply_to_message(message, f"You're on fishing cooldown (" +
-                                                                        f"{json_utils.FISHING_COOLDOWN - (current_time - json_utils.get_user_last_fish_time(message.author.name))}"
+                                                                        f"{fish_utils.FISHING_COOLDOWN - (current_time - fish_utils.get_user_last_fish_time(message.author.name))}"
                                                                         f"seconds until you can fish again)", bypass_cd=True)
 
             elif message.content.startswith('admin:switch'):
-                if json_utils.switch_fishing():
+                if fish_utils.switch_fishing():
                     await server_instance.send_message(message, 'Fishing sim turned on. let the brainrot begin')
                 else:
                     await server_instance.send_message(message, 'Fishing sim turned off. go outside everyone')
@@ -553,31 +553,32 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
             await server_instance.reply_to_message(message, 'you can\'t do that (reference to 1984 by George Orwell)',
                                                    bypass_cd=True)
 
-    if is_admin or json_utils.FISHING_ENABLED:
+    if is_admin or fish_utils.FISHING_ENABLED:
         if find_word_bool(message.content, ['show profile', 'show pf']):
             username_temp = message.author.name
-            if lowercase_message_content.startswith('show profile '):
+            if (lowercase_message_content.startswith('show profile ') or
+                lowercase_message_content.startswith('show pf ')):
                 parts = message.content.split(' ')
                 username_temp = parts[-1]
 
-            embed = discord.Embed(title=f'{username_temp}\'s Profile', description=json_utils.profile_to_string(username_temp))
+            embed = discord.Embed(title=f'{username_temp}\'s Profile', description=fish_utils.profile_to_string(username_temp))
             await message.channel.send(embed=embed)
-            # await server_instance.send_message(message, json_utils.profile_to_string(username_temp), bypass_cd=True)
+            # await server_instance.send_message(message, fish_utils.profile_to_string(username_temp), bypass_cd=True)
 
         if find_word_bool(message.content, ['show leaderboard', 'show lb']):
-            embed = discord.Embed(title='Leaderboard', description=json_utils.leaderboard_string())
+            embed = discord.Embed(title='Leaderboard', description=fish_utils.leaderboard_string())
             await message.channel.send(embed=embed)
-            # await server_instance.send_message(message, json_utils.leaderboard_string(), bypass_cd=True)
+            # await server_instance.send_message(message, fish_utils.leaderboard_string(), bypass_cd=True)
 
         if find_word_bool(message.content, ['luck lb', 'rng lb', 'show luck']):
-            embed = discord.Embed(title='RNG Leaderboard', description=json_utils.leaderboard_string(sort_by_luck=True))
+            embed = discord.Embed(title='RNG Leaderboard', description=fish_utils.leaderboard_string(sort_by_luck=True))
             await message.channel.send(embed=embed)
 
         if find_word_bool(message.content, ['all fish', 'global stats', 'global fish', 'all stats', 'combined profiles', 'combined joblessness',
                                             'global joblessness', 'how jobless is everyone', '.allfish']):
-            embed = discord.Embed(title='Universal Stats', description=json_utils.universal_profile_to_string())
+            embed = discord.Embed(title='Universal Stats', description=fish_utils.universal_profile_to_string())
             await message.channel.send(embed=embed)
-            # await server_instance.send_message(message, json_utils.universal_profile_to_string(), bypass_cd=True)
+            # await server_instance.send_message(message, fish_utils.universal_profile_to_string(), bypass_cd=True)
 
     if find_word_bool(message.content, ['catchjonklerfishdebug']):
         await server_instance.send_message(message, "that doesn't work anymore dumbass",

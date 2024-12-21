@@ -1,0 +1,89 @@
+[
+  {
+    "item_type": "consumable",
+    "name": "140x Caffeinated Worms",
+    "description": "Next 140 catches are more likely to reel up multiple items at once",
+    "money_price": 0,
+    "item_price": [
+            {
+                "item": {
+                    "name": "Adderall (1840 Limited Edition)",
+                    "value": 1299,
+                    "weight": 0.45
+                },
+                "count": 1
+            }],
+    "requirements": [],
+    "page": 1
+  },
+  {
+    "item_type": "perm_upgrade",
+    "name": "State Farm Fishing Insurance I",
+    "description": "-33% chance to get no items in a catch",
+    "money_price": 0,
+    "item_price": [
+            {
+                "item": {
+                    "name": "God",
+                    "value": 249,
+                    "weight": 1.2
+                },
+                "count": 3
+            },
+            {
+                "item": {
+                    "name": "Used 1999 Toyota Tacoma",
+                    "value": 199,
+                    "weight": 1.5
+                },
+                "count": 4
+            }
+    ],
+    "requirements": [],
+    "page": 1
+  },
+  {
+    "item_type": "perm_upgrade",
+    "name": "State Farm Fishing Insurance II",
+    "description": "-33% chance to get no items in a catch",
+    "money_price": 6666,
+    "item_price": [
+            {
+                "item": {
+                    "name": "Gambling Addiction Diagnosis",
+                    "value": 1999,
+                    "weight": 0.32
+                },
+                "count": 1
+            }
+    ],
+    "requirements": ["State Farm Fishing Insurance I"],
+    "page": 1
+  },
+  {
+    "item_type": "perm_upgrade",
+    "name": "State Farm Fishing Insurance III",
+    "description": "-33% chance to get no items in a catch",
+    "money_price": 16666,
+    "item_price": [
+            {
+                "item": {
+                    "name": "Gambling Addiction Diagnosis",
+                    "value": 1999,
+                    "weight": 0.32
+                },
+                "count": 1
+            },
+            {
+                "item": {
+                    "name": "Ohlone Rejection Letter",
+                    "value": 5555,
+                    "weight": 0.1
+                },
+                "count": 1
+            }
+    ],
+    "requirements": ["State Farm Fishing Insurance II"],
+    "page": 2
+  }
+]

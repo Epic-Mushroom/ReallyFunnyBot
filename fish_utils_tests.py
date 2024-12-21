@@ -1,12 +1,12 @@
-import json_utils
+import fish_utils
 import unittest
 
-from json_utils import manipulated_weights
+from fish_utils import manipulated_weights
 
 TEST_FACTOR = 1
 
 def get_average_value(factor=1.0) -> float:
-    fish_items = json_utils.fishing_items[:]
+    fish_items = fish_utils.fishing_items[:]
     weights = manipulated_weights(factor=factor)
 
     weight_sum = sum(weights)
@@ -26,7 +26,7 @@ class FishingTests(unittest.TestCase):
                 "count": 1
             }
         ]
-        self.fishing_items = json_utils.fishing_items[:]
+        self.fishing_items = fish_utils.fishing_items[:]
         self.old_boot = self.fishing_items[1]
 
     def test_percents_of_each_fish(self):

@@ -1,9 +1,9 @@
 import json
 from pathlib import Path
 
-import json_utils_tests
-from json_utils import random_range
-from json_utils_tests import get_average_value
+import fish_utils_tests
+from fish_utils import random_range
+from fish_utils_tests import get_average_value
 
 test_path = Path('trackers\\test.json')
 
@@ -31,14 +31,14 @@ def catch_count(boost=False) -> int:
     return count
 
 if __name__ == '__main__':
-    avg_val = get_average_value(factor=json_utils_tests.TEST_FACTOR)
+    avg_val = get_average_value(factor=fish_utils_tests.TEST_FACTOR)
 
     total = 0
     iterations = 300000
     for i in range(iterations):
         total += catch_count()
 
-    print("FACTOR APPLIED: ", json_utils_tests.TEST_FACTOR, '\n')
+    print("FACTOR APPLIED: ", fish_utils_tests.TEST_FACTOR, '\n')
 
     print("Average (without boost):", avg_val * total / iterations)
     w_line_snaps = avg_val * total / iterations

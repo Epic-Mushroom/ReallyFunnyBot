@@ -37,6 +37,9 @@ class Stack:
 
         self.count = count
 
+    def __str__(self):
+        return f'{self.count}x {self.item.name}'
+
 class FishingItem:
     def __init__(self, name, value, weight, **kwargs):
         self.name = name
@@ -378,7 +381,7 @@ def fish_event(username: str, is_extra_fish=False, force_fish_name=None, factor=
 
             elif one_fish.name == 'Caffeinated Worms':
                 output += (
-                    f'You caught: **{one_fish.name}** (next 30 catches are more likely to reel up multiple items)')
+                    f'You caught: **{one_fish.name}** (next 30 catches are more likely to reel up multiple items at once)')
                 add_special(username, 'caffeine_bait', count=30)
 
             elif one_fish.name == 'Mercenary Contract':
