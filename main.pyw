@@ -545,8 +545,9 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
                     await server_instance.reply_to_message(message, f'bro you done fucked smth up ({e})')
 
             elif message.content.startswith('admin:commitbackups'):
-                backup_utils.commit_and_push_backups()
-                await server_instance.reply_to_message(message, 'Backups sent to github... probably')
+                # backup_utils.commit_and_push_backups()
+                # await server_instance.reply_to_message(message, 'Backups sent to github... probably')
+                await server_instance.reply_to_message(message, 'this command is disabled')
 
         else:
             await server_instance.reply_to_message(message, 'you can\'t do that (reference to 1984 by George Orwell)',
