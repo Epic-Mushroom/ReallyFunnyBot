@@ -121,6 +121,19 @@ class ShopItem:
 
         update_fish_file(list_of_profiles)
 
+def get_list_of_shop_items() -> list[ShopItem]:
+    shop = shop_database()
+    shop_items = []
+
+    for item in shop:
+        shop_items.append(ShopItem(**item))
+
+    return shop_items
+
+def display_shop_page(page=1) -> str:
+    shop_items = get_list_of_shop_items()
+    ...
+
 if __name__ == '__main__':
     # TESTING
     shop = shop_database()

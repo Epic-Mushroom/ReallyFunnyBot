@@ -712,7 +712,7 @@ def update_fish_database(username: str, fish: FishingItem=None, count=1, cd_pena
                 update_inventory(profile['items'], fish, count=count)
 
             profile['value'] = round(sum(stack['item']['value'] * stack['count'] for stack in profile['items']))
-            profile['times_fished'] = sum(stack['count'] for stack in profile['items'])
+            profile['times_fished'] = sum(stack['count'] for stack in profile['items'] if stack['item']['name'] != 'Credit')
 
             if not bypass_fish_cd:
                 profile['last_fish_time'] = int(time.time()) + cd_penalty
