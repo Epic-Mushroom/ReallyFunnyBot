@@ -126,15 +126,6 @@ def initialize_fishing_items() -> list[FishingItem]:
 
     return all_da_fishies
 
-def initialize_rares():
-    rares = []
-
-    for fish in fishing_items:
-        if 0 <= fish.weight <= RARE_ITEM_WEIGHT_THRESHOLD:
-            rares.append(fish)
-
-    return rares
-
 def get_fish_from_name(name: str):
     the_fish = [fish for fish in fishing_items if fish.name == name][0]
     return the_fish
@@ -292,6 +283,19 @@ def fish_event(username: str, is_extra_fish=False, force_fish_name=None, factor=
             count -= 1
 
         return count
+    
+    def rare_prefix(fishing_item: FishingItem) -> str:
+        result = ''
+        bangbangbangbang = f'‼️‼️ '
+        bangbang = f'‼️ '
+
+        if fishing_item.weight <= SUPER_RARE_ITEM_WEIGHT_THRESHOLD:
+            result = bangbangbangbang
+
+        elif fishing_item.weight <= RARE_ITEM_WEIGHT_THRESHOLD:
+            result = bangbang
+            
+        return result
 
     higher_beings = ['epicmushroom.', 'test_user', 'test_user2', 'test_user3']
 
@@ -355,11 +359,7 @@ def fish_event(username: str, is_extra_fish=False, force_fish_name=None, factor=
             output += f'You caught nothing ({random.choice(unlucky_messages)})'
 
         for one_fish in caught_fish:
-            if one_fish.weight <= SUPER_RARE_ITEM_WEIGHT_THRESHOLD:
-                output += f'‼️‼️ '
-
-            elif one_fish in rare_items:
-                output += f'‼️ '
+            output += rare_prefix(one_fish)
 
             if one_fish.name == 'Cop Fish' and not bypass_fish_cd and not bribe_active:
                 penalty += random_num + 19
@@ -429,7 +429,7 @@ def fish_event(username: str, is_extra_fish=False, force_fish_name=None, factor=
                     temp_username = heist_tuple[0]
                     stolen_fish = heist_tuple[1]
     
-                    output += f'\nStole {stolen_fish.name} from {temp_username}'
+                    output += f'\nStole {rare_prefix(stolen_fish)}**{stolen_fish.name}** from {temp_username}'
     
             elif one_fish.name == 'CS:GO Fish' and not is_test_user:
                 output += f'You caught: **CS:GO Fish** ('
@@ -439,7 +439,7 @@ def fish_event(username: str, is_extra_fish=False, force_fish_name=None, factor=
                     temp_username = heist_tuple[0]
                     stolen_fish = heist_tuple[1]
     
-                    output += f'{temp_username}\'s {stolen_fish.name} was shot)'
+                    output += f'{temp_username}\'s {rare_prefix(stolen_fish)}**{stolen_fish.name}** was shot)'
     
             elif one_fish.name == 'Sea Bass':
                 output += f'You caught: **{one_fish.name}**... no it\'s at least a C+ (worth {one_fish.value} moneys)'
@@ -521,7 +521,7 @@ def steal_fish_from_random(thief_name: str, shoot=False) -> tuple[str, FishingIt
     list_of_profiles = fishing_database()
 
     while True:
-        weights = [profile['times_fished'] for profile in list_of_profiles]
+        weights = [profile['value'] for profile in list_of_profiles]
         player_profile = random.choices(list_of_profiles, weights=weights, k=1)[0]
         player_inv = player_profile['items']
         player_name = player_profile['username']
@@ -790,7 +790,6 @@ os.chdir(script_directory)
 
 fishing_items = initialize_fishing_items()
 sort_fishing_items_by_weight()
-rare_items = initialize_rares()
 
 recalculate_fish_database()
 
