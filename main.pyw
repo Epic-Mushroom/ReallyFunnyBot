@@ -1,24 +1,21 @@
-import discord, os, random, time, logging, sys, json_utils, asyncio, subprocess
+import discord, os, random, time, logging, sys, json_utils, backup_utils, asyncio, subprocess
 from dotenv import load_dotenv
 from pathlib import Path
 from string_utils import *
 # Yeah thats right prof thornton im using import * what are you gonna do about it
 
-# SETUP
+# Directory and logging setup
 script_directory = Path(__file__).parent.resolve()
 os.chdir(script_directory)
 
 logging.basicConfig(level=logging.INFO, stream=sys.stdout)
 
+# Token setup
 load_dotenv()
 
-# TOKEN = os.getenv('DISCORD_TOKEN')
 SECRET_FILE_PATH = Path('secrets', 'discord bot token.txt')
 TOKEN = None
 MY_GUILD = os.getenv('DISCORD_GUILD')
-intents = discord.Intents.default()
-intents.message_content = True
-client = discord.Client(intents=intents)
 
 try:
     with open(SECRET_FILE_PATH) as file1:
@@ -26,7 +23,12 @@ try:
 except FileNotFoundError:
     TOKEN = os.environ['BOT_TOKEN']
 
-# for local testing purposes
+# Discord client setup
+intents = discord.Intents.default()
+intents.message_content = True
+client = discord.Client(intents=intents)
+
+# For local testing purposes; the 'testing' directory should only be available on local
 ADMIN_ONLY = False
 test_file = None
 try:
@@ -535,6 +537,17 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
                 await server_instance.send_message(message, "Shutting down bot :(", bypass_cd=True)
                 exit(2)
 
+            elif message.content.startswith('admin:backup'):
+                try:
+                    backup_utils.make_backup()
+                    await server_instance.reply_to_message(message, 'Backup successful')
+                except Exception as e:
+                    await server_instance.reply_to_message(message, f'bro you done fucked smth up ({e})')
+
+            elif message.content.startswith('admin:commitbackups'):
+                backup_utils.commit_and_push_backups()
+                await server_instance.reply_to_message(message, 'Backups sent to github... probably')
+
         else:
             await server_instance.reply_to_message(message, 'you can\'t do that (reference to 1984 by George Orwell)',
                                                    bypass_cd=True)
@@ -590,7 +603,7 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
         await server_instance.reply_to_message(message, f"{random.choice(BAITS[4:])}", ping=False)
 
 if __name__ == '__main__':
-    print("!!!!TYPE EXIT TO START THE BOT!!!!")
+    print("!!!!TYPE 'exit' TO START THE BOT!!!!")
 
     user_input = None
     while user_input != "exit":
@@ -600,12 +613,6 @@ if __name__ == '__main__':
             break
 
         else:
-            try:
-                command = user_input.strip().lower().split(' ')
-                output = subprocess.run(command, capture_output=True, text=True, shell=True)
-                print(output.stdout)
-
-            except Exception as err:
-                print(f'exception: {err}')
+            backup_utils.shell_command(user_input)
 
     client.run(TOKEN)
