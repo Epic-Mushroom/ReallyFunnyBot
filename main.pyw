@@ -295,7 +295,7 @@ async def on_message(message):
     is_admin = message.author.id == EPIC_MUSHROOM_ID
 
     # Makes the bot only respond if ADMIN_ONLY is enabled
-    if (ADMIN_ONLY and not is_admin) or server_instance.server_name is not None:
+    if ADMIN_ONLY and (not is_admin or server_instance.server_name is not None):
         print("Non-admin message detected")
         return
 
