@@ -60,7 +60,7 @@ class ShopItem:
         show_item_price = len(self.item_price) > 0
         show_prereqs = len(self.requirements) > 0
 
-        result = f'{self.name} ({type_str})\n*{self.description}*\nCosts:\n'
+        result = f'**{self.name}** ({type_str})\n*{self.description}*\nCosts:\n'
 
         if show_money_price:
             result += f'{self.money_price} moneys\n'

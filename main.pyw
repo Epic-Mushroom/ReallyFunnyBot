@@ -10,24 +10,6 @@ os.chdir(script_directory)
 
 logging.basicConfig(level=logging.INFO, stream=sys.stdout)
 
-# Token setup
-load_dotenv()
-
-SECRET_FILE_PATH = Path('secrets', 'discord bot token.txt')
-TOKEN = None
-MY_GUILD = os.getenv('DISCORD_GUILD')
-
-try:
-    with open(SECRET_FILE_PATH) as file1:
-        TOKEN = file1.readline()
-except FileNotFoundError:
-    TOKEN = os.environ['BOT_TOKEN']
-
-# Discord client setup
-intents = discord.Intents.default()
-intents.message_content = True
-client = discord.Client(intents=intents)
-
 # For local testing purposes; the 'testing' directory should only be available on local
 ADMIN_ONLY = False
 test_file = None
@@ -102,6 +84,25 @@ VIDEOS = list(Path("videos").iterdir())
 
 COOLDOWN_LENGTH = 40
 COOLDOWN_LIMIT = 7 # how many messages that can be sent per COOLDOWN_LENGTH seconds
+
+# Token setup
+load_dotenv()
+
+SECRET_FILE_PATH = Path('secrets', 'discord bot token.txt')
+TOKEN = None
+MY_GUILD = os.getenv('DISCORD_GUILD')
+
+try:
+    with open(SECRET_FILE_PATH) as file1:
+        TOKEN = file1.readline()
+except FileNotFoundError:
+    TOKEN = os.environ['BOT_TOKEN']
+
+# Discord client setup
+intents = discord.Intents.default()
+intents.message_content = True
+client = discord.Client(intents=intents)
+tree = discord.app_commands.CommandTree(client)
 
 class ServerSpecificInstance:
 
@@ -251,9 +252,16 @@ with open(Path('revenge.txt'), 'r') as lyrics:
     for line in lyrics:
         REVENGE_LYRICS.append(strip_punctuation(line.strip().lower()))
 
+@tree.command(name='test')
+async def test(interaction: discord.Interaction):
+    await interaction.response.send_message('hello')
+    print(interaction.user.id)
+
 @client.event
 async def on_ready():
     global guild_list
+
+    await tree.sync()
 
     for g in client.guilds:
         # logging.info(len(client.guilds))
@@ -261,6 +269,12 @@ async def on_ready():
 
     # editing global variables
     guild_list = list(client.guilds)
+
+    # testing
+    command_list = await tree.fetch_commands()
+
+    for c in command_list:
+        logging.info(c)
 
 @client.event
 async def on_message(message):
@@ -305,7 +319,7 @@ async def on_message(message):
     index_of_im = find_index_after_word(lowercase_message_content, POSSESSIVE_PERSONAL_PRONOUN_LIST)
     index_of_pronoun = find_index_after_word(lowercase_message_content, PRONOUNS)
 
-    if find_isolated_word_bool(message.content, REVENGE_LYRICS):
+    if any(lowercase_message_content.strip().startswith(lyric) for lyric in REVENGE_LYRICS):
         try:
             lyric_found = find_word(message.content, REVENGE_LYRICS)
             await server_instance.reply_to_message(message, REVENGE_LYRICS[REVENGE_LYRICS.index(lyric_found) + 1], bypass_cd=True)
