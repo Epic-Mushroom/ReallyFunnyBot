@@ -1,4 +1,4 @@
-import discord, os, random, time, logging, sys, fish_utils, backup_utils, asyncio, subprocess
+import discord, os, random, time, logging, sys, fish_utils, backup_utils, asyncio, subprocess, shop_utils
 from dotenv import load_dotenv
 from pathlib import Path
 from string_utils import *
@@ -165,8 +165,9 @@ class ServerSpecificInstance:
             return
 
         if bypass_cd or not (self.something_sent or self.on_cooldown()):
+            self.something_sent = True
+
             if not bypass_cd:
-                self.something_sent = True
                 self.recently_sent_messages += 1
 
             if file:
@@ -199,8 +200,9 @@ class ServerSpecificInstance:
             return
 
         if bypass_cd or not (self.something_sent or self.on_cooldown()):
+            self.something_sent = True
+
             if not bypass_cd:
-                self.something_sent = True
                 self.recently_sent_messages += 1
 
             if ping:
@@ -294,7 +296,7 @@ async def on_message(message):
     # Enables admin commands
     is_admin = message.author.id == EPIC_MUSHROOM_ID
 
-    # Makes the bot only respond if ADMIN_ONLY is enabled
+    # Makes the bot only respond in dms if ADMIN_ONLY is enabled
     if ADMIN_ONLY and (not is_admin or server_instance.server_name is not None):
         print("Non-admin message detected")
         return
@@ -609,9 +611,17 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
             await message.channel.send(embed=embed)
             # await server_instance.send_message(message, fish_utils.universal_profile_to_string(), bypass_cd=True)
 
-    if find_word_bool(message.content, ['catchjonklerfishdebug']):
-        await server_instance.send_message(message, "that doesn't work anymore dumbass",
-                                           bypass_cd=True)
+        if message.content.startswith('go shop'):
+            parts = message.content.split(' ')
+            page_num = 1
+
+            try:
+                page_num = int(parts[-1])
+            except ValueError:
+                pass
+
+            embed = discord.Embed(title=f'Shop (Page {page_num} of {shop_utils.max_page()})', description=shop_utils.display_shop_page(page_num))
+            await message.channel.send(embed=embed)
 
     if message.content.startswith('!spam '):
         parts = message.content.split(' ')

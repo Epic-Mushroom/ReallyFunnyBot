@@ -1,5 +1,5 @@
-from fish_utils import *
 from pathlib import Path
+import json, fish_utils
 
 SHOP_PATH = Path("values", "shop.json")
 
@@ -26,8 +26,9 @@ class ShopItem:
     """
     self will have attribute "special" if it is a consumable. it will be of type "list" and contains the name id of the special
         in the first slot and the count in the second
-    self will have attribute requirements if it is an upgrade. it will be a non-empty list of strs with the names of other shop items needed
-        to buy it
+    self will have attribute requirements if it is an upgrade or consumable. it will be a non-empty list of strs
+        with the names of other upgrades needed to buy it
+    upgrades will NOT have the attribute "special"
     """
     VALID_TYPES = ['upgrade', 'consumable', 'misc']
 
@@ -38,7 +39,7 @@ class ShopItem:
                 stack_list = []
 
                 for stack_dict in value:
-                    temp_stack = Stack(**stack_dict)
+                    temp_stack = fish_utils.Stack(**stack_dict)
                     stack_list.append(temp_stack)
 
                 self.item_price = stack_list
@@ -59,7 +60,7 @@ class ShopItem:
         show_item_price = len(self.item_price) > 0
         show_prereqs = len(self.requirements) > 0
 
-        result = f'({type_str})\n{self.name}\n*{self.description}*\nCosts:\n'
+        result = f'{self.name} ({type_str})\n*{self.description}*\nCosts:\n'
 
         if show_money_price:
             result += f'{self.money_price} moneys\n'
@@ -90,8 +91,12 @@ class ShopItem:
 
             return effective_cost <= profile['value']
 
-        list_of_profiles = fishing_database()
+        list_of_profiles = fish_utils.fishing_database()
         user_profile = next((profile for profile in list_of_profiles if profile['username'] == username), None)
+
+        for req in self.requirements:
+            if not req in user_profile['upgrades']:
+                raise RequirementError
 
         if self.item_type == 'upgrade':
             if not self.name in user_profile['upgrades']:
@@ -100,15 +105,11 @@ class ShopItem:
             else:
                 raise AlreadyOwned
 
-            for req in self.requirements:
-                if not req in user_profile['upgrades']:
-                    raise RequirementError
-
             user_profile['upgrades'].append(self.name)
 
         elif self.item_type == 'consumable':
             if can_sell_to(user_profile):
-                add_special(username, self.special[0], count=self.special[1])
+                fish_utils.add_special(username, self.special[0], count=self.special[1])
             else:
                 raise UserIsBroke
 
@@ -116,11 +117,11 @@ class ShopItem:
             raise ValueError
 
         # writes upgrades to fishing.json
-        update_fish_file(list_of_profiles)
+        fish_utils.update_fish_file(list_of_profiles)
 
-        update_fish_database(username, fish=get_fish_from_name('Credit'), count=0 - self.money_price, bypass_fish_cd=True)
+        fish_utils.update_fish_database(username, fish=fish_utils.get_fish_from_name('Credit'), count=0 - self.money_price, bypass_fish_cd=True)
         for stack in self.item_price:
-            update_fish_database(username, fish=get_fish_from_name(stack.item.name), count=0 - stack.count, bypass_fish_cd=True)
+            fish_utils.update_fish_database(username, fish=fish_utils.get_fish_from_name(stack.item.name), count=0 - stack.count, bypass_fish_cd=True)
             # print(0 - stack.count, "of item was deleted from inv")
 
 def get_list_of_shop_items() -> list[ShopItem]:
@@ -132,12 +133,32 @@ def get_list_of_shop_items() -> list[ShopItem]:
 
     return shop_items
 
+def max_page() -> int:
+    shop_items = get_list_of_shop_items()
+    return max([shop_item.page for shop_item in shop_items])
+
 def display_shop_page(page=1) -> str:
     shop_items = get_list_of_shop_items()
-    ...
+    result = ''
 
-if __name__ == '__main__':
-    # TESTING
+    for item in shop_items:
+        if item.page == page:
+            result += f'{str(item)}\n'
+
+    # result += f'Page {page} of {max_page()}'
+    result += f'*Type "go shop [page number]" to navigate to a different page*'
+    return result
+
+def get_user_upgrades(username) -> list[str]:
+    list_of_profiles = fish_utils.fishing_database()
+    user_profile = next((profile for profile in list_of_profiles if profile['username'] == username), None)
+
+    if user_profile is not None:
+        return user_profile['upgrades']
+    else:
+        return []
+
+def test_purchasing_items():
     for item_obj in get_list_of_shop_items():
         print(item_obj)
 
@@ -154,3 +175,7 @@ if __name__ == '__main__':
                 print("you are too broke to buy that!")
             except RequirementError:
                 print("you do not have the prerequisite upgrades to buy that!")
+
+if __name__ == '__main__':
+    # TESTING
+    print(display_shop_page(1))

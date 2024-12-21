@@ -1,21 +1,33 @@
 work on shop:
-- fix values not calculating properly
 - display shop with page numbers
+- add kris tyson upgrade (immune to effects of mrbeast fish)
+- add Capitalism Accelerator I, II, and III upgrade (decreases cooldown length to 8, 6, and 4 seconds)
+  (last one must be pretty expensive)
+- add Law Evasion (permanent effects of bribe fish, also immune to catching more bribe fish)
+- add Brainrot Evasion (requires Law Evasion, immune to cooldown decrease from jonklerfish)
+- add Security Guard Contract consumable (requires Law Evasion, adds +??? Security Guard Fish, which is
+  a special that makes it impossible to catch negative valued fish)
+  - before adding this, need to implement effects of Security Guard Fish
+- add Anti-Catfishing Pocket Guide upgrade (immune to other people's catfish, costs 1x anti cyberbullying guide)
+- add Point of No Return upgrade (permanent effects of nemo) (must be insanely expensive and require multiple rtgo)
 
-work on command to mute the bot/ lockdown
+maybe make bribe fish unable to catch cop fish entirely instead of just making it effectively an empty reel
+- this would need to be done before adding Law Evasion
 
-grim reaper fish and god 2 fish (deletes stack and dupes stack respectively
+grim reaper fish and god 2 fish (deletes stack and dupes stack respectively)
+- do i actually want to add this? probably nto
 
 add beel nye ???? what would this do idk prolly just make it another random fish
 add more funny bot triggersF ortnie battle paslei ijsut shit out my ass:speakignehad
 actually use objects for profiles (annoying and im prolly gonna break everything weiofjwofi2390
-make normal (nonfishing) bot message cooldown not get affected by isfsihng messages
 
 make code not spaggheti NOT HAPPENING XFDDDDDD
+ - need to fix the mess that is main.pyw (use bound methods or something)
 become good at fortnite
-become good at programming (see two lines above yeah not happengieg
+become good at programming (see two lines above yeah not happengieg)
 become good at osu
 become good at life
 become god
 make bot work when computer is offline ??? (github cannot be abused permanetnlyi hate this why cant i get anything for free why why whwywheih4 please i want free tihngs
+- DONE BUT the server will expire eventually, make sure to create frequent backups of fishing data in the case that they fuckin delete everything on the server or smth)
 survive winter break (:terror:)

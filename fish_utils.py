@@ -1,4 +1,5 @@
 from pathlib import Path
+from shop_utils import get_user_upgrades
 import json, time, random, os, math
 
 FISHING_ENABLED = True
@@ -262,6 +263,14 @@ def fish_event(username: str, is_extra_fish=False, force_fish_name=None, factor=
             elif active_special == 'caffeine_bait':
                 caffeine_active = True
 
+    def handle_upgrades() -> None:
+        nonlocal sffi_tiers
+        active_upgrades = get_user_upgrades(original_user)
+
+        for upgrade in active_upgrades:
+            if upgrade.startswith("State Farm Fishing Insurance"):
+                sffi_tiers += 1
+
     def catch_count(boost=False) -> int:
         random_num = random_range(1, 500)
         count = 1
@@ -269,7 +278,7 @@ def fish_event(username: str, is_extra_fish=False, force_fish_name=None, factor=
         insanely_lucky = random_num <= 2  # 0.4% chance
         super_lucky = random_num <= 8  # 1.6% chance
         lucky = random_num <= (150 if boost else 45)  # 9% chance without boost, 30% with
-        unlucky = random_num >= 471 and not boost  # 6% chance
+        unlucky = random_num >= 471 + 10 * sffi_tiers and not boost  # 6% chance, decreased by 2% for every tier of SFFI
 
         if insanely_lucky:
             for j in range(4):
@@ -315,11 +324,14 @@ def fish_event(username: str, is_extra_fish=False, force_fish_name=None, factor=
 
     output = "(test_user)" if is_test_user else ""
 
+    # Flags and variables for handling specials/upgrades
     bribe_active = False
     caffeine_active = False
+    sffi_tiers = 0
 
     active_specials = activate_special()
     handle_specials()
+    handle_upgrades()
 
     catfish_holder = other_player_with_catfish()
     if catfish_holder:
@@ -607,15 +619,16 @@ def profile_to_string(username: str) -> str:
                        f"Items caught: **{profile['times_fished']}**\n\n")
 
             for stack in profile['items']:
-                if stack['item']['weight'] <= WEIGHT_CUTOFF:
-                    output += f"**{stack['count']}x** *{stack['item']['name']}*"
-                else:
-                    output += f"{stack['count']}x {stack['item']['name']}"
+                if stack['item']['name'] != 'Credit':
+                    if stack['item']['weight'] <= WEIGHT_CUTOFF:
+                        output += f"**{stack['count']}x** *{stack['item']['name']}*"
+                    else:
+                        output += f"{stack['count']}x {stack['item']['name']}"
 
-                if profile['items'].index(stack) != len(profile['items']) - 1:
-                    output += ', '
-                else:
-                    output += '\n'
+                    if profile['items'].index(stack) != len(profile['items']) - 1:
+                        output += ', '
+                    else:
+                        output += '\n'
 
             active_specials = get_active_specials(username)
 
@@ -657,20 +670,21 @@ def universal_profile_to_string() -> str:
         temp_name = fish.name
         temp_total = 0
 
-        for profile in list_of_profiles:
-            if profile['username'] != 'test_user':
-                for stack in profile['items']:
-                    if stack['item']['name'] == temp_name:
-                        temp_total += stack['count']
+        if fish.name != 'Credit':
+            for profile in list_of_profiles:
+                if profile['username'] != 'test_user':
+                    for stack in profile['items']:
+                        if stack['item']['name'] == temp_name:
+                            temp_total += stack['count']
 
-        if temp_total > 0:
-            if fish.weight <= WEIGHT_CUTOFF:
-                output += f"**{temp_total}x** *{temp_name}*"
-            else:
-                output += f"{temp_total}x {temp_name}"
+            if temp_total > 0:
+                if fish.weight <= WEIGHT_CUTOFF:
+                    output += f"**{temp_total}x** *{temp_name}*"
+                else:
+                    output += f"{temp_total}x {temp_name}"
 
-            if fishing_items.index(fish) != len(fishing_items) - 1:
-                output += ', '
+                if fishing_items.index(fish) != len(fishing_items) - 1:
+                    output += ', '
 
     return output
 

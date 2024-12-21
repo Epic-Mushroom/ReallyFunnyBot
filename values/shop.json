@@ -12,7 +12,7 @@
                     "value": 1299,
                     "weight": 0.45
                 },
-                "count": 288
+                "count": 1
             }],
     "requirements": [],
     "page": 1
@@ -29,7 +29,7 @@
                     "value": 249,
                     "weight": 1.2
                 },
-                "count": 3
+                "count": 1
             },
             {
                 "item": {
@@ -37,7 +37,7 @@
                     "value": 199,
                     "weight": 1.5
                 },
-                "count": 4
+                "count": 2
             }
     ],
     "requirements": [],
@@ -51,11 +51,11 @@
     "item_price": [
             {
                 "item": {
-                    "name": "Gambling Addiction Diagnosis",
-                    "value": 1999,
-                    "weight": 0.32
-                },
-                "count": 1
+                              "name": "Unregistered Firearm",
+                              "value": 177.6,
+                              "weight": 1.5
+                          },
+                "count": 2
             }
     ],
     "requirements": ["State Farm Fishing Insurance I"],
@@ -72,14 +72,6 @@
                     "name": "Gambling Addiction Diagnosis",
                     "value": 1999,
                     "weight": 0.32
-                },
-                "count": 1
-            },
-            {
-                "item": {
-                    "name": "Ohlone Rejection Letter",
-                    "value": 5555,
-                    "weight": 0.1
                 },
                 "count": 1
             }
