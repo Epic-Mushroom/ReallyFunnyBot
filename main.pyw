@@ -152,7 +152,7 @@ class ServerSpecificInstance:
     def get_comedians(self) -> list[str]:
         return self.comedians
 
-    async def send_message(self, reference, text, bypass_cd=False, file_path=None) -> None:
+    async def send_message(self, reference, text, bypass_cd=False, file_path=None, fishing=False) -> None:
         file = None
         if file_path:
             file = discord.File(file_path)
@@ -160,7 +160,7 @@ class ServerSpecificInstance:
         if self.on_cooldown():
             logging.info(f'On cooldown. Message withheld: {text}')
 
-        if self.on_lockdown():
+        if self.on_lockdown() and not fishing:
             logging.info(f'On lockdown. Message withheld: {text}')
             return
 
@@ -190,11 +190,11 @@ class ServerSpecificInstance:
         if file:
             file.close()
 
-    async def reply_to_message(self, reference, text, bypass_cd=False, ping=True) -> None:
+    async def reply_to_message(self, reference, text, bypass_cd=False, ping=True, fishing=False) -> None:
         if self.on_cooldown():
             logging.info(f'On cooldown. Message withheld: {text}')
 
-        if self.on_lockdown():
+        if self.on_lockdown() and not fishing:
             logging.info(f'On lockdown. Message withheld: {text}')
             return
 
@@ -221,8 +221,9 @@ class ServerSpecificInstance:
 
             fish_utils.update_user_database(reference.author.name)
 
-    def set_lockdown(self, seconds):
+    def set_lockdown(self, seconds) -> int:
         self.lockdown = int(time.time()) + seconds
+        return self.lockdown
 
     def on_lockdown(self):
         return int(time.time()) < self.lockdown
@@ -522,13 +523,13 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
         try:
             await server_instance.reply_to_message(message, f'{'[TESTING ONLY] ' if not fish_utils.FISHING_ENABLED else ''}' +
                                                             f'{fish_utils.fish_event(message.author.name)}',
-                                                   bypass_cd=True)
+                                                   bypass_cd=True, fishing=True)
         except fish_utils.OnFishingCooldownError:
             await server_instance.reply_to_message(message, f"You're on fishing cooldown (" +
-                                                            f"{fish_utils.FISHING_COOLDOWN - (current_time - fish_utils.get_user_last_fish_time(message.author.name))} seconds until you can fish again)", bypass_cd=True)
+                                                            f"{fish_utils.FISHING_COOLDOWN - (current_time - fish_utils.get_user_last_fish_time(message.author.name))} seconds until you can fish again)", bypass_cd=True, fishing=True)
 
         except fish_utils.MaintenanceError:
-            await server_instance.reply_to_message(message, f'fishing is currently disabled, go do college apps in the meantime or some shit')
+            await server_instance.reply_to_message(message, f'fishing is currently disabled, go do college apps in the meantime or some shit', bypass_cd=True, fishing=True)
 
     if message.content.startswith('admin:') and len(message.content) > 6:
         if is_admin:
@@ -545,9 +546,9 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
 
             elif message.content.startswith('admin:switch'):
                 if fish_utils.switch_fishing():
-                    await server_instance.send_message(message, 'Fishing sim turned on. let the brainrot begin')
+                    await server_instance.send_message(message, 'Fishing sim turned on. let the brainrot begin', fishing=True)
                 else:
-                    await server_instance.send_message(message, 'Fishing sim turned off. go outside everyone')
+                    await server_instance.send_message(message, 'Fishing sim turned off. go outside everyone', fishing=True)
 
             elif message.content.startswith('admin:shutdown'):
                 await server_instance.send_message(message, "Shutting down bot :(", bypass_cd=True)
@@ -556,17 +557,25 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
             elif message.content.startswith('admin:backup'):
                 try:
                     backup_utils.make_backup()
-                    await server_instance.reply_to_message(message, 'Backup successful')
+                    await server_instance.reply_to_message(message, 'Backup successful', fishing=True)
                 except Exception as e:
                     await server_instance.reply_to_message(message, f'bro you done fucked smth up ({e})')
 
             elif message.content.startswith('admin:commitbackups'):
                 # backup_utils.commit_and_push_backups()
                 # await server_instance.reply_to_message(message, 'Backups sent to github... probably')
-                await server_instance.reply_to_message(message, 'this command is disabled')
+                await server_instance.reply_to_message(message, 'this command is disabled', bypass_cd=True)
 
             elif message.content.startswith('admin:mutebot '):
-                pass
+                parts = message.content.split(' ')
+                timeout_length = int(parts[-1])
+
+                lockdown_expiry_time = server_instance.set_lockdown(timeout_length)
+                await message.channel.send(f'The bot may not exercise freedom of speech until <t:{lockdown_expiry_time}:f>')
+
+            elif message.content.startswith('admin:unmutebot'):
+                server_instance.set_lockdown(-1)
+                await message.channel.send('The bot may exercise freedom of speech again')
 
         else:
             await server_instance.reply_to_message(message, 'you can\'t do that (reference to 1984 by George Orwell)',
@@ -614,26 +623,22 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
             else:
                 await kush.send('Hi')
 
-    if find_word_bool(message.content, ['embedtestingthing']):
-        embed = discord.Embed(description='Hello\nthis\nis\nsupposed\nto\nbe\na\ndescription')
-        await message.channel.send(embed=embed)
-
     if random_range(1, 210) == 1:
         await server_instance.reply_to_message(message, f"{random.choice(BAITS)}", ping=False)
     elif index_of_pronoun > -1 and random_range(1, 27) == 1:
         await server_instance.reply_to_message(message, f"{random.choice(BAITS[4:])}", ping=False)
 
 if __name__ == '__main__':
-    print("!!!!TYPE 'exit' TO START THE BOT!!!!")
-
-    user_input = None
-    while user_input != "exit":
-        user_input = input("shell command: ")
-
-        if user_input == "exit":
-            break
-
-        else:
-            backup_utils.shell_command(user_input)
+    # print("!!!!TYPE 'exit' TO START THE BOT!!!!")
+    #
+    # user_input = None
+    # while user_input != "exit":
+    #     user_input = input("shell command: ")
+    #
+    #     if user_input == "exit":
+    #         break
+    #
+    #     else:
+    #         backup_utils.shell_command(user_input)
 
     client.run(TOKEN)
