@@ -1,13 +1,12 @@
 import fish_utils
 import unittest
 
-from fish_utils import manipulated_weights
-
 TEST_FACTOR = 1
 
+# It's probably best to run this module twice
 def get_average_value(factor=1.0) -> float:
     fish_items = fish_utils.fishing_items[:]
-    weights = manipulated_weights(factor=factor)
+    weights = fish_utils.manipulated_weights(factor=factor)
 
     weight_sum = sum(weights)
     a_sum = sum(weights[i] * fish_items[i].value for i in range(len(fish_items)))
@@ -30,7 +29,7 @@ class FishingTests(unittest.TestCase):
         self.old_boot = self.fishing_items[1]
 
     def test_percents_of_each_fish(self):
-        weights = manipulated_weights(factor=TEST_FACTOR)
+        weights = fish_utils.manipulated_weights(factor=TEST_FACTOR)
         weight_sum = sum(weights)
         for i in range(len(self.fishing_items)):
             print(f'{self.fishing_items[i].name}: {(100 * weights[i] / weight_sum):.3f}%')

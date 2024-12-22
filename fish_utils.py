@@ -508,13 +508,14 @@ def fish_soap(username: str, absolute=False):
 
             if absolute:
                 negatives = ['trollface.png', 'Negative Jamesfish', 'Bribe Fish',
-                             'Thief Fish', 'Homeless Guy\'s Underwear', 'Brawl Starfish', 'Viola']
+                             'Thief Fish', 'Homeless Guy\'s Underwear', 'Brawl Starfish', 'Viola',
+                             'How Unfortunate']
                 positives = ["Anti-Cyberbullying Pocket Guide",
                              "This Item Should Be Unobtainable",
                              'Illegal Refund Fish',
                              'Contributing Member of Society Fish',
                              'Homeless Guy\'s Bank Account',
-                             'Clam Royale', 'Grand Piano']
+                             'Clam Royale', 'Grand Piano', 'How the Tables Turn']
 
                 for stack in player_inv:
                     if stack['item']['name'] in negatives:
@@ -810,8 +811,8 @@ def update_user_database(username: str, increment=1) -> None:
 script_directory = Path(__file__).parent.resolve()
 os.chdir(script_directory)
 
-fishing_items = initialize_fishing_items()
 sort_fishing_items_by_weight()
+fishing_items = initialize_fishing_items()
 
 recalculate_fish_database()
 

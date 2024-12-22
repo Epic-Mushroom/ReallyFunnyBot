@@ -286,6 +286,7 @@ with open(Path('revenge.txt'), 'r') as lyrics:
 async def on_ready():
     global guild_list
 
+    # syncs commands
     if ADMIN_ONLY:
         await tree.sync(guild=COMMANDS_GUILD)
     else:
