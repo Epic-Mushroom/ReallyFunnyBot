@@ -664,7 +664,7 @@ def universal_profile_to_string() -> str:
 
     fishing_items_sorted_by_value = sorted(fishing_items, key=lambda item: item.value, reverse=True)
 
-    for fish in fishing_items:
+    for fish in fishing_items_sorted_by_value:
         temp_name = fish.name
         temp_total = 0
 
