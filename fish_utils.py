@@ -153,6 +153,11 @@ def update_fish_file(json_object: list | dict):
         json.dump(json_object, file, indent=4)
         file.truncate()
 
+def get_user_profile(username: str):
+    list_of_profiles = fishing_database()
+
+    return next((profile for profile in list_of_profiles if profile['username'] == username), None)
+
 def specials_database() -> dict:
     with open(SPECIALS_DATABASE_PATH, 'r') as file:
         specials_dict = json.load(file)
