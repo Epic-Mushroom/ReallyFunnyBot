@@ -1,5 +1,5 @@
 from pathlib import Path
-from shop_utils import get_user_upgrades
+import shop_utils
 import json, time, random, os, math
 
 FISHING_ENABLED = True
@@ -265,7 +265,7 @@ def fish_event(username: str, is_extra_fish=False, force_fish_name=None, factor=
 
     def handle_upgrades() -> None:
         nonlocal sffi_tiers
-        active_upgrades = get_user_upgrades(original_user)
+        active_upgrades = shop_utils.get_user_upgrades(original_user)
 
         for upgrade in active_upgrades:
             if upgrade.startswith("State Farm Fishing Insurance"):
@@ -841,7 +841,7 @@ if __name__ == '__main__':
                 iterations = int(parts[1])
 
                 for j in range(iterations):
-                    print(fish_event('test_user2', bypass_fish_cd=True))
+                    print(fish_event('test_user2', force_fish_name='Absolute Value Fish', bypass_fish_cd=True))
 
             else:
                 print(fish_event('test_user2'))
