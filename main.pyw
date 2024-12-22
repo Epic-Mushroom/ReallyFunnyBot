@@ -648,7 +648,7 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
             await message.channel.send(embed=embed)
             # await server_instance.send_message(message, fish_utils.universal_profile_to_string(), bypass_cd=True)
 
-        if message.content.startswith('go shop'):
+        if lowercase_message_content.startswith('go shop'):
             parts = message.content.split(' ')
             page_num = 1
 
@@ -661,7 +661,7 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
                                   color=0xffffff)
             await message.channel.send(embed=embed)
 
-        if message.content.startswith('go buy'):
+        if lowercase_message_content.startswith('go buy'):
             parts = message.content.split(' ')
             item_id = None
 
