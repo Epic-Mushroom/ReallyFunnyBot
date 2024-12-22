@@ -277,8 +277,10 @@ def fish_event(username: str, is_extra_fish=False, force_fish_name=None, factor=
 
         insanely_lucky = random_num <= 2  # 0.4% chance
         super_lucky = random_num <= 8  # 1.6% chance
-        lucky = random_num <= (150 if boost else 45)  # 9% chance without boost, 30% with
-        unlucky = random_num >= 471 + 10 * sffi_tiers and not boost  # 6% chance, decreased by 2% for every tier of SFFI
+        lucky = random_num <= (140 if boost else 35)  # 7% chance without boost, 28% with
+        unlucky = random_num >= (471 + 10 * sffi_tiers if boost else 456 + 15 * sffi_tiers)
+        # with boost: 6%, 4%, 2%, 0% for 0, 1, 2, 3 sffi tiers
+        # without boost: 9%, 6%, 3%, 0% for 0, 1, 2, 3 sffi tiers
 
         if insanely_lucky:
             for j in range(4):
