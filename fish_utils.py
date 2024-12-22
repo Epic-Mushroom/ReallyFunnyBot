@@ -538,7 +538,7 @@ def steal_fish_from_random(thief_name: str, shoot=False) -> tuple[str, FishingIt
         if (player_name != thief_name or shoot) and player_name != 'test_user':
             break
 
-    weights = [stack['count'] for stack in player_inv]
+    weights = [max(stack['count'], 0) for stack in player_inv]
     stolen_fish = FishingItem(**random.choices(player_inv, weights=weights, k=1)[0]['item'])
 
     # Removes the stolen fish from the player who was being stolen from, not modifying the time they last fished
