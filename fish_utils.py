@@ -519,8 +519,7 @@ def fish_soap(username: str, absolute=False):
                 for stack in player_inv:
                     if stack['item']['name'] in negatives:
                         temp_index = negatives.index(stack['item']['name'])
-
-                        update_fish_database(username, fish=get_fish_from_name(positives[temp_index]), count=stack['count'], bypass_fish_cd=True)
+                        update_inventory(player_inv, fish=get_fish_from_name(positives[temp_index]), count=stack['count'])
 
             profile['items'] = [stack for stack in player_inv if stack['item']['value'] >= 0]
 
@@ -841,6 +840,7 @@ if __name__ == '__main__':
                 iterations = int(parts[1])
 
                 for j in range(iterations):
+                    print(fish_event('test_user2', force_fish_name='Viola', bypass_fish_cd=True))
                     print(fish_event('test_user2', force_fish_name='Absolute Value Fish', bypass_fish_cd=True))
 
             else:
