@@ -702,7 +702,7 @@ def universal_profile_to_string() -> str:
                     output += f"**{temp_total}x** *{temp_name}*"
                 else:
                     output += f"{temp_total}x {temp_name}"
-                print(display_items.index(fish))
+                # print(display_items.index(fish))
                 if display_items.index(fish) != len(display_items) - 1:
                     output += ', '
 
