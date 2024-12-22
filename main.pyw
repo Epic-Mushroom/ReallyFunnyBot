@@ -594,6 +594,14 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
                 await server_instance.send_message(message, "Shutting down bot :(", bypass_cd=True)
                 exit(2)
 
+            elif message.content.startswith('admin:addnewspecials'):
+                new_added = fish_utils._add_new_specials()
+
+                if len(new_added) > 0:
+                    await server_instance.send_message(message, f"Added: {new_added}", bypass_cd=True)
+                else:
+                    await server_instance.send_message(message, "Nothing was added", bypass_cd=True)
+
             elif message.content.startswith('admin:backup'):
                 try:
                     backup_utils.make_backup()

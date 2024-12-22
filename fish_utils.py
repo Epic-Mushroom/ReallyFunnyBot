@@ -25,6 +25,8 @@ POSITIVES = ["Anti-Cyberbullying Pocket Guide",
              'Homeless Guy\'s Bank Account',
              'Clam Royale', 'Grand Piano', 'How the Tables Turn']
 
+LIST_OF_NEW_SPECIALS = ['no_negative_items']
+
 class OnFishingCooldownError(Exception):
     pass
 
@@ -223,7 +225,8 @@ def fish_event(username: str, is_extra_fish=False, force_fish_name=None, factor=
                   ['mogfish', 'fishing_manifesto', 'nemo'],
                   ['bribe_fish'],
                   ['unregistered_firearm', 'mercenary_contract'],
-                  ['caffeine_bait']]
+                  ['caffeine_bait'],
+                  ['no_negative_items']]
 
         user_specials = [special for special in get_active_specials(username) if special != 'catfish']
         activated_specials = []
@@ -242,6 +245,7 @@ def fish_event(username: str, is_extra_fish=False, force_fish_name=None, factor=
             # force fish powerups cannot use up powerups of another kind unless it is mrbeast or caffeine
             activated_specials[2] = None
             activated_specials[3] = None
+            activated_specials[6] = None
 
         if other_player_with_catfish():
             # mrbeast fish and bribe fish cannot be used if the user is being catfished
@@ -270,6 +274,8 @@ def fish_event(username: str, is_extra_fish=False, force_fish_name=None, factor=
                 force_fish_name = 'CS:GO Fish'
             elif active_special == 'bribe_fish':
                 uncatchable.append('Cop Fish')
+            elif active_special == 'no_negative_items':
+                uncatchable.extend(NEGATIVES)
             elif active_special == 'caffeine_bait':
                 caffeine_active = True
 
@@ -819,6 +825,18 @@ def update_user_database(username: str, increment=1) -> None:
         file.seek(0)
         json.dump(list_of_dicts, file, indent=4)
         file.truncate()
+
+def _add_new_specials():
+    specials_dict = specials_database()
+    added = []
+
+    for spec in LIST_OF_NEW_SPECIALS:
+        if not spec in specials_dict.keys():
+            specials_dict[spec] = []
+            added.append(spec)
+
+    update_specials_file(specials_dict)
+    return added
 
 script_directory = Path(__file__).parent.resolve()
 os.chdir(script_directory)
