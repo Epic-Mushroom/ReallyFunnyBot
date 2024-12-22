@@ -15,6 +15,16 @@ FISHING_DATABASE_PATH = Path("trackers", "fishing.json")
 SPECIALS_DATABASE_PATH = Path("trackers", "specials.json")
 GENERAL_DATABASE_PATH = Path("trackers", "user_triggers.json")
 
+NEGATIVES = ['trollface.png', 'Negative Jamesfish', 'Bribe Fish',
+                             'Thief Fish', 'Homeless Guy\'s Underwear', 'Brawl Starfish', 'Viola',
+                             'How Unfortunate']
+POSITIVES = ["Anti-Cyberbullying Pocket Guide",
+             "This Item Should Be Unobtainable",
+             'Illegal Refund Fish',
+             'Contributing Member of Society Fish',
+             'Homeless Guy\'s Bank Account',
+             'Clam Royale', 'Grand Piano', 'How the Tables Turn']
+
 class OnFishingCooldownError(Exception):
     pass
 
@@ -241,7 +251,7 @@ def fish_event(username: str, is_extra_fish=False, force_fish_name=None, factor=
         return activated_specials
 
     def handle_specials() -> None:
-        nonlocal factor, force_fish_name, bribe_active, caffeine_active, username, bypass_fish_cd
+        nonlocal factor, force_fish_name, uncatchable, caffeine_active, username, bypass_fish_cd
         # i should really put this into a class or something but ehhh lazy
 
         for active_special in active_specials:
@@ -259,7 +269,7 @@ def fish_event(username: str, is_extra_fish=False, force_fish_name=None, factor=
             elif active_special == 'unregistered_firearm':
                 force_fish_name = 'CS:GO Fish'
             elif active_special == 'bribe_fish':
-                bribe_active = True
+                uncatchable.append('Cop Fish')
             elif active_special == 'caffeine_bait':
                 caffeine_active = True
 
@@ -327,7 +337,7 @@ def fish_event(username: str, is_extra_fish=False, force_fish_name=None, factor=
     output = "(test_user)" if is_test_user else ""
 
     # Flags and variables for handling specials/upgrades
-    bribe_active = False
+    uncatchable: list[str | None] = [None] # list of fish names that can't be caught
     caffeine_active = False
     sffi_tiers = 0
 
@@ -349,10 +359,18 @@ def fish_event(username: str, is_extra_fish=False, force_fish_name=None, factor=
         unlucky = caught_fish_count <= 0
 
         for j in range(caught_fish_count):
-            if is_test_user:
-                caught_fish.append(go_fish(factor=factor * 1.9, force_fish_name=force_fish_name))
-            else:
-                caught_fish.append(go_fish(factor=factor, force_fish_name=force_fish_name))
+            temp_fish = None
+            temp_fish_name = None
+
+            while temp_fish_name in uncatchable:
+                if is_test_user:
+                    temp_fish = go_fish(factor=factor * 1.9, force_fish_name=force_fish_name)
+                else:
+                    temp_fish = go_fish(factor=factor, force_fish_name=force_fish_name)
+
+                temp_fish_name = temp_fish.name
+
+            caught_fish.append(temp_fish)
 
         if very_lucky:
             output += '*You caught a lot more stuff than usual*\n'
@@ -375,7 +393,7 @@ def fish_event(username: str, is_extra_fish=False, force_fish_name=None, factor=
         for one_fish in caught_fish:
             output += rare_prefix(one_fish)
 
-            if one_fish.name == 'Cop Fish' and not bypass_fish_cd and not bribe_active:
+            if one_fish.name == 'Cop Fish' and not bypass_fish_cd:
                 penalty += random_num + 19
                 output += f'You caught the Cop Fish! ({random_num + 19} seconds added to next cooldown)'
     
@@ -509,20 +527,10 @@ def fish_soap(username: str, absolute=False):
             player_inv = profile['items']
 
             if absolute:
-                negatives = ['trollface.png', 'Negative Jamesfish', 'Bribe Fish',
-                             'Thief Fish', 'Homeless Guy\'s Underwear', 'Brawl Starfish', 'Viola',
-                             'How Unfortunate']
-                positives = ["Anti-Cyberbullying Pocket Guide",
-                             "This Item Should Be Unobtainable",
-                             'Illegal Refund Fish',
-                             'Contributing Member of Society Fish',
-                             'Homeless Guy\'s Bank Account',
-                             'Clam Royale', 'Grand Piano', 'How the Tables Turn']
-
                 for stack in player_inv:
-                    if stack['item']['name'] in negatives:
-                        temp_index = negatives.index(stack['item']['name'])
-                        update_inventory(player_inv, fish=get_fish_from_name(positives[temp_index]), count=stack['count'])
+                    if stack['item']['name'] in NEGATIVES:
+                        temp_index = NEGATIVES.index(stack['item']['name'])
+                        update_inventory(player_inv, fish=get_fish_from_name(POSITIVES[temp_index]), count=stack['count'])
 
             profile['items'] = [stack for stack in player_inv if stack['item']['value'] >= 0]
 
