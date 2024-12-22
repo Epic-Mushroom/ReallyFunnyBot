@@ -25,6 +25,11 @@
         "weight": 0
     },
     {
+        "name": "Grand Piano",
+        "value": 1,
+        "weight": 0
+    },
+    {
         "name": "Credit",
         "value": 1,
         "weight": 0

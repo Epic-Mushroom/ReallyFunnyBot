@@ -508,24 +508,21 @@ def fish_soap(username: str, absolute=False):
 
             if absolute:
                 negatives = ['trollface.png', 'Negative Jamesfish', 'Bribe Fish',
-                             'Thief Fish', 'Homeless Guy\'s Underwear', 'Brawl Starfish']
+                             'Thief Fish', 'Homeless Guy\'s Underwear', 'Brawl Starfish', 'Viola']
                 positives = ["Anti-Cyberbullying Pocket Guide",
                              "This Item Should Be Unobtainable",
                              'Illegal Refund Fish',
                              'Contributing Member of Society Fish',
                              'Homeless Guy\'s Bank Account',
-                             'Clam Royale']
+                             'Clam Royale', 'Grand Piano']
 
                 for stack in player_inv:
                     if stack['item']['name'] in negatives:
                         temp_index = negatives.index(stack['item']['name'])
 
-                        stack['item']['name'] = positives[temp_index]
-                        stack['item']['value'] = 0 - stack['item']['value']
-                        stack['item']['weight'] = 0
+                        update_fish_database(username, fish=get_fish_from_name(positives[temp_index]), count=stack['count'], bypass_fish_cd=True)
 
-            else:
-                profile['items'] = [stack for stack in player_inv if stack['item']['value'] >= 0]
+            profile['items'] = [stack for stack in player_inv if stack['item']['value'] >= 0]
 
     update_fish_file(list_of_profiles)
 
