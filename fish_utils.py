@@ -310,10 +310,10 @@ def fish_event(username: str, is_extra_fish=False, force_fish_name=None, factor=
         bangbangbangbang = f'‼️‼️ '
         bangbang = f'‼️ '
 
-        if fishing_item.weight <= SUPER_RARE_ITEM_WEIGHT_THRESHOLD:
+        if 0 < fishing_item.weight <= SUPER_RARE_ITEM_WEIGHT_THRESHOLD:
             result = bangbangbangbang
 
-        elif fishing_item.weight <= RARE_ITEM_WEIGHT_THRESHOLD:
+        elif 0 < fishing_item.weight <= RARE_ITEM_WEIGHT_THRESHOLD:
             result = bangbang
             
         return result
