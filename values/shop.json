@@ -2,6 +2,25 @@
   {
     "item_type": "consumable",
     "id": 1,
+    "name": "Kahoot Battle Pass",
+    "description": "Next 25 catches will not pull any items with negative value",
+    "special": ["no_negative_items", 25],
+    "money_price": 0,
+    "item_price": [
+            {
+                "item": {
+        "name": "P-Wing Boys Bathroom Cocaine",
+        "value": 99,
+        "weight": 2.3
+    },
+                "count": 1
+            }],
+    "requirements": [],
+    "page": 1
+  },
+  {
+    "item_type": "consumable",
+    "id": 2,
     "name": "Can of Caffeinated Worms",
     "description": "Next 140 catches are more likely to reel up multiple items at once and less likely to pull zero items",
     "special": ["caffeine_bait", 140],
@@ -20,7 +39,7 @@
   },
   {
     "item_type": "upgrade",
-    "id": 2,
+    "id": 3,
     "name": "State Farm Fishing Insurance I",
     "description": "-33% chance to get no items in a catch",
     "money_price": 0,
@@ -47,7 +66,7 @@
   },
   {
     "item_type": "upgrade",
-    "id": 3,
+    "id": 4,
     "name": "State Farm Fishing Insurance II",
     "description": "-33% chance to get no items in a catch",
     "money_price": 6666,
@@ -62,11 +81,11 @@
             }
     ],
     "requirements": ["State Farm Fishing Insurance I"],
-    "page": 1
+    "page": 2
   },
   {
     "item_type": "upgrade",
-    "id": 4,
+    "id": 5,
     "name": "State Farm Fishing Insurance III",
     "description": "-33% chance to get no items in a catch",
     "money_price": 16666,

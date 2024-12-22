@@ -12,7 +12,7 @@ work on shop:
   a special that makes it impossible to catch negative valued fish)
   - before adding this, need to implement effects of no_negative_items
   - this is about a 20% boost in effective money
-  - 1 cocaine for 25 security guard fish is probably ok
+  - 1 cocaine for 25 nni is probably ok
 - add Anti-Catfishing Pocket Guide upgrade (immune to other people's catfish, costs 1x anti cyberbullying guide)
 - add Supreme Joblessness Trophy upgrade ("Ridiculous power, but at what cost")(permanent effects of nemo and immune to catching mogfish)
     requires 88888 moneys

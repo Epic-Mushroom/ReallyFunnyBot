@@ -173,7 +173,6 @@ def get_active_specials(username: str) -> list[str]:
                 active_specials.append(key)
                 break
 
-
     return active_specials
 
 def add_special(username: str, special: str, count: int) -> None:
@@ -449,6 +448,10 @@ def fish_event(username: str, is_extra_fish=False, force_fish_name=None, factor=
             elif one_fish.name == 'Absolute Value Fish':
                 output += f'You caught: **{one_fish.name}** (all items with negative value turned to positive value)'
                 fish_soap(username, absolute=True)
+
+            elif one_fish.name == 'Security Guard Fish':
+                output += f'You caught: **{one_fish.name}** (this item is literally unobtainable)'
+                add_special(username, 'no_negative_items', count=1)
     
             elif one_fish.name == 'Jonklerfish' and not is_test_user:
                 penalty = random_num + 39
