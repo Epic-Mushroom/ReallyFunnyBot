@@ -556,7 +556,7 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
                                         'zxcvbnm', 'qwertyuiop']):
         if random_range(1, 750) == 1:
             jumpscare = await message.channel.send('https://tenor.com/view/oceanmam-fnaf-jumpscare-gif-22911379')
-            await asyncio.sleep(0.27)
+            await asyncio.sleep(0.31)
             await jumpscare.delete()
             await asyncio.sleep(0.5)
 
