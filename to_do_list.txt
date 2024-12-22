@@ -4,18 +4,20 @@ work on shop:
 - add Capitalism Accelerator I, II, III, and IV upgrade (decreases cooldown length to 9, 8, 7, 6 seconds)
   (last one must be pretty expensive since it's a 67% effective bonus per time period over having no powerups)
 - add Law Evasion (permanent effects of bribe fish, also immune to catching more bribe fish)
+    requires 2 illegal refund fish + 30000 moneys
 - add Brainrot Evasion (requires Law Evasion, immune to cooldown decrease from jonklerfish)
+    tier I: immune to cd decrease from jonklers caught by you
+    tier II: immune to cd decrease from any jonklers
 - add Security Guard Contract consumable (requires Law Evasion, adds +??? Security Guard Fish, which is
   a special that makes it impossible to catch negative valued fish)
   - before adding this, need to implement effects of Security Guard Fish
+  - this is about a 20% boost in effective money
+  - 1 cocaine for 25 security guard fish is probably ok
 - add Anti-Catfishing Pocket Guide upgrade (immune to other people's catfish, costs 1x anti cyberbullying guide)
 - add Supreme Joblessness Trophy upgrade ("Ridiculous power, but at what cost")(permanent effects of nemo and immune to catching mogfish)
     requires 88888 moneys
     requires 2 rtgo, 6 ohlone letter, and 20 gad
     requires sffi 3 and anti-catfishing pocket guide
-
-maybe make bribe fish unable to catch cop fish entirely instead of just making it effectively an empty reel
-- this would need to be done before adding Law Evasion
 
 grim reaper fish and god 2 fish (deletes stack and dupes stack respectively)
 - do i actually want to add this? probably nto
