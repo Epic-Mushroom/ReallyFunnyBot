@@ -681,7 +681,7 @@ def universal_profile_to_string() -> str:
                 else:
                     output += f"{temp_total}x {temp_name}"
 
-                if fishing_items.index(fish) != len(fishing_items) - 1:
+                if fishing_items_sorted_by_value.index(fish) != len(fishing_items) - 1:
                     output += ', '
 
     return output
