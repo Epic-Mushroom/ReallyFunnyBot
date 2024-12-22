@@ -47,6 +47,8 @@ class ShopItem:
             else:
                 setattr(self, key, value)
 
+        self.effective_cost = self.money_price + sum([stk.item.value * stk.count for stk in self.item_price])
+
     def __str__(self):
         result = ''
 
@@ -68,6 +70,8 @@ class ShopItem:
             for stack in self.item_price:
                 result += f'{stack.__str__()}\n'
 
+            result += f'*Effective cost: {self.effective_cost} moneys*\n'
+
         if show_prereqs:
             result += f'\nRequires:\n'
             for req in self.requirements:
@@ -77,19 +81,15 @@ class ShopItem:
 
     def sell_to(self, username):
         def can_sell_to(profile: dict) -> bool:
-            effective_cost = self.money_price
-
             if profile is None:
                 return False
 
             for stack in self.item_price:
-                effective_cost += stack.count * stack.item.value
-
                 if not any(stack_dict['item']['name'] == stack.item.name and stack_dict['count'] >= stack.count for stack_dict in profile['items']):
                     print(f'Can\'t afford paying: {stack.item.name}')
                     return False
 
-            return effective_cost <= profile['value']
+            return self.effective_cost <= profile['value']
 
         list_of_profiles = fish_utils.fishing_database()
         user_profile = next((profile for profile in list_of_profiles if profile['username'] == username), None)
