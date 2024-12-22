@@ -1,5 +1,4 @@
 import discord, os, random, time, logging, sys, fish_utils, backup_utils, asyncio, subprocess, shop_utils
-from dotenv import load_dotenv
 from pathlib import Path
 from string_utils import *
 # Yeah thats right prof thornton im using import * what are you gonna do about it
@@ -85,18 +84,20 @@ VIDEOS = list(Path("videos").iterdir())
 COOLDOWN_LENGTH = 40
 COOLDOWN_LIMIT = 7 # how many messages that can be sent per COOLDOWN_LENGTH seconds
 
-# Token setup
-load_dotenv()
-
+# Token and commands guild setup
 SECRET_FILE_PATH = Path('secrets', 'discord bot token.txt')
 TOKEN = None
-MY_GUILD = os.getenv('DISCORD_GUILD')
+MY_GUILD = 964941621110120538
 
 try:
     with open(SECRET_FILE_PATH) as file1:
         TOKEN = file1.readline()
 except FileNotFoundError:
     TOKEN = os.environ['BOT_TOKEN']
+
+COMMANDS_GUILD = None
+if ADMIN_ONLY:
+    COMMANDS_GUILD = discord.Object(id=MY_GUILD)
 
 # Discord client setup
 intents = discord.Intents.default()
@@ -252,16 +253,40 @@ with open(Path('revenge.txt'), 'r') as lyrics:
     for line in lyrics:
         REVENGE_LYRICS.append(strip_punctuation(line.strip().lower()))
 
-@tree.command(name='test')
-async def test(interaction: discord.Interaction):
-    await interaction.response.send_message('hello')
-    print(interaction.user.id)
+@tree.command(name='all-fish', description='Displays universal fishing stats', guild=COMMANDS_GUILD)
+async def all_fish(interaction: discord.Interaction):
+    mthd = interaction.response.send_message
+
+    embed = discord.Embed(title='Universal Stats', description=fish_utils.universal_profile_to_string())
+    await mthd(embed=embed)
+
+@tree.command(name='profile', description='Displays a user\'s fishing profile', guild=COMMANDS_GUILD)
+async def profile(interaction: discord.Interaction, user: discord.User=None):
+    mthd = interaction.response.send_message
+    username_temp = interaction.user.name
+
+    if user is not None:
+        username_temp = user.name
+
+    embed = discord.Embed(title=f'{username_temp}\'s Profile', description=fish_utils.profile_to_string(username_temp))
+    await mthd(embed=embed)
+
+@tree.command(name='shop', description='View the fishing shop', guild=COMMANDS_GUILD)
+async def shop(interaction, page_num: int=1):
+    mthd = interaction.response.send_message
+    max_page = shop_utils.max_page()
+
+    if 1 <= page_num <= max_page:
+        embed = discord.Embed(title=f'Shop (Page {page_num} of {max_page})', description=shop_utils.display_shop_page(page_num))
+        await mthd(embed=embed)
+    else:
+        await mthd("Invalid page number")
 
 @client.event
 async def on_ready():
     global guild_list
 
-    await tree.sync()
+    await tree.sync(guild=COMMANDS_GUILD)
 
     for g in client.guilds:
         # logging.info(len(client.guilds))
@@ -269,12 +294,6 @@ async def on_ready():
 
     # editing global variables
     guild_list = list(client.guilds)
-
-    # testing
-    command_list = await tree.fetch_commands()
-
-    for c in command_list:
-        logging.info(c)
 
 @client.event
 async def on_message(message):
