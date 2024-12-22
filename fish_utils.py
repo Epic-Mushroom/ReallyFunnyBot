@@ -615,17 +615,18 @@ def profile_to_string(username: str) -> str:
             output += (f"Moneys obtained: **{profile['value']}**\n" +
                        f"Items caught: **{profile['times_fished']}**\n\n")
 
-            for stack in profile['items']:
-                if stack['item']['name'] != 'Credit':
-                    if stack['item']['weight'] <= WEIGHT_CUTOFF:
-                        output += f"**{stack['count']}x** *{stack['item']['name']}*"
-                    else:
-                        output += f"{stack['count']}x {stack['item']['name']}"
+            display_stacks = [stack for stack in profile['items'] if stack['item']['name'] != 'Credit']
 
-                    if profile['items'].index(stack) != len(profile['items']) - 1:
-                        output += ', '
-                    else:
-                        output += '\n'
+            for stack in display_stacks:
+                if stack['item']['weight'] <= WEIGHT_CUTOFF:
+                    output += f"**{stack['count']}x** *{stack['item']['name']}*"
+                else:
+                    output += f"{stack['count']}x {stack['item']['name']}"
+
+                if display_stacks.index(stack) != len(display_stacks) - 1:
+                    output += ', '
+                else:
+                    output += '\n'
 
             active_specials = get_active_specials(username)
 
@@ -664,8 +665,9 @@ def universal_profile_to_string() -> str:
                f"*\n\n")
 
     fishing_items_sorted_by_value = sorted(fishing_items, key=lambda item: item.value, reverse=True)
+    display_items = [item for item in fishing_items_sorted_by_value if item.name != 'Credit']
 
-    for fish in fishing_items_sorted_by_value:
+    for fish in display_items:
         temp_name = fish.name
         temp_total = 0
 
@@ -681,8 +683,8 @@ def universal_profile_to_string() -> str:
                     output += f"**{temp_total}x** *{temp_name}*"
                 else:
                     output += f"{temp_total}x {temp_name}"
-
-                if fishing_items_sorted_by_value.index(fish) != len(fishing_items) - 1:
+                print(display_items.index(fish))
+                if display_items.index(fish) != len(display_items) - 1:
                     output += ', '
 
     return output
