@@ -657,8 +657,32 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
             except ValueError:
                 pass
 
-            embed = discord.Embed(title=f'Shop (Page {page_num} of {shop_utils.max_page()})', description=shop_utils.display_shop_page(page_num))
+            embed = discord.Embed(title=f'Shop (Page {page_num} of {shop_utils.max_page()})', description=shop_utils.display_shop_page(page_num),
+                                  color=0xffffff)
             await message.channel.send(embed=embed)
+
+        if message.content.startswith('go buy'):
+            parts = message.content.split(' ')
+            item_id = None
+
+            try:
+                item_id = int(parts[-1])
+            except ValueError:
+                pass
+
+            try:
+                item = shop_utils.get_shop_item_from_id(item_id)
+                item.sell_to(message.author.name)
+
+                await message.reply(f'You purchased {item.name}')
+            except shop_utils.UserIsBroke:
+                await message.reply(f'You are too broke to buy that item!')
+            except shop_utils.AlreadyOwned:
+                await message.reply(f'You already have that upgrade!')
+            except shop_utils.RequirementError:
+                await message.reply(f'You don\'t have the prerequisite upgrades owned!')
+            except AttributeError:
+                await message.reply(f'That\'s not a valid ID')
 
     if message.content.startswith('!spam '):
         parts = message.content.split(' ')

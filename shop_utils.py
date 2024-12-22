@@ -60,7 +60,7 @@ class ShopItem:
         show_item_price = len(self.item_price) > 0
         show_prereqs = len(self.requirements) > 0
 
-        result = f'**{self.name}** ({type_str})\n*{self.description}*\nCosts:\n'
+        result = f'[ID: {self.id}]\n**{self.name}** ({type_str})\n*{self.description}*\nCosts:\n'
 
         if show_money_price:
             result += f'{self.money_price} moneys\n'
@@ -133,6 +133,10 @@ def get_list_of_shop_items() -> list[ShopItem]:
 
     return shop_items
 
+def get_shop_item_from_id(id: int):
+    shop_items = get_list_of_shop_items()
+    return next((item for item in shop_items if item.id == id), None)
+
 def max_page() -> int:
     shop_items = get_list_of_shop_items()
     return max([shop_item.page for shop_item in shop_items])
@@ -146,7 +150,8 @@ def display_shop_page(page=1) -> str:
             result += f'{str(item)}\n'
 
     # result += f'Page {page} of {max_page()}'
-    result += f'*Type "go shop [page number]" to navigate to a different page*'
+    result += f'*Type "go shop [page number]" to navigate to a different page*\n'
+    result += f'*Type "go buy [item ID]" to buy that item*'
     return result
 
 def get_user_upgrades(username) -> list[str]:
@@ -178,4 +183,4 @@ def test_purchasing_items():
 
 if __name__ == '__main__':
     # TESTING
-    print(display_shop_page(1))
+    print(get_shop_item_from_id(4))
