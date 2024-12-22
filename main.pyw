@@ -253,40 +253,43 @@ with open(Path('revenge.txt'), 'r') as lyrics:
     for line in lyrics:
         REVENGE_LYRICS.append(strip_punctuation(line.strip().lower()))
 
-@tree.command(name='all-fish', description='Displays universal fishing stats', guild=COMMANDS_GUILD)
-async def all_fish(interaction: discord.Interaction):
-    mthd = interaction.response.send_message
-
-    embed = discord.Embed(title='Universal Stats', description=fish_utils.universal_profile_to_string())
-    await mthd(embed=embed)
-
-@tree.command(name='profile', description='Displays a user\'s fishing profile', guild=COMMANDS_GUILD)
-async def profile(interaction: discord.Interaction, user: discord.User=None):
-    mthd = interaction.response.send_message
-    username_temp = interaction.user.name
-
-    if user is not None:
-        username_temp = user.name
-
-    embed = discord.Embed(title=f'{username_temp}\'s Profile', description=fish_utils.profile_to_string(username_temp))
-    await mthd(embed=embed)
-
-@tree.command(name='shop', description='View the fishing shop', guild=COMMANDS_GUILD)
-async def shop(interaction, page_num: int=1):
-    mthd = interaction.response.send_message
-    max_page = shop_utils.max_page()
-
-    if 1 <= page_num <= max_page:
-        embed = discord.Embed(title=f'Shop (Page {page_num} of {max_page})', description=shop_utils.display_shop_page(page_num))
-        await mthd(embed=embed)
-    else:
-        await mthd("Invalid page number")
+# @tree.command(name='all-fish', description='Displays universal fishing stats', guild=COMMANDS_GUILD)
+# async def all_fish(interaction: discord.Interaction):
+#     mthd = interaction.response.send_message
+#
+#     embed = discord.Embed(title='Universal Stats', description=fish_utils.universal_profile_to_string())
+#     await mthd(embed=embed)
+#
+# @tree.command(name='profile', description='Displays a user\'s fishing profile', guild=COMMANDS_GUILD)
+# async def profile(interaction: discord.Interaction, user: discord.User=None):
+#     mthd = interaction.response.send_message
+#     username_temp = interaction.user.name
+#
+#     if user is not None:
+#         username_temp = user.name
+#
+#     embed = discord.Embed(title=f'{username_temp}\'s Profile', description=fish_utils.profile_to_string(username_temp))
+#     await mthd(embed=embed)
+#
+# @tree.command(name='shop', description='View the fishing shop', guild=COMMANDS_GUILD)
+# async def shop(interaction, page_num: int=1):
+#     mthd = interaction.response.send_message
+#     max_page = shop_utils.max_page()
+#
+#     if 1 <= page_num <= max_page:
+#         embed = discord.Embed(title=f'Shop (Page {page_num} of {max_page})', description=shop_utils.display_shop_page(page_num))
+#         await mthd(embed=embed)
+#     else:
+#         await mthd("Invalid page number")
 
 @client.event
 async def on_ready():
     global guild_list
 
-    await tree.sync(guild=COMMANDS_GUILD)
+    if ADMIN_ONLY:
+        await tree.sync(guild=COMMANDS_GUILD)
+    else:
+        await tree.sync()
 
     for g in client.guilds:
         # logging.info(len(client.guilds))
