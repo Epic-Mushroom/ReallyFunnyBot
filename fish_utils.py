@@ -533,10 +533,12 @@ def fish_soap(username: str, absolute=False):
 
     for profile in list_of_profiles:
         if profile['username'] == username:
+            # copy used to prevent modifying the list while iterating through it
             player_inv = profile['items']
+            p_inv_copy = player_inv[:]
 
             if absolute:
-                for stack in player_inv:
+                for stack in p_inv_copy:
                     if stack['item']['name'] in NEGATIVES:
                         temp_index = NEGATIVES.index(stack['item']['name'])
                         update_inventory(player_inv, fish=get_fish_from_name(POSITIVES[temp_index]), count=stack['count'])

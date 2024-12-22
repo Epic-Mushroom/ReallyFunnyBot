@@ -5,8 +5,9 @@ work on shop:
   (last one must be pretty expensive since it's a 67% effective bonus per time period over having no powerups)
 - add Law Evasion (permanent effects of bribe fish, also immune to catching more bribe fish)
     requires 2 illegal refund fish + 30000 moneys
-- add Brainrot Evasion (requires Law Evasion, immune to cooldown decrease from jonklerfish)
+- add Brainrot Evasion (immune to cooldown decrease from jonklerfish)
     tier I: immune to cd decrease from jonklers caught by you
+    - requires 15 jonklerfish
     tier II: immune to cd decrease from any jonklers
 - add Anti-Catfishing Pocket Guide upgrade (immune to other people's catfish, costs 1x anti cyberbullying guide)
 - add Supreme Joblessness Trophy upgrade ("Ridiculous power, but at what cost")(permanent effects of nemo and immune to catching mogfish)
