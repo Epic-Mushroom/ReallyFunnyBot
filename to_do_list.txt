@@ -8,11 +8,6 @@ work on shop:
 - add Brainrot Evasion (requires Law Evasion, immune to cooldown decrease from jonklerfish)
     tier I: immune to cd decrease from jonklers caught by you
     tier II: immune to cd decrease from any jonklers
-- add Kahoot Battle Pass consumable (requires Law Evasion, adds +??? no_negative_items, which is
-  a special that makes it impossible to catch negative valued fish)
-  - before adding this, need to implement effects of no_negative_items
-  - this is about a 20% boost in effective money
-  - 1 cocaine for 25 nni is probably ok
 - add Anti-Catfishing Pocket Guide upgrade (immune to other people's catfish, costs 1x anti cyberbullying guide)
 - add Supreme Joblessness Trophy upgrade ("Ridiculous power, but at what cost")(permanent effects of nemo and immune to catching mogfish)
     requires 88888 moneys
