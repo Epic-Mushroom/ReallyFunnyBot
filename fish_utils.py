@@ -662,6 +662,8 @@ def universal_profile_to_string() -> str:
                f"Items caught: **{sum(profile['times_fished'] for profile in list_of_profiles if profile['username'] != 'test_user')}*" +
                f"*\n\n")
 
+    fishing_items_sorted_by_value = sorted(fishing_items, key=lambda item: item.value, reverse=True)
+
     for fish in fishing_items:
         temp_name = fish.name
         temp_total = 0
