@@ -395,7 +395,7 @@ def fish_event(username: str, is_extra_fish=False, force_fish_name=None, factor=
 
             elif one_fish.name == 'Caffeinated Worms':
                 output += (
-                    f'You caught: **{one_fish.name}** (next 30 catches are more likely to reel up multiple items at once)')
+                    f'You caught: **{one_fish.name}** (next 30 catches are more likely to reel up multiple items at once and less likely to pull zero items)')
                 add_special(username, 'caffeine_bait', count=30)
 
             elif one_fish.name == 'Mercenary Contract':
