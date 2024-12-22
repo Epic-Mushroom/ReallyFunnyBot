@@ -5,5 +5,5 @@ __pycache__
 .zip
 trackers
 secrets
-keep_up.py
+_command_remover.py
 desktop.ini
