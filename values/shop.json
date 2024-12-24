@@ -3,8 +3,8 @@
     "item_type": "consumable",
     "id": 1,
     "name": "Kahoot Battle Pass",
-    "description": "Next 25 catches will not pull any items with negative value",
-    "special": ["no_negative_items", 25],
+    "description": "Next 30 catches will not pull any items with negative value",
+    "special": ["no_negative_items", 30],
     "money_price": 0,
     "item_price": [
             {
@@ -22,8 +22,8 @@
     "item_type": "consumable",
     "id": 2,
     "name": "Can of Caffeinated Worms",
-    "description": "Next 140 catches are more likely to reel up multiple items at once and less likely to pull zero items",
-    "special": ["caffeine_bait", 140],
+    "description": "Next 250 catches are more likely to reel up multiple items at once and less likely to pull zero items",
+    "special": ["caffeine_bait", 250],
     "money_price": 0,
     "item_price": [
             {
