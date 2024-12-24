@@ -407,7 +407,8 @@ def fish_event(username: str, is_extra_fish=False, force_fish_name=None, factor=
                 'you got distracted by subway surfers gameplay',
                 'rng doesn\'t like you',
                 'you were cursed by Eldritch beings',
-                'you used gas station bait'
+                'you used gas station bait',
+                'the fish grew wings and flew away'
             ]
 
             update_fish_database(username, bypass_fish_cd=bypass_fish_cd)
@@ -421,7 +422,7 @@ def fish_event(username: str, is_extra_fish=False, force_fish_name=None, factor=
                 output += f'You caught the Cop Fish! ({random_num + 19} seconds added to next cooldown)'
     
             elif one_fish.name == 'Catfish' and not is_test_user:
-                output += f'You caught: **Catfish** (next 4 catches by other players will be transferred to you)'
+                output += f'You caught: **{one_fish.name}** (next 4 catches by other players will be transferred to you)'
                 add_special(username, 'catfish', count=4)
 
             elif one_fish.name == 'Fishing Manifesto':
@@ -448,7 +449,7 @@ def fish_event(username: str, is_extra_fish=False, force_fish_name=None, factor=
                 add_special(username, 'unregistered_firearm', count=3)
     
             elif one_fish.name == 'Nemo':
-                output += f'You caught: **Nemo** (next 12 catches by you are much more likely to include rare items)'
+                output += f'You caught: **{one_fish.name}** (next 12 catches by you are much more likely to include rare items)'
                 add_special(username, 'nemo', count=12)
 
             elif one_fish.name == 'Bribe Fish':
@@ -460,7 +461,7 @@ def fish_event(username: str, is_extra_fish=False, force_fish_name=None, factor=
                 add_special(username, 'mogfish', count=12)
     
             elif one_fish.name == 'Fish Soap':
-                output += f'You caught: **Fish Soap** (all items with negative value in your inventory removed)'
+                output += f'You caught: **{one_fish.name}** (all items with negative value in your inventory removed)'
                 fish_soap(username)
 
             elif one_fish.name == 'Absolute Value Fish':
