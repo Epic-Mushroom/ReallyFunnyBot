@@ -130,11 +130,6 @@
         "weight": 1.6
     },
     {
-        "name": "Caffeinated Worms",
-        "value": 0,
-        "weight": 1.7
-    },
-    {
         "name": "Mercenary Contract",
         "value": 0,
         "weight": 1.6
@@ -143,6 +138,11 @@
         "name": "Nemo",
         "value": 0,
         "weight": 1.6
+    },
+    {
+        "name": "Caffeinated Worms",
+        "value": 0,
+        "weight": 1.7
     },
     {
         "name": "Floating Wood EX",
@@ -195,11 +195,6 @@
         "weight": 7
     },
     {
-        "name": "Mr. Beast Fish",
-        "value": 0,
-        "weight": 7
-    },
-    {
         "name": "WD-40 Bottle",
         "value": 45,
         "weight": 7.2
@@ -248,6 +243,11 @@
         "name": "Cop Fish",
         "value": 0,
         "weight": 11
+    },
+    {
+        "name": "Mr. Beast Fish",
+        "value": 0,
+        "weight": 12
     },
     {
         "name": "Jadenfish",

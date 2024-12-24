@@ -431,8 +431,8 @@ def fish_event(username: str, is_extra_fish=False, force_fish_name=None, factor=
 
             elif one_fish.name == 'Mr. Beast Fish':
                 output += (
-                    f'You caught: **{one_fish.name}** (next 4 catches by you will be donated to a random player)')
-                add_special(username, 'mrbeast_fish', count=4)
+                    f'You caught: **{one_fish.name}** (next 2 catches by you will be donated to a random player)')
+                add_special(username, 'mrbeast_fish', count=2)
 
             elif one_fish.name == 'Caffeinated Worms':
                 output += (
