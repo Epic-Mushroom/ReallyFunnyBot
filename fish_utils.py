@@ -7,7 +7,6 @@ FISHING_ENABLED = True
 FISHING_COOLDOWN = 10
 RARE_ITEM_WEIGHT_THRESHOLD = 1.62
 SUPER_RARE_ITEM_WEIGHT_THRESHOLD = 0.501
-TRASH_CUTOFF = 10 # for highlighting items in inventory
 WEIGHT_CUTOFF = 13 # for highlighting items in inventory
 
 FISHING_ITEMS_PATH = Path("values", "fishing_items.json")
@@ -36,8 +35,22 @@ class MaintenanceError(Exception):
 class Profile:
     def __init__(self, username, **kwargs):
         self.username = username
+
         for key, value in kwargs.items():
-            setattr(self, key, value)
+            if key == 'items':
+                stack_list = []
+
+                for stack_dict in value:
+                    temp_stack = Stack(**stack_dict)
+                    stack_list.append(temp_stack)
+
+                self.items = stack_list
+
+            else:
+                setattr(self, key, value)
+
+    def __str__(self):
+        return profile_to_string(self.username)
 
 class Stack:
     def __init__(self, item, count=1, **kwargs):
@@ -722,9 +735,9 @@ def leaderboard_string(sort_by_luck=False) -> str:
     unshown = 0
 
     list_of_profiles = fishing_database()
+    list_of_profiles = [profile for profile in list_of_profiles if profile['times_fished'] > 0]
 
     if sort_by_luck:
-        list_of_profiles = [profile for profile in list_of_profiles if profile['times_fished'] > 0]
         list_of_profiles.sort(key=lambda prof: prof['value'] / prof['times_fished'], reverse=True)
     else:
         list_of_profiles.sort(key=lambda prof: prof['value'], reverse=True)
@@ -733,7 +746,7 @@ def leaderboard_string(sort_by_luck=False) -> str:
         try:
             trophy = '🥇 ' if index == 1 else '🥈 ' if index == 2 else '🥉 ' if index == 3 else ''
 
-            if not sort_by_luck or (sort_by_luck and profile['times_fished'] >= 10):
+            if not sort_by_luck or profile['times_fished'] >= 10:
                 output += (f'{index}. {trophy}{profile['username']}: **{(profile['value'] if not sort_by_luck else round(profile['value'] / profile['times_fished'], 2))} '
                            f'moneys{'/catch' if sort_by_luck else ''}**\n')
 
@@ -873,9 +886,11 @@ if __name__ == '__main__':
         if user_input == 'recalc':
             print(recalculate_fish_database())
         elif user_input == 'j':
-            print(fishing_manifesto_factor('jamescheung24578'))
+            print(fishing_manifesto_factor('paliopolis'))
         elif user_input == 'e':
             print(fishing_manifesto_factor('epicmushroom.'))
+        elif user_input == 'proftest':
+            print(Profile(**get_user_profile('epicmushroom.')))
         elif user_input.startswith('>fishtest'):
             parts = user_input.split(' ')
 
