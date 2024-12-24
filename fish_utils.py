@@ -738,7 +738,8 @@ def leaderboard_string(sort_by_luck=False) -> str:
     list_of_profiles = [profile for profile in list_of_profiles if profile['times_fished'] > 0]
 
     if sort_by_luck:
-        list_of_profiles.sort(key=lambda prof: prof['value'] / prof['times_fished'], reverse=True)
+        # you'll be horizontally scrolling for years to see the end of this next line                                                                                                   ok maybe not that much
+        list_of_profiles.sort(key=lambda prof: sum([stack['count'] * stack['item']['value'] for stack in prof['items'] if stack['item']['name'] != 'Credit']) / prof['times_fished'], reverse=True)
     else:
         list_of_profiles.sort(key=lambda prof: prof['value'], reverse=True)
 
