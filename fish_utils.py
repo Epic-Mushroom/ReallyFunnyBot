@@ -746,8 +746,10 @@ def leaderboard_string(sort_by_luck=False) -> str:
         try:
             trophy = '🥇 ' if index == 1 else '🥈 ' if index == 2 else '🥉 ' if index == 3 else ''
 
+            more_accurate_val = profile['value'] if not sort_by_luck else sum([stack['count'] * stack['item']['value'] for stack in profile['items'] if stack['item']['name'] != 'Credit'])
+
             if not sort_by_luck or profile['times_fished'] >= 10:
-                output += (f'{index}. {trophy}{profile['username']}: **{(profile['value'] if not sort_by_luck else round(profile['value'] / profile['times_fished'], 2))} '
+                output += (f'{index}. {trophy}{profile['username']}: **{(more_accurate_val if not sort_by_luck else round(more_accurate_val / profile['times_fished'], 2))} '
                            f'moneys{'/catch' if sort_by_luck else ''}**\n')
 
                 index += 1
