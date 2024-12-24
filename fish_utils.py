@@ -24,7 +24,7 @@ POSITIVES = ["Anti-Cyberbullying Pocket Guide",
              'Homeless Guy\'s Bank Account',
              'Clam Royale', 'Grand Piano', 'How the Tables Turn']
 
-LIST_OF_NEW_SPECIALS = ['no_negative_items']
+LIST_OF_NEW_SPECIALS = []
 
 class OnFishingCooldownError(Exception):
     pass

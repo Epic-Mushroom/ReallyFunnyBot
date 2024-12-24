@@ -1,6 +1,7 @@
 work on shop:
-- display shop with page numbers
-- add kris tyson upgrade (immune to effects of mrbeast fish)
+- add kris tyson upgrade (immune to catching mrbeast fish)
+- add the real jaden christian edwin upgrade (immune to catching mogfish)
+    - make it cost some number of shiny jadenfish
 - add Capitalism Accelerator I, II, III, and IV upgrade (decreases cooldown length to 9, 8, 7, 6 seconds)
   (last one must be pretty expensive since it's a 67% effective bonus per time period over having no powerups)
 - add Law Evasion (permanent effects of bribe fish, also immune to catching more bribe fish)
@@ -13,7 +14,7 @@ work on shop:
 - add Supreme Joblessness Trophy upgrade ("Ridiculous power, but at what cost")(permanent effects of nemo and immune to catching mogfish)
     requires 88888 moneys
     requires 2 rtgo, 6 ohlone letter, and 20 gad
-    requires sffi 3 and anti-catfishing pocket guide
+    requires 2500 old ass boots
 
 grim reaper fish and god 2 fish (deletes stack and dupes stack respectively)
 - do i actually want to add this? probably nto
