@@ -5,7 +5,7 @@ import json, time, random, os, math
 FISHING_ENABLED = True
 
 FISHING_COOLDOWN = 10
-RARE_ITEM_WEIGHT_THRESHOLD = 1.62
+RARE_ITEM_WEIGHT_THRESHOLD = 2
 SUPER_RARE_ITEM_WEIGHT_THRESHOLD = 0.501
 WEIGHT_CUTOFF = 13 # for highlighting items in inventory
 
@@ -436,8 +436,8 @@ def fish_event(username: str, is_extra_fish=False, force_fish_name=None, factor=
 
             elif one_fish.name == 'Caffeinated Worms':
                 output += (
-                    f'You caught: **{one_fish.name}** (next 30 catches are more likely to reel up multiple items at once and less likely to pull zero items)')
-                add_special(username, 'caffeine_bait', count=30)
+                    f'You caught: **{one_fish.name}** (next 60 catches are more likely to reel up multiple items at once and less likely to pull zero items)')
+                add_special(username, 'caffeine_bait', count=60)
 
             elif one_fish.name == 'Mercenary Contract':
                 output += f'You caught: **{one_fish.name}** (next 4 catches are guaranteed to include Mercenary Fish)'
