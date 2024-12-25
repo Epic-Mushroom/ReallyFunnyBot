@@ -872,6 +872,7 @@ sort_fishing_items_by_weight()
 fishing_items = initialize_fishing_items()
 
 recalculate_fish_database()
+_add_new_specials()
 
 test_file = None
 try:
@@ -886,6 +887,7 @@ finally:
 if __name__ == '__main__':
     while True:
         user_input = input()
+        iterations = 1
 
         if user_input == 'recalc':
             print(recalculate_fish_database())
@@ -901,11 +903,7 @@ if __name__ == '__main__':
             if len(parts) > 1:
                 iterations = int(parts[1])
 
-                for j in range(iterations):
-                    print(fish_event('test_user2', force_fish_name='Viola', bypass_fish_cd=True))
-                    print(fish_event('test_user2', force_fish_name='Absolute Value Fish', bypass_fish_cd=True))
-
-            else:
+            for i in range(iterations):
                 print(fish_event('test_user2'))
 
         elif user_input == 'exit':
