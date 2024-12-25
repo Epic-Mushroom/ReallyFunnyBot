@@ -72,6 +72,9 @@ class FishingItem:
         self.value = value
         self.weight = weight
 
+        for key, value in kwargs.items():
+            setattr(self, key, value)
+
 def switch_fishing() -> bool:
     global FISHING_ENABLED
 
@@ -142,19 +145,18 @@ def fishing_manifesto_factor(username: str) -> float:
     return 21 * ((420 * x / m) + 1) ** -0.2 - 4.45
 
 def initialize_fishing_items() -> list[FishingItem]:
-    all_da_fishies = []
+    result = []
 
     with open(FISHING_ITEMS_PATH, 'r') as file:
-        list_of_fishies = json.load(file)
+        list_of_fish_items = json.load(file)
 
-        for fishy in list_of_fishies:
-            all_da_fishies.append(FishingItem(**fishy))
+        for fishy in list_of_fish_items:
+            result.append(FishingItem(**fishy))
 
-    return all_da_fishies
+    return result
 
 def get_fish_from_name(name: str):
-    the_fish = [fish for fish in fishing_items if fish.name == name][0]
-    return the_fish
+    return next((fish for fish in fishing_items if fish.name == name), None)
 
 def fishing_database() -> list[dict]:
     with open(FISHING_DATABASE_PATH, 'r') as file:
@@ -214,7 +216,7 @@ def add_special(username: str, special: str, count: int) -> None:
 
     update_specials_file(specials_dict)
 
-def fish_event(username: str, is_extra_fish=False, force_fish_name=None, factor=1.0, bypass_fish_cd=False) -> str:
+def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=False) -> str:
 
     def other_player_with_catfish() -> str | None:
 
@@ -353,7 +355,7 @@ def fish_event(username: str, is_extra_fish=False, force_fish_name=None, factor=
     last_fish_time = get_user_last_fish_time(username)
     current_time = int(time.time())
 
-    random_num = random_range(1, 100)
+    random_num = random_range(1, 100) # used to determine penalty from cop fish and jonklerfish
 
     penalty = 0
 
@@ -544,7 +546,7 @@ def go_fish(factor=1.0, force_fish_name: str=None) -> FishingItem:
     if not force_fish_name:
         return random.choices(fishing_items_sorted_by_weight, weights=weights, k=1)[0]
     else:
-        force_fish = [fish for fish in fishing_items if fish.name == force_fish_name][0]
+        force_fish = get_fish_from_name(force_fish_name)
         return force_fish
 
 def fish_soap(username: str, absolute=False):
@@ -552,9 +554,8 @@ def fish_soap(username: str, absolute=False):
 
     for profile in list_of_profiles:
         if profile['username'] == username:
-            # copy used to prevent modifying the list while iterating through it
             player_inv = profile['items']
-            p_inv_copy = player_inv[:]
+            p_inv_copy = player_inv[:] # copy used to prevent modifying the list while iterating through it
 
             if absolute:
                 for stack in p_inv_copy:
@@ -611,7 +612,6 @@ def update_inventory(inventory: list[dict], fish: FishingItem, count=1):
     for stack in inventory:
         if stack['item']['name'] == fish.name:
             stack['count'] += count
-            # print(stack['count'])
             item_found = True
 
     if not item_found:
@@ -625,7 +625,6 @@ def update_inventory(inventory: list[dict], fish: FishingItem, count=1):
 
 def sort_inventory_by_value(inventory: list[dict]):
     inventory.sort(key=lambda stack: stack['item']['value'], reverse=True)
-    # print(inventory[0]['count'])
 
 def sort_fishing_items_by_value():
     with open(FISHING_ITEMS_PATH, 'r+') as file:
@@ -723,7 +722,6 @@ def universal_profile_to_string() -> str:
                     output += f"**{temp_total}x** *{temp_name}*"
                 else:
                     output += f"{temp_total}x {temp_name}"
-                # print(display_items.index(fish))
                 if display_items.index(fish) != len(display_items) - 1:
                     output += ', '
 

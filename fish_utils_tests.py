@@ -3,7 +3,6 @@ import unittest
 
 TEST_FACTOR = 1
 
-# It's probably best to run this module twice
 def get_average_value(factor=1.0) -> float:
     fish_items = fish_utils.fishing_items[:]
     weights = fish_utils.manipulated_weights(factor=factor)
@@ -14,19 +13,7 @@ def get_average_value(factor=1.0) -> float:
 
 class FishingTests(unittest.TestCase):
     def setUp(self):
-        self.empty_inv = []
-        self.nonempty_inv = [
-            {
-                "item": {
-                    "name": "Hook",
-                    "value": 1,
-                    "weight": 100
-                },
-                "count": 1
-            }
-        ]
         self.fishing_items = fish_utils.fishing_items[:]
-        self.old_boot = self.fishing_items[1]
 
     def test_percents_of_each_fish(self):
         weights = fish_utils.manipulated_weights(factor=TEST_FACTOR)
