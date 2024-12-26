@@ -550,7 +550,7 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
         """
         await server_instance.send_message(message, fortnite_battle_pass)
 
-    if find_word_bool(message.content, ['🐟', '🎣', '🐠', 'asdfghjkl', 'go fish', 'गो फिश', 'go gamble', 'jobless behavior', 'le fishe',
+    if find_word_bool(message.content, ['🐟', '🎣', '🐠', '🐡', 'asdfghjkl', 'go fish', 'गो फिश', 'go gamble', 'jobless behavior', 'le fishe',
                                         'quiero comer pescado', 'lets go gambling', 'let\'s go gambling',
                                         '.fish', 'let’s go gambling', '去钓鱼', '><>', '<><', '2+2', 'godfisa',
                                         'zxcvbnm', 'qwertyuiop']):
