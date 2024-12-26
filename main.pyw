@@ -390,7 +390,7 @@ async def on_message(message):
         await server_instance.reply_to_message(message, "https://www.youtube.com/watch?v=At8v_Yc044Y")
 
     if find_word_bool(lowercase_message_content, ['skibidi', 'hawk tuah', 'jelqing', 'lv 100 gyatt']):
-        await server_instance.send_message(message, "no", True)
+        await server_instance.send_message(message, "no")
 
     if "FUCK" in message.content or "SHIT" in message.content or lowercase_message_content == "shut the fuck up":
         await server_instance.reply_to_message(message, f"{random.choice(SWEARING_RESPONSES)}")
@@ -417,14 +417,14 @@ async def on_message(message):
 
         await server_instance.reply_to_message(message, f"{current_count} triggers", bypass_cd=True)
 
-    if "debuggeneral" in lowercase_message_content:
-        await server_instance.reply_to_message(message, f"I am in {len(list(client.guilds))} servers")
-        await message.channel.send(f"{len(server_instance.get_comedians())} is the length of the comedians list")
-        await message.channel.send(f"{len(guild_list)} is the length of the guild_list list")
-        try:
-            await message.channel.send(f"The name of this guild is {current_guild.name} and my nick is {current_display_name}")
-        except AttributeError:
-            await message.channel.send(f"I am not in a guild. However, my display name is {current_display_name}")
+    # if "debuggeneral" in lowercase_message_content:
+    #     await server_instance.reply_to_message(message, f"I am in {len(list(client.guilds))} servers")
+    #     await message.channel.send(f"{len(server_instance.get_comedians())} is the length of the comedians list")
+    #     await message.channel.send(f"{len(guild_list)} is the length of the guild_list list")
+    #     try:
+    #         await message.channel.send(f"The name of this guild is {current_guild.name} and my nick is {current_display_name}")
+    #     except AttributeError:
+    #         await message.channel.send(f"I am not in a guild. However, my display name is {current_display_name}")
 
     if "debugcooldown" in lowercase_message_content:
         if server_instance.on_cooldown():
@@ -489,9 +489,9 @@ async def on_message(message):
         except FileNotFoundError:
             print(f"'{str(video_path)} wasn't found'")
 
-    if find_word_bool(message.content, ['testingmultmessages', 'testmultmessages']):
-        await server_instance.send_message(message, 'test')
-        await server_instance.send_message(message, 'test2', bypass_cd=True)
+    # if find_word_bool(message.content, ['testingmultmessages', 'testmultmessages']):
+    #     await server_instance.send_message(message, 'test')
+    #     await server_instance.send_message(message, 'test2', bypass_cd=True)
 
     if find_isolated_word_bool(message.content, ['speech bubble', 'speechbubble']) and referred_message:
         if not message.mentions:
@@ -641,12 +641,12 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
             await message.channel.send(embed=embed)
             # await server_instance.send_message(message, fish_utils.profile_to_string(username_temp), bypass_cd=True)
 
-        if find_word_bool(message.content, ['show leaderboard', 'show lb']):
+        if find_word_bool(message.content, ['show leaderboard', 'show lb', '.lb']):
             embed = discord.Embed(title='Leaderboard', description=fish_utils.leaderboard_string())
             await message.channel.send(embed=embed)
             # await server_instance.send_message(message, fish_utils.leaderboard_string(), bypass_cd=True)
 
-        if find_word_bool(message.content, ['luck lb', 'rng lb', 'show luck']):
+        if find_word_bool(message.content, ['luck lb', 'rng lb', 'show luck', '.rnglb', '.lbrng', '.lbluck', '.lucklb']):
             embed = discord.Embed(title='RNG Leaderboard', description=fish_utils.leaderboard_string(sort_by_luck=True))
             await message.channel.send(embed=embed)
 
@@ -656,7 +656,7 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
             await message.channel.send(embed=embed)
             # await server_instance.send_message(message, fish_utils.universal_profile_to_string(), bypass_cd=True)
 
-        if lowercase_message_content.startswith('go shop'):
+        if find_word_bool(message.content, ['show shop', 'go shop']):
             parts = message.content.split(' ')
             page_num = 1
 
