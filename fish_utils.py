@@ -53,7 +53,7 @@ class Profile:
         return profile_to_string(self.username)
 
 class Stack:
-    def __init__(self, item, count=1, **kwargs):
+    def __init__(self, item, count=1):
         if isinstance(item, dict):
             self.item = FishingItem(**item)
         elif isinstance(item, FishingItem):
@@ -110,14 +110,13 @@ def manipulated_weights(factor=1.0) -> list:
     rarest_partition = []
     most_common_partition = []
 
-    rarest_cutoff_a = 15
-    rarest_cutoff_b = 50 - factor * 4
+    rarest_cutoff = 15
     common_cutoff_a = 30
     common_cutoff_b = factor * 3
 
     for i in range(len(chances)):
         rarest_partition.append(fishing_items_sorted_by_weight[i])
-        if sum(chances[:i + 1]) >= rarest_cutoff_a:
+        if sum(chances[:i + 1]) >= rarest_cutoff:
             break
 
     for i in range(len(chances))[::-1]:
@@ -130,12 +129,8 @@ def manipulated_weights(factor=1.0) -> list:
         modified_weights[i] = factor * weights[i]
     for i in range(len(weights) - len(most_common_partition), len(weights)):
         modified_weights[i] = weights[i] / factor
-    new_weight_sum = sum(modified_weights)
-    new_chances = [(100 * weight / new_weight_sum) for weight in modified_weights]
 
     return modified_weights
-    # print(chances)
-    # print(new_chances)
 
 def fishing_manifesto_factor(username: str) -> float:
     list_of_profiles = fishing_database()
