@@ -1,0 +1,355 @@
+{
+    "catfish": [
+        {
+            "username": "epicmushroom.",
+            "count": 0
+        },
+        {
+            "username": "test_user",
+            "count": 0
+        },
+        {
+            "username": "adityaxad",
+            "count": 0
+        },
+        {
+            "username": "zakkthecactus",
+            "count": 0
+        },
+        {
+            "username": "jamescheung24578",
+            "count": 0
+        },
+        {
+            "username": "paliopolis",
+            "count": 0
+        },
+        {
+            "username": "oh.noes",
+            "count": 0
+        },
+        {
+            "username": "artemis3548",
+            "count": 0
+        },
+        {
+            "username": "m05hp0t",
+            "count": 0
+        },
+        {
+            "username": "potatochipbag",
+            "count": 0
+        }
+    ],
+    "mrbeast_fish": [
+        {
+            "username": "epicmushroom.",
+            "count": 0
+        },
+        {
+            "username": "m05hp0t",
+            "count": 0
+        },
+        {
+            "username": "jamescheung24578",
+            "count": 0
+        },
+        {
+            "username": "adityaxad",
+            "count": 2
+        },
+        {
+            "username": "potatochipbag",
+            "count": 0
+        },
+        {
+            "username": "paliopolis",
+            "count": 4
+        },
+        {
+            "username": "zakkthecactus",
+            "count": 0
+        },
+        {
+            "username": "artemis3548",
+            "count": 0
+        },
+        {
+            "username": "oh.noes",
+            "count": 0
+        },
+        {
+            "username": "jesusfreak72",
+            "count": 4
+        },
+        {
+            "username": "phospholipase_c",
+            "count": 0
+        }
+    ],
+    "unregistered_firearm": [
+        {
+            "username": "test_user",
+            "count": 0
+        },
+        {
+            "username": "artemis3548",
+            "count": 0
+        },
+        {
+            "username": "paliopolis",
+            "count": 0
+        },
+        {
+            "username": "epicmushroom.",
+            "count": 0
+        },
+        {
+            "username": "m05hp0t",
+            "count": 0
+        },
+        {
+            "username": "oh.noes",
+            "count": 0
+        },
+        {
+            "username": "jamescheung24578",
+            "count": 0
+        }
+    ],
+    "mogfish": [
+        {
+            "username": "epicmushroom.",
+            "count": 0,
+            "effect": "nearly guaranteed trash items"
+        },
+        {
+            "username": "test_user",
+            "count": 53
+        },
+        {
+            "username": "jamescheung24578",
+            "count": 0
+        },
+        {
+            "username": "paliopolis",
+            "count": 11
+        },
+        {
+            "username": "oh.noes",
+            "count": 0
+        },
+        {
+            "username": "adityaxad",
+            "count": 0
+        },
+        {
+            "username": "zakkthecactus",
+            "count": 0
+        },
+        {
+            "username": "phospholipase_c",
+            "count": 0
+        },
+        {
+            "username": "artemis3548",
+            "count": 0
+        },
+        {
+            "username": "m05hp0t",
+            "count": 0
+        },
+        {
+            "username": "potatochipbag",
+            "count": 0
+        }
+    ],
+    "mercenary_contract": [
+        {
+            "username": "epicmushroom.",
+            "count": 0
+        },
+        {
+            "username": "jamescheung24578",
+            "count": 0
+        },
+        {
+            "username": "zakkthecactus",
+            "count": 0
+        },
+        {
+            "username": "adityaxad",
+            "count": 0
+        },
+        {
+            "username": "artemis3548",
+            "count": 0
+        },
+        {
+            "username": "m05hp0t",
+            "count": 4
+        },
+        {
+            "username": "oh.noes",
+            "count": 0
+        },
+        {
+            "username": "paliopolis",
+            "count": 0
+        }
+    ],
+    "fishing_manifesto": [
+        {
+            "username": "epicmushroom.",
+            "count": 0
+        },
+        {
+            "username": "test_user",
+            "count": 86
+        },
+        {
+            "username": "zakkthecactus",
+            "count": 0
+        },
+        {
+            "username": "jamescheung24578",
+            "count": 0
+        },
+        {
+            "username": "paliopolis",
+            "count": 0
+        },
+        {
+            "username": "oh.noes",
+            "count": 0
+        },
+        {
+            "username": "adityaxad",
+            "count": 0
+        },
+        {
+            "username": "artemis3548",
+            "count": 1
+        },
+        {
+            "username": "m05hp0t",
+            "count": 0
+        },
+        {
+            "username": "jesusfreak72",
+            "count": 0
+        },
+        {
+            "username": "potatochipbag",
+            "count": 0
+        },
+        {
+            "username": "phospholipase_c",
+            "count": 0
+        }
+    ],
+    "bribe_fish": [
+        {
+            "username": "epicmushroom.",
+            "count": 0,
+            "effect": "immune to cop fish cooldown increases"
+        },
+        {
+            "username": "artemis3548",
+            "count": 0
+        },
+        {
+            "username": "jamescheung24578",
+            "count": 0
+        },
+        {
+            "username": "paliopolis",
+            "count": 69
+        },
+        {
+            "username": "oh.noes",
+            "count": 0
+        },
+        {
+            "username": "phospholipase_c",
+            "count": 0
+        },
+        {
+            "username": "zakkthecactus",
+            "count": 59
+        },
+        {
+            "username": "m05hp0t",
+            "count": 0
+        },
+        {
+            "username": "jesusfreak72",
+            "count": 12
+        },
+        {
+            "username": "potatochipbag",
+            "count": 23
+        },
+        {
+            "username": "hiyakabi",
+            "count": 40
+        }
+    ],
+    "caffeine_bait": [
+        {
+            "username": "epicmushroom.",
+            "count": 0
+        },
+        {
+            "username": "phospholipase_c",
+            "count": 3
+        }
+    ],
+    "nemo": [
+        {
+            "username": "epicmushroom.",
+            "count": 0,
+            "effect": "9x fishing luck delete this"
+        },
+        {
+            "username": "test_user",
+            "count": 18
+        },
+        {
+            "username": "zakkthecactus",
+            "count": 0
+        },
+        {
+            "username": "paliopolis",
+            "count": 14
+        },
+        {
+            "username": "jamescheung24578",
+            "count": 0
+        },
+        {
+            "username": "oh.noes",
+            "count": 0
+        },
+        {
+            "username": "artemis3548",
+            "count": 0
+        },
+        {
+            "username": "m05hp0t",
+            "count": 0
+        }
+    ],
+    "kahoot_battle_pass": [
+        {
+            "username": "test_user",
+            "count": 0
+        }
+    ],
+    "beel nye": [
+        {
+            "username": "test_user",
+            "count": 0
+        }
+    ]
+}

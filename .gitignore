@@ -2,8 +2,9 @@
 testing
 .venv
 __pycache__
-.zip
+*.zip
 trackers
 secrets
 _command_remover.py
+_make_zip.py
 desktop.ini
