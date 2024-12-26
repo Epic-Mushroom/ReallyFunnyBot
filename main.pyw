@@ -21,15 +21,11 @@ finally:
     if test_file:
         test_file.close()
 
-# GLOBAL VARIABLES oh no im using global variables oh noo
+# Globals
 guild_list = []
 server_instance_list = []
 
-cooldown_last_reset_time = time.time()
-something_sent = True
-recently_sent_messages = 0
-
-# CONSTANTS
+# Constants
 FOLLOWING_CHARACTERS = ['', ' ', '.', '?', '!', '"', "'"]
 PRECEDING_CHARACTERS = [' ', '.', ':', '"', "'"]
 ENDING_CHARACTERS = ['.', '?', '!', ':', 'bruh']
