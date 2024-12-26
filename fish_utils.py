@@ -353,6 +353,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
     random_num = random_range(1, 100) # used to determine penalty from cop fish and jonklerfish
 
     penalty = 0
+    stolen_amt = 0
 
     output = "(test_user)" if is_test_user else ""
 
@@ -487,6 +488,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
                     stolen_fish = heist_tuple[1]
     
                     output += f'\nStole {rare_prefix(stolen_fish)}**{stolen_fish.name}** from {temp_username}'
+                    stolen_amt += stolen_fish.value
     
             elif one_fish.name == 'CS:GO Fish' and not is_test_user:
                 output += f'You caught: **CS:GO Fish** ('
@@ -520,6 +522,9 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
         for active_special in active_specials:
             if active_special is not None:
                 add_special(original_user, active_special, count=-1)
+
+    if stolen_amt > 0:
+        output += f'\n*Stole {stolen_amt} moneys from players*'
 
     # adds cooldown to the original user if they are being catfished or have donated
     if username != original_user:
