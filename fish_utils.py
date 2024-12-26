@@ -385,7 +385,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
 
             while temp_fish_name in uncatchable:
                 if is_test_user:
-                    temp_fish = go_fish(factor=factor * 1.9, force_fish_name=force_fish_name)
+                    temp_fish = go_fish(factor=max(factor * 9, 9), force_fish_name=force_fish_name)
                 else:
                     temp_fish = go_fish(factor=factor, force_fish_name=force_fish_name)
 
