@@ -26,9 +26,6 @@ guild_list = []
 server_instance_list = []
 
 # Constants
-FOLLOWING_CHARACTERS = ['', ' ', '.', '?', '!', '"', "'"]
-PRECEDING_CHARACTERS = [' ', '.', ':', '"', "'"]
-ENDING_CHARACTERS = ['.', '?', '!', ':', 'bruh']
 POSSESSIVE_PERSONAL_PRONOUN_LIST = ['im', "i'm", 'i am', 'I’m']
 AMONG_US_TRIGGERS = ["among us", 'amongus', 'amogus', 'among sus', 'sussy', 'sus', 'baka']
 THICK_OF_IT_TRIGGERS = ['ksi', 'thick of it', 'from the screen', 'to the ring', 'this is how the story goes']
@@ -73,9 +70,6 @@ EPIC_MUSHROOM_ID = 456943500249006108
 PALIOPOLIS_ID = 873412148880089102
 KUSH_ID = 873411125633491024
 JADEN_ID = 762393738676404224
-
-IMAGES = list(Path("images").iterdir())
-VIDEOS = list(Path("videos").iterdir())
 
 COOLDOWN_LENGTH = 40
 COOLDOWN_LIMIT = 7 # how many messages that can be sent per COOLDOWN_LENGTH seconds
@@ -533,7 +527,7 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
 
     if find_word_bool(message.content, ['🐟', '🎣', '🐠', '🐡', 'asdfghjkl', 'go fish', 'go gamble', 'jobless behavior', 'le fishe',
                                         'quiero comer pescado', 'lets go gambling', 'let\'s go gambling',
-                                        '.fish', 'let’s go gambling', '><>', '<><', '2+2', 'godfisa',
+                                        '.fish', 'let’s go gambling', '><>', '去钓鱼', '<><', '2+2', 'godfisa',
                                         'zxcvbnm', 'qwertyuiop']):
         if random_range(1, 750) == 1:
             jumpscare = await message.channel.send('https://tenor.com/view/oceanmam-fnaf-jumpscare-gif-22911379')
