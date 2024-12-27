@@ -451,8 +451,8 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
                 add_special(username, 'nemo', count=12)
 
             elif one_fish.name == 'Bribe Fish':
-                output += f'You caught: **{one_fish.name}** (-50 moneys, but immune to Cop Fish for next 40 catches)'
-                add_special(username, 'bribe_fish', count=40)
+                output += f'You caught: **{one_fish.name}** (-50 moneys, but immune to Cop Fish for next 80 catches)'
+                add_special(username, 'bribe_fish', count=80)
 
             elif one_fish.name == 'Mogfish':
                 output += f'You caught: **{one_fish.name}** (next 12 catches by you are nearly guaranteed to include trash items)'
