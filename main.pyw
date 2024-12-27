@@ -313,8 +313,6 @@ async def on_message(message):
         server_instance_list.append(ServerSpecificInstance(current_guild))
         server_instance = server_instance_list[-1]
 
-    current_display_name = server_instance.get_nickname()
-
     # Makes it so it doesn't reply to itself
     if message.author == client.user:
         return
@@ -413,15 +411,6 @@ async def on_message(message):
 
         await server_instance.reply_to_message(message, f"{current_count} triggers", bypass_cd=True)
 
-    # if "debuggeneral" in lowercase_message_content:
-    #     await server_instance.reply_to_message(message, f"I am in {len(list(client.guilds))} servers")
-    #     await message.channel.send(f"{len(server_instance.get_comedians())} is the length of the comedians list")
-    #     await message.channel.send(f"{len(guild_list)} is the length of the guild_list list")
-    #     try:
-    #         await message.channel.send(f"The name of this guild is {current_guild.name} and my nick is {current_display_name}")
-    #     except AttributeError:
-    #         await message.channel.send(f"I am not in a guild. However, my display name is {current_display_name}")
-
     if "debugcooldown" in lowercase_message_content:
         if server_instance.on_cooldown():
             await server_instance.reply_to_message(message, f"I am on cooldown. Stop freaking spamming bro. (cooldown length is {COOLDOWN_LENGTH}, "
@@ -484,10 +473,6 @@ async def on_message(message):
             await server_instance.send_message(message, "** **", file_path=video_path)
         except FileNotFoundError:
             print(f"'{str(video_path)} wasn't found'")
-
-    # if find_word_bool(message.content, ['testingmultmessages', 'testmultmessages']):
-    #     await server_instance.send_message(message, 'test')
-    #     await server_instance.send_message(message, 'test2', bypass_cd=True)
 
     if find_isolated_word_bool(message.content, ['speech bubble', 'speechbubble']) and referred_message:
         if not message.mentions:

@@ -5,7 +5,7 @@ import json, time, random, os, math
 FISHING_ENABLED = True
 
 FISHING_COOLDOWN = 10
-RARE_ITEM_WEIGHT_THRESHOLD = 2
+RARE_ITEM_WEIGHT_THRESHOLD = 1.9
 SUPER_RARE_ITEM_WEIGHT_THRESHOLD = 0.501
 WEIGHT_CUTOFF = 13 # for highlighting items in inventory
 
