@@ -145,6 +145,11 @@
         "weight": 1.7
     },
     {
+        "name": "Mogfish",
+        "value": 0,
+        "weight": 2
+    },
+    {
         "name": "Floating Wood EX",
         "value": 120,
         "weight": 2.1
@@ -163,11 +168,6 @@
         "name": "John Pork's Reincarnation",
         "value": 91,
         "weight": 2.6
-    },
-    {
-        "name": "Mogfish",
-        "value": 0,
-        "weight": 2
     },
     {
         "name": "KSI - Thick of It Vinyl Record",

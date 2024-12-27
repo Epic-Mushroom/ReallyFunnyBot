@@ -22,8 +22,8 @@
     "item_type": "consumable",
     "id": 2,
     "name": "Can of Caffeinated Worms",
-    "description": "Next 250 catches are more likely to reel up multiple items at once and less likely to pull zero items",
-    "special": ["caffeine_bait", 250],
+    "description": "Next 310 catches are more likely to reel up multiple items at once and less likely to pull zero items",
+    "special": ["caffeine_bait", 310],
     "money_price": 0,
     "item_price": [
             {

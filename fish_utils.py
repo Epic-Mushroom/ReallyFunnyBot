@@ -33,24 +33,30 @@ class MaintenanceError(Exception):
     pass
 
 class Profile:
-    def __init__(self, username, **kwargs):
+    def __init__(self, username, value=0, last_fish_time=0, times_fished=0, items=None, upgrades=None, **kwargs):
         self.username = username
+        self.value = value
+        self.last_fish_time = last_fish_time
+        self.times_fished = times_fished
+        self.items = items if items is not None else []
+        self.upgrades = upgrades if upgrades is not None else []
+
+        stack_list = []
+        for key, value in self.items.items():
+            for stack_dict in value:
+                temp_stack = Stack(**stack_dict)
+                stack_list.append(temp_stack)
+
+        self.items = stack_list
 
         for key, value in kwargs.items():
-            if key == 'items':
-                stack_list = []
-
-                for stack_dict in value:
-                    temp_stack = Stack(**stack_dict)
-                    stack_list.append(temp_stack)
-
-                self.items = stack_list
-
-            else:
-                setattr(self, key, value)
+            setattr(self, key, value)
 
     def __str__(self):
         return profile_to_string(self.username)
+
+    def save_profile(self):
+        pass
 
 class Stack:
     def __init__(self, item, count=1):
@@ -409,7 +415,6 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
                 'the fish grew wings and flew away'
             ]
 
-            update_fish_database(username, bypass_fish_cd=bypass_fish_cd)
             output += f'You caught nothing ({random.choice(unlucky_messages)})'
 
         for one_fish in caught_fish:
@@ -535,6 +540,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
             else:
                 output += f'\n*Fish donated to {username} (Mr. Beast powerup)*'
 
+        # warning: if the initial bypass_fish_cd param was set to True, this will make it False regardless
         update_fish_database(original_user, cd_penalty=penalty, bypass_fish_cd=False)
 
     return output
@@ -767,8 +773,6 @@ def leaderboard_string(sort_by_luck=False) -> str:
     return output
 
 def update_fish_database(username: str, fish: FishingItem=None, count=1, cd_penalty=0, bypass_fish_cd=False) -> None:
-    """
-    """
     list_of_profiles = fishing_database()
     user_found = False
 

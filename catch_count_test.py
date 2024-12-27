@@ -4,11 +4,11 @@ from pathlib import Path
 import fish_utils_tests
 from fish_utils import random_range
 from fish_utils_tests import get_average_value
+from fish_utils import fish_event
 
 test_path = Path('trackers\\test.json')
 
-
-def catch_count(boost=False) -> int:
+def catch_count(boost=False, sffi_tiers=0) -> int:
     random_num = random_range(1, 500)
     count = 1
 
@@ -33,49 +33,35 @@ def catch_count(boost=False) -> int:
 
     return count
 
-if __name__ == '__main__':
-    avg_val = get_average_value(factor=fish_utils_tests.TEST_FACTOR)
-
-    sffi_tiers = 0
+def simulate_avg(iterations=300000, factor=fish_utils_tests.TEST_FACTOR, sffi=0, boost=False):
+    avg_val = get_average_value(factor=factor)
     total = 0
-    iterations = 300000
+
+    for i in range(iterations):
+        total += catch_count(boost=boost, sffi_tiers=sffi)
+    result_avg = avg_val * total / iterations
+
+    print("FACTOR APPLIED: ", fish_utils_tests.TEST_FACTOR, '\n')
+    print("Average: ", result_avg)
+
+    factor = fish_utils_tests.TEST_FACTOR
+    avg_val = get_average_value(factor=factor)
+    total = 0
+
     for i in range(iterations):
         total += catch_count()
+    control_avg = avg_val * total / iterations
+
+    print("Average with no buffs: ", control_avg)
+    print("Flat increase per command on average: ", result_avg - control_avg)
+
+def simulate_user(iterations=500):
+    total = 0
+
+    for i in range(iterations):
+        fish_event('test_user3', bypass_fish_cd=True)
 
     print("FACTOR APPLIED: ", fish_utils_tests.TEST_FACTOR, '\n')
 
-    print("Average (without boost):", avg_val * total / iterations)
-    base_val = avg_val * total / iterations
-
-    while sffi_tiers < 3:
-        sffi_tiers += 1
-        total = 0
-        for i in range(iterations):
-            total += catch_count()
-
-        print(f"Average (with {sffi_tiers} sffi tiers):", avg_val * total / iterations)
-        powered_up_val = avg_val * total / iterations
-
-        print(f"Percent increase with {sffi_tiers} sffi tiers: ", powered_up_val / base_val * 100 - 100, "%")
-        print("Flat increase per go fish command on average: ", powered_up_val - base_val)
-
-    total = 0
-    for i in range(iterations):
-        total += catch_count(boost=True)
-
-    print(f"Average (with {sffi_tiers} sffi tiers and caffeine boost):", avg_val * total / iterations)
-    powered_up_val = avg_val * total / iterations
-
-    print(f"Percent increase with {sffi_tiers} sffi tiers and boost: ", powered_up_val / base_val * 100 - 100, "%")
-    print("Flat increase per go fish command on average: ", powered_up_val - base_val)
-
-    total = 0
-    sffi_tiers = 0
-    for i in range(iterations):
-        total += catch_count(boost=True)
-
-    print(f"Average (with {sffi_tiers} sffi tiers and caffeine boost):", avg_val * total / iterations)
-    powered_up_val = avg_val * total / iterations
-
-    print(f"Percent increase with {sffi_tiers} sffi tiers and boost: ", powered_up_val / base_val * 100 - 100, "%")
-    print("Flat increase per go fish command on average: ", powered_up_val - base_val)
+if __name__ == '__main__':
+    simulate_avg(iterations=3000000, sffi=0, boost=True)
