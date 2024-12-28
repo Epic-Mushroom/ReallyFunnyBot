@@ -33,21 +33,23 @@ class MaintenanceError(Exception):
     pass
 
 class Profile:
-    def __init__(self, username, value=0, last_fish_time=0, times_fished=0, items=None, upgrades=None, **kwargs):
+    def __init__(self, username, value=0, last_fish_time=0, times_fished=0, items=None, specials=None, upgrades=None, **kwargs):
         self.username = username
         self.value = value
         self.last_fish_time = last_fish_time
         self.times_fished = times_fished
         self.items = items if items is not None else []
+        self.specials = specials if specials is not None else dict()
         self.upgrades = upgrades if upgrades is not None else []
 
-        stack_list = []
-        for key, value in self.items.items():
-            for stack_dict in value:
+        if len(items) > 0 and isinstance(items[-1], dict):
+            stack_list = []
+
+            for stack_dict in self.items:
                 temp_stack = Stack(**stack_dict)
                 stack_list.append(temp_stack)
 
-        self.items = stack_list
+            self.items = stack_list
 
         for key, value in kwargs.items():
             setattr(self, key, value)
@@ -55,8 +57,27 @@ class Profile:
     def __str__(self):
         return profile_to_string(self.username)
 
-    def save_profile(self):
-        pass
+    def add_cd(self, penalty=0):
+        self.last_fish_time = int(time.time()) + penalty
+
+    def add_fish(self, fish, count=1):
+        fish_stack = next((stack for stack in self.items if stack.item.name == fish.name), None)
+
+        if fish_stack is None:
+            self.items.append(Stack(fish, count))
+        else:
+            fish_stack.count += count
+
+class AllProfiles:
+    def __init__(self):
+        list_of_profiles = fishing_database()
+        self.profiles = [Profile(**pf) for pf in list_of_profiles]
+
+    def profile_from_name(self, username) -> Profile:
+        return next((pf for pf in self.profiles if pf.username == username), None)
+
+    def write_data(self):
+        update_fish_file(to_dict(self.profiles))
 
 class Stack:
     def __init__(self, item, count=1):
@@ -354,7 +375,6 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
     original_user = username
 
     last_fish_time = get_user_last_fish_time(username)
-    current_time = int(time.time())
 
     random_num = random_range(1, 100) # used to determine penalty from cop fish and jonklerfish
 
@@ -377,7 +397,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
         username = catfish_holder
         bypass_fish_cd = True
 
-    if is_test_user or current_time - last_fish_time >= FISHING_COOLDOWN:
+    if is_test_user or int(time.time()) - last_fish_time >= FISHING_COOLDOWN:
         caught_fish = []
         caught_fish_count = catch_count(boost=caffeine_active)
 
@@ -674,7 +694,6 @@ def profile_to_string(username: str) -> str:
                     output += '\n'
 
             active_specials = get_active_specials(username)
-
             if len(active_specials) > 0:
                 output += f'\n**Active powerups:**\n'
 
@@ -866,6 +885,25 @@ def _add_new_specials():
 
     update_specials_file(specials_dict)
     return added
+
+def _add_specials_to_profile():
+    # UNFINISHED
+    all_pfs = AllProfiles()
+    specials_added = 0
+
+    for pf in all_pfs.profiles:
+        active_specials = get_active_specials(pf.username)
+        if len(active_specials) > 0:
+            specials_dict = specials_database()
+
+            for special in active_specials:
+                for user_status in specials_dict[special]:
+                    if user_status['username'] == pf.username:
+                        pf.specials[special] = user_status['count']
+                        specials_added += 1
+
+    all_pfs.write_data()
+    return specials_added
 
 script_directory = Path(__file__).parent.resolve()
 os.chdir(script_directory)

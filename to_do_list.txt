@@ -1,3 +1,8 @@
+use objects instead of json dictionary to modify profile data
+- add specials to profiles instead of using specials.json
+- must update method calls in all py files that import fish_utils to use the profile object instead of fishing.json
+- make sure fishing.json is still saved to and loaded from properly
+
 work on shop:
 - add kris tyson upgrade (immune to catching mrbeast fish)
 - add the real jaden christian edwin upgrade (immune to catching mogfish)
@@ -8,20 +13,23 @@ work on shop:
     requires 2 illegal refund fish + 30000 moneys
 - add Brainrot Evasion (immune to cooldown decrease from jonklerfish)
     tier I: immune to cd decrease from jonklers caught by you
-    - requires 15 jonklerfish
+    - requires 8 jonklerfish
     tier II: immune to cd decrease from any jonklers
-- add Anti-Catfishing Pocket Guide upgrade (immune to other people's catfish, costs 1x anti cyberbullying guide)
+    - requires 12 jonklerfish + 1200 moneys
+- add Anti-Catfishing Pocket Guide upgrade (immune to other people's catfish, costs 2x anti cyberbullying guide)
 - add Supreme Joblessness Trophy upgrade ("Ridiculous power, but at what cost")(permanent effects of nemo and immune to catching mogfish)
     requires 88888 moneys
     requires 2 rtgo, 6 ohlone letter, and 20 gad
     requires 2500 old ass boots
+
+make better simulation method(s?) in catch_count_test.py
 
 grim reaper fish and god 2 fish (deletes stack and dupes stack respectively)
 - do i actually want to add this? probably nto
 
 add beel nye ???? what would this do idk prolly just make it another random fish
 add more funny bot triggersF ortnie battle paslei ijsut shit out my ass:speakignehad
-actually use objects for profiles (annoying and im prolly gonna break everything weiofjwofi2390
+add quid
 
 make code not spaggheti NOT HAPPENING XFDDDDDD
  - need to fix the mess that is main.pyw (use bound methods or something)
@@ -31,5 +39,5 @@ become good at osu
 become good at life
 become god
 make bot work when computer is offline ??? (github cannot be abused permanetnlyi hate this why cant i get anything for free why why whwywheih4 please i want free tihngs
-- DONE BUT the server will expire eventually, make sure to create frequent backups of fishing data in the case that they fuckin delete everything on the server or smth)
+- DONE BUT the server will expire eventually, make sure to create frequent backups of fishing data in the case that they fuckin delete everything on the server or smth (or get ddosed again lmfoa))
 survive winter break (:terror:)

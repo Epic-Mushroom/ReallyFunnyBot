@@ -1,25 +1,6 @@
 import discord, os, random, time, logging, sys, fish_utils, backup_utils, asyncio, subprocess, shop_utils
 from pathlib import Path
 from string_utils import *
-# Yeah thats right prof thornton im using import * what are you gonna do about it
-
-# Directory and logging setup
-script_directory = Path(__file__).parent.resolve()
-os.chdir(script_directory)
-
-logging.basicConfig(level=logging.INFO, stream=sys.stdout)
-
-# For local testing purposes; the 'testing' directory should only be available on local
-ADMIN_ONLY = False
-test_file = None
-try:
-    test_file = open(Path("testing", "test_file.txt"))
-    ADMIN_ONLY = True
-except FileNotFoundError:
-    ADMIN_ONLY = False
-finally:
-    if test_file:
-        test_file.close()
 
 # Globals
 guild_list = []
@@ -73,6 +54,24 @@ JADEN_ID = 762393738676404224
 
 COOLDOWN_LENGTH = 40
 COOLDOWN_LIMIT = 7 # how many messages that can be sent per COOLDOWN_LENGTH seconds
+
+# Directory and logging setup
+script_directory = Path(__file__).parent.resolve()
+os.chdir(script_directory)
+
+logging.basicConfig(level=logging.INFO, stream=sys.stdout)
+
+# For local testing purposes; the 'testing' directory should only be available on local
+ADMIN_ONLY = False
+test_file = None
+try:
+    test_file = open(Path("testing", "test_file.txt"))
+    ADMIN_ONLY = True
+except FileNotFoundError:
+    ADMIN_ONLY = False
+finally:
+    if test_file:
+        test_file.close()
 
 # Token and commands guild setup
 SECRET_FILE_PATH = Path('secrets', 'discord bot token.txt')
@@ -570,10 +569,10 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
                 exit(2)
 
             elif message.content.startswith('admin:addnewspecials'):
-                new_added = fish_utils._add_new_specials()
+                new_added = fish_utils._add_specials_to_profile()
 
-                if len(new_added) > 0:
-                    await server_instance.send_message(message, f"Added: {new_added}", bypass_cd=True)
+                if new_added > 0:
+                    await server_instance.send_message(message, f"Synced {new_added} specials from specials.json", bypass_cd=True)
                 else:
                     await server_instance.send_message(message, "Nothing was added", bypass_cd=True)
 
