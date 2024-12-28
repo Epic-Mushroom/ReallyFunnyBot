@@ -542,12 +542,7 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
                 exit(2)
 
             elif message.content.startswith('admin:syncspecialsfromfile'):
-                new_added = fish_utils._add_specials_to_profile()
-
-                if new_added > 0:
-                    await server_instance.send_message(message, f"Synced {new_added} specials from specials.json", bypass_cd=True)
-                else:
-                    await server_instance.send_message(message, "Nothing was added", bypass_cd=True)
+                await server_instance.send_message(message, 'that has been disabled', bypass_cd=True)
 
             elif message.content.startswith('admin:backup'):
                 try:
@@ -589,7 +584,6 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
 
             embed = discord.Embed(title=f'{username_temp}\'s Profile', description=fish_utils.profile_to_string(username_temp))
             await message.channel.send(embed=embed)
-            # await server_instance.send_message(message, fish_utils.profile_to_string(username_temp), bypass_cd=True)
 
         if find_word_bool(message.content, ['show leaderboard', 'show lb', '.lb']):
             embed = discord.Embed(title='Leaderboard', description=fish_utils.leaderboard_string())

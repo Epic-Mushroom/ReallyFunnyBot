@@ -279,11 +279,6 @@ def update_fish_file(json_object: list | dict):
         json.dump(json_object, file, indent=4)
         file.truncate()
 
-def get_user_profile(username: str) -> dict:
-    list_of_profiles = fishing_database()
-
-    return next((profile for profile in list_of_profiles if profile['username'] == username), None)
-
 def specials_database() -> dict:
     with open(SPECIALS_DATABASE_PATH, 'r') as file:
         specials_dict = json.load(file)
@@ -300,41 +295,7 @@ def get_active_specials(username: str) -> list[str]:
 
     return active_specials_
 
-# def add_special(username: str, special: str, count: int) -> None:
-#     """
-#     This can just be removed once profile objects are completed
-#     """
-#     specials_dict = specials_database()
-#
-#     if count < 0:
-#         for user_status in specials_dict[special]:
-#             if user_status['username'] == username and user_status['count'] > 0:
-#                 user_status['count'] += count
-#                 break
-#
-#     else:
-#         user_status = next(
-#             (user_status for user_status in specials_dict[special] if user_status['username'] == username),
-#             None)
-#
-#         if user_status:
-#             user_status['count'] += count
-#         else:
-#             specials_dict[special].append({'username': username, 'count': count})
-#
-#     update_specials_file(specials_dict)
-
 def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=False) -> str:
-
-    # def other_player_with_catfish() -> str | None:
-    #     specials_dict = specials_database()
-    #     catfish_list = specials_dict['catfish']
-    #
-    #     for user_status in catfish_list:
-    #         if user_status['username'] != original_user and user_status['count'] > 0:
-    #             return user_status['username']
-    #
-    #     return None
 
     def other_profile_with_catfish() -> Profile | None:
         return next((prof for prof in all_pfs.profiles if 'catfish' in prof.specials.keys() and prof.specials['catfish'] > 0), None)
@@ -719,40 +680,8 @@ def steal_fish_from_random(thief_name: str, shoot=False) -> tuple[str, FishingIt
 
     return player_pf.username, stolen_fish_
 
-# def get_user_last_fish_time(username: str) -> int:
-#     list_of_profiles = fishing_database()
-#
-#     for profile in list_of_profiles:
-#         if profile['username'] == username:
-#             return profile['last_fish_time']
-#
-#     return 0
-
 def get_all_users() -> list[str]:
     return [pf.username for pf in all_pfs.profiles]
-
-# def update_inventory(inventory: list[dict], fish: FishingItem, count=1):
-#     """
-#     This does not modify any files!
-#     """
-#     item_found = False
-#
-#     for stack in inventory:
-#         if stack['item']['name'] == fish.name:
-#             stack['count'] += count
-#             item_found = True
-#
-#     if not item_found:
-#         stack = dict()
-#         stack['item'] = fish.__dict__
-#         stack['count'] = count
-#
-#         inventory.append(stack)
-#
-#     sort_inventory_by_value(inventory)
-
-def sort_inventory_by_value(inventory: list[dict]):
-    inventory.sort(key=lambda stack: stack['item']['value'], reverse=True)
 
 def sort_fishing_items_by_value():
     with open(FISHING_ITEMS_PATH, 'r+') as file:
@@ -814,43 +743,6 @@ def leaderboard_string(sort_by_luck=False) -> str:
 
     return output
 
-# def update_fish_database(username: str, fish: FishingItem=None, count=1, cd_penalty=0, bypass_fish_cd=False) -> None:
-#     list_of_profiles = fishing_database()
-#     user_found = False
-#
-#     for profile in list_of_profiles:
-#         if profile['username'] == username:
-#             if fish:
-#                 update_inventory(profile['items'], fish, count=count)
-#
-#             profile['value'] = round(sum(stack['item']['value'] * stack['count'] for stack in profile['items']))
-#             profile['times_fished'] = sum(stack['count'] for stack in profile['items'] if stack['item']['name'] != 'Credit')
-#
-#             if not bypass_fish_cd:
-#                 profile['last_fish_time'] = int(time.time()) + cd_penalty
-#
-#             user_found = True
-#
-#     if not user_found:
-#         new_profile = dict()
-#         new_profile['username'] = username
-#         new_profile['times_fished'] = count
-#         new_profile['items'] = []
-#         new_profile['upgrades'] = []
-#         new_profile['last_fish_time'] = 0
-#
-#         if not bypass_fish_cd:
-#             new_profile['last_fish_time'] = int(time.time()) + cd_penalty
-#
-#         if fish:
-#             update_inventory(new_profile['items'], fish, count=count)
-#
-#         new_profile['value'] = round(sum(stack['item']['value'] * stack['count'] for stack in new_profile['items']))
-#
-#         list_of_profiles.append(new_profile)
-#
-#     update_fish_file(list_of_profiles)
-
 def recalculate_fish_database() -> int:
     """
     Modifies value/weights of fish already in fishing.json to reflect those in fishing_items.json
@@ -861,9 +753,6 @@ def recalculate_fish_database() -> int:
 
     for profile in list_of_profiles:
         temp_inv = profile['items']
-
-        if not 'upgrades' in profile.keys():
-            profile['upgrades'] = []
 
         for stack in temp_inv:
             fish_in_file = FishingItem(**stack['item'])
