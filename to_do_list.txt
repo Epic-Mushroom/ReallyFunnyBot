@@ -1,8 +1,3 @@
-use objects instead of json dictionary to modify profile data
-- add specials to profiles instead of using specials.json
-- must update method calls in all py files that import fish_utils to use the profile object instead of fishing.json
-- make sure fishing.json is still saved to and loaded from properly
-
 work on shop:
 - add kris tyson upgrade (immune to catching mrbeast fish)
 - add the real jaden christian edwin upgrade (immune to catching mogfish)

@@ -80,48 +80,44 @@ class ShopItem:
         return result
 
     def sell_to(self, username):
-        def can_sell_to(profile: dict) -> bool:
+        def can_sell_to(profile: fish_utils.Profile) -> bool:
             if profile is None:
                 return False
 
             for stack in self.item_price:
-                if not any(stack_dict['item']['name'] == stack.item.name and stack_dict['count'] >= stack.count for stack_dict in profile['items']):
+                if not any(inv_stack.item.name == stack.item.name and inv_stack.count >= stack.count for inv_stack in profile.items):
                     print(f'Can\'t afford paying: {stack.item.name}')
                     return False
 
-            return self.effective_cost <= profile['value']
+            return self.effective_cost <= profile.value
 
-        list_of_profiles = fish_utils.fishing_database()
-        user_profile = next((profile for profile in list_of_profiles if profile['username'] == username), None)
+        user_profile = fish_utils.all_pfs.profile_from_name(username)
 
         for req in self.requirements:
-            if not req in user_profile['upgrades']:
+            if not req in user_profile.upgrades:
                 raise RequirementError
 
         if self.item_type == 'upgrade':
-            if not self.name in user_profile['upgrades']:
+            if not self.name in user_profile.upgrades:
                 if not can_sell_to(user_profile):
                     raise UserIsBroke
             else:
                 raise AlreadyOwned
 
-            user_profile['upgrades'].append(self.name)
+            user_profile.upgrades.append(self.name)
 
         elif self.item_type == 'consumable':
             if can_sell_to(user_profile):
-                fish_utils.add_special(username, self.special[0], count=self.special[1])
+                user_profile.add_special(self.special[0], count=self.special[1])
             else:
                 raise UserIsBroke
 
         elif self.item_type == 'misc':
             raise ValueError
 
-        # writes upgrades to fishing.json
-        fish_utils.update_fish_file(list_of_profiles)
-
-        fish_utils.update_fish_database(username, fish=fish_utils.get_fish_from_name('Credit'), count=0 - self.money_price, bypass_fish_cd=True)
+        user_profile.add_fish(fish_utils.get_fish_from_name('Credit'), count=0 - self.money_price)
         for stack in self.item_price:
-            fish_utils.update_fish_database(username, fish=fish_utils.get_fish_from_name(stack.item.name), count=0 - stack.count, bypass_fish_cd=True)
+            user_profile.add_fish(fish_utils.get_fish_from_name(stack.item.name), count=0 - stack.count)
             # print(0 - stack.count, "of item was deleted from inv")
 
 def get_list_of_shop_items() -> list[ShopItem]:
@@ -155,11 +151,10 @@ def display_shop_page(page=1) -> str:
     return result
 
 def get_user_upgrades(username) -> list[str]:
-    list_of_profiles = fish_utils.fishing_database()
-    user_profile = next((profile for profile in list_of_profiles if profile['username'] == username), None)
+    user_profile = fish_utils.all_pfs.profile_from_name(username)
 
     if user_profile is not None:
-        return user_profile['upgrades']
+        return user_profile.upgrades
     else:
         return []
 

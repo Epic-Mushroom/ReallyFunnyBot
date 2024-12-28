@@ -242,35 +242,6 @@ with open(Path('revenge.txt'), 'r') as lyrics:
     for line in lyrics:
         REVENGE_LYRICS.append(strip_punctuation(line.strip().lower()))
 
-# @tree.command(name='all-fish', description='Displays universal fishing stats', guild=COMMANDS_GUILD)
-# async def all_fish(interaction: discord.Interaction):
-#     mthd = interaction.response.send_message
-#
-#     embed = discord.Embed(title='Universal Stats', description=fish_utils.universal_profile_to_string())
-#     await mthd(embed=embed)
-#
-# @tree.command(name='profile', description='Displays a user\'s fishing profile', guild=COMMANDS_GUILD)
-# async def profile(interaction: discord.Interaction, user: discord.User=None):
-#     mthd = interaction.response.send_message
-#     username_temp = interaction.user.name
-#
-#     if user is not None:
-#         username_temp = user.name
-#
-#     embed = discord.Embed(title=f'{username_temp}\'s Profile', description=fish_utils.profile_to_string(username_temp))
-#     await mthd(embed=embed)
-#
-# @tree.command(name='shop', description='View the fishing shop', guild=COMMANDS_GUILD)
-# async def shop(interaction, page_num: int=1):
-#     mthd = interaction.response.send_message
-#     max_page = shop_utils.max_page()
-#
-#     if 1 <= page_num <= max_page:
-#         embed = discord.Embed(title=f'Shop (Page {page_num} of {max_page})', description=shop_utils.display_shop_page(page_num))
-#         await mthd(embed=embed)
-#     else:
-#         await mthd("Invalid page number")
-
 @client.event
 async def on_ready():
     global guild_list
@@ -540,10 +511,12 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
                                                    bypass_cd=True, fishing=True)
         except fish_utils.OnFishingCooldownError:
             await server_instance.reply_to_message(message, f"You're on fishing cooldown (" +
-                                                            f"{fish_utils.FISHING_COOLDOWN - (current_time - fish_utils.get_user_last_fish_time(message.author.name))} seconds until you can fish again)", bypass_cd=True, fishing=True)
+                                                            f"{fish_utils.FISHING_COOLDOWN - (current_time - fish_utils.all_pfs.profile_from_name(message.author.name).last_fish_time)} seconds until you can fish again)", bypass_cd=True, fishing=True)
 
         except fish_utils.MaintenanceError:
             await server_instance.reply_to_message(message, f'fishing is currently disabled, go do college apps in the meantime or some shit', bypass_cd=True, fishing=True)
+
+        fish_utils.all_pfs.write_data()
 
     if message.content.startswith('admin:') and len(message.content) > 6:
         if is_admin:
@@ -555,7 +528,7 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
                                                            bypass_cd=True)
                     except fish_utils.OnFishingCooldownError:
                         await server_instance.reply_to_message(message, f"You're on fishing cooldown (" +
-                                                                        f"{fish_utils.FISHING_COOLDOWN - (current_time - fish_utils.get_user_last_fish_time(message.author.name))}"
+                                                                        f"{fish_utils.FISHING_COOLDOWN - (current_time - fish_utils.all_pfs.profile_from_name(message.author.name).last_fish_time)}"
                                                                         f"seconds until you can fish again)", bypass_cd=True)
 
             elif message.content.startswith('admin:switch'):
@@ -568,7 +541,7 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
                 await server_instance.send_message(message, "Shutting down bot :(", bypass_cd=True)
                 exit(2)
 
-            elif message.content.startswith('admin:addnewspecials'):
+            elif message.content.startswith('admin:syncspecialsfromfile'):
                 new_added = fish_utils._add_specials_to_profile()
 
                 if new_added > 0:
@@ -598,6 +571,9 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
             elif message.content.startswith('admin:unmutebot'):
                 server_instance.set_lockdown(-1)
                 await message.channel.send('The bot may exercise freedom of speech again')
+
+            elif message.content.startswith('admin:save'):
+                fish_utils.all_pfs.write_data()
 
         else:
             await server_instance.reply_to_message(message, 'you can\'t do that (reference to 1984 by George Orwell)',
@@ -657,6 +633,8 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
                 item.sell_to(message.author.name)
 
                 await message.reply(f'You purchased {item.name}')
+
+                fish_utils.all_pfs.write_data()
             except shop_utils.UserIsBroke:
                 await message.reply(f'You are too broke to buy that item!')
             except shop_utils.AlreadyOwned:
