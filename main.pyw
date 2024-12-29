@@ -295,9 +295,10 @@ async def on_message(message):
     # Enables admin commands
     is_admin = message.author.id == EPIC_MUSHROOM_ID
 
-    # Makes the bot only respond in dms if ADMIN_ONLY is enabled
-    if ADMIN_ONLY and (not is_admin or (server_instance.server_name is not None and server_instance.get_server().id != MY_GUILD)):
-        print("Non-admin message detected")
+    # Makes the bot only respond in dms/my server if ADMIN_ONLY is enabled
+    is_testing = not ADMIN_ONLY or (is_admin and (server_instance.server_name is None or server_instance.get_server().id == MY_GUILD))
+    if not is_testing:
+        print("Non-admin message detected while in testing mode")
         return
 
     # Triggers start here

@@ -23,6 +23,8 @@ POSITIVES = ["Anti-Cyberbullying Pocket Guide",
              'Contributing Member of Society Fish',
              'Homeless Guy\'s Bank Account',
              'Clam Royale', 'Grand Piano', 'How the Tables Turn']
+SHINY_ITEMS = ['Rainbow Crystal Meth', 'Diamond Juice Box Peel', 'Shiny Jadenfish', 'Blue Crystal Meth', 'Midasfish', 'Gold Goldfish',
+               'Golden Juice Box Peel', 'Brawl Starfish', 'Soda Can']
 
 LIST_OF_NEW_SPECIALS = []
 
@@ -315,14 +317,15 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
         return random.choices(usable_profiles, weights=weights_, k=1)[0]
 
     def activate_special() -> list[str | None]:
-        groups = [['catfish'],
-                  ['mrbeast_fish'],
-                  ['mogfish', 'fishing_manifesto', 'nemo', 'luck_boost'],
-                  ['bribe_fish'],
-                  ['unregistered_firearm', 'mercenary_contract', 'sae_niijima'],
-                  ['caffeine_bait'],
-                  ['no_negative_items'],
-                  ['double_items']]
+        groups = [['catfish'], # fish transfers to user from other players
+                  ['mrbeast_fish'], # fish transfers from user to other players
+                  ['mogfish', 'fishing_manifesto', 'nemo', 'luck_boost'], # boosts factor
+                  ['bribe_fish'], # puts Cop Fish in uncatchable
+                  ['unregistered_firearm', 'mercenary_contract', 'testing_only'], # forces a fish item
+                  ['caffeine_bait'], # makes it more likely to catch multiple items
+                  ['no_negative_items'], # i wonder what this does
+                  ['double_items'], # i wonder what this does
+                  ['midasfish']] # x% chance to get items from a group of items
 
         user_specials = [special for special in get_active_specials(username) if special != 'catfish']
         activated_specials = []
@@ -342,6 +345,11 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
             activated_specials[2] = None
             activated_specials[3] = None
             activated_specials[6] = None
+            activated_specials[8] = None
+
+        if activated_specials[8] is not None:
+            # midasfish cannot use up no_negative_items
+            activated_specials[6] = None
 
         if other_profile_with_catfish():
             # mrbeast fish and bribe fish cannot be used if the user is being catfished
@@ -351,7 +359,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
         return activated_specials
 
     def handle_specials() -> None:
-        nonlocal factor, force_fish_name, caffeine_active, pf, bypass_fish_cd, double_items
+        nonlocal factor, force_fish_name, caffeine_active, pf, bypass_fish_cd, double_items, midas_active
 
         for active_special in active_specials:
             if active_special == 'mrbeast_fish':
@@ -367,8 +375,10 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
                 force_fish_name = 'Mercenary Fish'
             elif active_special == 'unregistered_firearm':
                 force_fish_name = 'CS:GO Fish'
-            elif active_special == 'sae_niijima':
-                force_fish_name = random.choice(['Boops boops'])
+            elif active_special == 'testing_only':
+                force_fish_name = random.choice(['Midasfish'])
+            elif active_special == 'midasfish':
+                midas_active = True
             elif active_special == 'bribe_fish':
                 uncatchable.append('Cop Fish')
             elif active_special == 'no_negative_items':
@@ -453,6 +463,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
     # Flags and variables for handling specials/upgrades
     uncatchable: list[str | None] = [None] # list of fish names that can't be caught
     caffeine_active = False
+    midas_active = False
     double_items = False
     double_mercenary = False
     sffi_tiers = 0
@@ -487,6 +498,11 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
                     temp_fish = go_fish(factor=factor, force_fish_name=force_fish_name)
 
                 temp_fish_name = temp_fish.name
+
+            if midas_active:
+                # Will override the original fish
+                if random_range(1, 100) <= 25:
+                    temp_fish = get_fish_from_name(random.choice(SHINY_ITEMS))
 
             caught_fish.append(temp_fish)
 
@@ -546,6 +562,10 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
             elif one_fish.name == 'Nemo':
                 output += f'You caught: **{one_fish.name}** (next 12 catches by you are much more likely to include rare items)'
                 pf.add_special('luck_boost', count=12)
+
+            elif one_fish.name == 'Midasfish':
+                output += f'You caught: **{one_fish.name}** (next catch is more likely to include a "shiny" item)'
+                pf.add_special('midasfish', count=1)
 
             elif one_fish.name == 'Blue Whale':
                 output += f'You caught: **{one_fish.name}** (everyone\'s next catch is much more likely to include rare items)'
@@ -913,5 +933,7 @@ if __name__ == '__main__':
             for name in test_items:
                 fish_ = get_fish_from_name(name)
                 print(f'{fish_.name} obtained: {'yes' if all_pfs.fish_obtained(fish_) else 'no'}')
+        elif user_input == 'shinyitemavgtest':
+            print((sum([get_fish_from_name(n).value for n in SHINY_ITEMS[1:]]) + 2500) / len(SHINY_ITEMS))
         elif user_input == 'exit':
             break
