@@ -1,8 +1,6 @@
 adjust prices of upgrades
 
 work on shop:
-- add espionage tactics book (mercenary fish can steal twice as much)
-    requires 5 mercenary contract
 - add kris tyson upgrade (immune to catching mrbeast fish)
 - add the real jaden christian edwin upgrade (immune to catching mogfish)
     - make it cost some number of shiny jadenfish
