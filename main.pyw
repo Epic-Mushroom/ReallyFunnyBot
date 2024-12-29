@@ -257,8 +257,8 @@ async def on_ready():
         await tree.sync()
 
     for g in client.guilds:
-        # logging.info(len(client.guilds))
-        logging.info(f'connected to {g.name}, server id: {g.id}')
+        logging.info(len(client.guilds))
+        # logging.info(f'connected to {g.name}, server id: {g.id}')
 
     # editing global variables
     guild_list = list(client.guilds)

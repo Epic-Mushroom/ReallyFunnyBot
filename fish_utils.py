@@ -589,10 +589,8 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
                         stolen_fish = heist_tuple[1]
 
                         output += f'{temp_username}\'s {rare_prefix(stolen_fish)}**{stolen_fish.name}** was shot)'
-                except IndexError:
-                    output += f'Somehow, there was nothing to shoot)'
-                except ValueError:
-                    output += f'Somehow, there was nothing to shoot)'
+                except Exception as e:
+                    output += f'Somehow, there was nothing to shoot [{e}])'
     
             elif one_fish.name == 'Sea Bass':
                 output += f'You caught: **{one_fish.name}**... no it\'s at least a C+ (worth {one_fish.value} moneys)'
@@ -659,7 +657,7 @@ def fish_soap(username: str, absolute=False):
 
 def steal_fish_from_random(thief_name: str, shoot=False) -> tuple[str, FishingItem]:
     while True:
-        weights_ = [pf.value for pf in all_pfs.profiles]
+        weights_ = [pf.value for pf in all_pfs.real_profiles]
         player_pf: Profile = random.choices(all_pfs.real_profiles, weights=weights_, k=1)[0]
         player_name = player_pf.username
 
