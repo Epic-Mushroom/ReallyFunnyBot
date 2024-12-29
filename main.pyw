@@ -51,6 +51,7 @@ EPIC_MUSHROOM_ID = 456943500249006108
 PALIOPOLIS_ID = 873412148880089102
 KUSH_ID = 873411125633491024
 JADEN_ID = 762393738676404224
+GENERAL_CHANNEL_ID = 1309380397410291715
 
 COOLDOWN_LENGTH = 40
 COOLDOWN_LIMIT = 7 # how many messages that can be sent per COOLDOWN_LENGTH seconds
@@ -505,18 +506,22 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
             await jumpscare.delete()
             await asyncio.sleep(0.5)
 
-        try:
-            await server_instance.reply_to_message(message, f'{'[TESTING ONLY] ' if not fish_utils.FISHING_ENABLED else ''}' +
-                                                            f'{fish_utils.fish_event(message.author.name)}',
-                                                   bypass_cd=True, fishing=True)
-        except fish_utils.OnFishingCooldownError:
-            await server_instance.reply_to_message(message, f"You're on fishing cooldown (" +
-                                                            f"{fish_utils.FISHING_COOLDOWN - (current_time - fish_utils.all_pfs.profile_from_name(message.author.name).last_fish_time)} seconds until you can fish again)", bypass_cd=True, fishing=True)
+        if message.channel.id != 1160028122205401138:
+            try:
+                await server_instance.reply_to_message(message, f'{'[TESTING ONLY] ' if not fish_utils.FISHING_ENABLED else ''}' +
+                                                                f'{fish_utils.fish_event(message.author.name)}',
+                                                       bypass_cd=True, fishing=True)
+            except fish_utils.OnFishingCooldownError:
+                await server_instance.reply_to_message(message, f"You're on fishing cooldown (" +
+                                                                f"{fish_utils.FISHING_COOLDOWN - (current_time - fish_utils.all_pfs.profile_from_name(message.author.name).last_fish_time)} seconds until you can fish again)", bypass_cd=True, fishing=True)
 
-        except fish_utils.MaintenanceError:
-            await server_instance.reply_to_message(message, f'fishing is currently disabled, go do college apps in the meantime or some shit', bypass_cd=True, fishing=True)
+            except fish_utils.MaintenanceError:
+                await server_instance.reply_to_message(message, f'fishing is currently disabled, go do college apps in the meantime or some shit', bypass_cd=True, fishing=True)
 
-        fish_utils.all_pfs.write_data()
+            fish_utils.all_pfs.write_data()
+
+        else:
+            message.reply('NO FISHING IN GENERAL')
 
     if message.content.startswith('admin:') and len(message.content) > 6:
         if is_admin:
