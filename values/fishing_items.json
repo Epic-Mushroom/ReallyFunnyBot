@@ -70,6 +70,11 @@
         "weight": 0.1
     },
     {
+        "name": "Rainbow Crystal Meth",
+        "value": 700,
+        "weight": 0.2
+    },
+    {
         "name": "Gambling Addiction Diagnosis",
         "value": 1999,
         "weight": 0.3
@@ -140,6 +145,11 @@
         "weight": 1.6
     },
     {
+        "name": "Blue Crystal Meth",
+        "value": 0,
+        "weight": 1.65
+    },
+    {
         "name": "Caffeinated Worms",
         "value": 0,
         "weight": 1.7
@@ -148,11 +158,6 @@
         "name": "Boops boops",
         "value": 160,
         "weight": 1.8
-    },
-    {
-        "name": "Blue Crystal Meth",
-        "value": 0,
-        "weight": 1.65
     },
     {
         "name": "Mogfish",
