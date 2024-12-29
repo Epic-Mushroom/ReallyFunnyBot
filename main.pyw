@@ -21,6 +21,8 @@ CRAZY_RESPONSES = ["https://tenor.com/view/crazy-rubber-room-gif-105244771741669
                    ME HCRANTZZyaYY""", "crazy? i was crazy once", "rats make me rubber"]
 BAITS = ["what", "What", 'when', 'When', 'who', 'Who']
 PRONOUNS = ['he', 'she', 'they']
+KYS_RESPONSES = ["Let's be nice to each other ok.", "Let's all calm down guys.",
+                         "Guys lets find our happy place."]
 TYPOS = ['SOTP', 'HWO', 'HLEP', 'imdeed', 'DYHINF', 'EHLP', 'liek', 'sitpoo', 'cehap', 'parnets', 'paretns', 'vioolni', 'sotfp', 'tahnkss', 'sucj', 'kmagine', 'heah', 'murser',
          'go dish', 'gof ish', 'g ofish', 'go fesh', 'go fsih', 'gi fish', 'gi fsih', 'go fsh', 'ho fish', 'go fihs', 'go fidh']
 SWEARING_RESPONSES = ["Bro chill out dude.", "Let's calm down bro.", "Dude swearing is not cool.", "Guys lets find our happy place.",
@@ -50,6 +52,7 @@ EPIC_MUSHROOM_ID = 456943500249006108
 PALIOPOLIS_ID = 873412148880089102
 KUSH_ID = 873411125633491024
 JADEN_ID = 762393738676404224
+
 GENERAL_CHANNEL_ID_1 = 1309380397410291715
 GENERAL_CHANNEL_ID_2 = 1096685257891250228
 
@@ -354,9 +357,7 @@ async def on_message(message):
         await server_instance.reply_to_message(message, f"{random.choice(SWEARING_RESPONSES)}")
 
     if find_isolated_word_bool(message.content, ['kys', 'kill yourself', 'kill your self']):
-        kys_responses = ["Let's be nice to each other ok.", "Let's all calm down guys.",
-                         "Guys lets find our happy place."]
-        await server_instance.send_message(message, f"{random.choice(kys_responses)}")
+        await server_instance.send_message(message, f"{random.choice(KYS_RESPONSES)}")
     
     if "what is the time" in lowercase_message_content:
         await server_instance.reply_to_message(message, f"It is <t:{current_time}:f>")
