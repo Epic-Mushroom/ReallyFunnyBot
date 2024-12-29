@@ -371,12 +371,15 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
                 double_items = True
 
     def handle_upgrades() -> None:
-        nonlocal sffi_tiers
+        nonlocal sffi_tiers, double_mercenary
         active_upgrades = shop_utils.get_user_upgrades(original_user)
 
         for upgrade in active_upgrades:
             if upgrade.startswith("State Farm Fishing Insurance"):
                 sffi_tiers += 1
+
+        if "Espionage Tactics Book" in active_upgrades:
+            double_mercenary = True
 
     def catch_count(boost=False) -> int:
         random_num = random_range(1, 500)
@@ -443,6 +446,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
     uncatchable: list[str | None] = [None] # list of fish names that can't be caught
     caffeine_active = False
     double_items = False
+    double_mercenary = False
     sffi_tiers = 0
 
     active_specials = activate_special()
@@ -565,7 +569,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
             elif one_fish.name == 'Mercenary Fish' and not is_test_user:
                 output += f'You caught the Mercenary Fish!'
     
-                for i in range(random_range(6, 7)):
+                for i in range(random_range(12 if double_mercenary else 6, 14 if double_mercenary else 7)):
                     # steal_fish_from_random also updates the thief's profile with the fish that was stolen
                     try:
                         heist_tuple = steal_fish_from_random(username)
@@ -818,6 +822,26 @@ def _add_specials_to_profile():
 
     update_specials_file(specials_dict)
     return specials_added
+
+def _manual_data_changes() -> str:
+    output = ''
+
+    for pf in all_pfs.profiles:
+        if 'State Farm Fishing Insurance II' in pf.upgrades:
+            refund_fish = 'Credit'
+            refund_count = 6166
+
+            pf.add_fish(get_fish_from_name(refund_fish), refund_count)
+            output += f'Gave {refund_count} {refund_fish} to {pf.username}\n'
+
+        if 'State Farm Fishing Insurance I' in pf.upgrades:
+            refund_fish = 'God'
+            refund_count = 1
+
+            pf.add_fish(get_fish_from_name(refund_fish), refund_count)
+            output += f'Gave {refund_count} {refund_fish} to {pf.username}\n'
+
+    return output
 
 script_directory = Path(__file__).parent.resolve()
 os.chdir(script_directory)

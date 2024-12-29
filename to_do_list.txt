@@ -1,11 +1,15 @@
+adjust prices of upgrades
+
 work on shop:
+- add espionage tactics book (mercenary fish can steal twice as much)
+    requires 5 mercenary contract
 - add kris tyson upgrade (immune to catching mrbeast fish)
 - add the real jaden christian edwin upgrade (immune to catching mogfish)
     - make it cost some number of shiny jadenfish
 - add Capitalism Accelerator I, II, III, and IV upgrade (decreases cooldown length to 9, 8, 7, 6 seconds)
   (last one must be pretty expensive since it's a 67% effective bonus per time period over having no powerups)
 - add Law Evasion (permanent effects of bribe fish, also immune to catching more bribe fish)
-    requires 2 illegal refund fish + 30000 moneys
+    requires 2 illegal refund fish + 2500 moneys
 - add Brainrot Evasion (immune to cooldown decrease from jonklerfish)
     tier I: immune to cd decrease from jonklers caught by you
     - requires 8 jonklerfish

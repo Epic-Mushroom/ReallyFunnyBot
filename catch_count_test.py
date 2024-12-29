@@ -64,4 +64,4 @@ def simulate_user(iterations=500):
     print("FACTOR APPLIED: ", fish_utils_tests.TEST_FACTOR, '\n')
 
 if __name__ == '__main__':
-    simulate_avg(iterations=800000, sffi=0, boost=True)
+    simulate_avg(iterations=800000, sffi=3, boost=False)

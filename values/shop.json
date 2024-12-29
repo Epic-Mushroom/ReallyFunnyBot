@@ -40,6 +40,25 @@
   {
     "item_type": "upgrade",
     "id": 3,
+    "name": "Espionage Tactics Book",
+    "description": "Doubles the number of items stolen by Mercenary Fish",
+    "money_price": 0,
+    "item_price": [
+            {
+                "item": {
+                    "name": "Mercenary Contract",
+                    "value": 0,
+                    "weight": 1.6
+                },
+                "count": 5
+            }
+    ],
+    "requirements": [],
+    "page": 1
+  },
+  {
+    "item_type": "upgrade",
+    "id": 4,
     "name": "State Farm Fishing Insurance I",
     "description": "-33% chance to get no items in a catch",
     "money_price": 0,
@@ -62,11 +81,11 @@
             }
     ],
     "requirements": [],
-    "page": 1
+    "page": 2
   },
   {
     "item_type": "upgrade",
-    "id": 4,
+    "id": 5,
     "name": "State Farm Fishing Insurance II",
     "description": "-33% chance to get no items in a catch",
     "money_price": 6666,
@@ -85,7 +104,7 @@
   },
   {
     "item_type": "upgrade",
-    "id": 5,
+    "id": 6,
     "name": "State Farm Fishing Insurance III",
     "description": "-33% chance to get no items in a catch",
     "money_price": 16666,

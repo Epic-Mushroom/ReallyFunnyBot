@@ -70,7 +70,8 @@ class ShopItem:
             for stack in self.item_price:
                 result += f'{stack.__str__()}\n'
 
-            result += f'*Effective cost: {self.effective_cost} moneys*\n'
+            if self.effective_cost > 0:
+                result += f'*Effective cost: {self.effective_cost} moneys*\n'
 
         if show_prereqs:
             result += f'\nRequires:\n'
