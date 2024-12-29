@@ -309,7 +309,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
     def activate_special() -> list[str | None]:
         groups = [['catfish'],
                   ['mrbeast_fish'],
-                  ['mogfish', 'fishing_manifesto', 'nemo'],
+                  ['mogfish', 'fishing_manifesto', 'nemo', 'luck_boost'],
                   ['bribe_fish'],
                   ['unregistered_firearm', 'mercenary_contract', 'sae_niijima'],
                   ['caffeine_bait'],
@@ -351,7 +351,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
                 bypass_fish_cd = True
             elif active_special == 'fishing_manifesto':
                 factor = fishing_manifesto_factor(username)
-            elif active_special == 'nemo':
+            elif active_special == 'nemo' or active_special == 'luck_boost':
                 factor = 9.5
             elif active_special == 'mogfish':
                 factor = 0.04
@@ -360,7 +360,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
             elif active_special == 'unregistered_firearm':
                 force_fish_name = 'CS:GO Fish'
             elif active_special == 'sae_niijima':
-                force_fish_name = random.choice(['Blue Crystal Meth'])
+                force_fish_name = random.choice(['Blue Whale'])
             elif active_special == 'bribe_fish':
                 uncatchable.append('Cop Fish')
             elif active_special == 'no_negative_items':
@@ -536,7 +536,13 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
     
             elif one_fish.name == 'Nemo':
                 output += f'You caught: **{one_fish.name}** (next 12 catches by you are much more likely to include rare items)'
-                pf.add_special('nemo', count=12)
+                pf.add_special('luck_boost', count=12)
+
+            elif one_fish.name == 'Blue Whale':
+                output += f'You caught: **{one_fish.name}** (everyone\'s next catch is much more likely to include rare items)'
+
+                for prof in all_pfs.profiles:
+                    prof.add_special('luck_boost', count=1)
 
             elif one_fish.name == 'Bribe Fish':
                 output += f'You caught: **{one_fish.name}** (-50 moneys, but immune to Cop Fish for next 80 catches)'
