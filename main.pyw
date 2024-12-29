@@ -25,7 +25,6 @@ TYPOS = ['SOTP', 'HWO', 'HLEP', 'imdeed', 'DYHINF', 'EHLP', 'liek', 'sitpoo', 'c
          'go dish', 'gof ish', 'g ofish', 'go fesh', 'go fsih', 'gi fish', 'gi fsih', 'go fsh', 'ho fish', 'go fihs', 'go fidh']
 SWEARING_RESPONSES = ["Bro chill out dude.", "Let's calm down bro.", "Dude swearing is not cool.", "Guys lets find our happy place.",
                       "Watch your fucking language.", "That's a no-no word"]
-KYS_RESPONSES = ["Let's be nice to each other ok.", "Let's all calm down guys.", "Guys lets find our happy place."]
 SPEECH_BUBBLES = ['https://cdn.discordapp.com/attachments/1087868146288951389/1285450220741726278/togif.gif?ex=6722580f&is=6721068f&hm=eae8f4b73914afeef14e09b34df7eca35865ce5b6ee517558325fba6c5fcf0fb&',
                   'https://tenor.com/view/manlet-speech-bubble-bobcat-gif-25293164',
                   'https://tenor.com/view/discord-speech-bubble-small-guy-with-a-sword-speech-bubble-gif-2288421216251484021',
@@ -51,7 +50,8 @@ EPIC_MUSHROOM_ID = 456943500249006108
 PALIOPOLIS_ID = 873412148880089102
 KUSH_ID = 873411125633491024
 JADEN_ID = 762393738676404224
-GENERAL_CHANNEL_ID = 1309380397410291715
+GENERAL_CHANNEL_ID_1 = 1309380397410291715
+GENERAL_CHANNEL_ID_2 = 1096685257891250228
 
 COOLDOWN_LENGTH = 40
 COOLDOWN_LIMIT = 7 # how many messages that can be sent per COOLDOWN_LENGTH seconds
@@ -344,7 +344,6 @@ async def on_message(message):
             else:
                 await message.add_reaction(random.choice(FUNNY_EMOJIS))
 
-
     if find_word_bool(lowercase_message_content, THICK_OF_IT_TRIGGERS):
         await server_instance.reply_to_message(message, "https://www.youtube.com/watch?v=At8v_Yc044Y")
 
@@ -355,7 +354,9 @@ async def on_message(message):
         await server_instance.reply_to_message(message, f"{random.choice(SWEARING_RESPONSES)}")
 
     if find_isolated_word_bool(message.content, ['kys', 'kill yourself', 'kill your self']):
-        await server_instance.send_message(message, f"{random.choice(KYS_RESPONSES)}")
+        kys_responses = ["Let's be nice to each other ok.", "Let's all calm down guys.",
+                         "Guys lets find our happy place."]
+        await server_instance.send_message(message, f"{random.choice(kys_responses)}")
     
     if "what is the time" in lowercase_message_content:
         await server_instance.reply_to_message(message, f"It is <t:{current_time}:f>")
@@ -376,7 +377,7 @@ async def on_message(message):
 
         await server_instance.reply_to_message(message, f"{current_count} triggers", bypass_cd=True)
 
-    if "debugcooldown" in lowercase_message_content:
+    if "cooldownstatus" in lowercase_message_content:
         if server_instance.on_cooldown():
             await server_instance.reply_to_message(message, f"I am on cooldown. Stop freaking spamming bro. (cooldown length is {COOLDOWN_LENGTH}, "
                                         f"max number of messages able to be sent per cooldown reset period is {COOLDOWN_LIMIT}, "
@@ -506,7 +507,7 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
             await jumpscare.delete()
             await asyncio.sleep(0.5)
 
-        if message.channel.id != GENERAL_CHANNEL_ID:
+        if not message.channel.id in [GENERAL_CHANNEL_ID_1, GENERAL_CHANNEL_ID_2]:
             try:
                 await server_instance.reply_to_message(message, f'{'[TESTING ONLY] ' if not fish_utils.FISHING_ENABLED else ''}' +
                                                                 f'{fish_utils.fish_event(message.author.name)}',
