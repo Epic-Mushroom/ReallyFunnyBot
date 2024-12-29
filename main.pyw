@@ -506,7 +506,7 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
             await jumpscare.delete()
             await asyncio.sleep(0.5)
 
-        if message.channel.id != 1160028122205401138:
+        if message.channel.id != GENERAL_CHANNEL_ID:
             try:
                 await server_instance.reply_to_message(message, f'{'[TESTING ONLY] ' if not fish_utils.FISHING_ENABLED else ''}' +
                                                                 f'{fish_utils.fish_event(message.author.name)}',
