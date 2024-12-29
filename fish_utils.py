@@ -61,7 +61,7 @@ class Profile:
         output += (f"Moneys obtained: **{self.value}**\n" +
                    f"Items caught: **{self.times_fished}**\n\n")
 
-        display_stacks = [stack for stack in self.items if stack.item.name != 'Credit']
+        display_stacks = [stack for stack in self.items if stack.item.name != 'Credit' and stack.count > 0]
 
         for stack in display_stacks:
             if stack.item.weight <= WEIGHT_CUTOFF:
@@ -307,6 +307,9 @@ def get_active_specials(username: str) -> list[str]:
 
 def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=False) -> str:
 
+    def other_profile_with_taxation() -> Profile | None:
+        pass
+
     def other_profile_with_catfish() -> Profile | None:
         return next((prof for prof in all_pfs.profiles if 'catfish' in prof.specials.keys() and prof.specials['catfish'] > 0 and prof.username != original_user), None)
 
@@ -317,7 +320,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
         return random.choices(usable_profiles, weights=weights_, k=1)[0]
 
     def activate_special() -> list[str | None]:
-        groups = [['catfish'], # fish transfers to user from other players
+        groups = [['catfish', 'tax_collector'], # not used when the user is fishing, only when other users are fishing
                   ['mrbeast_fish'], # fish transfers from user to other players
                   ['mogfish', 'fishing_manifesto', 'nemo', 'luck_boost'], # boosts factor
                   ['bribe_fish'], # puts Cop Fish in uncatchable
@@ -327,7 +330,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
                   ['double_items'], # i wonder what this does
                   ['midasfish']] # x% chance to get items from a group of items
 
-        user_specials = [special for special in get_active_specials(username) if special != 'catfish']
+        user_specials = get_active_specials(username)
         activated_specials = []
 
         for n in range(len(groups)):
@@ -339,6 +342,9 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
                 if special == groups[n][-1]:
                     # checks if no powerups from this group was found for the user
                     activated_specials.append(None)
+
+        # catfish and similar powerups cannot be used up when its holder is the one fishing
+        activated_specials[0] = None
 
         if activated_specials[4] is not None:
             # force fish powerups cannot use up powerups of another kind unless it is mrbeast, caffeine, or double items
@@ -472,8 +478,13 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
     handle_specials()
     handle_upgrades()
 
+    tax_collector = other_profile_with_taxation()
+
     catfish_holder_pf = other_profile_with_catfish()
     if catfish_holder_pf:
+        # user cannot pay taxes if another player has catfish active, other players with catfish
+        # will also take priority over paying taxes
+        tax_collector = None
         pf = catfish_holder_pf
         bypass_fish_cd = True
 
