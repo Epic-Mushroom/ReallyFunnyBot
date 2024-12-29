@@ -395,12 +395,14 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
                 double_items = True
 
     def handle_upgrades() -> None:
-        nonlocal sffi_tiers, double_mercenary
+        nonlocal sffi_tiers, double_mercenary, ml_tiers
         active_upgrades = shop_utils.get_user_upgrades(original_user)
 
         for upgrade in active_upgrades:
             if upgrade.startswith("State Farm Fishing Insurance"):
                 sffi_tiers += 1
+            elif upgrade.startswith("Money Laundering"):
+                ml_tiers += 1
 
         if "Espionage Tactics Book" in active_upgrades:
             double_mercenary = True
@@ -473,6 +475,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
     double_items = False
     double_mercenary = False
     sffi_tiers = 0
+    ml_tiers = 0
 
     active_specials = activate_special()
     handle_specials()
@@ -541,7 +544,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
 
             if one_fish.name == 'Cop Fish' and not bypass_fish_cd:
                 penalty += random_num + 19
-                output += f'You caught the Cop Fish! ({random_num + 19} seconds added to next cooldown)'
+                output += f'You caught: **Cop Fish** ({random_num + 19} seconds added to next cooldown)'
     
             elif one_fish.name == 'Catfish' and not is_test_user:
                 output += f'You caught: **{one_fish.name}** (next 4 catches by other players will be transferred to you)'
@@ -614,14 +617,14 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
     
             elif one_fish.name == 'Jonklerfish' and not is_test_user:
                 penalty = random_num + 39
-                output += (f'You caught the {one_fish.name}! (+{one_fish.value} moneys, everyone\'s next cooldown ' +
+                output += (f'You caught: **{one_fish.name}** (+{one_fish.value} moneys, everyone\'s next cooldown ' +
                            f'set to {penalty + FISHING_COOLDOWN} seconds)')
     
                 for user in all_users:
                     all_pfs.profile_from_name(user).add_cd(penalty=penalty)
     
             elif one_fish.name == 'Mercenary Fish' and not is_test_user:
-                output += f'You caught the Mercenary Fish!'
+                output += f'You caught: **Mercenary Fish**'
     
                 for i in range(random_range(12 if double_mercenary else 6, 14 if double_mercenary else 7)):
                     # steal_fish_from_random also updates the thief's profile with the fish that was stolen

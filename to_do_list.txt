@@ -3,6 +3,10 @@ add great depressionfish (taxes)
 adjust prices of upgrades
 
 work on shop:
+- add Money Laundering I upgrade (+5 extra money per catch)
+    costs 10k
+- add Money Laundering II upgrade (+5 extra)
+    costs 10k + 1 letter
 - add kris tyson upgrade (immune to catching mrbeast fish)
 - add the real jaden christian edwin upgrade (immune to catching mogfish)
     - make it cost some number of shiny jadenfish
