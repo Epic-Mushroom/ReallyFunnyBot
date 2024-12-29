@@ -140,13 +140,21 @@ class AllProfiles:
     def write_data(self):
         update_fish_file(to_dict(self.profiles))
 
+    def fish_obtained(self, fish):
+        for pf in self.real_profiles:
+            for stack in pf.items:
+                if stack.item.name == fish.name:
+                    return True
+
+        return False
+
     def __str__(self):
         output = (f"Moneys obtained: **{round(sum(profile.value for profile in self.real_profiles))}**\n" +
                f"Items caught: **{sum(profile.times_fished for profile in self.real_profiles)}*" +
                f"*\n\n")
 
         fishing_items_sorted_by_value = sorted(fishing_items, key=lambda item: item.value, reverse=True)
-        display_items = [item for item in fishing_items_sorted_by_value if item.name != 'Credit']
+        display_items = [item for item in fishing_items_sorted_by_value if item.name != 'Credit' and self.fish_obtained(item)]
 
         for fish in display_items:
             temp_name = fish.name
@@ -360,7 +368,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
             elif active_special == 'unregistered_firearm':
                 force_fish_name = 'CS:GO Fish'
             elif active_special == 'sae_niijima':
-                force_fish_name = random.choice(['Blue Whale'])
+                force_fish_name = random.choice(['Boops boops'])
             elif active_special == 'bribe_fish':
                 uncatchable.append('Cop Fish')
             elif active_special == 'no_negative_items':
@@ -502,6 +510,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
 
         for one_fish in caught_fish:
             output += rare_prefix(one_fish)
+            output += '⭐ First catch! ' if not all_pfs.fish_obtained(one_fish) else ''
 
             if one_fish.name == 'Cop Fish' and not bypass_fish_cd:
                 penalty += random_num + 19
@@ -898,5 +907,11 @@ if __name__ == '__main__':
 
             for i in range(iterations):
                 print(fish_event('test_user2'))
+        elif user_input == 'fishobtest':
+            test_items = ['Credit', 'Ohlone Rejection Letter', 'Boops boops', 'Floating Wood EX', 'Blue Whale']
+
+            for name in test_items:
+                fish_ = get_fish_from_name(name)
+                print(f'{fish_.name} obtained: {'yes' if all_pfs.fish_obtained(fish_) else 'no'}')
         elif user_input == 'exit':
             break
