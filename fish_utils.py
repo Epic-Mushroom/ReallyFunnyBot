@@ -298,7 +298,7 @@ def get_active_specials(username: str) -> list[str]:
 def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=False) -> str:
 
     def other_profile_with_catfish() -> Profile | None:
-        return next((prof for prof in all_pfs.profiles if 'catfish' in prof.specials.keys() and prof.specials['catfish'] > 0), None)
+        return next((prof for prof in all_pfs.profiles if 'catfish' in prof.specials.keys() and prof.specials['catfish'] > 0 and prof.username != original_user), None)
 
     def find_random_user_to_donate_to() -> Profile:
         usable_profiles = [prof for prof in all_pfs.real_profiles if prof.username != original_user]
