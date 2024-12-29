@@ -521,7 +521,8 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
             fish_utils.all_pfs.write_data()
 
         else:
-            message.reply('NO FISHING IN GENERAL')
+            temp_path = Path("images", "no fishing in general.gif")
+            await message.reply(file=discord.File(temp_path))
 
     if message.content.startswith('admin:') and len(message.content) > 6:
         if is_admin:
