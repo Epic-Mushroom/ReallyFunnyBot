@@ -584,6 +584,14 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
                 await server_instance.reply_to_message(message, fish_utils._manual_data_changes())
                 fish_utils.all_pfs.write_data()
 
+            elif message.content.startswith('admin:manifesto'):
+                # returns the fishing manifesto factor for a given user
+                parts = message.content.split(' ')
+                try:
+                    await server_instance.reply_to_message(message, fish_utils.fishing_manifesto_factor(parts[-1]), bypass_cd=True)
+                except AttributeError:
+                    await server_instance.reply_to_message(message, "That user (probably) doesn't exist", bypass_cd=True)
+
             elif message.content.startswith('admin:give'):
                 # ONLY USE THIS IF FISH IS UNFAIRLY LOST/GAINED BECAUSE OF BUGS
                 # format: "admin:give "epicmushroom." "God" 3"
