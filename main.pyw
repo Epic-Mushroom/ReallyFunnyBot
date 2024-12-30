@@ -148,7 +148,7 @@ class ServerSpecificInstance:
         return self.comedians
 
     async def send_message(self, reference, text, bypass_cd=False, file_path=None, fishing=False) -> None:
-        if len(text) > 1990:
+        if len(str(text)) > 1990:
             text = "[*some parts of this message were removed because of discord's character limit*]" + text[-1800:]
 
         file = None
@@ -190,7 +190,7 @@ class ServerSpecificInstance:
             file.close()
 
     async def reply_to_message(self, reference, text, bypass_cd=False, ping=True, fishing=False) -> None:
-        if len(text) > 1990:
+        if len(str(text)) > 1990:
             text = "[*some parts of this message were removed because of discord's character limit*]" + text[-1800:]
 
         if self.on_cooldown():
@@ -476,25 +476,25 @@ async def on_message(message):
             await server_instance.send_message(message, f"idk can you {interpreted_text}")
 
     if random_range(1, 888) == 1:
-        await server_instance.send_message(message, '🫠 (this message has a 1/888 chance to appear)', bypass_cd=True)
+        await send('🫠 (this message has a 1/888 chance to appear)', bypass_cd=True)
 
     if random_range(1, 6666) == 1:
-        await server_instance.send_message(message, '🐺 (this message has a 1/6,666 chance to appear)', bypass_cd=True)
+        await send('🐺 (this message has a 1/6,666 chance to appear)', bypass_cd=True)
 
     if find_word_bool(message.content, ['flip a coin']):
         if random_range(1, 2) == 1:
-            await server_instance.send_message(message, 'Heads', bypass_cd=True)
+            await send('Heads', bypass_cd=True)
         else:
-            await server_instance.send_message(message, 'Tails', bypass_cd=True)
+            await send('Tails', bypass_cd=True)
 
     if find_word_bool(message.content, ['roll a die', 'roll a dice', 'diceroll']):
-        await server_instance.send_message(message, random_range(1, 6), bypass_cd=True)
+        await send(str(random_range(1, 6)), bypass_cd=True)
 
     if find_word_bool(message.content, ['roll a d20']):
-        await server_instance.send_message(message, random_range(1, 20), bypass_cd=True)
+        await send(str(random_range(1, 20)), bypass_cd=True)
 
     if find_word_bool(message.content, ['what is my name']):
-        await server_instance.reply_to_message(message, f"{message.author.display_name} *({message.author.name})*")
+        await send(f"{message.author.display_name} *({message.author.name})*", reply=True)
 
     if find_word_bool(message.content, ['fortnite battle']):
         fortnite_battle_pass = """Fortnite Battle Pass 🗣️🗣️
@@ -509,7 +509,7 @@ Its Nighttime🌃🌃
 I mean, it's 5 o'clock 🕔 🕔, that's basically nighttime 😴😴 🌃
 Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
         """
-        await server_instance.send_message(message, fortnite_battle_pass)
+        await send(fortnite_battle_pass)
 
     if find_word_bool(message.content, ['🐟', '🎣', '🐠', '🐡', 'asdfghjkl', 'go phish', 'go fish', 'go gamble', 'jobless behavior', 'le fishe',
                                         'quiero comer pescado', 'lets go gambling', 'let\'s go gambling',

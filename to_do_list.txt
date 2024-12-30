@@ -1,13 +1,8 @@
 add great depressionfish (taxes)
-https://discord.com/channels/1309380397410291712/1309646950446137424/1323175082427945012
-
-adjust prices of upgrades
+add "Joever" (some really bad effect)
+add a fish that makes the next person to mistype go fish get -200 moneys
 
 work on shop:
-- add Money Laundering I upgrade (50% chance to get 10 extra money per catch)
-    costs 10k
-- add Money Laundering II upgrade (100% chance)
-    costs 10k + 1 letter
 - add kris tyson upgrade (immune to catching mrbeast fish)
 - add the real jaden christian edwin upgrade (immune to catching mogfish)
     - make it cost some number of shiny jadenfish
