@@ -626,7 +626,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
                 for i in range(random_range(12 if double_mercenary else 6, 14 if double_mercenary else 7)):
                     # steal_fish_from_random also updates the thief's profile with the fish that was stolen
                     try:
-                        heist_tuple = steal_fish_from_random(username)
+                        heist_tuple = steal_fish_from_random(pf.username)
                         temp_username = heist_tuple[0]
                         stolen_fish = heist_tuple[1]
 
@@ -642,7 +642,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
 
                 try:
                     for i in range(random_range(1, 1)):
-                        heist_tuple = steal_fish_from_random(username, shoot=True)
+                        heist_tuple = steal_fish_from_random(pf.username, shoot=True)
                         temp_username = heist_tuple[0]
                         stolen_fish = heist_tuple[1]
 
@@ -848,41 +848,6 @@ def update_user_database(username: str, increment=1) -> None:
         json.dump(list_of_dicts, file, indent=4)
         file.truncate()
 
-def _add_new_specials():
-    """
-    Adds new specials to the soon to be deprecated specials.json file
-    """
-    specials_dict = specials_database()
-    added = []
-
-    for spec in LIST_OF_NEW_SPECIALS:
-        if not spec in specials_dict.keys():
-            specials_dict[spec] = []
-            added.append(spec)
-
-    update_specials_file(specials_dict)
-    return added
-
-def _add_specials_to_profile():
-    """
-    Adds specials from specials.json to corresponding profiles in fishing.json
-    """
-    specials_added = 0
-
-    specials_dict = specials_database()
-
-    for pf in all_pfs.profiles:
-        for special in specials_dict.keys():
-            for user_status in specials_dict[special]:
-                if user_status['username'] == pf.username:
-                    pf.add_special(special, user_status['count'])
-                    specials_added += 1 if user_status['count'] > 0 else 0
-                    user_status['count'] = 0
-                    break
-
-    update_specials_file(specials_dict)
-    return specials_added
-
 def _manual_data_changes() -> str:
     output = ''
 
@@ -904,7 +869,6 @@ fishing_items = initialize_fishing_items()
 
 recalculate_fish_database()
 all_pfs = AllProfiles()
-_add_specials_to_profile()
 
 test_file = None
 try:
