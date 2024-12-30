@@ -47,6 +47,7 @@ class ShopItem:
             else:
                 setattr(self, key, value)
 
+        self.page = (self.id - 1) // 3 + 1
         self.effective_cost = self.money_price + sum([stk.item.value * stk.count for stk in self.item_price])
 
     def __str__(self):

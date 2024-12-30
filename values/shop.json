@@ -15,8 +15,7 @@
     },
                 "count": 1
             }],
-    "requirements": [],
-    "page": 1
+    "requirements": []
   },
   {
     "item_type": "consumable",
@@ -34,8 +33,7 @@
                 },
                 "count": 1
             }],
-    "requirements": [],
-    "page": 1
+    "requirements": []
   },
   {
     "item_type": "upgrade",
@@ -53,12 +51,38 @@
                 "count": 5
             }
     ],
-    "requirements": [],
-    "page": 1
+    "requirements": []
   },
   {
     "item_type": "upgrade",
     "id": 4,
+    "name": "Money Laundering I",
+    "description": "50% chance to get 10 extra money per catch",
+    "money_price": 10000,
+    "item_price": [
+    ],
+    "requirements": []
+  },
+  {
+    "item_type": "upgrade",
+    "id": 5,
+    "name": "Money Laundering II",
+    "description": "Guaranteed 10 extra money per catch",
+    "money_price": 10000,
+    "item_price": [{
+                "item": {
+                    "name": "Ohlone Rejection Letter",
+                    "value": 5555,
+                    "weight": 0.09
+                },
+                "count": 1
+            }
+    ],
+    "requirements": ["Money Laundering I"]
+  },
+  {
+    "item_type": "upgrade",
+    "id": 6,
     "name": "State Farm Fishing Insurance I",
     "description": "-33% chance to get no items in a catch",
     "money_price": 0,
@@ -80,12 +104,11 @@
                 "count": 2
             }
     ],
-    "requirements": [],
-    "page": 2
+    "requirements": []
   },
   {
     "item_type": "upgrade",
-    "id": 5,
+    "id": 7,
     "name": "State Farm Fishing Insurance II",
     "description": "-33% chance to get no items in a catch",
     "money_price": 6666,
@@ -99,12 +122,11 @@
                 "count": 2
             }
     ],
-    "requirements": ["State Farm Fishing Insurance I"],
-    "page": 2
+    "requirements": ["State Farm Fishing Insurance I"]
   },
   {
     "item_type": "upgrade",
-    "id": 6,
+    "id": 8,
     "name": "State Farm Fishing Insurance III",
     "description": "-33% chance to get no items in a catch",
     "money_price": 16666,
@@ -118,7 +140,6 @@
                 "count": 1
             }
     ],
-    "requirements": ["State Farm Fishing Insurance II"],
-    "page": 2
+    "requirements": ["State Farm Fishing Insurance II"]
   }
 ]

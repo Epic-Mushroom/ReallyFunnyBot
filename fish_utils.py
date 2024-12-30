@@ -675,14 +675,19 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
     if stolen_amt > 0:
         output += f'\n*Stole {stolen_amt} moneys from players*'
 
+    if ml_tiers > 0:
+        if random_range(1, 3 - ml_tiers) == 1:
+            pf.add_fish(get_fish_from_name('Credit'), 10)
+            output += f'\n*Money Laundering: +10 bonus moneys*'
+
     # adds cooldown to the original user if they are being catfished or have donated
     if pf != original_pf:
         if caught_fish_count > 0:
             if catfish_holder_pf:
                 catfish_holder_pf.add_special('catfish', count=-1)
-                output += f'\n*Fish taken by {catfish_holder_pf.username} (Catfish powerup)*'
+                output += f'\n*Fish{' and money' if ml_tiers > 0 else ''} taken by {catfish_holder_pf.username} (Catfish powerup)*'
             else:
-                output += f'\n*Fish donated to {pf.username} (Mr. Beast powerup)*'
+                output += f'\n*Fish{' and money' if ml_tiers > 0 else ''} donated to {pf.username} (Mr. Beast powerup)*'
 
         # warning: if the initial bypass_fish_cd param was set to True, this will make it False regardless
         original_pf.add_cd(penalty=penalty)
