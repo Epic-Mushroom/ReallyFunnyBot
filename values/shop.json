@@ -89,14 +89,6 @@
     "item_price": [
             {
                 "item": {
-                    "name": "God",
-                    "value": 249,
-                    "weight": 1.2
-                },
-                "count": 1
-            },
-            {
-                "item": {
                     "name": "Used 1999 Toyota Tacoma",
                     "value": 199,
                     "weight": 1.5
@@ -111,7 +103,7 @@
     "id": 7,
     "name": "State Farm Fishing Insurance II",
     "description": "-33% chance to get no items in a catch",
-    "money_price": 6666,
+    "money_price": 500,
     "item_price": [
             {
                 "item": {
@@ -129,7 +121,7 @@
     "id": 8,
     "name": "State Farm Fishing Insurance III",
     "description": "-33% chance to get no items in a catch",
-    "money_price": 16666,
+    "money_price": 0,
     "item_price": [
             {
                 "item": {

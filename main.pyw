@@ -579,6 +579,10 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
             elif message.content.startswith('admin:save'):
                 fish_utils.all_pfs.write_data()
 
+            elif message.content.startswith('admin:refund'):
+                # USE THIS COMMAND WITH CAUTION
+                await server_instance.reply_to_message(message, fish_utils._manual_data_changes())
+
         else:
             await server_instance.reply_to_message(message, 'you can\'t do that (reference to 1984 by George Orwell)',
                                                    bypass_cd=True)
