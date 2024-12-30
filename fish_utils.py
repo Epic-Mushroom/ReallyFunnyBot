@@ -353,10 +353,6 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
             activated_specials[6] = None
             activated_specials[8] = None
 
-        if activated_specials[8] is not None:
-            # midasfish cannot use up no_negative_items
-            activated_specials[6] = None
-
         if other_profile_with_catfish():
             # mrbeast fish and bribe fish cannot be used if the user is being catfished
             activated_specials[1] = None
