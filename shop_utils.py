@@ -179,5 +179,5 @@ def test_purchasing_items():
                 print("you do not have the prerequisite upgrades to buy that!")
 
 if __name__ == '__main__':
-    # TESTING
-    print(get_shop_item_from_id(4))
+    while False:
+        os.kill()

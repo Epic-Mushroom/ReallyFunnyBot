@@ -1,6 +1,7 @@
 add great depressionfish (taxes)
 add "Joever" (some really bad effect)
 add a fish that makes the next person to mistype go fish get -200 moneys
+add eldritch beings (gives a lot of money but guarantees negative items)
 
 work on shop:
 - add kris tyson upgrade (immune to catching mrbeast fish)
@@ -15,7 +16,7 @@ work on shop:
     - requires 8 jonklerfish
     tier II: immune to cd decrease from any jonklers
     - requires 12 jonklerfish + 1200 moneys
-- add Anti-Catfishing Pocket Guide upgrade (immune to other people's catfish, costs 2x anti cyberbullying guide)
+- add Anti-Catfishing Pocket Guide upgrade (immune to other people's catfish, costs 3x anti cyberbullying guide)
 - add Supreme Joblessness Trophy upgrade ("Ridiculous power, but at what cost")(permanent effects of nemo and immune to catching mogfish)
     requires 88888 moneys
     requires 2 rtgo, 6 ohlone letter, and 20 gad

@@ -18,8 +18,16 @@ class FishingTests(unittest.TestCase):
     def test_percents_of_each_fish(self):
         weights = fish_utils.manipulated_weights(factor=TEST_FACTOR)
         weight_sum = sum(weights)
+
         for i in range(len(self.fishing_items)):
-            print(f'{self.fishing_items[i].name}: {(100 * weights[i] / weight_sum):.3f}%')
+            if self.fishing_items[i].weight > 0:
+                print(f'{self.fishing_items[i].name}: {(100 * weights[i] / weight_sum):.3f}%')
+
+        print(f"\n**Unobtainables**\n")
+
+        for i in range(len(self.fishing_items)):
+            if self.fishing_items[i].weight <= 0:
+                print(f'{self.fishing_items[i].name}')
 
     def test_average_value(self):
         print(f'AVERAGE EXPECTED VALUE: {get_average_value(TEST_FACTOR):.3f}')
