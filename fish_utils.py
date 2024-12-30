@@ -544,8 +544,8 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
                 output += f'You caught: **Cop Fish** ({random_num + 19} seconds added to next cooldown)'
     
             elif one_fish.name == 'Catfish' and not is_test_user:
-                output += f'You caught: **{one_fish.name}** (next 4 catches by other players will be transferred to you)'
-                pf.add_special('catfish', count=4)
+                output += f'You caught: **{one_fish.name}** (next 3 catches by other players will be transferred to you)'
+                pf.add_special('catfish', count=3)
 
             elif one_fish.name == 'Fishing Manifesto':
                 output += (f'You caught: **{one_fish.name}** (next 8 catches by you are more likely to include rare items;' +
