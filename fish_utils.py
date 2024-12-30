@@ -328,6 +328,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
                   ['caffeine_bait'], # makes it more likely to catch multiple items
                   ['no_negative_items'], # i wonder what this does
                   ['double_items'], # i wonder what this does
+                  ['8x_items'],
                   ['midasfish']] # x% chance to get items from a group of items
 
         user_specials = get_active_specials(username)
@@ -347,11 +348,11 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
         activated_specials[0] = None
 
         if activated_specials[4] is not None:
-            # force fish powerups cannot use up powerups of another kind unless it is mrbeast, caffeine, or double items
+            # force fish powerups cannot use up powerups of another kind unless it is mrbeast, caffeine, or double/8x items
             activated_specials[2] = None
             activated_specials[3] = None
             activated_specials[6] = None
-            activated_specials[8] = None
+            activated_specials[9] = None
 
         if other_profile_with_catfish():
             # mrbeast fish and bribe fish cannot be used if the user is being catfished
@@ -361,7 +362,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
         return activated_specials
 
     def handle_specials() -> None:
-        nonlocal factor, force_fish_name, caffeine_active, pf, bypass_fish_cd, double_items, midas_active
+        nonlocal factor, force_fish_name, caffeine_active, pf, bypass_fish_cd, double_items, midas_active, octuple_items
 
         for active_special in active_specials:
             if active_special == 'mrbeast_fish':
@@ -389,6 +390,8 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
                 caffeine_active = True
             elif active_special == 'double_items':
                 double_items = True
+            elif active_special == '8x_items':
+                octuple_items = True
 
     def handle_upgrades() -> None:
         nonlocal sffi_tiers, double_mercenary, ml_tiers
@@ -470,6 +473,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
     caffeine_active = False
     midas_active = False
     double_items = False
+    octuple_items = False
     double_mercenary = False
     sffi_tiers = 0
     ml_tiers = 0
@@ -497,6 +501,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
         unlucky = caught_fish_count <= 0
 
         caught_fish_count *= 2 if double_items else 1
+        caught_fish_count *= 8 if octuple_items else 1
 
         for j in range(caught_fish_count):
             temp_fish = None

@@ -148,6 +148,9 @@ class ServerSpecificInstance:
         return self.comedians
 
     async def send_message(self, reference, text, bypass_cd=False, file_path=None, fishing=False) -> None:
+        if len(text) > 1990:
+            text = "[*some parts of this message were removed because of discord's character limit*]" + text[-1800:]
+
         file = None
         if file_path:
             file = discord.File(file_path)
@@ -187,6 +190,9 @@ class ServerSpecificInstance:
             file.close()
 
     async def reply_to_message(self, reference, text, bypass_cd=False, ping=True, fishing=False) -> None:
+        if len(text) > 1990:
+            text = "[*some parts of this message were removed because of discord's character limit*]" + text[-1800:]
+
         if self.on_cooldown():
             logging.info(f'On cooldown. Message withheld: {text}')
 
