@@ -608,7 +608,7 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
                     return
 
                 await server_instance.reply_to_message(message, f"Gave {temp_count} {temp_fish.name} to {temp_username}\n"
-                                                                f"Make sure to use admin:save")
+                                                                f"Make sure to use admin:save", bypass_cd=True)
 
         else:
             await server_instance.reply_to_message(message, 'you can\'t do that (reference to 1984 by George Orwell)',
