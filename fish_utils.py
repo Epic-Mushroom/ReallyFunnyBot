@@ -891,24 +891,10 @@ def _manual_data_changes() -> str:
             refund_fish = 'Credit'
             refund_count = 6166
 
-            pf.add_fish(get_fish_from_name(refund_fish), refund_count)
-            output += f'Gave {refund_count} {refund_fish} to {pf.username} (for sffi 2)\n'
+            # pf.add_fish(get_fish_from_name(refund_fish), refund_count)
+            # output += f'Gave {refund_count} {refund_fish} to {pf.username} (for sffi 2)\n'
 
-        if 'State Farm Fishing Insurance III' in pf.upgrades:
-            refund_fish = 'Credit'
-            refund_count = 16666
-
-            pf.add_fish(get_fish_from_name(refund_fish), refund_count)
-            output += f'Gave {refund_count} {refund_fish} to {pf.username} (for sffi 3)\n'
-
-        if 'State Farm Fishing Insurance I' in pf.upgrades:
-            refund_fish = 'God'
-            refund_count = 1
-
-            pf.add_fish(get_fish_from_name(refund_fish), refund_count)
-            output += f'Gave {refund_count} {refund_fish} to {pf.username} (for sffi 1)\n'
-
-    return output
+    return output + '** **'
 
 script_directory = Path(__file__).parent.resolve()
 os.chdir(script_directory)
