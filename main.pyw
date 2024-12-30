@@ -584,6 +584,32 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
                 await server_instance.reply_to_message(message, fish_utils._manual_data_changes())
                 fish_utils.all_pfs.write_data()
 
+            elif message.content.startswith('admin:give'):
+                # ONLY USE THIS IF FISH IS UNFAIRLY LOST/GAINED BECAUSE OF BUGS
+                # format: "admin:give "epicmushroom." "God" 3"
+                parts = message.content.split('"')
+                temp_username = parts[1]
+                temp_fish = fish_utils.get_fish_from_name(parts[3])
+                try:
+                    temp_count = int(parts[4].strip())
+                except IndexError:
+                    temp_count = 1
+                except ValueError:
+                    temp_count = 1
+                except Exception as e:
+                    await server_instance.reply_to_message(message, f"Something went wrong [{e}]", bypass_cd=True)
+                    return
+
+                temp_profile = fish_utils.all_pfs.profile_from_name(temp_username)
+                if temp_profile is not None and temp_fish is not None:
+                    temp_profile.add_fish(temp_fish, temp_count)
+                else:
+                    await server_instance.reply_to_message(message, "User/fish couldn't be found", bypass_cd=True)
+                    return
+
+                await server_instance.reply_to_message(message, f"Gave {temp_count} {temp_fish.name} to {temp_username}\n"
+                                                                f"Make sure to use admin:save")
+
         else:
             await server_instance.reply_to_message(message, 'you can\'t do that (reference to 1984 by George Orwell)',
                                                    bypass_cd=True)
@@ -596,21 +622,22 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
                 parts = message.content.split(' ')
                 username_temp = parts[-1]
 
-            embed = discord.Embed(title=f'{username_temp}\'s Profile', description=fish_utils.profile_to_string(username_temp))
+            embed = discord.Embed(title=f'{'(Testing Only) ' if not fish_utils.FISHING_ENABLED else ''}'
+                                        f'{username_temp}\'s Profile', description=fish_utils.profile_to_string(username_temp))
             await message.channel.send(embed=embed)
 
         if find_word_bool(message.content, ['show leaderboard', 'show lb', '.lb']):
-            embed = discord.Embed(title='Leaderboard', description=fish_utils.leaderboard_string())
+            embed = discord.Embed(title=f'{'(Testing Only) ' if not fish_utils.FISHING_ENABLED else ''}Leaderboard', description=fish_utils.leaderboard_string())
             await message.channel.send(embed=embed)
             # await server_instance.send_message(message, fish_utils.leaderboard_string(), bypass_cd=True)
 
         if find_word_bool(message.content, ['luck lb', 'rng lb', 'show luck', '.rnglb', '.lbrng', '.lbluck', '.lucklb']):
-            embed = discord.Embed(title='RNG Leaderboard', description=fish_utils.leaderboard_string(sort_by_luck=True))
+            embed = discord.Embed(title=f'{'(Testing Only) ' if not fish_utils.FISHING_ENABLED else ''}RNG Leaderboard', description=fish_utils.leaderboard_string(sort_by_luck=True))
             await message.channel.send(embed=embed)
 
         if find_word_bool(message.content, ['all fish', 'global stats', 'global fish', 'all stats', 'combined profiles', 'combined joblessness',
                                             'global joblessness', 'how jobless is everyone', '.allfish']):
-            embed = discord.Embed(title='Universal Stats', description=fish_utils.universal_profile_to_string())
+            embed = discord.Embed(title=f'{'(Testing Only) ' if not fish_utils.FISHING_ENABLED else ''}Universal Stats', description=fish_utils.universal_profile_to_string())
             await message.channel.send(embed=embed)
             # await server_instance.send_message(message, fish_utils.universal_profile_to_string(), bypass_cd=True)
 
@@ -623,7 +650,7 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
             except ValueError:
                 pass
 
-            embed = discord.Embed(title=f'Shop (Page {page_num} of {shop_utils.max_page()})', description=shop_utils.display_shop_page(page_num),
+            embed = discord.Embed(title=f'{'(Testing Only) ' if not fish_utils.FISHING_ENABLED else ''}Shop (Page {page_num} of {shop_utils.max_page()})', description=shop_utils.display_shop_page(page_num),
                                   color=0xffffff)
             await message.channel.send(embed=embed)
 
@@ -640,7 +667,7 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
                 item = shop_utils.get_shop_item_from_id(item_id)
                 item.sell_to(message.author.name)
 
-                await message.reply(f'You purchased {item.name}')
+                await message.reply(f'{'(Testing Only) ' if not fish_utils.FISHING_ENABLED else ''}You purchased {item.name}')
 
                 fish_utils.all_pfs.write_data()
             except shop_utils.UserIsBroke:
