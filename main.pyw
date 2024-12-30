@@ -301,6 +301,12 @@ async def on_message(message):
         print("Non-admin message detected while in testing mode")
         return
 
+    async def send(content: str, reply=False, bypass_cd=False, ping=True, file_path=None, fishing=False):
+        if reply:
+            await server_instance.reply_to_message(message, content, bypass_cd=bypass_cd, ping=ping, fishing=fishing)
+        else:
+            await server_instance.send_message(message, content, bypass_cd=bypass_cd, file_path=file_path, fishing=fishing)
+
     # Triggers start here
     index_of_im = find_index_after_word(lowercase_message_content, POSSESSIVE_PERSONAL_PRONOUN_LIST)
     index_of_pronoun = find_index_after_word(lowercase_message_content, PRONOUNS)
@@ -323,10 +329,10 @@ async def on_message(message):
             await server_instance.send_message(message, f"Hi {interpreted_name}, I'm {random.choice(server_instance.get_comedians())}!")
 
     if find_isolated_word_bool(message.content, TYPOS) and random_range(1, 1) == 1:
-        await server_instance.reply_to_message(message, "https://www.wikihow.com/Type")
+        await send("https://www.wikihow.com/Type", reply=True)
 
     if "crazy" in lowercase_message_content.lower():
-        await server_instance.reply_to_message(message, f"{random.choice(CRAZY_RESPONSES)}")
+        await send(f"{random.choice(CRAZY_RESPONSES)}", reply=True)
 
     if (message.author.id == PALIOPOLIS_ID or message.author.id == JADEN_ID) and random_range(1, 1000) == 1:
         await message.add_reaction(random.choice(NEGATIVE_EMOJIS))
@@ -334,7 +340,7 @@ async def on_message(message):
     if referred_message and referred_message.author == client.user:
         if referred_message.content.lower() == "who":
             if strip_punctuation(lowercase_message_content.lower()) != "asked":
-                await server_instance.reply_to_message(message, "asked :rofl::rofl:", True)
+                await send("asked :rofl::rofl:", reply=True, bypass_cd=True)
             else:
                 await message.add_reaction(random.choice(FUNNY_EMOJIS))
         elif referred_message.content.lower() == "what":
@@ -615,8 +621,8 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
                     await server_instance.reply_to_message(message, "User/fish couldn't be found", bypass_cd=True)
                     return
 
-                await server_instance.reply_to_message(message, f"Gave {temp_count} {temp_fish.name} to {temp_username}\n"
-                                                                f"Make sure to use admin:save", bypass_cd=True)
+                await server_instance.reply_to_message(message, f"Gave {temp_count} {temp_fish.name} to {temp_username}\n", bypass_cd=True)
+                fish_utils.all_pfs.write_data()
 
         else:
             await server_instance.reply_to_message(message, 'you can\'t do that (reference to 1984 by George Orwell)',

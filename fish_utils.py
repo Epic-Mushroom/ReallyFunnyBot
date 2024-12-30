@@ -368,7 +368,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
                 pf = find_random_user_to_donate_to()
                 bypass_fish_cd = True
             elif active_special == 'fishing_manifesto':
-                factor = fishing_manifesto_factor(username)
+                factor = fishing_manifesto_factor(original_pf.username)
             elif active_special == 'nemo' or active_special == 'luck_boost':
                 factor = 9.5
             elif active_special == 'mogfish':
@@ -533,7 +533,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
                 'the fish grew wings and flew away'
             ]
 
-            output += f'You caught nothing ({random.choice(unlucky_messages)})'
+            output += f'You caught nothing ({random.choice(unlucky_messages)})\n'
 
         for one_fish in caught_fish:
             output += rare_prefix(one_fish)
