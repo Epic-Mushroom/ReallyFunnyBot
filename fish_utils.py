@@ -621,7 +621,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
                 pf.add_special('no_negative_items', count=1)
     
             elif one_fish.name == 'Jonklerfish' and not is_test_user:
-                penalty = random_num + 39
+                penalty = random_num + 44
                 output += (f'You caught: **{one_fish.name}** (+{one_fish.value} moneys, everyone\'s next cooldown ' +
                            f'set to {penalty + FISHING_COOLDOWN} seconds)')
     
@@ -631,7 +631,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
             elif one_fish.name == 'Mercenary Fish' and not is_test_user:
                 output += f'You caught: **Mercenary Fish**'
     
-                for i in range(random_range(12 if double_mercenary else 6, 14 if double_mercenary else 7)):
+                for i in range(random_range(10 if double_mercenary else 5, 12 if double_mercenary else 6)):
                     # steal_fish_from_random also updates the thief's profile with the fish that was stolen
                     try:
                         heist_tuple = steal_fish_from_random(pf.username)
