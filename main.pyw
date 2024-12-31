@@ -597,10 +597,12 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
                 fish_utils.all_pfs.write_data()
 
             elif message.content.startswith('admin:manifesto'):
-                # returns the fishing manifesto factor for a given user
+                # returns the fishing manifesto factor and percent boost for a given user
                 parts = message.content.split(' ')
                 try:
-                    await server_instance.reply_to_message(message, fish_utils.fishing_manifesto_factor(parts[-1]), bypass_cd=True)
+                    factor = fish_utils.fishing_manifesto_factor(parts[-1])
+                    await server_instance.reply_to_message(message, f'{factor} ('
+                                                                    f'{fish_utils.factor_to_percent_increase(factor):.1f}% boost on avg)', bypass_cd=True)
                 except AttributeError:
                     await server_instance.reply_to_message(message, "That user (probably) doesn't exist", bypass_cd=True)
 
