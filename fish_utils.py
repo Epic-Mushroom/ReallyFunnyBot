@@ -229,6 +229,12 @@ def to_dict(obj):
     else:
         return obj
 
+def percent_increase_to_factor(pc_inc=0) -> float:
+    return 1.0082 ** pc_inc
+
+def factor_to_percent_increase(factor=1) -> float:
+    return math.log(factor, 1.0082)
+
 def manipulated_weights(factor=1.0) -> list:
     fishing_items_sorted_by_weight = sorted(fishing_items, key=lambda item: item.weight)
     weights = [fish.weight for fish in fishing_items_sorted_by_weight]
@@ -264,9 +270,11 @@ def fishing_manifesto_factor(username: str) -> float:
     pf = all_pfs.profile_from_name(username)
     x_ = max(pf.value, 0) if pf is not None else 0
     m_ = max(profile.value for profile in all_pfs.real_profiles)
-    formula = 21 * ((420 * x_ / m_) + 1) ** -0.2 - 4.45
+    old_formula = 21 * ((420 * x_ / m_) + 1) ** -0.2 - 4.45
 
-    return formula
+    new_formula = percent_increase_to_factor(500 * ((420 * x_ / m_) + 1) ** -0.2 - 70)
+
+    return old_formula
 
 def initialize_fishing_items() -> list[FishingItem]:
     result = []
@@ -374,7 +382,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
             elif active_special == 'fishing_manifesto':
                 factor = fishing_manifesto_factor(original_pf.username)
             elif active_special == 'nemo' or active_special == 'luck_boost':
-                factor = 3.5
+                factor = percent_increase_to_factor(200)
             elif active_special == 'mogfish':
                 factor = 0.04
             elif active_special == 'mercenary_contract':
@@ -557,7 +565,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
 
             elif one_fish.name == 'Fishing Manifesto':
                 output += (f'You caught: **{one_fish.name}** (next 8 catches by you are more likely to include rare items;' +
-                           f' the luck boost is more if you are lower on the leaderboard)')
+                           f' the luck boost is more the farther you are from #1 on the leaderboard)')
                 pf.add_special('fishing_manifesto', count=8)
 
             elif one_fish.name == 'Mr. Beast Fish':
