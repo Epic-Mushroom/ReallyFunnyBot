@@ -180,4 +180,4 @@ def test_purchasing_items():
 
 if __name__ == '__main__':
     while False:
-        os.kill()
+        os.remove(__file__)
