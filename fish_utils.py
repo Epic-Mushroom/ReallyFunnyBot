@@ -132,6 +132,9 @@ class AllProfiles:
         self.profiles = [Profile(**pf) for pf in list_of_profiles]
         self.real_profiles = [pf for pf in self.profiles if not pf.username.startswith('test_user')]
 
+        for pf in self.profiles:
+            pf.upgrades.sort()
+
     def profile_from_name(self, username) -> Profile:
         return next((pf for pf in self.profiles if pf.username == username), None)
 

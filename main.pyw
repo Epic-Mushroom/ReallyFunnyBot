@@ -55,9 +55,10 @@ JADEN_ID = 762393738676404224
 
 GENERAL_CHANNEL_ID_1 = 1309380397410291715
 GENERAL_CHANNEL_ID_2 = 1096685257891250228
+GENERAL_CHANNEL_ID_3 = 964941621110120541
 
-COOLDOWN_LENGTH = 40
-COOLDOWN_LIMIT = 7 # how many messages that can be sent per COOLDOWN_LENGTH seconds
+COOLDOWN_LENGTH = 10
+COOLDOWN_LIMIT = 4 # how many messages that can be sent per COOLDOWN_LENGTH seconds
 
 # Directory and logging setup
 script_directory = Path(__file__).parent.resolve()
@@ -149,6 +150,45 @@ class ServerSpecificInstance:
 
     async def send_message(self, reference, text, bypass_cd=False, file_path=None, fishing=False) -> None:
         if len(str(text)) > 1990:
+            text = "[*some parts of this message were removed because of discord's character limit*]\n" + text[-1800:]
+
+        file = None
+        if file_path:
+            file = discord.File(file_path)
+
+        if self.on_cooldown():
+            logging.info(f'On cooldown. Message withheld: {text}')
+
+        if self.on_lockdown() and not fishing:
+            logging.info(f'On lockdown. Message withheld: {text}')
+            return
+
+        if bypass_cd or not (self.something_sent or self.on_cooldown()):
+            self.something_sent = True
+
+            if not bypass_cd:
+                self.recently_sent_messages += 1
+
+            await reference.channel.send(text, file=file)
+
+            total_triggers_file = None
+
+            try:
+                total_triggers_file = Path("trackers", "total_triggers.txt").open('r+')
+                current_count = int(total_triggers_file.readline())
+                total_triggers_file.seek(0)
+                total_triggers_file.write(f"{current_count + 1}")
+            finally:
+                if total_triggers_file:
+                    total_triggers_file.close()
+
+            fish_utils.update_user_database(reference.author.name)
+            
+        if file:
+            file.close()
+
+    async def reply_to_message(self, reference, text, bypass_cd=False, ping=True, file_path=None, fishing=False) -> None:
+        if len(str(text)) > 1990:
             text = "[*some parts of this message were removed because of discord's character limit*]" + text[-1800:]
 
         file = None
@@ -168,10 +208,10 @@ class ServerSpecificInstance:
             if not bypass_cd:
                 self.recently_sent_messages += 1
 
-            if file:
-                await reference.channel.send(text, file=file)
+            if ping:
+                await reference.reply(text, file=file)
             else:
-                await reference.channel.send(text)
+                await reference.reply(text, file=file, allowed_mentions=discord.AllowedMentions.none())
 
             total_triggers_file = None
 
@@ -185,44 +225,9 @@ class ServerSpecificInstance:
                     total_triggers_file.close()
 
             fish_utils.update_user_database(reference.author.name)
-            
+
         if file:
             file.close()
-
-    async def reply_to_message(self, reference, text, bypass_cd=False, ping=True, fishing=False) -> None:
-        if len(str(text)) > 1990:
-            text = "[*some parts of this message were removed because of discord's character limit*]" + text[-1800:]
-
-        if self.on_cooldown():
-            logging.info(f'On cooldown. Message withheld: {text}')
-
-        if self.on_lockdown() and not fishing:
-            logging.info(f'On lockdown. Message withheld: {text}')
-            return
-
-        if bypass_cd or not (self.something_sent or self.on_cooldown()):
-            self.something_sent = True
-
-            if not bypass_cd:
-                self.recently_sent_messages += 1
-
-            if ping:
-                await reference.reply(text)
-            else:
-                await reference.reply(text, allowed_mentions=discord.AllowedMentions.none())
-
-            total_triggers_file = None
-
-            try:
-                total_triggers_file = Path("trackers", "total_triggers.txt").open('r+')
-                current_count = int(total_triggers_file.readline())
-                total_triggers_file.seek(0)
-                total_triggers_file.write(f"{current_count + 1}")
-            finally:
-                if total_triggers_file:
-                    total_triggers_file.close()
-
-            fish_utils.update_user_database(reference.author.name)
 
     def set_lockdown(self, seconds) -> int:
         self.lockdown = int(time.time()) + seconds
@@ -273,6 +278,12 @@ async def on_ready():
 async def on_message(message):
     global server_instance_list, guild_list
 
+    async def send(content='** **', reply=False, bypass_cd=False, ping=True, file_path=None, fishing=False):
+        if reply:
+            await server_instance.reply_to_message(message, content, bypass_cd=bypass_cd, file_path=file_path, ping=ping, fishing=fishing)
+        else:
+            await server_instance.send_message(message, content, bypass_cd=bypass_cd, file_path=file_path, fishing=fishing)
+
     referred_message = None
     lowercase_message_content = message.content.lower()
 
@@ -307,12 +318,6 @@ async def on_message(message):
         print("Non-admin message detected while in testing mode")
         return
 
-    async def send(content: str, reply=False, bypass_cd=False, ping=True, file_path=None, fishing=False):
-        if reply:
-            await server_instance.reply_to_message(message, content, bypass_cd=bypass_cd, ping=ping, fishing=fishing)
-        else:
-            await server_instance.send_message(message, content, bypass_cd=bypass_cd, file_path=file_path, fishing=fishing)
-
     # Triggers start here
     index_of_im = find_index_after_word(lowercase_message_content, POSSESSIVE_PERSONAL_PRONOUN_LIST)
     index_of_pronoun = find_index_after_word(lowercase_message_content, PRONOUNS)
@@ -320,7 +325,7 @@ async def on_message(message):
     if any(lowercase_message_content.strip().startswith(lyric) for lyric in REVENGE_LYRICS):
         try:
             lyric_found = find_word(message.content, REVENGE_LYRICS)
-            await server_instance.reply_to_message(message, REVENGE_LYRICS[REVENGE_LYRICS.index(lyric_found) + 1], bypass_cd=True)
+            await server_instance.reply_to_message(message, REVENGE_LYRICS[REVENGE_LYRICS.index(lyric_found) + 1])
         except IndexError:
             pass
         except ValueError:
@@ -411,7 +416,7 @@ async def on_message(message):
             await server_instance.reply_to_message(message, 'Nah I don\'t feel like it', bypass_cd=True)
 
     if "HALOOLY BRIKTAY" == message.content:
-        await server_instance.reply_to_message(message, message.content, bypass_cd=True)
+        await server_instance.reply_to_message(message, message.content)
 
     if find_word_bool(message.content, ['ur mom', 'your mom', 'ur dad', 'ur gae', 'ur gay', "you're gay"]):
         await message.add_reaction(random.choice(FUNNY_EMOJIS))
@@ -521,23 +526,22 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
             await jumpscare.delete()
             await asyncio.sleep(0.5)
 
-        if not message.channel.id in [GENERAL_CHANNEL_ID_1, GENERAL_CHANNEL_ID_2]:
+        if not message.channel.id in [GENERAL_CHANNEL_ID_1, GENERAL_CHANNEL_ID_2, GENERAL_CHANNEL_ID_3]:
             try:
-                await server_instance.reply_to_message(message, f'{'[TESTING ONLY] ' if not fish_utils.FISHING_ENABLED else ''}' +
-                                                                f'{fish_utils.fish_event(message.author.name)}',
-                                                       bypass_cd=True, fishing=True)
+                content = f'{'[TESTING ONLY] ' if not fish_utils.FISHING_ENABLED else ''}{fish_utils.fish_event(message.author.name)}'
+                await send(content, reply=True, bypass_cd=True, fishing=True)
             except fish_utils.OnFishingCooldownError:
                 await server_instance.reply_to_message(message, f"You're on fishing cooldown (" +
                                                                 f"{fish_utils.FISHING_COOLDOWN - (current_time - fish_utils.all_pfs.profile_from_name(message.author.name).last_fish_time)} seconds until you can fish again)", bypass_cd=True, fishing=True)
 
             except fish_utils.MaintenanceError:
-                await server_instance.reply_to_message(message, f'fishing is currently disabled, go do college apps in the meantime or some shit', bypass_cd=True, fishing=True)
+                await server_instance.reply_to_message(message, f'fishing is currently disabled, go play minecraft in the meantime or some shit', bypass_cd=True, fishing=True)
 
             fish_utils.all_pfs.write_data()
 
         else:
             temp_path = Path("images", "no fishing in general.gif")
-            await message.reply(file=discord.File(temp_path))
+            await send(reply=True, file_path=temp_path)
 
     if message.content.startswith('admin:') and len(message.content) > 6:
         if is_admin:
@@ -561,9 +565,6 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
             elif message.content.startswith('admin:shutdown'):
                 await server_instance.send_message(message, "Shutting down bot :(", bypass_cd=True)
                 exit(2)
-
-            elif message.content.startswith('admin:syncspecialsfromfile'):
-                await server_instance.send_message(message, 'that has been disabled', bypass_cd=True)
 
             elif message.content.startswith('admin:backup'):
                 try:
@@ -647,17 +648,20 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
             await message.channel.send(embed=embed)
 
         if find_word_bool(message.content, ['show leaderboard', 'show lb', '.lb']):
-            embed = discord.Embed(title=f'{'(Testing Only) ' if not fish_utils.FISHING_ENABLED else ''}Leaderboard', description=fish_utils.leaderboard_string())
+            embed = discord.Embed(title=f'{'(Testing Only) ' if not fish_utils.FISHING_ENABLED else ''}Leaderboard',
+                                  description=fish_utils.leaderboard_string())
             await message.channel.send(embed=embed)
             # await server_instance.send_message(message, fish_utils.leaderboard_string(), bypass_cd=True)
 
         if find_word_bool(message.content, ['luck lb', 'rng lb', 'show luck', '.rnglb', '.lbrng', '.lbluck', '.lucklb']):
-            embed = discord.Embed(title=f'{'(Testing Only) ' if not fish_utils.FISHING_ENABLED else ''}RNG Leaderboard', description=fish_utils.leaderboard_string(sort_by_luck=True))
+            embed = discord.Embed(title=f'{'(Testing Only) ' if not fish_utils.FISHING_ENABLED else ''}RNG Leaderboard',
+                                  description=fish_utils.leaderboard_string(sort_by_luck=True))
             await message.channel.send(embed=embed)
 
         if find_word_bool(message.content, ['all fish', 'global stats', 'global fish', 'all stats', 'combined profiles', 'combined joblessness',
                                             'global joblessness', 'how jobless is everyone', '.allfish']):
-            embed = discord.Embed(title=f'{'(Testing Only) ' if not fish_utils.FISHING_ENABLED else ''}Universal Stats', description=fish_utils.universal_profile_to_string())
+            embed = discord.Embed(title=f'{'(Testing Only) ' if not fish_utils.FISHING_ENABLED else ''}Universal Stats',
+                                  description=fish_utils.universal_profile_to_string())
             await message.channel.send(embed=embed)
             # await server_instance.send_message(message, fish_utils.universal_profile_to_string(), bypass_cd=True)
 
@@ -670,7 +674,8 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
             except ValueError:
                 pass
 
-            embed = discord.Embed(title=f'{'(Testing Only) ' if not fish_utils.FISHING_ENABLED else ''}Shop (Page {page_num} of {shop_utils.max_page()})', description=shop_utils.display_shop_page(page_num),
+            embed = discord.Embed(title=f'{'(Testing Only) ' if not fish_utils.FISHING_ENABLED else ''}Shop (Page '
+                                        f'{page_num} of {shop_utils.max_page()})', description=shop_utils.display_shop_page(page_num),
                                   color=0xffffff)
             await message.channel.send(embed=embed)
 
