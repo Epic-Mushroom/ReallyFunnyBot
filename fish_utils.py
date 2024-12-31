@@ -739,8 +739,10 @@ def steal_fish_from_random(thief_name: str, shoot=False) -> tuple[str, FishingIt
         if player_name != thief_name or shoot or len(all_pfs.real_profiles) == 1:
             break
 
-    weights_ = [max(stack.count, 0) for stack in player_pf.items]
-    stolen_fish_ = random.choices(player_pf.items, weights=weights_, k=1)[0].item
+    stealable = [stack for stack in player_pf.items if stack.item.name != 'Credit']
+
+    weights_ = [max(stack.count, 0) for stack in stealable]
+    stolen_fish_ = random.choices(stealable, weights=weights_, k=1)[0].item
 
     # Removes the stolen fish from the player who was being stolen from, not modifying the time they last fished
     player_pf.add_fish(stolen_fish_, count=-1)
