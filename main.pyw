@@ -539,7 +539,7 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
 
             fish_utils.all_pfs.write_data()
 
-        else:
+        elif not find_word_bool(message.content, ['2+2', 'zxcvbnm', 'qwertyuiop', 'asdfghjkl', '🐟', '🎣', '🐠', '🐡', 'jobless behavior']):
             temp_path = Path("images", "no fishing in general.gif")
             await send(reply=True, file_path=temp_path)
 
