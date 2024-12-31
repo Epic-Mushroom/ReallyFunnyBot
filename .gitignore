@@ -7,4 +7,7 @@ trackers
 secrets
 _command_remover.py
 _make_zip.py
+fish_utils_tests.py
+catch_count_test.py
+graph_tests.py
 desktop.ini
