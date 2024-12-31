@@ -95,14 +95,14 @@
         "weight": 0.8
     },
     {
-        "name": "Midasfish",
-        "value": 0,
-        "weight": 0.8
-    },
-    {
         "name": "Absolute Value Fish",
         "value": 0,
         "weight": 0.9
+    },
+    {
+        "name": "Midasfish",
+        "value": 0,
+        "weight": 1.1
     },
     {
         "name": "Catalytic Converter",
@@ -200,14 +200,14 @@
         "weight": 2.6
     },
     {
-        "name": "KSI - Thick of It Vinyl Record",
-        "value": 69,
-        "weight": 5
-    },
-    {
         "name": "Jonklerfish",
         "value": 120,
         "weight": 3.5
+    },
+    {
+        "name": "KSI - Thick of It Vinyl Record",
+        "value": 69,
+        "weight": 5
     },
     {
         "name": "Catfish",

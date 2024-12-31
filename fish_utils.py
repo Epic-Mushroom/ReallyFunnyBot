@@ -23,8 +23,8 @@ POSITIVES = ["Anti-Cyberbullying Pocket Guide",
              'Contributing Member of Society Fish',
              'Homeless Guy\'s Bank Account',
              'Clam Royale', 'Grand Piano', 'How the Tables Turn']
-SHINY_ITEMS = ['Rainbow Crystal Meth', 'Diamond Juice Box Peel', 'Shiny Jadenfish', 'Blue Crystal Meth', 'Midasfish', 'Gold Goldfish',
-               'Golden Juice Box Peel', 'Brawl Starfish', 'Soda Can']
+SHINY_ITEMS = ['Rainbow Crystal Meth', 'Diamond Juice Box Peel', 'Shiny Jadenfish', 'Blue Crystal Meth', 'Midasfish', "KSI - Thick of It Vinyl Record",
+               'Gold Goldfish', 'Golden Juice Box Peel', 'Brawl Starfish', 'Goldfish', 'Soda Can']
 
 LIST_OF_NEW_SPECIALS = []
 
@@ -374,7 +374,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
             elif active_special == 'fishing_manifesto':
                 factor = fishing_manifesto_factor(original_pf.username)
             elif active_special == 'nemo' or active_special == 'luck_boost':
-                factor = 9.5
+                factor = 3.5
             elif active_special == 'mogfish':
                 factor = 0.04
             elif active_special == 'mercenary_contract':
@@ -601,8 +601,8 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
                 pf.add_special('double_items', count=10)
 
             elif one_fish.name == 'Rainbow Crystal Meth':
-                output += f'You caught: **{one_fish.name}** (+{one_fish.value} moneys, doubles number of items caught for next 100 catches)'
-                pf.add_special('double_items', count=100)
+                output += f'You caught: **{one_fish.name}** (+{one_fish.value} moneys, doubles number of items caught for next 85 catches)'
+                pf.add_special('double_items', count=85)
 
             elif one_fish.name == 'Mogfish':
                 output += f'You caught: **{one_fish.name}** (next 12 catches by you are nearly guaranteed to include trash items)'
