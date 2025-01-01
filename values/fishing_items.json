@@ -102,32 +102,32 @@
     {
         "name": "Midasfish",
         "value": 0,
-        "weight": 1.1
+        "weight": 1.05
     },
     {
         "name": "Catalytic Converter",
         "value": 501,
-        "weight": 1.1
+        "weight": 1.05
     },
     {
         "name": "Diamond Juice Box Peel",
         "value": 500,
-        "weight": 1.1
+        "weight": 1.05
     },
     {
         "name": "Shiny Jadenfish",
         "value": 499,
-        "weight": 1.1
+        "weight": 1.05
     },
     {
         "name": "God",
         "value": 249,
-        "weight": 1.3
+        "weight": 1.25
     },
     {
         "name": "Used 1999 Toyota Tacoma",
         "value": 199,
-        "weight": 1.4
+        "weight": 1.3
     },
     {
         "name": "Unregistered Firearm",
@@ -137,42 +137,42 @@
     {
         "name": "trollface.png",
         "value": -100,
-        "weight": 1.6
+        "weight": 1.55
     },
     {
         "name": "Fish Soap",
         "value": 0,
-        "weight": 1.6
+        "weight": 1.55
     },
     {
         "name": "Mercenary Contract",
         "value": 0,
-        "weight": 1.6
+        "weight": 1.55
     },
     {
         "name": "Nemo",
         "value": 0,
-        "weight": 1.6
+        "weight": 1.55
     },
     {
         "name": "Blue Whale",
         "value": 0,
-        "weight": 1.6
+        "weight": 1.55
     },
     {
         "name": "Blue Crystal Meth",
         "value": 0,
-        "weight": 1.65
+        "weight": 1.6
     },
     {
         "name": "Caffeinated Worms",
         "value": 0,
-        "weight": 1.7
+        "weight": 1.6
     },
     {
         "name": "Boops boops",
         "value": 160,
-        "weight": 1.8
+        "weight": 1.7
     },
     {
         "name": "Mogfish",
@@ -210,7 +210,17 @@
         "weight": 5
     },
     {
+        "name": "Mercenary Fish",
+        "value": 0,
+        "weight": 5
+    },
+    {
         "name": "Catfish",
+        "value": 0,
+        "weight": 6
+    },
+    {
+        "name": "Fishing Manifesto",
         "value": 0,
         "weight": 6
     },
@@ -218,11 +228,6 @@
         "name": "Gold Goldfish",
         "value": 60,
         "weight": 7
-    },
-    {
-        "name": "Fishing Manifesto",
-        "value": 0,
-        "weight": 6
     },
     {
         "name": "WD-40 Bottle",
@@ -233,11 +238,6 @@
         "name": "Swordfish",
         "value": 40,
         "weight": 7.7
-    },
-    {
-        "name": "Mercenary Fish",
-        "value": 0,
-        "weight": 5
     },
     {
         "name": "Golden Juice Box Peel",
@@ -327,7 +327,7 @@
     {
         "name": "Viola",
         "value": -1,
-        "weight": 22
+        "weight": 23
     },
     {
         "name": "Salmon",
@@ -357,31 +357,31 @@
     {
         "name": "Hook",
         "value": 1,
-        "weight": 27
+        "weight": 28
     },
     {
         "name": "Old Ass Boot",
         "value": 1,
-        "weight": 28
+        "weight": 30
     },
     {
         "name": "Soda Can",
         "value": 1,
-        "weight": 28
+        "weight": 30
     },
     {
         "name": "Empty McNuggets Box",
         "value": 1,
-        "weight": 28
+        "weight": 30
     },
     {
         "name": "Small Fry",
         "value": 0.5,
-        "weight": 33
+        "weight": 34
     },
     {
         "name": "Floating Wood",
         "value": 1,
-        "weight": 34
+        "weight": 35
     }
 ]

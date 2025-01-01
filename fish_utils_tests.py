@@ -11,6 +11,18 @@ def get_average_value(factor=1.0) -> float:
     a_sum = sum(weights[i] * fish_items[i].value for i in range(len(fish_items)))
     return a_sum / weight_sum
 
+def get_rare_item_chance(factor=1.0) -> float:
+    fish_items = fish_utils.fishing_items[:]
+    weights = fish_utils.manipulated_weights(factor=TEST_FACTOR)
+    weight_sum = sum(weights)
+
+    temp_chance_sum = 0
+    for i in range(len(fish_items)):
+        if fish_utils.RARE_ITEM_WEIGHT_THRESHOLD >= fish_items[i].weight > 0:
+            temp_chance_sum += 100 * weights[i] / weight_sum
+
+    return temp_chance_sum
+
 class FishingTests(unittest.TestCase):
     def setUp(self):
         self.fishing_items = fish_utils.fishing_items[:]
@@ -18,6 +30,10 @@ class FishingTests(unittest.TestCase):
     def test_percents_of_each_fish(self):
         weights = fish_utils.manipulated_weights(factor=TEST_FACTOR)
         weight_sum = sum(weights)
+
+        print(f"Rare item chance: {get_rare_item_chance(factor=TEST_FACTOR):.3f}%")
+
+        print(f"\n**All**\n")
 
         for i in range(len(self.fishing_items)):
             if self.fishing_items[i].weight > 0:
