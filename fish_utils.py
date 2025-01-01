@@ -344,7 +344,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
                   ['no_negative_items'], # i wonder what this does
                   ['double_items'], # i wonder what this does
                   ['8x_items'],
-                  ['midasfish']] # x% chance to get items from a group of items
+                  ['midasfish', 'drug_magnet']] # x% chance to get items from a group of items
 
         user_specials = get_active_specials(username)
         activated_specials = []
@@ -377,7 +377,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
         return activated_specials
 
     def handle_specials() -> None:
-        nonlocal factor, force_fish_name, caffeine_active, pf, bypass_fish_cd, double_items, midas_active, octuple_items
+        nonlocal factor, force_fish_name, caffeine_active, pf, bypass_fish_cd, double_items, midas_active, octuple_items, drug_magnet_active
 
         for active_special in active_specials:
             if active_special == 'mrbeast_fish':
@@ -394,9 +394,11 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
             elif active_special == 'unregistered_firearm':
                 force_fish_name = 'CS:GO Fish'
             elif active_special == 'testing_only':
-                force_fish_name = random.choice(['Reminder to Go Outside'])
+                force_fish_name = random.choice(['Russia'])
             elif active_special == 'midasfish':
                 midas_active = True
+            elif active_special == 'drug_magnet':
+                drug_magnet_active = True
             elif active_special == 'bribe_fish':
                 uncatchable.append('Cop Fish')
             elif active_special == 'no_negative_items':
@@ -487,6 +489,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
     uncatchable: list[str | None] = [None] # list of fish names that can't be caught
     caffeine_active = False
     midas_active = False
+    drug_magnet_active = False
     double_items = False
     octuple_items = False
     double_mercenary = False
@@ -534,6 +537,9 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
                 # Will override the original fish
                 if random_range(1, 100) <= 25:
                     temp_fish = get_fish_from_name(random.choice(SHINY_ITEMS))
+            elif drug_magnet_active:
+                if random_range(1, 100) <= 33:
+                    temp_fish = get_fish_from_name(random.choice(DRUG_ITEMS))
 
             caught_fish.append(temp_fish)
 
@@ -601,6 +607,10 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
             elif one_fish.name == 'Midasfish':
                 output += f'You caught: **{one_fish.name}** (next catch is more likely to include a "shiny" item)'
                 pf.add_special('midasfish', count=1)
+
+            elif one_fish.name == 'Russia':
+                output += f'You caught: **{one_fish.name}** (+{one_fish.value}, next 2 catches are more likely to include a "drug" item)'
+                pf.add_special('drug_magnet', count=2)
 
             elif one_fish.name == 'Blue Whale':
                 output += f'You caught: **{one_fish.name}** (everyone\'s next catch is much more likely to include rare items)'

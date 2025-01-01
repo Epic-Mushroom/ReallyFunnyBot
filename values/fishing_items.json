@@ -100,9 +100,9 @@
         "weight": 0.9
     },
     {
-        "name": "Midasfish",
-        "value": 0,
-        "weight": 1.3
+        "name": "Russia",
+        "value": 600,
+        "weight": 1
     },
     {
         "name": "Catalytic Converter",
@@ -132,6 +132,11 @@
     {
         "name": "Unregistered Firearm",
         "value": 177.6,
+        "weight": 1.4
+    },
+    {
+        "name": "Midasfish",
+        "value": 0,
         "weight": 1.4
     },
     {
@@ -378,11 +383,6 @@
         "name": "Small Fry",
         "value": 0.5,
         "weight": 34
-    },
-    {
-        "name": "Russia",
-        "value": 0,
-        "weight": 0
     },
     {
         "name": "Floating Wood",
