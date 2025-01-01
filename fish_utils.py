@@ -201,6 +201,8 @@ class FishingItem:
         self.value = value
         self.weight = weight
 
+        self.effective_value = self.value
+
         for key, value in kwargs.items():
             setattr(self, key, value)
 
@@ -477,8 +479,6 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
 
     last_fish_time = pf.last_fish_time
 
-    random_num = random_range(1, 100) # used to determine penalty from cop fish and jonklerfish
-
     penalty = 0
     stolen_amt = 0
     money_laundered = False
@@ -566,7 +566,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
             output += '⭐ First catch! ' if not all_pfs.fish_obtained(one_fish) else ''
 
             if one_fish.name == 'Cop Fish' and not bypass_fish_cd:
-                penalty += random_num + 19
+                penalty += random_range(19, 119)
                 output += f'You caught: **Cop Fish** ({penalty} seconds added to next cooldown)'
 
             elif one_fish.name == 'Reminder to Go Outside' and not bypass_fish_cd:
@@ -647,7 +647,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
                 pf.add_special('no_negative_items', count=1)
     
             elif one_fish.name == 'Jonklerfish' and not is_test_user:
-                penalty = random_num + 44
+                penalty = random_range(44, 144)
                 output += (f'You caught: **{one_fish.name}** (+{one_fish.value} moneys, everyone\'s next cooldown ' +
                            f'set to {penalty + FISHING_COOLDOWN} seconds)')
     
