@@ -698,15 +698,17 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
         if find_word_bool(message.content, ['show manifesto', 'go manifesto']):
             # returns the fishing manifesto factor and percent boost for a given user
             parts = message.content.split(' ')
-            try:
-                factor = fish_utils.fishing_manifesto_factor(parts[-1])
-                if fish_utils.all_pfs.profile_from_name(parts[-1]):
-                    await server_instance.reply_to_message(message, f'{factor} ('
-                                                                    f'{fish_utils.factor_to_percent_increase(factor):.1f}% boost on avg)',
-                                                           bypass_cd=True)
-                else:
-                    raise AttributeError
-            except AttributeError:
+
+            pf = fish_utils.all_pfs.profile_from_name(parts[-1])
+            if pf is None:
+                pf = fish_utils.all_pfs.profile_from_name(message.author.name)
+            factor = fish_utils.fishing_manifesto_factor(pf.username)
+
+            if pf:
+                await server_instance.reply_to_message(message, f'{pf.username}: '
+                                                                f'{fish_utils.factor_to_percent_increase(factor):.1f}% boost on avg (doesn\'t include effects of powerups)',
+                                                       bypass_cd=True)
+            else:
                 await server_instance.reply_to_message(message, "That user (probably) doesn't exist", bypass_cd=True)
 
     if message.content.startswith('!spam '):

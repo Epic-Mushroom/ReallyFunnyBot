@@ -203,6 +203,9 @@ class FishingItem:
         for key, value in kwargs.items():
             setattr(self, key, value)
 
+    def __str__(self):
+        return self.name
+
 def switch_fishing() -> bool:
     global FISHING_ENABLED
 
