@@ -25,6 +25,7 @@ POSITIVES = ["Anti-Cyberbullying Pocket Guide",
              'Clam Royale', 'Grand Piano', 'How the Tables Turn']
 SHINY_ITEMS = ['Rainbow Crystal Meth', 'Diamond Juice Box Peel', 'Shiny Jadenfish', 'Blue Crystal Meth', 'Midasfish', "KSI - Thick of It Vinyl Record",
                'Gold Goldfish', 'Golden Juice Box Peel', 'Brawl Starfish', 'Goldfish', 'Soda Can']
+DRUG_ITEMS = ["Adderall (1840 Limited Edition)", "Blue Crystal Meth", "Caffeinated Worms", "P-Wing Boys Bathroom Cocaine", "Seaweed"]
 
 LIST_OF_NEW_SPECIALS = []
 
@@ -933,6 +934,8 @@ if __name__ == '__main__':
                 fish_ = get_fish_from_name(name)
                 print(f'{fish_.name} obtained: {'yes' if all_pfs.fish_obtained(fish_) else 'no'}')
         elif user_input == 'shinyitemavgtest':
-            print((sum([get_fish_from_name(n).value for n in SHINY_ITEMS[1:]]) + 2500) / len(SHINY_ITEMS))
+            print((sum([get_fish_from_name(n).value for n in SHINY_ITEMS[:]]) + 95 * 18.5) / len(SHINY_ITEMS))
+        elif user_input == 'drugitemavgtest':
+            print((sum([get_fish_from_name(n).value for n in DRUG_ITEMS[:]]) + 185) / len(SHINY_ITEMS))
         elif user_input == 'exit':
             break

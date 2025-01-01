@@ -1,3 +1,4 @@
+add Russia (similar to midasfish, increases chance of getting 'drug' items except rainbow crystal meth)
 add great depressionfish (taxes)
 add "Joever" (some really bad effect)
 add a fish that makes the next person to mistype go fish get -200 moneys

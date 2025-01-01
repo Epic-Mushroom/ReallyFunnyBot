@@ -102,7 +102,7 @@
     {
         "name": "Midasfish",
         "value": 0,
-        "weight": 1.05
+        "weight": 1.3
     },
     {
         "name": "Catalytic Converter",
@@ -378,6 +378,11 @@
         "name": "Small Fry",
         "value": 0.5,
         "weight": 34
+    },
+    {
+        "name": "Russia",
+        "value": 0,
+        "weight": 0
     },
     {
         "name": "Floating Wood",
