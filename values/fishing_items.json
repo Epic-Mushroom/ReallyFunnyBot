@@ -97,7 +97,8 @@
     {
         "name": "Absolute Value Fish",
         "value": 0,
-        "weight": 0.9
+        "weight": 0.9,
+        "effective_value": 200
     },
     {
         "name": "Russia",

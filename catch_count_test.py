@@ -1,15 +1,12 @@
 import json
 from pathlib import Path
 
-import fish_utils_tests
-from fish_utils import random_range
-from fish_utils_tests import get_average_value
-from fish_utils import fish_event
+import fish_utils_tests, fish_utils
 
 test_path = Path('trackers\\test.json')
 
 def catch_count(boost=False, sffi_tiers=0) -> int:
-    random_num = random_range(1, 500)
+    random_num = fish_utils.random_range(1, 500)
     count = 1
 
     insanely_lucky = random_num <= 2  # 0.4% chance
@@ -34,7 +31,7 @@ def catch_count(boost=False, sffi_tiers=0) -> int:
     return count
 
 def simulate_avg(iterations=300000, factor=fish_utils_tests.TEST_FACTOR, sffi=0, boost=False):
-    avg_val = get_average_value(factor=factor)
+    avg_val = fish_utils_tests.get_average_value(factor=factor)
     total = 0
 
     for i in range(iterations):
@@ -45,7 +42,7 @@ def simulate_avg(iterations=300000, factor=fish_utils_tests.TEST_FACTOR, sffi=0,
     print("Average: ", result_avg)
 
     factor = fish_utils_tests.TEST_FACTOR
-    avg_val = get_average_value(factor=factor)
+    avg_val = fish_utils_tests.get_average_value(factor=factor)
     total = 0
 
     for i in range(iterations):
@@ -55,13 +52,42 @@ def simulate_avg(iterations=300000, factor=fish_utils_tests.TEST_FACTOR, sffi=0,
     print("Average with no buffs: ", control_avg)
     print("Flat increase per command on average: ", result_avg - control_avg)
 
-def simulate_user(iterations=500):
-    total = 0
+def simulate_user(test_username='joker_from_persona_5', iterations=12500):
+    test_username_2 = 'bill_nye'
+
+    fish_utils.fish_event(test_username)
+    fish_utils.fish_event(test_username_2)
+
+    pf = fish_utils.all_pfs.profile_from_name(test_username)
+    pf_2 = fish_utils.all_pfs.profile_from_name(test_username_2)
+    starting = pf.value if pf else 0
+    starting_2 = pf_2.value if pf_2 else 0
+    pf.last_fish_time = 0
+    pf_2.last_fish_time = 0
 
     for i in range(iterations):
-        fish_event('test_user3', bypass_fish_cd=True)
+        try:
+            event = fish_utils.fish_event(test_username)
+            pf.last_fish_time = 0
+            pf_2.last_fish_time = 0
+            event_2 = fish_utils.fish_event(test_username_2)
+            pf.last_fish_time = 0
+            pf_2.last_fish_time = 0
+        except ValueError:
+            iterations = i
+            break
 
+    gained = pf.value - starting
+    gained_2 = pf_2.value - starting_2
+
+    print(pf)
+    print(pf_2)
+
+    print(f'JOKER:\n===========GAINED: {gained}\nITERATIONS: {iterations}\nPER COMMAND: {gained / iterations}\n')
+    print(f'BILL NYE:\n===========GAINED: {gained_2}\nITERATIONS: {iterations}\nPER COMMAND: {gained_2 / iterations}')
     print("FACTOR APPLIED: ", fish_utils_tests.TEST_FACTOR, '\n')
 
+    fish_utils.all_pfs.write_data()
+
 if __name__ == '__main__':
-    simulate_avg(iterations=800000, sffi=3, boost=False)
+    simulate_user()

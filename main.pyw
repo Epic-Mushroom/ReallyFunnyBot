@@ -646,6 +646,11 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
 
         if find_word_bool(message.content, ['luck lb', 'rng lb', 'show luck', '.rnglb', '.lbrng', '.lbluck', '.lucklb']):
             embed = discord.Embed(title=f'{'(Testing Only) ' if not fish_utils.FISHING_ENABLED else ''}RNG Leaderboard',
+                                  description=fish_utils.luck_leaderboard_string())
+            await message.channel.send(embed=embed)
+
+        if find_word_bool(message.content, ['old luck lb', 'old rng lb', 'show luck old', '.oldrnglb', '.oldlbrng', '.oldlbluck', '.oldlucklb']):
+            embed = discord.Embed(title=f'{'(Testing Only) ' if not fish_utils.FISHING_ENABLED else ''}RNG Leaderboard (old)',
                                   description=fish_utils.leaderboard_string(sort_by_luck=True))
             await message.channel.send(embed=embed)
 

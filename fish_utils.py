@@ -36,11 +36,13 @@ class MaintenanceError(Exception):
     pass
 
 class Profile:
-    def __init__(self, username, value=0, last_fish_time=0, times_fished=0, items=None, specials=None, upgrades=None, **kwargs):
+    def __init__(self, username, value=0, last_fish_time=0, times_fished=0, new_moneys=0, new_catches=0, items=None, specials=None, upgrades=None, **kwargs):
         self.username = username
         self.value = value
         self.last_fish_time = last_fish_time
         self.times_fished = times_fished
+        self.new_moneys = new_moneys
+        self.new_catches = new_catches
         self.items = items if items is not None else []
         self.specials = specials if specials is not None else dict()
         self.upgrades = upgrades if upgrades is not None else []
@@ -277,7 +279,6 @@ def fishing_manifesto_factor(username: str) -> float:
     x_ = max(pf.value, 0) if pf is not None else 0
     m_ = max(profile.value for profile in all_pfs.real_profiles)
     old_formula = 21 * ((420 * x_ / m_) + 1) ** -0.2 - 4.45
-
     new_formula = percent_increase_to_factor(500 * ((420 * x_ / m_) + 1) ** -0.2 - 70)
 
     return old_formula
@@ -462,7 +463,8 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
             
         return result
 
-    higher_beings = ['epicmushroom.', 'test_user', 'test_user2', 'test_user3']
+    higher_beings = ['epicmushroom.', 'test_user', 'test_user2', 'test_user3', 'joker_from_persona_5',
+                     'bill_nye']
 
     if not username in higher_beings and FISHING_ENABLED == False:
         raise MaintenanceError
@@ -473,17 +475,17 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
         all_pfs.add_new_profile(pf)
 
     all_users = get_all_users()
-    is_test_user = username == 'test_user'
     original_user = username
     original_pf = pf
 
     last_fish_time = pf.last_fish_time
+    old_value = pf.value # to determine new luck lb stats
 
     penalty = 0
     stolen_amt = 0
     money_laundered = False
 
-    output = "(test_user)" if is_test_user else ""
+    output = ""
 
     # Flags and variables for handling specials/upgrades
     uncatchable: list[str | None] = [None] # list of fish names that can't be caught
@@ -510,7 +512,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
         pf = catfish_holder_pf
         bypass_fish_cd = True
 
-    if is_test_user or int(time.time()) - last_fish_time >= FISHING_COOLDOWN:
+    if int(time.time()) - last_fish_time >= FISHING_COOLDOWN:
         caught_fish = []
         caught_fish_count = catch_count(boost=caffeine_active)
 
@@ -526,11 +528,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
             temp_fish_name = None
 
             while temp_fish_name in uncatchable:
-                if is_test_user:
-                    temp_fish = go_fish(factor=max(factor * 9, 9), force_fish_name=force_fish_name)
-                else:
-                    temp_fish = go_fish(factor=factor, force_fish_name=force_fish_name)
-
+                temp_fish = go_fish(factor=factor, force_fish_name=force_fish_name)
                 temp_fish_name = temp_fish.name
 
             if midas_active:
@@ -563,17 +561,17 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
 
         for one_fish in caught_fish:
             output += rare_prefix(one_fish)
-            output += '⭐ First catch! ' if not all_pfs.fish_obtained(one_fish) else ''
+            output += '⭐ First catch! ' if one_fish.value >= 0 and not all_pfs.fish_obtained(one_fish) else ''
 
             if one_fish.name == 'Cop Fish' and not bypass_fish_cd:
                 penalty += random_range(19, 119)
-                output += f'You caught: **Cop Fish** ({penalty} seconds added to next cooldown)'
+                output += f'You caught: **{one_fish.name}** ({penalty} seconds added to next cooldown)'
 
             elif one_fish.name == 'Reminder to Go Outside' and not bypass_fish_cd:
                 penalty += 1800 - FISHING_COOLDOWN
                 output += f'You caught: **{one_fish.name}** (+{one_fish.value} moneys, can\'t fish for 30 minutes)'
 
-            elif one_fish.name == 'Catfish' and not is_test_user:
+            elif one_fish.name == 'Catfish':
                 output += f'You caught: **{one_fish.name}** (next 3 catches by other players will be transferred to you)'
                 pf.add_special('catfish', count=3)
 
@@ -646,7 +644,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
                 output += f'You caught: **{one_fish.name}** (this item is literally unobtainable)'
                 pf.add_special('no_negative_items', count=1)
     
-            elif one_fish.name == 'Jonklerfish' and not is_test_user:
+            elif one_fish.name == 'Jonklerfish':
                 penalty = random_range(44, 144)
                 output += (f'You caught: **{one_fish.name}** (+{one_fish.value} moneys, everyone\'s next cooldown ' +
                            f'set to {penalty + FISHING_COOLDOWN} seconds)')
@@ -654,7 +652,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
                 for user in all_users:
                     all_pfs.profile_from_name(user).add_cd(penalty=penalty)
     
-            elif one_fish.name == 'Mercenary Fish' and not is_test_user:
+            elif one_fish.name == 'Mercenary Fish':
                 output += f'You caught: **Mercenary Fish**'
     
                 for i in range(random_range(10 if double_mercenary else 5, 12 if double_mercenary else 6)):
@@ -671,7 +669,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
                     except ValueError:
                         output += f'\nBut there was nothing to steal'
     
-            elif one_fish.name == 'CS:GO Fish' and not is_test_user:
+            elif one_fish.name == 'CS:GO Fish':
                 output += f'You caught: **CS:GO Fish** ('
 
                 try:
@@ -728,6 +726,10 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
         # warning: if the initial bypass_fish_cd param was set to True, this will make it False regardless
         original_pf.add_cd(penalty=penalty)
 
+    # increments new_moneys and new_catches stats for the new luck lb
+    original_pf.new_catches += 1
+    original_pf.new_moneys += original_pf.value - old_value
+
     return output
 
 def go_fish(factor=1.0, force_fish_name: str=None) -> FishingItem:
@@ -754,16 +756,19 @@ def fish_soap(username: str, absolute=False):
     pf.items = [stx for stx in pf.items if stx.item.value >= 0]
 
 def steal_fish_from_random(thief_name: str, shoot=False) -> tuple[str, FishingItem]:
+    iterations = 0
     while True:
         weights_ = [pf.value for pf in all_pfs.real_profiles]
         player_pf: Profile = random.choices(all_pfs.real_profiles, weights=weights_, k=1)[0]
         player_name = player_pf.username
 
-        if len(all_pfs.real_profiles) <= 1 and not shoot:
+        if iterations >= 2000 or (len(all_pfs.real_profiles) <= 1 and not shoot):
             raise IndexError
 
         if player_name != thief_name or shoot or len(all_pfs.real_profiles) == 1:
             break
+
+        iterations += 1
 
     stealable = [stack for stack in player_pf.items if stack.item.name != 'Credit']
 
@@ -808,9 +813,9 @@ def universal_profile_to_string() -> str:
 def leaderboard_string(sort_by_luck=False) -> str:
     output = ''
     index = 1
-    unshown = 0
 
     list_of_profiles = [profile for profile in all_pfs.real_profiles if profile.times_fished > 0]
+    unshown = len(all_pfs.real_profiles) - len(list_of_profiles)
 
     if sort_by_luck:
         list_of_profiles.sort(key=lambda prof: sum([stack.count * stack.item.value for stack in prof.items if stack.item.name != 'Credit']) / prof.times_fished, reverse=True)
@@ -825,7 +830,7 @@ def leaderboard_string(sort_by_luck=False) -> str:
 
             if not sort_by_luck or profile.times_fished >= 10:
                 output += (f'{index}. {trophy}{profile.username}: **{(more_accurate_val if not sort_by_luck else round(more_accurate_val / profile.times_fished, 2))} '
-                           f'moneys{'/catch' if sort_by_luck else ''}**\n')
+                           f'moneys{'/item' if sort_by_luck else ''}**\n')
 
                 index += 1
             else:
@@ -838,6 +843,39 @@ def leaderboard_string(sort_by_luck=False) -> str:
 
     if unshown > 0:
         output += f'\n*{unshown} players not counted*'
+
+    return output
+
+def luck_leaderboard_string() -> str:
+    """
+    New rng leaderboard calculation using number of new catches instead of just total number of items
+    """
+    output = ''
+    index = 1
+
+    list_of_profiles = [profile for profile in all_pfs.real_profiles if profile.new_catches > 0]
+    unshown = len(all_pfs.real_profiles) - len(list_of_profiles)
+
+    list_of_profiles.sort(key=lambda prof: prof.new_moneys / prof.new_catches, reverse=True)
+
+    for profile in list_of_profiles:
+        try:
+            trophy = '🥇 ' if index == 1 else '🥈 ' if index == 2 else '🥉 ' if index == 3 else ''
+
+            if profile.new_catches >= 10:
+                output += f'{index}. {trophy}{profile.username}: **{round(profile.new_moneys / profile.new_catches, 2)} moneys/catch**\n'
+
+                index += 1
+            else:
+                unshown += 1
+
+        except KeyError:
+            pass
+        except ZeroDivisionError:
+            pass
+
+    if unshown > 0:
+        output += f'\n*{unshown} players not shown*'
 
     return output
 
