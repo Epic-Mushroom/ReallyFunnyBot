@@ -596,16 +596,6 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
                 await server_instance.reply_to_message(message, fish_utils._manual_data_changes())
                 fish_utils.all_pfs.write_data()
 
-            elif message.content.startswith('admin:manifesto'):
-                # returns the fishing manifesto factor and percent boost for a given user
-                parts = message.content.split(' ')
-                try:
-                    factor = fish_utils.fishing_manifesto_factor(parts[-1])
-                    await server_instance.reply_to_message(message, f'{factor} ('
-                                                                    f'{fish_utils.factor_to_percent_increase(factor):.1f}% boost on avg)', bypass_cd=True)
-                except AttributeError:
-                    await server_instance.reply_to_message(message, "That user (probably) doesn't exist", bypass_cd=True)
-
             elif message.content.startswith('admin:give'):
                 # ONLY USE THIS IF FISH IS UNFAIRLY LOST/GAINED BECAUSE OF BUGS
                 # format: "admin:give "epicmushroom." "God" 3"
@@ -704,6 +694,20 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
                 await message.reply(f'You don\'t have the prerequisite upgrades owned!')
             except AttributeError:
                 await message.reply(f'That\'s not a valid ID')
+
+        if find_word_bool(message.content, ['show manifesto', 'go manifesto']):
+            # returns the fishing manifesto factor and percent boost for a given user
+            parts = message.content.split(' ')
+            try:
+                factor = fish_utils.fishing_manifesto_factor(parts[-1])
+                if fish_utils.all_pfs.profile_from_name(parts[-1]):
+                    await server_instance.reply_to_message(message, f'{factor} ('
+                                                                    f'{fish_utils.factor_to_percent_increase(factor):.1f}% boost on avg)',
+                                                           bypass_cd=True)
+                else:
+                    raise AttributeError
+            except AttributeError:
+                await server_instance.reply_to_message(message, "That user (probably) doesn't exist", bypass_cd=True)
 
     if message.content.startswith('!spam '):
         parts = message.content.split(' ')
