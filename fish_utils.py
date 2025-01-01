@@ -850,7 +850,7 @@ def luck_leaderboard_string() -> str:
     """
     New rng leaderboard calculation using number of new catches instead of just total number of items
     Doesn't get affected when you receive fish via catfish/mr beast, or when you get items removed
-    from mercenary or cs:go
+    from mercenary or cs:go, or buying items from the shop
     """
     output = ''
     index = 1
