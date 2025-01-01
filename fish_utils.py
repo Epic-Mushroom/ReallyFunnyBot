@@ -393,7 +393,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
             elif active_special == 'unregistered_firearm':
                 force_fish_name = 'CS:GO Fish'
             elif active_special == 'testing_only':
-                force_fish_name = random.choice(['Midasfish'])
+                force_fish_name = random.choice(['Reminder to Go Outside'])
             elif active_special == 'midasfish':
                 midas_active = True
             elif active_special == 'bribe_fish':
@@ -560,8 +560,12 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
 
             if one_fish.name == 'Cop Fish' and not bypass_fish_cd:
                 penalty += random_num + 19
-                output += f'You caught: **Cop Fish** ({random_num + 19} seconds added to next cooldown)'
-    
+                output += f'You caught: **Cop Fish** ({penalty} seconds added to next cooldown)'
+
+            elif one_fish.name == 'Reminder to Go Outside' and not bypass_fish_cd:
+                penalty += 1800 - FISHING_COOLDOWN
+                output += f'You caught: **{one_fish.name}** (+{one_fish.value} moneys, can\'t fish for 30 minutes)'
+
             elif one_fish.name == 'Catfish' and not is_test_user:
                 output += f'You caught: **{one_fish.name}** (next 3 catches by other players will be transferred to you)'
                 pf.add_special('catfish', count=3)
