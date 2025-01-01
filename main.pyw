@@ -414,7 +414,7 @@ async def on_message(message):
         else:
             await server_instance.reply_to_message(message, 'Nah I don\'t feel like it', bypass_cd=True)
 
-    if "HALOOLY BRIKTAY" == message.content:
+    if "HALOOLYH BRIKTAY" == message.content:
         await server_instance.reply_to_message(message, message.content)
 
     if find_word_bool(message.content, ['ur mom', 'your mom', 'ur dad', 'ur gae', 'ur gay', "you're gay"]):
