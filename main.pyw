@@ -518,7 +518,7 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
     if find_word_bool(message.content, ['🐟', '🎣', '🐠', '🐡', 'asdfghjkl', 'go phish', 'go fish', 'go gamble', 'jobless behavior', 'le fishe',
                                         'quiero comer pescado', 'lets go gambling', 'let\'s go gambling',
                                         '.fish', 'let’s go gambling', '><>', '去钓鱼', '<><', '2+2', 'godfisa',
-                                        'zxcvbnm', 'qwertyuiop']):
+                                        'zxcvbnm', 'qwertyuiop', 'go ghoti']):
         if random_range(1, 1500) == 1:
             jumpscare = await message.channel.send('https://tenor.com/view/oceanmam-fnaf-jumpscare-gif-22911379')
             await asyncio.sleep(0.31)
