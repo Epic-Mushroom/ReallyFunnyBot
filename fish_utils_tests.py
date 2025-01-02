@@ -1,7 +1,7 @@
 import fish_utils
 import unittest
 
-TEST_FACTOR = fish_utils.percent_increase_to_factor(0)
+TEST_FACTOR = fish_utils.percent_increase_to_factor(167)
 
 def get_average_value(factor=1.0) -> float:
     fish_items = fish_utils.fishing_items[:]
@@ -11,9 +11,9 @@ def get_average_value(factor=1.0) -> float:
     a_sum = sum(weights[i] * fish_items[i].value for i in range(len(fish_items)))
     return a_sum / weight_sum
 
-def get_rare_item_chance(factor=1.0) -> float:
+def get_rare_item_chance(factor=TEST_FACTOR) -> float:
     fish_items = fish_utils.fishing_items[:]
-    weights = fish_utils.manipulated_weights(factor=TEST_FACTOR)
+    weights = fish_utils.manipulated_weights(factor=factor)
     weight_sum = sum(weights)
 
     temp_chance_sum = 0

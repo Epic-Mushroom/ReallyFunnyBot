@@ -605,8 +605,8 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
 
             elif one_fish.name == 'Eldritch Beings':
                 output += (
-                    f'You caught: **{one_fish.name}** (cursed for 8 catches)')
-                original_pf.add_special('curse', count=8)
+                    f'You caught: **{one_fish.name}** (cursed for 6 catches)')
+                original_pf.add_special('curse', count=6)
 
             elif one_fish.name == 'Caffeinated Worms':
                 output += (
