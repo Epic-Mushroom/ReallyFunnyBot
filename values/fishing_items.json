@@ -62,27 +62,32 @@
     {
         "name": "Reminder to Go Outside",
         "value": 26999,
-        "weight": 0.03
+        "weight": 0.037
     },
     {
         "name": "Ohlone Rejection Letter",
         "value": 5555,
-        "weight": 0.09
+        "weight": 0.12
     },
     {
         "name": "How Unfortunate",
         "value": -1000,
-        "weight": 0.1
+        "weight": 0.15
     },
     {
         "name": "Rainbow Crystal Meth",
         "value": 700,
-        "weight": 0.2
+        "weight": 0.23
+    },
+    {
+        "name": "Eldritch Beings",
+        "value": 0,
+        "weight": 0.25
     },
     {
         "name": "Gambling Addiction Diagnosis",
         "value": 1999,
-        "weight": 0.3
+        "weight": 0.4
     },
     {
         "name": "Adderall (1840 Limited Edition)",

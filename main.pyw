@@ -312,8 +312,8 @@ async def on_message(message):
     is_admin = message.author.id == EPIC_MUSHROOM_ID
 
     # Makes the bot only respond in dms/my server if ADMIN_ONLY is enabled
-    is_testing = not ADMIN_ONLY or (is_admin and (server_instance.server_name is None or server_instance.get_server().id == MY_GUILD))
-    if not is_testing:
+    can_proceed = not ADMIN_ONLY or (is_admin and (server_instance.server_name is None or server_instance.get_server().id == MY_GUILD))
+    if not can_proceed:
         print("Non-admin message detected while in testing mode")
         return
 
@@ -529,6 +529,9 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
             try:
                 content = f'{'[TESTING ONLY] ' if not fish_utils.FISHING_ENABLED else ''}{fish_utils.fish_event(message.author.name)}'
                 await send(content, reply=True, bypass_cd=True, fishing=True)
+
+                if ADMIN_ONLY and is_admin:
+                    fish_utils.all_pfs.profile_from_name(message.author.name).last_fish_time = 0
             except fish_utils.OnFishingCooldownError:
                 await server_instance.reply_to_message(message, f"You're on fishing cooldown (" +
                                                                 f"{fish_utils.FISHING_COOLDOWN - (current_time - fish_utils.all_pfs.profile_from_name(message.author.name).last_fish_time)} seconds until you can fish again)", bypass_cd=True, fishing=True)

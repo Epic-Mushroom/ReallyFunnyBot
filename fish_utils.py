@@ -281,7 +281,7 @@ def fishing_manifesto_factor(username: str) -> float:
     old_formula = 21 * ((420 * x_ / m_) + 1) ** -0.2 - 4.45
     new_formula = percent_increase_to_factor(500 * ((420 * x_ / m_) + 1) ** -0.2 - 70)
 
-    return old_formula
+    return new_formula
 
 def initialize_fishing_items() -> list[FishingItem]:
     result = []
@@ -347,7 +347,8 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
                   ['no_negative_items'], # i wonder what this does
                   ['double_items'], # i wonder what this does
                   ['8x_items'],
-                  ['midasfish', 'drug_magnet']] # x% chance to get items from a group of items
+                  ['midasfish', 'drug_magnet'], # x% chance to get items from a group of items
+                  ['curse']]
 
         user_specials = get_active_specials(username)
         activated_specials = []
@@ -365,6 +366,10 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
         # catfish and similar powerups cannot be used up when its holder is the one fishing
         activated_specials[0] = None
 
+        if activated_specials[10] is not None:
+            # curse cannot use up mrbeast
+            activated_specials[1] = None
+
         if activated_specials[4] is not None:
             # force fish powerups cannot use up powerups of another kind unless it is mrbeast, caffeine, or double/8x items
             activated_specials[2] = None
@@ -373,14 +378,15 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
             activated_specials[9] = None
 
         if other_profile_with_catfish():
-            # mrbeast fish and bribe fish cannot be used if the user is being catfished
+            # mrbeast fish, bribe fish, and curse cannot be used if the user is being catfished
             activated_specials[1] = None
             activated_specials[3] = None
+            activated_specials[10] = None
 
         return activated_specials
 
     def handle_specials() -> None:
-        nonlocal factor, force_fish_name, caffeine_active, pf, bypass_fish_cd, double_items, midas_active, octuple_items, drug_magnet_active
+        nonlocal factor, force_fish_name, caffeine_active, pf, bypass_fish_cd, double_items, midas_active, octuple_items, drug_magnet_active, curse_active
 
         for active_special in active_specials:
             if active_special == 'mrbeast_fish':
@@ -389,7 +395,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
             elif active_special == 'fishing_manifesto':
                 factor = fishing_manifesto_factor(original_pf.username)
             elif active_special == 'nemo' or active_special == 'luck_boost':
-                factor = percent_increase_to_factor(200)
+                factor = percent_increase_to_factor(167)
             elif active_special == 'mogfish':
                 factor = 0.04
             elif active_special == 'mercenary_contract':
@@ -397,11 +403,13 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
             elif active_special == 'unregistered_firearm':
                 force_fish_name = 'CS:GO Fish'
             elif active_special == 'testing_only':
-                force_fish_name = random.choice(['Russia'])
+                force_fish_name = random.choice(['Eldritch Beings'])
             elif active_special == 'midasfish':
                 midas_active = True
             elif active_special == 'drug_magnet':
                 drug_magnet_active = True
+            elif active_special == 'curse':
+                curse_active = True
             elif active_special == 'bribe_fish':
                 uncatchable.append('Cop Fish')
             elif active_special == 'no_negative_items':
@@ -433,9 +441,14 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
         insanely_lucky = random_num <= 2  # 0.4% chance
         super_lucky = random_num <= 8  # 1.6% chance
         lucky = random_num <= (140 if boost else 35)  # 7% chance without boost, 28% with
-        unlucky = random_num >= (471 + 10 * sffi_tiers if boost else 456 + 15 * sffi_tiers)
-        # with boost: 6%, 4%, 2%, 0% for 0, 1, 2, 3 sffi tiers
-        # without boost: 9%, 6%, 3%, 0% for 0, 1, 2, 3 sffi tiers
+        if curse_active:
+            unlucky = random_num >= (301 + 25 * sffi_tiers if boost else 251 + 25 * sffi_tiers)
+            # with boost: 40%, 35%, 30%, 25% for 0, 1, 2, 3 sffi tiers
+            # without boost: 50%, 45%, 40%, 35% for 0, 1, 2, 3 sffi tiers
+        else:
+            unlucky = random_num >= (471 + 10 * sffi_tiers if boost else 456 + 15 * sffi_tiers)
+            # with boost: 6%, 4%, 2%, 0% for 0, 1, 2, 3 sffi tiers
+            # without boost: 9%, 6%, 3%, 0% for 0, 1, 2, 3 sffi tiers
 
         if insanely_lucky:
             for j in range(4):
@@ -446,9 +459,9 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
         elif lucky:
             count += catch_count()
         elif unlucky:
-            count -= 1
+            count -= 999 if curse_active else 1
 
-        return count
+        return max(count, 0)
     
     def rare_prefix(fishing_item: FishingItem) -> str:
         result = ''
@@ -492,6 +505,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
     caffeine_active = False
     midas_active = False
     drug_magnet_active = False
+    curse_active = False
     double_items = False
     octuple_items = False
     double_mercenary = False
@@ -557,7 +571,8 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
                 'the fish grew wings and flew away'
             ]
 
-            output += f'You caught nothing ({random.choice(unlucky_messages)})\n'
+            chosen_msg = random.choice(unlucky_messages) if not curse_active else '**you were cursed by Eldritch beings**'
+            output += f'You caught nothing ({chosen_msg})\n'
 
         for one_fish in caught_fish:
             output += rare_prefix(one_fish)
@@ -584,6 +599,11 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
                 output += (
                     f'You caught: **{one_fish.name}** (next 2 catches by you will be donated to a random player)')
                 pf.add_special('mrbeast_fish', count=2)
+
+            elif one_fish.name == 'Eldritch Beings':
+                output += (
+                    f'You caught: **{one_fish.name}** (cursed for 10 catches)')
+                pf.add_special('curse', count=10)
 
             elif one_fish.name == 'Caffeinated Worms':
                 output += (
@@ -711,8 +731,26 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
     if ml_tiers > 0:
         if random_range(1, 3 - ml_tiers) == 1:
             pf.add_fish(get_fish_from_name('Credit'), 10)
-            output += f'\n*Money Laundering: +10 bonus moneys*'
+            output += f'\n*+10 moneys (Money Laundering bonus)*'
             money_laundered = True
+
+    if curse_active:
+        if random_range(1, 100) <= 2:
+            money_to_remove = min(15000, int(pf.value * 0.1))
+            pf.add_fish(get_fish_from_name('Credit'), 0 - money_to_remove)
+            output += f'\n*Oops! Lost {money_to_remove} moneys (Curse)*'
+
+            if caught_fish_count == 0:
+                pf.add_special('curse', count=-1)
+
+        elif random_range(1, 100) <= 2:
+            stack_to_remove = random.choice([stack for stack in pf.items if stack.item.value > 0 and stack.item.name != "Credit"])
+            amount_to_remove = stack_to_remove.count
+            pf.add_fish(stack_to_remove.item, 0 - amount_to_remove)
+            output += f'\n*Oops! Lost all {amount_to_remove} {stack_to_remove.item.name} in your inventory (Curse)*'
+
+            if caught_fish_count == 0:
+                pf.add_special('curse', count=-1)
 
     # adds cooldown to the original user if they are being catfished or have donated
     if pf != original_pf:

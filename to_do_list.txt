@@ -1,8 +1,6 @@
 add some sort of 'effective value' metric to each fish
 add great depressionfish (taxes)
-add "Joever" (some really bad effect)
 add a fish that makes the next person to mistype go fish get -200 moneys
-add eldritch beings (gives a lot of money but guarantees negative items)
 
 work on shop:
 - add kris tyson upgrade (immune to catching mrbeast fish)
