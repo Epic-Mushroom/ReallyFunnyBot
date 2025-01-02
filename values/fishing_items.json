@@ -95,15 +95,14 @@
         "weight": 0.6
     },
     {
+        "name": "Absolute Value Fish",
+        "value": 0,
+        "weight": 0.7
+    },
+    {
         "name": "Bolivia",
         "value": 998,
         "weight": 0.8
-    },
-    {
-        "name": "Absolute Value Fish",
-        "value": 0,
-        "weight": 0.9,
-        "effective_value": 200
     },
     {
         "name": "Russia",
@@ -146,13 +145,13 @@
         "weight": 1.4
     },
     {
-        "name": "trollface.png",
-        "value": -100,
-        "weight": 1.55
-    },
-    {
         "name": "Fish Soap",
         "value": 0,
+        "weight": 1.4
+    },
+    {
+        "name": "trollface.png",
+        "value": -100,
         "weight": 1.55
     },
     {
