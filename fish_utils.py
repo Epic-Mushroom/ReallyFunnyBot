@@ -581,8 +581,9 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
             output += '⭐ First catch! ' if one_fish.value >= 0 and not all_pfs.fish_obtained(one_fish) else ''
 
             if one_fish.name == 'Cop Fish' and not bypass_fish_cd:
-                penalty += random_range(19, 119)
-                output += f'You caught: **{one_fish.name}** ({penalty} seconds added to next cooldown)'
+                temp_rand = random_range(19, 119)
+                penalty += temp_rand
+                output += f'You caught: **{one_fish.name}** ({temp_rand} seconds added to next cooldown)'
 
             elif one_fish.name == 'Reminder to Go Outside' and not bypass_fish_cd:
                 penalty += 1800 - FISHING_COOLDOWN
@@ -605,7 +606,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
             elif one_fish.name == 'Eldritch Beings':
                 output += (
                     f'You caught: **{one_fish.name}** (cursed for 8 catches)')
-                pf.add_special('curse', count=8)
+                original_pf.add_special('curse', count=8)
 
             elif one_fish.name == 'Caffeinated Worms':
                 output += (
@@ -711,7 +712,10 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
                 output += f'You caught: **{one_fish.name}** (worth {one_fish.value} moneys)'
 
             output += '\n'
-            pf.add_fish(fish=one_fish)
+            if one_fish.name != 'Eldritch Beings':
+                pf.add_fish(fish=one_fish)
+            else:
+                original_pf.add_fish(fish=one_fish)
 
     else:
         raise OnFishingCooldownError
