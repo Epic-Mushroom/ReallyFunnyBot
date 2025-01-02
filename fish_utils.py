@@ -855,7 +855,7 @@ def leaderboard_string(sort_by_luck=False) -> str:
     index = 1
 
     list_of_profiles = [profile for profile in all_pfs.real_profiles if profile.times_fished > 0]
-    unshown = len(all_pfs.real_profiles) - len(list_of_profiles)
+    unshown = len(all_pfs.profiles) - len(list_of_profiles)
 
     if sort_by_luck:
         list_of_profiles.sort(key=lambda prof: sum([stack.count * stack.item.value for stack in prof.items if stack.item.name != 'Credit']) / prof.times_fished, reverse=True)
@@ -896,7 +896,7 @@ def luck_leaderboard_string() -> str:
     index = 1
 
     list_of_profiles = [profile for profile in all_pfs.real_profiles if profile.new_catches > 0]
-    unshown = len(all_pfs.real_profiles) - len(list_of_profiles)
+    unshown = len(all_pfs.profiles) - len(list_of_profiles)
 
     list_of_profiles.sort(key=lambda prof: prof.new_moneys / prof.new_catches, reverse=True)
 
