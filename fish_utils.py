@@ -611,8 +611,8 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
                 pf.add_special('caffeine_bait', count=60)
 
             elif one_fish.name == 'Mercenary Contract':
-                output += f'You caught: **{one_fish.name}** (next 4 catches are guaranteed to include Mercenary Fish)'
-                pf.add_special('mercenary_contract', count=4)
+                output += f'You caught: **{one_fish.name}** (next 3 catches are guaranteed to include Mercenary Fish)'
+                pf.add_special('mercenary_contract', count=3)
 
             elif one_fish.name == 'Unregistered Firearm':
                 output += f'You caught: **{one_fish.name}** (+177.6 moneys, next 3 catches are guaranteed to include CS:GO Fish)'
