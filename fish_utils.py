@@ -131,9 +131,11 @@ class Profile:
 
 class AllProfiles:
     def __init__(self):
+        banned = ['test_user', 'test_user2', 'StickyBot', 'Reminder']
         list_of_profiles = fishing_database()
+
         self.profiles = [Profile(**pf) for pf in list_of_profiles]
-        self.real_profiles = [pf for pf in self.profiles if not pf.username.startswith('test_user')]
+        self.real_profiles = [pf for pf in self.profiles if not pf.username in banned]
 
         for pf in self.profiles:
             pf.upgrades.sort()
@@ -329,7 +331,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
         pass
 
     def other_profile_with_catfish() -> Profile | None:
-        return next((prof for prof in all_pfs.profiles if 'catfish' in prof.specials.keys() and prof.specials['catfish'] > 0 and prof.username != original_user), None)
+        return next((prof for prof in all_pfs.real_profiles if 'catfish' in prof.specials.keys() and prof.specials['catfish'] > 0 and prof.username != original_user), None)
 
     def find_random_user_to_donate_to() -> Profile:
         usable_profiles = [prof for prof in all_pfs.real_profiles if prof.username != original_user]
