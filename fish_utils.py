@@ -630,7 +630,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
                 pf.add_special('midasfish', count=1)
 
             elif one_fish.name == 'Russia':
-                output += f'You caught: **{one_fish.name}** (+{one_fish.value}, next 2 catches are more likely to include a "drug" item)'
+                output += f'You caught: **{one_fish.name}** (+{one_fish.value} moneys, next 2 catches are more likely to include a "drug" item)'
                 pf.add_special('drug_magnet', count=2)
 
             elif one_fish.name == 'Blue Whale':
@@ -805,6 +805,7 @@ def steal_fish_from_random(thief_name: str, shoot=False) -> tuple[str, FishingIt
         weights_ = [pf.value for pf in all_pfs.real_profiles]
         player_pf: Profile = random.choices(all_pfs.real_profiles, weights=weights_, k=1)[0]
         player_name = player_pf.username
+
 
         if iterations >= 2000 or (len(all_pfs.real_profiles) <= 1 and not shoot):
             raise IndexError
