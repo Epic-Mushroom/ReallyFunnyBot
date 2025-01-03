@@ -180,6 +180,11 @@
         "weight": 1.6
     },
     {
+        "name": "Astro Fuel",
+        "value": 0,
+        "weight": 1.6
+    },
+    {
         "name": "Boops boops",
         "value": 160,
         "weight": 1.7
@@ -210,6 +215,11 @@
         "weight": 2.6
     },
     {
+        "name": "Astro Gruel",
+        "value": 0,
+        "weight": 3
+    },
+    {
         "name": "Jonklerfish",
         "value": 120,
         "weight": 3.5
@@ -227,7 +237,7 @@
     {
         "name": "Catfish",
         "value": 0,
-        "weight": 6
+        "weight": 5.5
     },
     {
         "name": "Fishing Manifesto",

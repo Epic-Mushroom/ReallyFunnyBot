@@ -57,10 +57,7 @@ class Profile:
             self.items = stack_list
 
         for key, value in kwargs.items():
-            if key == 'last_fish_time':
-                self.next_fish_time = value + FISHING_COOLDOWN
-            else:
-                setattr(self, key, value)
+            setattr(self, key, value)
 
     def __str__(self):
         output: str = f"\n"
@@ -100,7 +97,7 @@ class Profile:
         return output
 
     def add_cd(self, amount=FISHING_COOLDOWN):
-        self.next_fish_time = int(time.time()) + amount
+        self.next_fish_time = time.time() + amount
 
     def add_fish(self, fish, count=1):
         fish_stack = next((stack for stack in self.items if stack.item.name == fish.name), None)
@@ -353,7 +350,8 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
                   ['double_items'], # i wonder what this does
                   ['8x_items'],
                   ['midasfish', 'drug_magnet'], # x% chance to get items from a group of items
-                  ['curse']]
+                  ['curse'],
+                  ['astro_gruel', 'astro_fuel']] # modifies cooldown
 
         user_specials = get_active_specials(username)
         activated_specials = []
@@ -376,7 +374,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
             activated_specials[1] = None
 
         if activated_specials[4] is not None:
-            # force fish powerups cannot use up powerups of another kind unless it is mrbeast, caffeine, or double/8x items
+            # force fish powerups cannot use up powerups of another kind that modify the type of item produced
             activated_specials[2] = None
             activated_specials[3] = None
             activated_specials[6] = None
@@ -391,7 +389,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
         return activated_specials
 
     def handle_specials() -> None:
-        nonlocal factor, force_fish_name, caffeine_active, pf, bypass_fish_cd, double_items, midas_active, octuple_items, drug_magnet_active, curse_active
+        nonlocal cd, factor, force_fish_name, caffeine_active, pf, bypass_fish_cd, double_items, midas_active, octuple_items, drug_magnet_active, curse_active
 
         for active_special in active_specials:
             if active_special == 'mrbeast_fish':
@@ -408,7 +406,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
             elif active_special == 'unregistered_firearm':
                 force_fish_name = 'CS:GO Fish'
             elif active_special == 'testing_only':
-                force_fish_name = random.choice(['Small Fry'])
+                force_fish_name = random.choice(['Astro Fuel'])
             elif active_special == 'midasfish':
                 midas_active = True
             elif active_special == 'drug_magnet':
@@ -425,6 +423,10 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
                 double_items = True
             elif active_special == '8x_items':
                 octuple_items = True
+            elif active_special == 'astro_gruel':
+                cd *= 2
+            elif active_special == 'astro_fuel':
+                cd = 1
 
     def handle_upgrades() -> None:
         nonlocal sffi_tiers, double_mercenary, ml_tiers
@@ -532,7 +534,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
         pf = catfish_holder_pf
         bypass_fish_cd = True
 
-    if int(time.time()) - next_fish_time >= 0:
+    if time.time() - next_fish_time >= 0:
         caught_fish = []
         caught_fish_count = catch_count(boost=caffeine_active)
 
@@ -620,6 +622,14 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
             elif one_fish.name == 'Mercenary Contract':
                 output += f'You caught: **{one_fish.name}** (next 3 catches are guaranteed to include Mercenary Fish)'
                 pf.add_special('mercenary_contract', count=3)
+
+            elif one_fish.name == 'Astro Gruel':
+                output += f'You caught: **{one_fish.name}** (cooldown doubled for next 10 catches)'
+                pf.add_special('astro_gruel', count=10)
+
+            elif one_fish.name == 'Astro Fuel':
+                output += f'You caught: **{one_fish.name}** (cooldown set to 1 second for next 10 catches)'
+                pf.add_special('astro_fuel', count=10)
 
             elif one_fish.name == 'Unregistered Firearm':
                 output += f'You caught: **{one_fish.name}** (+177.6 moneys, next 3 catches are guaranteed to include CS:GO Fish)'
@@ -722,7 +732,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
                 original_pf.add_fish(fish=one_fish)
 
     else:
-        return f"You're on fishing cooldown ({next_fish_time - int(time.time())} seconds until you can fish again)"
+        return f"You're on fishing cooldown ({int(next_fish_time - time.time())} seconds until you can fish again)"
 
     # adds cooldown to the user, unless the user is being catfished or have donated
     original_pf.add_cd(cd + penalty)

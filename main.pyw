@@ -544,18 +544,7 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
 
     if message.content.startswith('admin:') and len(message.content) > 6:
         if is_admin:
-            if message.content.startswith('admin:fishtest'):
-                parts = message.content.split(' ')
-                for l in range(min(int(parts[-1] if len(parts) > 1 else 1), 12)):
-                    try:
-                        await server_instance.send_message(message, fish_utils.fish_event('test_user', bypass_fish_cd=True),
-                                                           bypass_cd=True)
-                    except fish_utils.OnFishingCooldownError:
-                        await server_instance.reply_to_message(message, f"You're on fishing cooldown (" +
-                                                                        f"{fish_utils.FISHING_COOLDOWN - (current_time - fish_utils.all_pfs.profile_from_name(message.author.name).last_fish_time)}"
-                                                                        f"seconds until you can fish again)", bypass_cd=True)
-
-            elif message.content.startswith('admin:switch'):
+            if message.content.startswith('admin:switch'):
                 if fish_utils.switch_fishing():
                     await server_instance.send_message(message, 'Fishing sim turned on. let the brainrot begin', fishing=True)
                 else:
@@ -571,11 +560,6 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
                     await server_instance.reply_to_message(message, 'Backup successful', fishing=True)
                 except Exception as e:
                     await server_instance.reply_to_message(message, f'bro you done fucked smth up ({e})')
-
-            elif message.content.startswith('admin:commitbackups'):
-                # backup_utils.commit_and_push_backups()
-                # await server_instance.reply_to_message(message, 'Backups sent to github... probably')
-                await server_instance.reply_to_message(message, 'this command is disabled', bypass_cd=True)
 
             elif message.content.startswith('admin:mutebot '):
                 parts = message.content.split(' ')
