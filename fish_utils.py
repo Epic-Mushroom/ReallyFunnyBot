@@ -66,6 +66,8 @@ class Profile:
 
         display_stacks = [stack for stack in self.items if stack.item.name != 'Credit' and stack.count > 0]
 
+        output += '**Items:**\n' if len(display_stacks) > 0 else ''
+
         for stack in display_stacks:
             if stack.item.weight <= WEIGHT_CUTOFF:
                 output += f"**{stack.count}x** *{stack.item.name}*"
@@ -331,7 +333,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
         pass
 
     def other_profile_with_catfish() -> Profile | None:
-        return next((prof for prof in all_pfs.real_profiles if 'catfish' in prof.specials.keys() and prof.specials['catfish'] > 0 and prof.username != original_user), None)
+        return None if catfish_immunity else next((prof for prof in all_pfs.real_profiles if 'catfish' in prof.specials.keys() and prof.specials['catfish'] > 0 and prof.username != original_user), None)
 
     def find_random_user_to_donate_to() -> Profile:
         usable_profiles = [prof for prof in all_pfs.real_profiles if prof.username != original_user]
@@ -406,7 +408,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
             elif active_special == 'unregistered_firearm':
                 force_fish_name = 'CS:GO Fish'
             elif active_special == 'testing_only':
-                force_fish_name = random.choice(['Astro Fuel'])
+                force_fish_name = random.choice(['Catfish'])
             elif active_special == 'midasfish':
                 midas_active = True
             elif active_special == 'drug_magnet':
@@ -517,6 +519,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
     double_items = False
     octuple_items = False
     double_mercenary = False
+    catfish_immunity = False
     sffi_tiers = 0
     ml_tiers = 0
 
@@ -533,6 +536,11 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
         tax_collector = None
         pf = catfish_holder_pf
         bypass_fish_cd = True
+
+    # caps catfish at 9
+    if 'catfish' in pf.get_active_specials() and pf.specials['catfish'] >= 9:
+        print(f"catfish cap reached for {pf.username}")
+        uncatchable.append('Catfish')
 
     if time.time() - next_fish_time >= 0:
         caught_fish = []
@@ -1031,7 +1039,8 @@ if __name__ == '__main__':
                 iterations = int(parts[1])
 
             for i in range(iterations):
-                print(fish_event('test_user2'))
+                print(fish_event('epicmushroom.'))
+                all_pfs.write_data()
         elif user_input == 'fishobtest':
             test_items = ['Credit', 'Ohlone Rejection Letter', 'Boops boops', 'Floating Wood EX', 'Blue Whale']
 

@@ -1,7 +1,7 @@
 add some sort of 'effective value' metric to each fish
 add great depressionfish (taxes)
 add a fish that makes the next person to mistype go fish get -200 moneys
-add astro fuel (decreases cd temporarily)
+add susfishious (???)
 
 work on shop:
 - add kris tyson upgrade (immune to catching mrbeast fish)
