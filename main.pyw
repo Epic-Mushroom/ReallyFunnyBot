@@ -527,14 +527,11 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
 
         if not message.channel.id in [GENERAL_CHANNEL_ID_1, GENERAL_CHANNEL_ID_2, GENERAL_CHANNEL_ID_3]:
             try:
-                if ADMIN_ONLY and is_admin:
-                    fish_utils.all_pfs.profile_from_name(message.author.name).last_fish_time = 0
+                # if ADMIN_ONLY and is_admin:
+                #     fish_utils.all_pfs.profile_from_name(message.author.name).last_fish_time = 0
 
                 content = f'{'[TESTING ONLY] ' if not fish_utils.FISHING_ENABLED else ''}{fish_utils.fish_event(message.author.name)}'
                 await send(content, reply=True, bypass_cd=True, fishing=True)
-            except fish_utils.OnFishingCooldownError:
-                await server_instance.reply_to_message(message, f"You're on fishing cooldown (" +
-                                                                f"{fish_utils.FISHING_COOLDOWN - (current_time - fish_utils.all_pfs.profile_from_name(message.author.name).last_fish_time)} seconds until you can fish again)", bypass_cd=True, fishing=True)
 
             except fish_utils.MaintenanceError:
                 await server_instance.reply_to_message(message, f'fishing is currently disabled, go play minecraft in the meantime or some shit', bypass_cd=True, fishing=True)

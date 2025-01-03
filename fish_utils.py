@@ -36,10 +36,10 @@ class MaintenanceError(Exception):
     pass
 
 class Profile:
-    def __init__(self, username, value=0, last_fish_time=0, times_fished=0, new_moneys=0, new_catches=0, items=None, specials=None, upgrades=None, **kwargs):
+    def __init__(self, username, value=0, next_fish_time=0, times_fished=0, new_moneys=0, new_catches=0, items=None, specials=None, upgrades=None, **kwargs):
         self.username = username
         self.value = value
-        self.last_fish_time = last_fish_time
+        self.next_fish_time = next_fish_time
         self.times_fished = times_fished
         self.new_moneys = new_moneys
         self.new_catches = new_catches
@@ -57,7 +57,10 @@ class Profile:
             self.items = stack_list
 
         for key, value in kwargs.items():
-            setattr(self, key, value)
+            if key == 'last_fish_time':
+                self.next_fish_time = value + FISHING_COOLDOWN
+            else:
+                setattr(self, key, value)
 
     def __str__(self):
         output: str = f"\n"
@@ -96,8 +99,8 @@ class Profile:
 
         return output
 
-    def add_cd(self, penalty=0):
-        self.last_fish_time = int(time.time()) + penalty
+    def add_cd(self, amount=FISHING_COOLDOWN):
+        self.next_fish_time = int(time.time()) + amount
 
     def add_fish(self, fish, count=1):
         fish_stack = next((stack for stack in self.items if stack.item.name == fish.name), None)
@@ -405,7 +408,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
             elif active_special == 'unregistered_firearm':
                 force_fish_name = 'CS:GO Fish'
             elif active_special == 'testing_only':
-                force_fish_name = random.choice(['Eldritch Beings'])
+                force_fish_name = random.choice(['Small Fry'])
             elif active_special == 'midasfish':
                 midas_active = True
             elif active_special == 'drug_magnet':
@@ -493,9 +496,10 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
     original_user = username
     original_pf = pf
 
-    last_fish_time = pf.last_fish_time
+    next_fish_time = pf.next_fish_time
     old_value = pf.value # to determine new luck lb stats
 
+    cd = FISHING_COOLDOWN
     penalty = 0
     stolen_amt = 0
     money_laundered = False
@@ -528,7 +532,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
         pf = catfish_holder_pf
         bypass_fish_cd = True
 
-    if int(time.time()) - last_fish_time >= FISHING_COOLDOWN:
+    if int(time.time()) - next_fish_time >= 0:
         caught_fish = []
         caught_fish_count = catch_count(boost=caffeine_active)
 
@@ -586,7 +590,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
                 output += f'You caught: **{one_fish.name}** ({temp_rand} seconds added to next cooldown)'
 
             elif one_fish.name == 'Reminder to Go Outside' and not bypass_fish_cd:
-                penalty += 1800 - FISHING_COOLDOWN
+                penalty += 1800 - cd
                 output += f'You caught: **{one_fish.name}** (+{one_fish.value} moneys, can\'t fish for 30 minutes)'
 
             elif one_fish.name == 'Catfish':
@@ -670,10 +674,10 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
             elif one_fish.name == 'Jonklerfish':
                 penalty = random_range(44, 144)
                 output += (f'You caught: **{one_fish.name}** (+{one_fish.value} moneys, everyone\'s next cooldown ' +
-                           f'set to {penalty + FISHING_COOLDOWN} seconds)')
+                           f'set to {cd + penalty} seconds)')
     
                 for user in all_users:
-                    all_pfs.profile_from_name(user).add_cd(penalty=penalty)
+                    all_pfs.profile_from_name(user).add_cd(cd + penalty)
     
             elif one_fish.name == 'Mercenary Fish':
                 output += f'You caught: **Mercenary Fish**'
@@ -718,11 +722,10 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
                 original_pf.add_fish(fish=one_fish)
 
     else:
-        raise OnFishingCooldownError
+        return f"You're on fishing cooldown ({next_fish_time - int(time.time())} seconds until you can fish again)"
 
     # adds cooldown to the user, unless the user is being catfished or have donated
-    if not bypass_fish_cd:
-        pf.add_cd(penalty=penalty)
+    original_pf.add_cd(cd + penalty)
 
     # uses up all specials except the catfish because it should only be used up when
     # another player fishes with the catfish active
@@ -766,9 +769,6 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
                 output += f'\n*Fish{' and money' if money_laundered else ''} taken by {catfish_holder_pf.username} (Catfish powerup)*'
             else:
                 output += f'\n*Fish{' and money' if money_laundered > 0 else ''} donated to {pf.username} (Mr. Beast powerup)*'
-
-        # warning: if the initial bypass_fish_cd param was set to True, this will make it False regardless
-        original_pf.add_cd(penalty=penalty)
 
     # increments new_moneys and new_catches stats for the new luck lb
     original_pf.new_catches += 1
