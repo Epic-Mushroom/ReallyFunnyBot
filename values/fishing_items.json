@@ -107,7 +107,7 @@
     {
         "name": "Russia",
         "value": 600,
-        "weight": 1
+        "weight": 0.9
     },
     {
         "name": "Catalytic Converter",
