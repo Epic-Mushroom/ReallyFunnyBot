@@ -560,6 +560,9 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
                 temp_fish = go_fish(factor=factor, force_fish_name=force_fish_name)
                 temp_fish_name = temp_fish.name
 
+                if force_fish_name in uncatchable:
+                    break
+
             if midas_active:
                 # Will override the original fish
                 if random_range(1, 100) <= 25:
@@ -1031,7 +1034,7 @@ if __name__ == '__main__':
             print(fishing_manifesto_factor('epicmushroom.'))
         elif user_input == 'proftest':
             print(all_pfs.profile_from_name('epicmushroom.'))
-        elif user_input.startswith('>fishtest'):
+        elif user_input.startswith('>fishtest') or user_input.startswith('go fish'):
             parts = user_input.split(' ')
 
             if len(parts) > 1:
