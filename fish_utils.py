@@ -487,7 +487,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
         return result
 
     higher_beings = ['epicmushroom.', 'test_user', 'test_user2', 'test_user3', 'joker_from_persona_5',
-                     'bill_nye']
+                     'bill_nye', 'hi_guys', 'welcome_back_to_my_yt_channel']
 
     if not username in higher_beings and FISHING_ENABLED == False:
         raise MaintenanceError
@@ -513,7 +513,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
     output = ""
 
     # Flags and variables for handling specials/upgrades
-    uncatchable: list[str | None] = [None] # list of fish names that can't be caught
+    uncatchable: list[str | None] = [] # list of fish names that can't be caught
     caffeine_active = False
     midas_active = False
     drug_magnet_active = False
@@ -558,7 +558,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
             temp_fish = None
             temp_fish_name = None
 
-            while temp_fish_name in uncatchable:
+            while temp_fish_name in uncatchable or temp_fish is None:
                 temp_fish = go_fish(factor=factor, force_fish_name=force_fish_name)
                 temp_fish_name = temp_fish.name
 

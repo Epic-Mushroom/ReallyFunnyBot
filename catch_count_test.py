@@ -52,9 +52,7 @@ def simulate_avg(iterations=300000, factor=fish_utils_tests.TEST_FACTOR, sffi=0,
     print("Average with no buffs: ", control_avg)
     print("Flat increase per command on average: ", result_avg - control_avg)
 
-def simulate_user(test_username='joker_from_persona_5', iterations=12500):
-    test_username_2 = 'bill_nye'
-
+def simulate_user(test_username='welcome_back_to_my_yt_channel', test_username_2='hi_guys', iterations=12500):
     fish_utils.fish_event(test_username)
     fish_utils.fish_event(test_username_2)
 
@@ -83,8 +81,8 @@ def simulate_user(test_username='joker_from_persona_5', iterations=12500):
     print(pf)
     print(pf_2)
 
-    print(f'JOKER:\n===========GAINED: {gained}\nITERATIONS: {iterations}\nPER COMMAND: {gained / iterations}\n')
-    print(f'BILL NYE:\n===========GAINED: {gained_2}\nITERATIONS: {iterations}\nPER COMMAND: {gained_2 / iterations}')
+    print(f'1:\n===========GAINED: {gained}\nITERATIONS: {iterations}\nPER COMMAND: {gained / iterations}\n')
+    print(f'2:\n===========GAINED: {gained_2}\nITERATIONS: {iterations}\nPER COMMAND: {gained_2 / iterations}')
     print("FACTOR APPLIED: ", 1, '\n')
 
     fish_utils.all_pfs.write_data()
