@@ -62,17 +62,17 @@ def simulate_user(test_username='joker_from_persona_5', iterations=12500):
     pf_2 = fish_utils.all_pfs.profile_from_name(test_username_2)
     starting = pf.value if pf else 0
     starting_2 = pf_2.value if pf_2 else 0
-    pf.last_fish_time = 0
-    pf_2.last_fish_time = 0
+    pf.next_fish_time = 0
+    pf_2.next_fish_time = 0
 
     for i in range(iterations):
         try:
             event = fish_utils.fish_event(test_username)
-            pf.last_fish_time = 0
-            pf_2.last_fish_time = 0
+            pf.next_fish_time = 0
+            pf_2.next_fish_time = 0
             event_2 = fish_utils.fish_event(test_username_2)
-            pf.last_fish_time = 0
-            pf_2.last_fish_time = 0
+            pf.next_fish_time = 0
+            pf_2.next_fish_time = 0
         except ValueError:
             iterations = i
             break
@@ -85,7 +85,7 @@ def simulate_user(test_username='joker_from_persona_5', iterations=12500):
 
     print(f'JOKER:\n===========GAINED: {gained}\nITERATIONS: {iterations}\nPER COMMAND: {gained / iterations}\n')
     print(f'BILL NYE:\n===========GAINED: {gained_2}\nITERATIONS: {iterations}\nPER COMMAND: {gained_2 / iterations}')
-    print("FACTOR APPLIED: ", fish_utils_tests.TEST_FACTOR, '\n')
+    print("FACTOR APPLIED: ", 1, '\n')
 
     fish_utils.all_pfs.write_data()
 

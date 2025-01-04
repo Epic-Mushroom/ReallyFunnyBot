@@ -5,7 +5,7 @@ import json, time, random, os, math
 FISHING_ENABLED = True
 
 FISHING_COOLDOWN = 10
-RARE_ITEM_WEIGHT_THRESHOLD = 1.9
+RARE_ITEM_WEIGHT_THRESHOLD = 1.8
 SUPER_RARE_ITEM_WEIGHT_THRESHOLD = 0.501
 WEIGHT_CUTOFF = 13 # for highlighting items in inventory
 
@@ -767,7 +767,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
             money_laundered = True
 
     if curse_active:
-        if random_range(1, 100) <= 2:
+        if random_range(1, 150) <= 2: # 1.5% chance for each curse
             money_to_remove = min(15000, int(pf.value * 0.1))
             pf.add_fish(get_fish_from_name('Credit'), 0 - money_to_remove)
             output += f'\n*Oops! Lost {money_to_remove:,} moneys (Curse)*'
@@ -775,7 +775,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
             if caught_fish_count == 0:
                 pf.add_special('curse', count=-1)
 
-        elif random_range(1, 100) <= 2:
+        elif random_range(1, 100) <= 1: # 1% chance for each curse
             stack_to_remove = random.choice([stack for stack in pf.items if stack.item.value > 0 and stack.item.name != "Credit"])
             amount_to_remove = stack_to_remove.count
             pf.add_fish(stack_to_remove.item, 0 - amount_to_remove)

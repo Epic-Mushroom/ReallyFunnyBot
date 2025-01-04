@@ -1,7 +1,7 @@
 import fish_utils
 import unittest
 
-TEST_FACTOR = fish_utils.percent_increase_to_factor(167)
+TEST_FACTOR = fish_utils.percent_increase_to_factor(0)
 
 def get_average_value(factor=1.0) -> float:
     fish_items = fish_utils.fishing_items[:]
