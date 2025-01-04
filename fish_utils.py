@@ -827,8 +827,8 @@ def fish_soap(username: str, absolute=False):
 def steal_fish_from_random(thief_name: str, shoot=False) -> tuple[str, FishingItem]:
     iterations = 0
     while True:
-        weights_ = [pf.value for pf in all_pfs.real_profiles]
-        player_pf: Profile = random.choices(all_pfs.real_profiles, weights=weights_, k=1)[0]
+        weights = [pf.value for pf in all_pfs.real_profiles]
+        player_pf: Profile = random.choices(all_pfs.real_profiles, weights=weights, k=1)[0]
         player_name = player_pf.username
 
 
@@ -842,16 +842,16 @@ def steal_fish_from_random(thief_name: str, shoot=False) -> tuple[str, FishingIt
 
     stealable = [stack for stack in player_pf.items if stack.item.name != 'Credit' and stack.item.value != 0]
 
-    weights_ = [max(stack.count, 0) for stack in stealable]
-    stolen_fish_ = random.choices(stealable, weights=weights_, k=1)[0].item
+    weights = [max(stack.count, 0) for stack in stealable]
+    stolen_fish = random.choices(stealable, weights=weights, k=1)[0].item
 
     # Removes the stolen fish from the player who was being stolen from, not modifying the time they last fished
-    player_pf.add_fish(stolen_fish_, count=-1)
+    player_pf.add_fish(stolen_fish, count=-1)
 
     if not shoot:
-        all_pfs.profile_from_name(thief_name).add_fish(stolen_fish_)
+        all_pfs.profile_from_name(thief_name).add_fish(stolen_fish)
 
-    return player_pf.username, stolen_fish_
+    return player_pf.username, stolen_fish
 
 def get_all_users() -> list[str]:
     return [pf.username for pf in all_pfs.profiles]
