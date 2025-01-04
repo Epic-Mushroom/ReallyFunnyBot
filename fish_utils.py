@@ -508,6 +508,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
     penalty = 0
     stolen_amt = 0
     money_laundered = False
+    eldritch_beings_caught = False
 
     output = ""
 
@@ -624,6 +625,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
                 output += (
                     f'You caught: **{one_fish.name}** (cursed for 6 catches)')
                 original_pf.add_special('curse', count=6)
+                eldritch_beings_caught = True
 
             elif one_fish.name == 'Caffeinated Worms':
                 output += (
@@ -784,12 +786,14 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
 
     # adds cooldown to the original user if they are being catfished or have donated
     if pf != original_pf:
+        addl_msg = ' except Eldritch Beings' if eldritch_beings_caught else ''
+
         if caught_fish_count > 0:
             if catfish_holder_pf:
                 catfish_holder_pf.add_special('catfish', count=-1)
-                output += f'\n*Fish{' and money' if money_laundered else ''} taken by {catfish_holder_pf.username} (Catfish powerup)*'
+                output += f'\n*Fish{' and money' if money_laundered else ''}{addl_msg} taken by {catfish_holder_pf.username} (Catfish powerup)*'
             else:
-                output += f'\n*Fish{' and money' if money_laundered > 0 else ''} donated to {pf.username} (Mr. Beast powerup)*'
+                output += f'\n*Fish{' and money' if money_laundered > 0 else ''}{addl_msg} donated to {pf.username} (Mr. Beast powerup)*'
 
     # increments new_moneys and new_catches stats for the new luck lb
     original_pf.new_catches += 1
