@@ -26,6 +26,7 @@ POSITIVES = ["Anti-Cyberbullying Pocket Guide",
 SHINY_ITEMS = ['Rainbow Crystal Meth', 'Diamond Juice Box Peel', 'Shiny Jadenfish', 'Blue Crystal Meth', 'Midasfish', "KSI - Thick of It Vinyl Record",
                'Gold Goldfish', 'Golden Juice Box Peel', 'Brawl Starfish', 'Goldfish', 'Soda Can']
 DRUG_ITEMS = ["Adderall (1840 Limited Edition)", "Blue Crystal Meth", "Caffeinated Worms", "P-Wing Boys Bathroom Cocaine", "Seaweed"]
+UNDESIRABLES = ["Mogfish", "Astro Gruel", "Mr. Beast Fish"]
 
 LIST_OF_NEW_SPECIALS = []
 
@@ -742,7 +743,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
                 original_pf.add_fish(fish=one_fish)
 
     else:
-        return f"You're on fishing cooldown ({int(next_fish_time - time.time())} seconds until you can fish again)"
+        return f"You're on fishing cooldown ({(next_fish_time - time.time()):.1f} seconds until you can fish again)"
 
     # adds cooldown to the user, unless the user is being catfished or have donated
     original_pf.add_cd(cd + penalty)
