@@ -703,7 +703,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
             elif one_fish.name == 'Mercenary Fish':
                 output += f'You caught: **Mercenary Fish**'
     
-                for i in range(random_range(10 if double_mercenary else 5, 12 if double_mercenary else 6)):
+                for i in range(random_range(8 if double_mercenary else 4, 12 if double_mercenary else 6)):
                     # steal_fish_from_random also updates the thief's profile with the fish that was stolen
                     try:
                         heist_tuple = steal_fish_from_random(pf.username)
@@ -836,7 +836,7 @@ def steal_fish_from_random(thief_name: str, shoot=False) -> tuple[str, FishingIt
 
         iterations += 1
 
-    stealable = [stack for stack in player_pf.items if stack.item.name != 'Credit']
+    stealable = [stack for stack in player_pf.items if stack.item.name != 'Credit' and stack.item.value != 0]
 
     weights_ = [max(stack.count, 0) for stack in stealable]
     stolen_fish_ = random.choices(stealable, weights=weights_, k=1)[0].item
