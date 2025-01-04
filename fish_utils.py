@@ -641,8 +641,8 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
                 pf.add_special('astro_gruel', count=10)
 
             elif one_fish.name == 'Astro Fuel':
-                output += f'You caught: **{one_fish.name}** (cooldown set to 1 second for next 10 catches)'
-                pf.add_special('astro_fuel', count=10)
+                output += f'You caught: **{one_fish.name}** (cooldown set to 1 second for next 7 catches)'
+                pf.add_special('astro_fuel', count=7)
 
             elif one_fish.name == 'Unregistered Firearm':
                 output += f'You caught: **{one_fish.name}** (+177.6 moneys, next 3 catches are guaranteed to include CS:GO Fish)'
