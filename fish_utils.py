@@ -62,8 +62,8 @@ class Profile:
 
     def __str__(self):
         output: str = f"\n"
-        output += (f"Moneys obtained: **{self.value}**\n" +
-                   f"Items caught: **{self.times_fished}**\n\n")
+        output += (f"Moneys obtained: **{self.value:,}**\n" +
+                   f"Items caught: **{self.times_fished:,}**\n\n")
 
         display_stacks = [stack for stack in self.items if stack.item.name != 'Credit' and stack.count > 0]
 
@@ -71,9 +71,9 @@ class Profile:
 
         for stack in display_stacks:
             if stack.item.weight <= WEIGHT_CUTOFF:
-                output += f"**{stack.count}x** *{stack.item.name}*"
+                output += f"**{stack.count:,}x** *{stack.item.name}*"
             else:
-                output += f"{stack.count}x {stack.item.name}"
+                output += f"{stack.count:,}x {stack.item.name}"
 
             if display_stacks.index(stack) != len(display_stacks) - 1:
                 output += ', '
@@ -85,7 +85,7 @@ class Profile:
             output += f'\n**Active powerups:**\n'
 
             for special in active_specials:
-                output += f'{self.specials[special]}x {special}\n'
+                output += f'{self.specials[special]:,}x {special}\n'
 
         output += '\n'
 
@@ -162,8 +162,8 @@ class AllProfiles:
         return False
 
     def __str__(self):
-        output = (f"Moneys obtained: **{round(sum(profile.value for profile in self.real_profiles))}**\n" +
-               f"Items caught: **{sum(profile.times_fished for profile in self.real_profiles)}*" +
+        output = (f"Moneys obtained: **{round(sum(profile.value for profile in self.real_profiles)):,}**\n" +
+               f"Items caught: **{sum(profile.times_fished for profile in self.real_profiles):,}*" +
                f"*\n\n")
 
         fishing_items_sorted_by_value = sorted(fishing_items, key=lambda item: item.value, reverse=True)
@@ -180,9 +180,9 @@ class AllProfiles:
 
             if temp_total > 0:
                 if fish.weight <= WEIGHT_CUTOFF:
-                    output += f"**{temp_total}x** *{temp_name}*"
+                    output += f"**{temp_total:,}x** *{temp_name}*"
                 else:
-                    output += f"{temp_total}x {temp_name}"
+                    output += f"{temp_total:,}x {temp_name}"
                 if display_items.index(fish) != len(display_items) - 1:
                     output += ', '
 
@@ -604,7 +604,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
 
             elif one_fish.name == 'Reminder to Go Outside' and not bypass_fish_cd:
                 penalty += 1800 - cd
-                output += f'You caught: **{one_fish.name}** (+{one_fish.value} moneys, can\'t fish for 30 minutes)'
+                output += f'You caught: **{one_fish.name}** (+{one_fish.value:,} moneys, can\'t fish for 30 minutes)'
 
             elif one_fish.name == 'Catfish':
                 output += f'You caught: **{one_fish.name}** (next 3 catches by other players will be transferred to you)'
@@ -734,7 +734,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
                 output += f'You caught: **{one_fish.name}**... no it\'s at least a C+ (worth {one_fish.value} moneys)'
     
             else:
-                output += f'You caught: **{one_fish.name}** (worth {one_fish.value} moneys)'
+                output += f'You caught: **{one_fish.name}** (worth {one_fish.value:,} moneys)'
 
             output += '\n'
             if one_fish.name != 'Eldritch Beings':
@@ -743,7 +743,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
                 original_pf.add_fish(fish=one_fish)
 
     else:
-        return f"You're on fishing cooldown ({(next_fish_time - time.time()):.1f} seconds until you can fish again)"
+        return f"You're on fishing cooldown ({(next_fish_time - time.time()):,.1f} seconds until you can fish again)"
 
     # adds cooldown to the user, unless the user is being catfished or have donated
     original_pf.add_cd(cd + penalty)
@@ -756,7 +756,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
                 original_pf.add_special(active_special, count=-1)
 
     if stolen_amt > 0:
-        output += f'\n*Stole {stolen_amt} moneys from players*'
+        output += f'\n*Stole {stolen_amt:,} moneys from players*'
 
     if ml_tiers > 0:
         if random_range(1, 3 - ml_tiers) == 1:
@@ -768,7 +768,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
         if random_range(1, 100) <= 2:
             money_to_remove = min(15000, int(pf.value * 0.1))
             pf.add_fish(get_fish_from_name('Credit'), 0 - money_to_remove)
-            output += f'\n*Oops! Lost {money_to_remove} moneys (Curse)*'
+            output += f'\n*Oops! Lost {money_to_remove:,} moneys (Curse)*'
 
             if caught_fish_count == 0:
                 pf.add_special('curse', count=-1)
@@ -777,7 +777,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
             stack_to_remove = random.choice([stack for stack in pf.items if stack.item.value > 0 and stack.item.name != "Credit"])
             amount_to_remove = stack_to_remove.count
             pf.add_fish(stack_to_remove.item, 0 - amount_to_remove)
-            output += f'\n*Oops! Lost all {amount_to_remove} {stack_to_remove.item.name} in your inventory (Curse)*'
+            output += f'\n*Oops! Lost all {amount_to_remove:,} {stack_to_remove.item.name} in your inventory (Curse)*'
 
             if caught_fish_count == 0:
                 pf.add_special('curse', count=-1)
@@ -895,7 +895,7 @@ def leaderboard_string(sort_by_luck=False) -> str:
             more_accurate_val = profile.value if not sort_by_luck else sum([stack.count * stack.item.value for stack in profile.items if stack.item.name != 'Credit'])
 
             if not sort_by_luck or profile.times_fished >= 10:
-                output += (f'{index}. {trophy}{profile.username}: **{(more_accurate_val if not sort_by_luck else round(more_accurate_val / profile.times_fished, 2))} '
+                output += (f'{index:,}. {trophy}{profile.username}: **{(more_accurate_val if not sort_by_luck else round(more_accurate_val / profile.times_fished, 2)):,} '
                            f'moneys{'/item' if sort_by_luck else ''}**\n')
 
                 index += 1
@@ -908,7 +908,7 @@ def leaderboard_string(sort_by_luck=False) -> str:
             pass
 
     if unshown > 0:
-        output += f'\n*{unshown} players not counted*'
+        output += f'\n*{unshown:,} players not counted*'
 
     return output
 
@@ -931,7 +931,7 @@ def luck_leaderboard_string() -> str:
             trophy = '🥇 ' if index == 1 else '🥈 ' if index == 2 else '🥉 ' if index == 3 else ''
 
             if profile.new_catches >= 10:
-                output += f'{index}. {trophy}{profile.username}: **{round(profile.new_moneys / profile.new_catches, 2)} moneys/catch**\n'
+                output += f'{index:,}. {trophy}{profile.username}: **{round(profile.new_moneys / profile.new_catches, 2):,} moneys/catch**\n'
 
                 index += 1
             else:
@@ -943,7 +943,7 @@ def luck_leaderboard_string() -> str:
             pass
 
     if unshown > 0:
-        output += f'\n*{unshown} players not shown*'
+        output += f'\n*{unshown:,} players not shown*'
 
     return output
 
