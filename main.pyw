@@ -732,10 +732,10 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
         time_tuple = days_and_hours_since(current_time, KUSH_BIRTHDAY_UNIX_TIME)
         await server_instance.reply_to_message(message, f"Kayshav has been consuming brainrot for {time_tuple[0]} days and {time_tuple[1]} hours")
 
-    if random_range(1, 210) == 1:
-        await server_instance.reply_to_message(message, f"{random.choice(BAITS)}", ping=False)
-    elif index_of_pronoun > -1 and random_range(1, 27) == 1:
-        await server_instance.reply_to_message(message, f"{random.choice(BAITS[4:])}", ping=False)
+    # if random_range(1, 210) == 1:
+    #     await server_instance.reply_to_message(message, f"{random.choice(BAITS)}", ping=False)
+    # elif index_of_pronoun > -1 and random_range(1, 27) == 1:
+    #     await server_instance.reply_to_message(message, f"{random.choice(BAITS[4:])}", ping=False)
 
 if __name__ == '__main__':
     # print("!!!!TYPE 'exit' TO START THE BOT!!!!")
