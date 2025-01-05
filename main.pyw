@@ -417,6 +417,14 @@ async def on_message(message):
     if "HALOOLYH BRIKTAY" == message.content:
         await server_instance.reply_to_message(message, message.content)
 
+    if find_isolated_word_bool(message.content, ['money']):
+        temu = """Happy New Year~ Sending you a New Year's card. Come and see my New Year's wishes and accept my invitation.
+-For real?
+-Sure, only 2 steps to take the gift and help me get mine!
+https://temu.com/s/Ut2tvFcWcwAKgdUM"""
+        await asyncio.sleep(5)
+        await send(temu)
+
     if find_word_bool(message.content, ['ur mom', 'your mom', 'ur dad', 'ur gae', 'ur gay', "you're gay"]):
         await message.add_reaction(random.choice(FUNNY_EMOJIS))
 
