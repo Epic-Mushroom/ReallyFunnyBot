@@ -540,7 +540,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
         bypass_fish_cd = True
 
     # caps catfish at 9
-    if 'catfish' in pf.get_active_specials() and pf.specials['catfish'] >= 9:
+    if 'catfish' in pf.get_active_specials() and pf.specials['catfish'] >= 7:
         uncatchable.append('Catfish')
 
     if time.time() - next_fish_time >= 0:
