@@ -201,7 +201,7 @@ class Stack:
         self.count = count
 
     def __str__(self):
-        return f'{self.count}x {self.item.name}'
+        return f'{self.count:,}x {self.item.name}'
 
 class FishingItem:
     def __init__(self, name, value, weight, **kwargs):
@@ -433,7 +433,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
                 cd = 1
 
     def handle_upgrades() -> None:
-        nonlocal sffi_tiers, double_mercenary, ml_tiers
+        nonlocal sffi_tiers, double_mercenary, octuple_items, ml_tiers
         active_upgrades = shop_utils.get_user_upgrades(original_user)
 
         for upgrade in active_upgrades:
@@ -444,6 +444,9 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
 
         if "Espionage Tactics Book" in active_upgrades:
             double_mercenary = True
+
+        if "Supreme Joblessness Trophy" in active_upgrades:
+            octuple_items = True
 
     def catch_count(boost=False) -> int:
         random_num = random_range(1, 500)
@@ -602,7 +605,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
             if one_fish.name == 'Cop Fish' and not bypass_fish_cd:
                 temp_rand = random_range(19, 119)
                 penalty += temp_rand
-                output += f'You caught: **{one_fish.name}** ({temp_rand} seconds added to next cooldown)'
+                output += f'You caught: **{one_fish.name}** (next cooldown increased to {cd + penalty} seconds)'
 
             elif one_fish.name == 'Reminder to Go Outside' and not bypass_fish_cd:
                 penalty += 1800 - cd

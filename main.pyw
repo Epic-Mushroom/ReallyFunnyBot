@@ -657,7 +657,7 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
                 pass
 
             embed = discord.Embed(title=f'{'(Testing Only) ' if not fish_utils.FISHING_ENABLED else ''}Shop (Page '
-                                        f'{page_num} of {shop_utils.max_page()})', description=shop_utils.display_shop_page(page_num),
+                                        f'{page_num:,} of {shop_utils.max_page():,})', description=shop_utils.display_shop_page(page_num),
                                   color=0xffffff)
             await message.channel.send(embed=embed)
 
