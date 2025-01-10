@@ -3,7 +3,6 @@ from pathlib import Path
 from string_utils import *
 
 # Globals
-guild_list = []
 server_instance_list = []
 
 # Constants
@@ -149,6 +148,7 @@ class ServerSpecificInstance:
         return self.comedians
 
     async def send_message(self, reference, text, bypass_cd=False, file_path=None, fishing=False) -> None:
+        # prevents message length from going over 2000
         if len(str(text)) > 1990:
             text = "[*some parts of this message were removed because of discord's character limit*]\n" + text[-1800:]
 
@@ -258,10 +258,7 @@ with open(Path('revenge.txt'), 'r') as lyrics:
         REVENGE_LYRICS.append(strip_punctuation(line.strip().lower()))
 
 @client.event
-async def on_ready():
-    global guild_list
-
-    # syncs commands
+async def on_ready():# syncs commands
     if ADMIN_ONLY:
         await tree.sync(guild=COMMANDS_GUILD)
     else:
@@ -271,12 +268,8 @@ async def on_ready():
     # for g in client.guilds:
         # logging.info(f'connected to {g.name}, server id: {g.id}')
 
-    guild_list = list(client.guilds)
-
 @client.event
 async def on_message(message):
-    global server_instance_list, guild_list
-
     async def send(content='** **', reply=False, bypass_cd=False, ping=True, file_path=None, fishing=False):
         if reply:
             await server_instance.reply_to_message(message, content, bypass_cd=bypass_cd, file_path=file_path, ping=ping, fishing=fishing)

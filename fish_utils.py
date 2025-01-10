@@ -229,7 +229,7 @@ def random_range(start: int, stop: int) -> int:
 
 def to_dict(obj):
     if isinstance(obj, dict):
-        data = {}
+        data = dict()
         for key, value in obj.items():
             data[key] = to_dict(value)
         return data
