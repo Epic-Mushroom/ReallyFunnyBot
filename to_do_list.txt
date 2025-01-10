@@ -1,11 +1,16 @@
-add some sort of 'effective value' metric to each fish
+add octopus (multiplies catch count by 8 for next catch, should be pretty rare like 0.8-1.2 weight)
 add great depressionfish (taxes)
 add a fish that makes the next person to mistype go fish get -200 moneys
-add susfishious (???)
+add susfishious (???) (gives you a random special?)
 
 "can we make a one time use item in the shop where we spend like 5-10
 unregistered firearms to form an assault team to attack a person of our
 choice giving them like an hour cooldown" -james
+
+"wait u should make a fish where the more # of times u catch it, the more valuable it gets or smthn"
+- kush
+
+add some sort of 'effective value' metric to each fish
 
 work on shop:
 - add kris tyson upgrade (immune to catching mrbeast fish)
@@ -21,18 +26,18 @@ work on shop:
     tier II: immune to cd decrease from any jonklers
     - requires 12 jonklerfish + 1200 moneys
 - add Anti-Catfishing Pocket Guide upgrade (immune to other people's catfish, costs 3x anti cyberbullying guide)
-- add Supreme Joblessness Trophy upgrade ("Ridiculous power, but at what cost")(permanent effects of nemo and immune to catching mogfish)
+- add Supreme Joblessness Trophy upgrade ("Ridiculous power, but at what cost")(multiplies items caught by 8)
     requires 88888 moneys
-    requires 2 rtgo, 6 ohlone letter, and 20 gad
-    requires 2500 old ass boots
+    requires 3 rtgo, 10 ohlone letter, and 30 gad
+    requires 3500 old ass boots
 
 make better simulation method(s?) in catch_count_test.py
 
 grim reaper fish and god 2 fish (deletes stack and dupes stack respectively)
 - do i actually want to add this? probably nto
+- first thing is implemented with eldritch curse
 
 add beel nye ???? what would this do idk prolly just make it another random fish
-add more funny bot triggersF ortnie battle paslei ijsut shit out my ass:speakignehad
 add quid
 
 make code not spaggheti NOT HAPPENING XFDDDDDD
@@ -42,6 +47,5 @@ become good at programming (see two lines above yeah not happengieg)
 become good at osu
 become good at life
 become god
-make bot work when computer is offline ??? (github cannot be abused permanetnlyi hate this why cant i get anything for free why why whwywheih4 please i want free tihngs
-- DONE BUT the server will expire eventually, make sure to create frequent backups of fishing data in the case that they fuckin delete everything on the server or smth (or get ddosed again lmfoa))
-survive winter break (:terror:)
+
+make sure to create frequent backups of fishing data in the case that they fuckin delete everything on the server or smth (or get ddosed again lmfoa))

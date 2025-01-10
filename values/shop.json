@@ -133,5 +133,49 @@
             }
     ],
     "requirements": ["State Farm Fishing Insurance II"]
+  },
+  {
+    "item_type": "upgrade",
+    "id": 9,
+    "name": "Supreme Joblessness Trophy",
+    "description": "Gives you game-breaking abilities",
+    "money_price": 88888,
+    "item_price": [
+      {
+                "item": {
+                    "name": "Reminder to Go Outside",
+                    "value": 26999,
+                    "weight": 0.04,
+                    "effective_value": 26999
+                },
+                "count": 3
+            },
+      {
+                "item": {
+                    "name": "Ohlone Rejection Letter",
+                    "value": 5555,
+                    "weight": 0.12,
+                    "effective_value": 5555
+                },
+                "count": 10
+            },
+            {
+                "item": {
+                    "name": "Gambling Addiction Diagnosis",
+                    "value": 1999,
+                    "weight": 0.32
+                },
+                "count": 30
+            },
+      {
+                "item": {
+                    "name": "Old Ass Boot",
+                    "value": 1,
+                    "weight": 30
+                },
+                "count": 3500
+            }
+    ],
+    "requirements": ["State Farm Fishing Insurance III"]
   }
 ]

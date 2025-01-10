@@ -185,11 +185,6 @@
         "weight": 1.7
     },
     {
-        "name": "Astro Fuel",
-        "value": 0,
-        "weight": 2.2
-    },
-    {
         "name": "Luigi Mangione's Steam Account",
         "value": 135,
         "weight": 1.9
@@ -205,9 +200,19 @@
         "weight": 2.1
     },
     {
+        "name": "Astro Fuel",
+        "value": 0,
+        "weight": 2.2
+    },
+    {
         "name": "P-Wing Boys Bathroom Cocaine",
         "value": 99,
         "weight": 2.3
+    },
+    {
+        "name": "Astro Gruel",
+        "value": 0,
+        "weight": 2.5
     },
     {
         "name": "Bribe Fish",
@@ -218,11 +223,6 @@
         "name": "John Pork's Reincarnation",
         "value": 91,
         "weight": 2.6
-    },
-    {
-        "name": "Astro Gruel",
-        "value": 0,
-        "weight": 2.5
     },
     {
         "name": "Jonklerfish",
