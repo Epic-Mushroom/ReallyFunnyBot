@@ -410,7 +410,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
             elif active_special == 'unregistered_firearm':
                 force_fish_name = 'CS:GO Fish'
             elif active_special == 'testing_only':
-                force_fish_name = random.choice(['Octopus'])
+                force_fish_name = random.choice(['God (Real)'])
             elif active_special == 'midasfish':
                 midas_active = True
             elif active_special == 'drug_magnet':
@@ -702,6 +702,15 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
                 output += f'You caught: **{one_fish.name}** (this item is literally unobtainable)'
                 pf.add_special('no_negative_items', count=1)
     
+            elif one_fish.name == 'God (Real)':
+                output += f'You caught: **{one_fish.name}** (duplicated a random stack in your inventory)'
+
+                stack_to_dupe = random.choice([stack for stack in pf.items if
+                                                 stack.item.value > 0 and stack.item.name != "Credit" and stack.count > 0])
+                amount_to_add = stack_to_dupe.count
+                pf.add_fish(stack_to_dupe.item, amount_to_add)
+                output += f'\nMaterialized {amount_to_add:,} {stack_to_dupe.item.name}'
+    
             elif one_fish.name == 'Jonklerfish':
                 penalty = random_range(44, 144)
                 output += (f'You caught: **{one_fish.name}** (+{one_fish.value} moneys, everyone\'s next cooldown ' +
@@ -784,7 +793,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
                 pf.add_special('curse', count=-1)
 
         elif random_range(1, 100) <= 1: # 1% chance for each curse
-            stack_to_remove = random.choice([stack for stack in pf.items if stack.item.value > 0 and stack.item.name != "Credit"])
+            stack_to_remove = random.choice([stack for stack in pf.items if stack.item.value > 0 and stack.item.name != "Credit" and stack.count > 0])
             amount_to_remove = stack_to_remove.count
             pf.add_fish(stack_to_remove.item, 0 - amount_to_remove)
             output += f'\n*Oops! Lost all {amount_to_remove:,} {stack_to_remove.item.name} in your inventory (Curse)*'

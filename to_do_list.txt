@@ -1,4 +1,3 @@
-add octopus (multiplies catch count by 8 for next catch, should be pretty rare like 0.8-1.2 weight)
 add great depressionfish (taxes)
 add a fish that makes the next person to mistype go fish get -200 moneys
 add susfishious (???) (gives you a random special?)
@@ -25,7 +24,7 @@ work on shop:
     - requires 8 jonklerfish
     tier II: immune to cd decrease from any jonklers
     - requires 12 jonklerfish + 1200 moneys
-- add Anti-Catfishing Pocket Guide upgrade (immune to other people's catfish, costs 3x anti cyberbullying guide)
+- add Anti-Catfishing Pocket Guide upgrade (immune to other people's catfish, costs 3(?)x anti cyberbullying guide)
 
 make better simulation method(s?) in catch_count_test.py
 

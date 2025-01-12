@@ -65,6 +65,11 @@
         "weight": 0.04
     },
     {
+        "name": "God (Real)",
+        "value": 0,
+        "weight": 0.08
+    },
+    {
         "name": "Ohlone Rejection Letter",
         "value": 5555,
         "weight": 0.12
