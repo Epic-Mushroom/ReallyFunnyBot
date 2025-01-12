@@ -671,8 +671,8 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
                     prof.add_special('luck_boost', count=1)
 
             elif one_fish.name == 'Bribe Fish':
-                output += f'You caught: **{one_fish.name}** (-50 moneys, but immune to Cop Fish for next 80 catches)'
-                pf.add_special('bribe_fish', count=80)
+                output += f'You caught: **{one_fish.name}** (-50 moneys, but immune to Cop Fish for next 60 catches)'
+                pf.add_special('bribe_fish', count=60)
 
             elif one_fish.name == 'Blue Crystal Meth':
                 output += f'You caught: **{one_fish.name}** (doubles number of items caught for next 10 catches)'
