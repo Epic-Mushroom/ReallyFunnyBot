@@ -90,6 +90,11 @@
         "weight": 0.4
     },
     {
+        "name": "Octopus",
+        "value": 888,
+        "weight": 0.6
+    },
+    {
         "name": "Adderall (1840 Limited Edition)",
         "value": 1299,
         "weight": 0.7

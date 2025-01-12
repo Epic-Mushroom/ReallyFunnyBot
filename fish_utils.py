@@ -410,7 +410,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
             elif active_special == 'unregistered_firearm':
                 force_fish_name = 'CS:GO Fish'
             elif active_special == 'testing_only':
-                force_fish_name = random.choice(['Catfish'])
+                force_fish_name = random.choice(['Octopus'])
             elif active_special == 'midasfish':
                 midas_active = True
             elif active_special == 'drug_magnet':
@@ -681,6 +681,10 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
             elif one_fish.name == 'Rainbow Crystal Meth':
                 output += f'You caught: **{one_fish.name}** (+{one_fish.value} moneys, doubles number of items caught for next 85 catches)'
                 pf.add_special('double_items', count=85)
+
+            elif one_fish.name == 'Octopus':
+                output += f'You caught: **{one_fish.name}** (+{one_fish.value} moneys, octuples number of items for next catch)'
+                pf.add_special('8x_items', count=1)
 
             elif one_fish.name == 'Mogfish':
                 output += f'You caught: **{one_fish.name}** (next 12 catches by you are nearly guaranteed to include trash items)'
