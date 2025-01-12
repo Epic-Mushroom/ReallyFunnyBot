@@ -26,17 +26,11 @@ work on shop:
     - requires 12 jonklerfish + 1200 moneys
 - add Anti-Catfishing Pocket Guide upgrade (immune to other people's catfish, costs 3(?)x anti cyberbullying guide)
 
-make better simulation method(s?) in catch_count_test.py
-
-grim reaper fish and god 2 fish (deletes stack and dupes stack respectively)
-- do i actually want to add this? probably nto
-- first thing is implemented with eldritch curse
-
 add beel nye ???? what would this do idk prolly just make it another random fish
 add quid
 
 make code not spaggheti NOT HAPPENING XFDDDDDD
- - need to fix the mess that is main.pyw (use bound methods or something)
+ - need to fix the mess that is main.pyw
 become good at fortnite
 become good at programming (see two lines above yeah not happengieg)
 become good at osu

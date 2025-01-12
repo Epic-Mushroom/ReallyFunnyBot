@@ -346,7 +346,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
     def activate_special() -> list[str | None]:
         groups = [['catfish', 'tax_collector'], # not used when the user is fishing, only when other users are fishing
                   ['mrbeast_fish'], # fish transfers from user to other players
-                  ['mogfish', 'fishing_manifesto', 'nemo', 'luck_boost'], # boosts factor
+                  ['mogfish', 'fishing_manifesto', 'luck_boost'], # changes factor
                   ['bribe_fish'], # puts Cop Fish in uncatchable
                   ['unregistered_firearm', 'mercenary_contract', 'testing_only'], # forces a fish item
                   ['caffeine_bait'], # makes it more likely to catch multiple items
@@ -410,7 +410,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
             elif active_special == 'unregistered_firearm':
                 force_fish_name = 'CS:GO Fish'
             elif active_special == 'testing_only':
-                force_fish_name = random.choice(['God (Real)'])
+                force_fish_name = random.choice(['Jamesfish'])
             elif active_special == 'midasfish':
                 midas_active = True
             elif active_special == 'drug_magnet':
