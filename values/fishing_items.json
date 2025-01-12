@@ -240,6 +240,11 @@
         "weight": 3.5
     },
     {
+        "name": "Catfish",
+        "value": 0,
+        "weight": 4.5
+    },
+    {
         "name": "KSI - Thick of It Vinyl Record",
         "value": 69,
         "weight": 5
@@ -248,11 +253,6 @@
         "name": "Mercenary Fish",
         "value": 0,
         "weight": 5
-    },
-    {
-        "name": "Catfish",
-        "value": 0,
-        "weight": 5.5
     },
     {
         "name": "Fishing Manifesto",
@@ -310,14 +310,14 @@
         "weight": 10
     },
     {
+        "name": "Mr. Beast Fish",
+        "value": 0,
+        "weight": 10
+    },
+    {
         "name": "Cop Fish",
         "value": 0,
         "weight": 11
-    },
-    {
-        "name": "Mr. Beast Fish",
-        "value": 0,
-        "weight": 12
     },
     {
         "name": "Jadenfish",
