@@ -1,6 +1,7 @@
-import discord, os, random, time, logging, sys, fish_utils, backup_utils, asyncio, subprocess, shop_utils
+import discord, os, random, datetime, time, logging, sys, fish_utils, backup_utils, asyncio, subprocess, shop_utils
 from pathlib import Path
 from string_utils import *
+from discord.ext import tasks
 
 # Globals
 server_instance_list = []
@@ -257,12 +258,22 @@ with open(Path('revenge.txt'), 'r') as lyrics:
     for line in lyrics:
         REVENGE_LYRICS.append(strip_punctuation(line.strip().lower()))
 
+# sends a reminder to renew the server in my dms
+reminder_time = datetime.time(hour=13, minute=0, tzinfo=datetime.timezone(datetime.timedelta(hours=-8)))
+
+@tasks.loop(time=reminder_time)
+async def reminder():
+    me = await client.fetch_user(EPIC_MUSHROOM_ID)
+    await me.send('@everyone renew server')
+
 @client.event
 async def on_ready():# syncs commands
     if ADMIN_ONLY:
         await tree.sync(guild=COMMANDS_GUILD)
     else:
         await tree.sync()
+
+    reminder.start()
 
     logging.info(f'connected to {len(client.guilds)} servers')
     # for g in client.guilds:
