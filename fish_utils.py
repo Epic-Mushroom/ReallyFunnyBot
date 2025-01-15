@@ -136,12 +136,13 @@ class Profile:
         self.times_fished = sum(stack.count for stack in self.items if stack.item.name != 'Credit')
 
 class AllProfiles:
+    BANNED = ['test_user', 'test_user2', 'StickyBot', 'Reminder']
+
     def __init__(self):
-        banned = ['test_user', 'test_user2', 'StickyBot', 'Reminder']
         list_of_profiles = fishing_database()
 
         self.profiles = [Profile(**pf) for pf in list_of_profiles]
-        self.real_profiles = [pf for pf in self.profiles if not pf.username in banned]
+        self.real_profiles = [pf for pf in self.profiles if not pf.username in AllProfiles.BANNED]
 
         for pf in self.profiles:
             pf.upgrades.sort()
@@ -151,7 +152,7 @@ class AllProfiles:
 
     def add_new_profile(self, profile: Profile):
         self.profiles.append(profile)
-        self.real_profiles = [pf for pf in self.profiles if not pf.username.startswith('test_user')]
+        self.real_profiles = [pf for pf in self.profiles if not pf.username in AllProfiles.BANNED]
 
     def write_data(self):
         update_fish_file(to_dict(self.profiles))
@@ -726,9 +727,8 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
                 for i in range(random_range(8 if double_mercenary else 4, 12 if double_mercenary else 6)):
                     # steal_fish_from_random also updates the thief's profile with the fish that was stolen
                     try:
-                        heist_tuple = steal_fish_from_random(pf.username)
-                        temp_username = heist_tuple[0]
-                        stolen_fish = heist_tuple[1]
+                        heist_tuple = steal_fish_from_random(original_user, recipient_name=pf.username)
+                        temp_username, stolen_fish = heist_tuple
 
                         output += f'\nStole {rare_prefix(stolen_fish)}**{stolen_fish.name}** from {temp_username}'
                         stolen_amt += stolen_fish.value
@@ -742,9 +742,8 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
 
                 try:
                     for i in range(random_range(1, 1)):
-                        heist_tuple = steal_fish_from_random(pf.username, shoot=True)
-                        temp_username = heist_tuple[0]
-                        stolen_fish = heist_tuple[1]
+                        heist_tuple = steal_fish_from_random(original_user, shoot=True)
+                        temp_username, stolen_fish = heist_tuple
 
                         output += f'{temp_username}\'s {rare_prefix(stolen_fish)}**{stolen_fish.name}** was shot)'
                 except Exception as e:
@@ -842,13 +841,15 @@ def fish_soap(username: str, absolute=False):
 
     pf.items = [stx for stx in pf.items if stx.item.value >= 0]
 
-def steal_fish_from_random(thief_name: str, shoot=False) -> tuple[str, FishingItem]:
+def steal_fish_from_random(thief_name: str, recipient_name: str=None, shoot=False) -> tuple[str, FishingItem]:
+    if recipient_name is None:
+        recipient_name = thief_name
+
     iterations = 0
     while True:
         weights = [pf.value for pf in all_pfs.real_profiles]
         player_pf: Profile = random.choices(all_pfs.real_profiles, weights=weights, k=1)[0]
         player_name = player_pf.username
-
 
         if iterations >= 2000 or (len(all_pfs.real_profiles) <= 1 and not shoot):
             raise IndexError
@@ -867,7 +868,7 @@ def steal_fish_from_random(thief_name: str, shoot=False) -> tuple[str, FishingIt
     player_pf.add_fish(stolen_fish, count=-1)
 
     if not shoot:
-        all_pfs.profile_from_name(thief_name).add_fish(stolen_fish)
+        all_pfs.profile_from_name(recipient_name).add_fish(stolen_fish)
 
     return player_pf.username, stolen_fish
 
