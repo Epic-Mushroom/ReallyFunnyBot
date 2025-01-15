@@ -14,6 +14,8 @@ FISHING_DATABASE_PATH = Path("trackers", "fishing.json")
 SPECIALS_DATABASE_PATH = Path("trackers", "specials.json")
 GENERAL_DATABASE_PATH = Path("trackers", "user_triggers.json")
 
+HIGHER_BEINGS = ['epicmushroom.', 'test_user', 'test_user2', 'test_user3', 'joker_from_persona_5', 'bill_nye', 'hi_guys', 'welcome_back_to_my_yt_channel']
+
 NEGATIVES = ['trollface.png', 'Negative Jamesfish', 'Bribe Fish',
                              'Thief Fish', 'Homeless Guy\'s Underwear', 'Brawl Starfish', 'Viola',
                              'How Unfortunate']
@@ -490,10 +492,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
             
         return result
 
-    higher_beings = ['epicmushroom.', 'test_user', 'test_user2', 'test_user3', 'joker_from_persona_5',
-                     'bill_nye', 'hi_guys', 'welcome_back_to_my_yt_channel']
-
-    if not username in higher_beings and FISHING_ENABLED == False:
+    if not username in HIGHER_BEINGS and FISHING_ENABLED == False:
         raise MaintenanceError
 
     pf = all_pfs.profile_from_name(username)
@@ -559,6 +558,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
         caught_fish_count *= 8 if octuple_items else 1
 
         for j in range(caught_fish_count):
+            # prob want to migrate this whole thing to go_fish
             temp_fish = None
             temp_fish_name = None
 
@@ -568,6 +568,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
 
                 if force_fish_name in uncatchable:
                     break
+            # ===============
 
             if midas_active:
                 # Will override the original fish

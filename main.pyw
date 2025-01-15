@@ -1,7 +1,10 @@
-import discord, os, random, datetime, time, logging, sys, fish_utils, backup_utils, asyncio, subprocess, shop_utils
+import os, random, datetime, time, asyncio
+import discord
+import fish_utils, shop_utils, backup_utils
+
 from pathlib import Path
-from string_utils import *
 from discord.ext import tasks
+from string_utils import *
 
 # Globals
 server_instance_list = []
@@ -60,11 +63,9 @@ GENERAL_CHANNEL_ID_3 = 964941621110120541
 COOLDOWN_LENGTH = 10
 COOLDOWN_LIMIT = 4 # how many messages that can be sent per COOLDOWN_LENGTH seconds
 
-# Directory and logging setup
+# Directory setup
 script_directory = Path(__file__).parent.resolve()
 os.chdir(script_directory)
-
-logging.basicConfig(level=logging.INFO, stream=sys.stdout)
 
 # For local testing purposes; the 'testing' directory should only be available on local
 ADMIN_ONLY = False
@@ -158,10 +159,10 @@ class ServerSpecificInstance:
             file = discord.File(file_path)
 
         if self.on_cooldown():
-            logging.info(f'On cooldown. Message withheld: {text}')
+            print(f'On cooldown. Message withheld: {text}')
 
         if self.on_lockdown() and not fishing:
-            logging.info(f'On lockdown. Message withheld: {text}')
+            print(f'On lockdown. Message withheld: {text}')
             return
 
         if bypass_cd or not (self.something_sent or self.on_cooldown()):
@@ -197,10 +198,10 @@ class ServerSpecificInstance:
             file = discord.File(file_path)
 
         if self.on_cooldown():
-            logging.info(f'On cooldown. Message withheld: {text}')
+            print(f'On cooldown. Message withheld: {text}')
 
         if self.on_lockdown() and not fishing:
-            logging.info(f'On lockdown. Message withheld: {text}')
+            print(f'On lockdown. Message withheld: {text}')
             return
 
         if bypass_cd or not (self.something_sent or self.on_cooldown()):
@@ -267,7 +268,8 @@ async def reminder():
     await me.send('@everyone renew server')
 
 @client.event
-async def on_ready():# syncs commands
+async def on_ready():
+    # syncs commands
     if ADMIN_ONLY:
         await tree.sync(guild=COMMANDS_GUILD)
     else:
@@ -275,7 +277,7 @@ async def on_ready():# syncs commands
 
     reminder.start()
 
-    logging.info(f'connected to {len(client.guilds)} servers')
+    print(f'connected to {len(client.guilds)} servers')
     # for g in client.guilds:
         # logging.info(f'connected to {g.name}, server id: {g.id}')
 
@@ -750,16 +752,4 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
     #     await server_instance.reply_to_message(message, f"{random.choice(BAITS[4:])}", ping=False)
 
 if __name__ == '__main__':
-    # print("!!!!TYPE 'exit' TO START THE BOT!!!!")
-    #
-    # user_input = None
-    # while user_input != "exit":
-    #     user_input = input("shell command: ")
-    #
-    #     if user_input == "exit":
-    #         break
-    #
-    #     else:
-    #         backup_utils.shell_command(user_input)
-
     client.run(TOKEN)
