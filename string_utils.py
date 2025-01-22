@@ -76,3 +76,18 @@ def find_index_after_word(text: str, words: list[str]) -> int:
             return index + len(found_word)
         else:
             return -1
+
+def pluralize(count, word):
+    return f'{count} {word}{'s' if count != 1 else ''}'
+
+def seconds_to_descriptive_time(seconds, decimalize=False) -> str:
+    if seconds >= 3600:
+        hours = seconds // 3600
+        time_left = seconds - hours * 3600
+        return f'{pluralize(int(hours), 'hour')}{', ' if time_left >= 60 else ' and '}{seconds_to_descriptive_time(time_left, decimalize=decimalize)}'
+    elif seconds >= 60:
+        minutes = seconds // 60
+        time_left = seconds - minutes * 60
+        return f'{pluralize(int(minutes), 'minute')}{f' and {seconds_to_descriptive_time(time_left, decimalize=decimalize)}' if time_left > 0 else ''}'
+    else:
+        return f'{seconds:,.1f} seconds' if decimalize else f'{seconds:,.0f} seconds'

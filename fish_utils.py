@@ -1,4 +1,5 @@
 from pathlib import Path
+from string_utils import seconds_to_descriptive_time as format_seconds
 import shop_utils
 import json, time, random, os, math
 
@@ -40,7 +41,8 @@ class MaintenanceError(Exception):
     pass
 
 class Profile:
-    def __init__(self, username, value=0, next_fish_time=0, times_fished=0, new_moneys=0, new_catches=0, items=None, specials=None, upgrades=None, **kwargs):
+    def __init__(self, username, value=0, next_fish_time=0, times_fished=0, new_moneys=0, new_catches=0,
+                 items=None, specials=None, upgrades=None, banned_until=0, ban_reason="", **kwargs):
         self.username = username
         self.value = value
         self.next_fish_time = next_fish_time
@@ -50,6 +52,8 @@ class Profile:
         self.items = items if items is not None else []
         self.specials = specials if specials is not None else dict()
         self.upgrades = upgrades if upgrades is not None else []
+        self.banned_until = banned_until
+        self.ban_reason = ban_reason
 
         if len(self.items) > 0 and isinstance(items[-1], dict):
             stack_list = []
@@ -135,14 +139,32 @@ class Profile:
     def update_items_caught(self):
         self.times_fished = sum(stack.count for stack in self.items if stack.item.name != 'Credit')
 
+    def on_cooldown(self) -> bool:
+        return time.time() < self.next_fish_time
+
+    def is_banned(self) -> bool:
+        return time.time() < self.banned_until
+
+    def ban(self, duration: int=60, reason="") -> int | float:
+        self.banned_until = time.time() + duration
+        self.ban_reason = reason
+
+        self.next_fish_time += duration
+
+        return self.banned_until
+
+    def unban(self):
+        self.banned_until = 0
+        self.ban_reason = ""
+
 class AllProfiles:
-    BANNED = ['test_user', 'test_user2', 'StickyBot', 'Reminder']
+    LB_BANNED = ['test_user', 'test_user2', 'StickyBot', 'Reminder']
 
     def __init__(self):
         list_of_profiles = fishing_database()
 
         self.profiles = [Profile(**pf) for pf in list_of_profiles]
-        self.real_profiles = [pf for pf in self.profiles if not pf.username in AllProfiles.BANNED]
+        self.real_profiles = [pf for pf in self.profiles if not pf.username in AllProfiles.LB_BANNED]
 
         for pf in self.profiles:
             pf.upgrades.sort()
@@ -152,7 +174,7 @@ class AllProfiles:
 
     def add_new_profile(self, profile: Profile):
         self.profiles.append(profile)
-        self.real_profiles = [pf for pf in self.profiles if not pf.username in AllProfiles.BANNED]
+        self.real_profiles = [pf for pf in self.profiles if not pf.username in AllProfiles.LB_BANNED]
 
     def write_data(self):
         update_fish_file(to_dict(self.profiles))
@@ -413,7 +435,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
             elif active_special == 'unregistered_firearm':
                 force_fish_name = 'CS:GO Fish'
             elif active_special == 'testing_only':
-                force_fish_name = random.choice(['Jamesfish'])
+                force_fish_name = random.choice(['Reminder to Go Outside'])
             elif active_special == 'midasfish':
                 midas_active = True
             elif active_special == 'drug_magnet':
@@ -547,7 +569,13 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
     if 'catfish' in pf.get_active_specials() and pf.specials['catfish'] >= 7:
         uncatchable.append('Catfish')
 
-    if time.time() - next_fish_time >= 0:
+    if original_pf.is_banned():
+        return f"You're banned from fishing for {format_seconds(original_pf.banned_until - time.time())}. Reason: {original_pf.ban_reason}"
+
+    elif original_pf.on_cooldown():
+        return f"You're on fishing cooldown ({format_seconds(next_fish_time - time.time(), True)} until you can fish again)"
+
+    else:
         caught_fish = []
         caught_fish_count = catch_count(boost=caffeine_active)
 
@@ -760,9 +788,6 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
                 pf.add_fish(fish=one_fish)
             else:
                 original_pf.add_fish(fish=one_fish)
-
-    else:
-        return f"You're on fishing cooldown ({(next_fish_time - time.time()):,.1f} seconds until you can fish again)"
 
     # adds cooldown to the user, unless the user is being catfished or have donated
     original_pf.add_cd(cd + penalty)

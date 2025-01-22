@@ -620,6 +620,46 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
                 await server_instance.reply_to_message(message, f"Gave {temp_count} {temp_fish.name} to {temp_username}\n", bypass_cd=True)
                 fish_utils.all_pfs.write_data()
 
+            elif message.content.startswith("admin:ban"):
+                # format: "admin:ban epicmushroom. 3600 testing testing"
+                parts = message.content.split(" ")
+
+                temp_username = parts[1]
+                try:
+                    temp_duration = int(parts[2])
+                except IndexError:
+                    temp_duration = 60
+                if len(parts) >= 4:
+                    temp_reason = ' '.join(parts[3:])
+                else:
+                    temp_reason = "none"
+
+                try:
+                    fish_utils.all_pfs.profile_from_name(temp_username).ban(temp_duration, temp_reason)
+                except AttributeError:
+                    await send("Profile not found")
+                    return
+
+                await send(f"Banned {temp_username} for {temp_duration} seconds with reason \"{temp_reason}\"")
+
+                fish_utils.all_pfs.write_data()
+
+            elif message.content.startswith("admin:unban"):
+                parts = message.content.split(" ")
+
+                temp_username = parts[1]
+
+                try:
+                    fish_utils.all_pfs.profile_from_name(temp_username).unban()
+                except AttributeError:
+                    await send("Profile not found")
+                    return
+
+                await send(f"Unanned {temp_username}")
+
+                fish_utils.all_pfs.write_data()
+
+
         else:
             await server_instance.reply_to_message(message, 'you can\'t do that (reference to 1984 by George Orwell)',
                                                    bypass_cd=True)
@@ -726,23 +766,26 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
             else:
                 await kush.send('Hi')
 
-    if find_word_index(lowercase_message_content, ['jaden', 'jedwin']) > -1:
+    if find_isolated_word_bool(lowercase_message_content, ['guess what']):
+        await send('chicken butt', reply=True)
+
+    if find_word_index(lowercase_message_content, ['jaden status', 'jedwin']) > -1:
         time_tuple = days_and_hours_since(current_time, JADEN_18TH_BIRTHDAY_UNIX_TIME)
         await server_instance.reply_to_message(message, f"Jaden has been stalking minors for {time_tuple[0]} days and {time_tuple[1]} hours")
 
-    if find_word_index(lowercase_message_content, ['jame', 'james', 'cheung']) > -1:
+    if find_word_index(lowercase_message_content, ['james status', 'cheung']) > -1:
         time_tuple = days_and_hours_since(current_time, JAMES_18TH_BIRTHDAY_UNIX_TIME)
         await server_instance.reply_to_message(message, f"James has been getting high for {time_tuple[0]} days and {time_tuple[1]} hours")
 
-    if find_word_index(lowercase_message_content, ['aravind', 'arvind']) > -1:
+    if find_word_index(lowercase_message_content, ['aravind status', 'arvind']) > -1:
         time_tuple = days_and_hours_since(ARAVIND_18TH_BIRTHDAY_UNIX_TIME, current_time)
         await server_instance.reply_to_message(message, f"Aravind will be legal in {time_tuple[0]} days and {time_tuple[1]} hours")
 
-    if find_index_after_word(lowercase_message_content, ['kush', 'hush b', 'hush']) > -1:
+    if find_index_after_word(lowercase_message_content, ['kush status', 'hush b', 'hush']) > -1:
         time_tuple = days_and_hours_since(current_time, KUSH_BIRTHDAY_UNIX_TIME)
         await server_instance.reply_to_message(message, f"Kush has been consuming brainrot for {time_tuple[0]} days and {time_tuple[1]} hours")
 
-    if find_index_after_word(lowercase_message_content, ['kayshav']) > -1:
+    if find_index_after_word(lowercase_message_content, ['kayshav status']) > -1:
         time_tuple = days_and_hours_since(current_time, KUSH_BIRTHDAY_UNIX_TIME)
         await server_instance.reply_to_message(message, f"Kayshav has been consuming brainrot for {time_tuple[0]} days and {time_tuple[1]} hours")
 
