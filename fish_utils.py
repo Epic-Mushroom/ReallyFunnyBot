@@ -154,6 +154,8 @@ class Profile:
         return self.banned_until
 
     def unban(self):
+        self.next_fish_time -= (self.banned_until - time.time())
+
         self.banned_until = 0
         self.ban_reason = ""
 
