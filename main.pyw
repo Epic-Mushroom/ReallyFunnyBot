@@ -640,7 +640,7 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
                     await send("Profile not found")
                     return
 
-                await send(f"Banned {temp_username} for {temp_duration} seconds with reason \"{temp_reason}\"")
+                await send(f"Banned {temp_username} from fishing for {temp_duration} seconds with reason \"{temp_reason}\"")
 
                 fish_utils.all_pfs.write_data()
 
@@ -655,7 +655,7 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
                     await send("Profile not found")
                     return
 
-                await send(f"Unanned {temp_username}")
+                await send(f"Unbanned {temp_username} from fishing")
 
                 fish_utils.all_pfs.write_data()
 
