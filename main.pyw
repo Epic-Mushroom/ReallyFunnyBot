@@ -773,7 +773,7 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
         time_tuple = days_and_hours_since(current_time, JADEN_18TH_BIRTHDAY_UNIX_TIME)
         await server_instance.reply_to_message(message, f"Jaden has been stalking minors for {time_tuple[0]} days and {time_tuple[1]} hours")
 
-    if find_word_index(lowercase_message_content, ['james status', 'cheung']) > -1:
+    if find_word_index(lowercase_message_content, ['james status']) > -1:
         time_tuple = days_and_hours_since(current_time, JAMES_18TH_BIRTHDAY_UNIX_TIME)
         await server_instance.reply_to_message(message, f"James has been getting high for {time_tuple[0]} days and {time_tuple[1]} hours")
 
