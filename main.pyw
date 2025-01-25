@@ -629,6 +629,9 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
                     temp_duration = int(parts[2])
                 except IndexError:
                     temp_duration = 60
+                except ValueError:
+                    await send("Invalid ban duration")
+                    return
                 if len(parts) >= 4:
                     temp_reason = ' '.join(parts[3:])
                 else:
