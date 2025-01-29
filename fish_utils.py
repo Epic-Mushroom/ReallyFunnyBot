@@ -276,8 +276,11 @@ def percent_increase_to_factor(pc_inc=0) -> float:
 def factor_to_percent_increase(factor=1) -> float:
     return math.log(factor, 1.0082)
 
-def manipulated_weights(factor=1.0) -> list:
-    fishing_items_sorted_by_weight = sorted(fishing_items, key=lambda item: item.weight)
+def manipulated_weights(factor=1.0, uncatchable=None) -> list:
+    if uncatchable is None:
+        uncatchable = []
+
+    fishing_items_sorted_by_weight = sorted([item for item in fishing_items if item.name not in uncatchable], key=lambda item: item.weight)
     weights = [fish.weight for fish in fishing_items_sorted_by_weight]
     weight_sum = sum(weights)
     chances = [(100 * weight / weight_sum) for weight in weights]
@@ -589,17 +592,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
         caught_fish_count *= 8 if octuple_items else 1
 
         for j in range(caught_fish_count):
-            # prob want to migrate this whole thing to go_fish
-            temp_fish = None
-            temp_fish_name = None
-
-            while temp_fish_name in uncatchable or temp_fish is None:
-                temp_fish = go_fish(factor=factor, force_fish_name=force_fish_name)
-                temp_fish_name = temp_fish.name
-
-                if force_fish_name in uncatchable:
-                    break
-            # ===============
+            temp_fish = go_fish(factor=factor, force_fish_name=force_fish_name, uncatchable=uncatchable)
 
             if midas_active:
                 # Will override the original fish
@@ -845,9 +838,12 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
 
     return output
 
-def go_fish(factor=1.0, force_fish_name: str=None) -> FishingItem:
-    weights = manipulated_weights(factor=factor)
-    fishing_items_sorted_by_weight = sorted(fishing_items, key=lambda item: item.weight)
+def go_fish(factor=1.0, force_fish_name: str=None, uncatchable=None) -> FishingItem:
+    if uncatchable is None:
+        uncatchable = []
+
+    weights = manipulated_weights(factor=factor, uncatchable=uncatchable)
+    fishing_items_sorted_by_weight = sorted([item for item in fishing_items if item.name not in uncatchable], key=lambda item: item.weight)
 
     if not force_fish_name:
         return random.choices(fishing_items_sorted_by_weight, weights=weights, k=1)[0]

@@ -11,6 +11,8 @@ choice giving them like an hour cooldown" -james
 
 add betting against other players in a double or nothing fashion
 
+add text-based adventure game with turn-based combat (lol)
+
 add some sort of 'effective value' metric to each fish
 
 work on shop:
