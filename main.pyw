@@ -318,7 +318,10 @@ async def on_ready():
 
 @client.event
 async def on_presence_update(before, after: discord.Member):
+    print(f"attempting to mimic the status of {after.name}")
+
     if after.id == STALKED_ID:
+        print(f"entered conditional")
         instance = ServerSpecificInstance.get_instance(after.guild)
 
         if instance is None:
