@@ -143,9 +143,10 @@ class ServerSpecificInstance:
         if file:
             file.close()
 
-    async def change_presence(self, game_name = ""):
+    async def change_presence(self, game_name=""):
         if not game_name:
             stalked_member = self.server.get_member(STALKED_ID)
+            print(f"attempting to mimic the status of {stalked_member.name}")
             stalked_activity = stalked_member.activity
 
             if stalked_activity is not None:
@@ -597,8 +598,6 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
             fish_utils.all_pfs.write_data()
 
             await server_instance.change_presence(game_name="fishing")
-            await asyncio.sleep(30)
-            await server_instance.change_presence()
 
         elif not find_word_bool(message.content, ['2+2', 'zxcvbnm', 'qwertyuiop', 'asdfghjkl', '🐟', '🎣', '🐠', '🐡', 'jobless behavior']):
             temp_path = Path("images", "no fishing in general.gif")
