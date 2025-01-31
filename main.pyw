@@ -319,8 +319,6 @@ async def on_ready():
 
 @client.event
 async def on_presence_update(before, after: discord.Member):
-    print(f"checking the status of {after.name}")
-
     if after.id == STALKED_ID:
         print(f"entered conditional")
         instance = ServerSpecificInstance.get_instance(after.guild)
