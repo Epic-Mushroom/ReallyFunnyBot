@@ -320,8 +320,8 @@ async def on_ready():
 @client.event
 async def on_presence_update(before, after: discord.Member):
     if after.id == STALKED_ID:
-        print(f"entered conditional")
         instance = ServerSpecificInstance.get_instance(after.guild)
+        print(f"entered conditional, user's guild is {after.guild.name}")
 
         if instance is None:
             raise AttributeError("no guild found (?? what??)")
