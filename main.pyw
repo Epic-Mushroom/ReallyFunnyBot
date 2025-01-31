@@ -309,7 +309,7 @@ async def on_message(message):
         server_instance = server_instance_list[-1]
 
     # Makes it so it doesn't reply to itself
-    if message.author == client.user:
+    if message.author.id in [1334971973859672094, 1300220037268770907]:
         return
 
     if message.reference is not None:
@@ -519,7 +519,7 @@ https://temu.com/s/Ut2tvFcWcwAKgdUM"""
     if find_word_bool(message.content, ['what is my name']):
         await send(f"{message.author.display_name} *({message.author.name})*", reply=True)
 
-    if find_word_bool(message.content, ['fortnite battle']):
+    if find_word_bool(message.content, ['battle pass']):
         fortnite_battle_pass = """Fortnite Battle Pass 🗣️🗣️
 I just shit out my ass 🗣️🗣️🗣️
 Booted up my PC 💻💻
