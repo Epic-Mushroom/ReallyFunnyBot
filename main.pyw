@@ -317,12 +317,12 @@ async def on_ready():
 
 @client.event
 async def on_presence_update(before, after: discord.Member):
-    instance = ServerSpecificInstance.get_instance(after.guild)
+    if after.id == STALKED_ID:
+        instance = ServerSpecificInstance.get_instance(after.guild)
 
-    if instance is None:
-        raise AttributeError("no guild found (?? what??)")
+        if instance is None:
+            raise AttributeError("no guild found (?? what??)")
 
-    if after.id == EPIC_MUSHROOM_ID:
         if before.activity != after.activity:
             await instance.change_presence()
 
