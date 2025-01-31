@@ -80,12 +80,15 @@ finally:
         test_file.close()
 
 # Token and commands guild setup
-SECRET_FILE_PATH = Path('secrets', 'discord bot token.txt')
+SECRET_FILE_PATH_MAIN = Path('secrets', 'discord bot token.txt')
+SECRET_FILE_PATH_TEST = Path('secrets', 'test discord bot token.txt')
 TOKEN = None
 MY_GUILD = 964941621110120538
 
 try:
-    with open(SECRET_FILE_PATH) as file1:
+    token_path = SECRET_FILE_PATH_TEST if ADMIN_ONLY else SECRET_FILE_PATH_MAIN
+
+    with open(token_path) as file1:
         TOKEN = file1.readline()
 except FileNotFoundError:
     TOKEN = os.environ['BOT_TOKEN']
