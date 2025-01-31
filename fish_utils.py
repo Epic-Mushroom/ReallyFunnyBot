@@ -160,7 +160,7 @@ class Profile:
         self.ban_reason = ""
 
 class AllProfiles:
-    LB_BANNED = ['test_user', 'test_user2', 'StickyBot', 'Reminder']
+    LB_BANNED = ['test_user', 'test_user2', 'StickyBot', 'Reminder', 'ReallyFunnyBotTEST']
 
     def __init__(self):
         list_of_profiles = fishing_database()
