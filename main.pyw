@@ -154,6 +154,7 @@ class ServerSpecificInstance:
                                              else None)
 
             else:
+                print(f"this user does not have an activity, changing bot activity to nothing")
                 await client.change_presence()
 
         else:
@@ -221,7 +222,7 @@ JAMES_ID = 336702837792833536
 KUSH_ID = 873411125633491024
 JADEN_ID = 762393738676404224
 
-STALKED_ID = EPIC_MUSHROOM_ID
+STALKED_ID = JAMES_ID
 
 GENERAL_CHANNEL_ID_1 = 1309380397410291715
 GENERAL_CHANNEL_ID_2 = 1096685257891250228
