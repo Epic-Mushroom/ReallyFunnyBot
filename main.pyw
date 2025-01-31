@@ -194,7 +194,7 @@ class ServerSpecificInstance:
 
     async def reply_to_message(self, reference, text, bypass_cd=False, ping=True, file_path=None, fishing=False) -> None:
         if len(str(text)) > 1990:
-            text = "[*some parts of this message were removed because of discord's character limit*]" + text[-1800:]
+            text = "[*some parts of this message were removed because of discord's character limit*]\n" + text[-1800:]
 
         file = None
         if file_path:
@@ -279,6 +279,8 @@ async def on_ready():
         await tree.sync()
 
     reminder.start()
+
+    await client.change_presence(activity=discord.Game("."))
 
     print(f'connected to {len(client.guilds)} servers')
     # for g in client.guilds:
@@ -554,6 +556,10 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
                 await server_instance.reply_to_message(message, f'fishing is currently disabled, go play minecraft in the meantime or some shit', bypass_cd=True, fishing=True)
 
             fish_utils.all_pfs.write_data()
+
+            await client.change_presence(activity=discord.Game("fishing"))
+            await asyncio.sleep(30)
+            await client.change_presence()
 
         elif not find_word_bool(message.content, ['2+2', 'zxcvbnm', 'qwertyuiop', 'asdfghjkl', '🐟', '🎣', '🐠', '🐡', 'jobless behavior']):
             temp_path = Path("images", "no fishing in general.gif")
