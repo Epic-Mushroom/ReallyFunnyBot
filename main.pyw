@@ -161,7 +161,7 @@ class ServerSpecificInstance:
         if file_path:
             file = discord.File(file_path)
 
-        if self.on_cooldown():
+        if self.on_cooldown() and not fishing:
             print(f'On cooldown. Message withheld: {text}')
 
         if self.on_lockdown() and not fishing:
@@ -200,7 +200,7 @@ class ServerSpecificInstance:
         if file_path:
             file = discord.File(file_path)
 
-        if self.on_cooldown():
+        if self.on_cooldown() and not fishing:
             print(f'On cooldown. Message withheld: {text}')
 
         if self.on_lockdown() and not fishing:
