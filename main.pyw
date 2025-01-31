@@ -6,8 +6,171 @@ from pathlib import Path
 from discord.ext import tasks
 from string_utils import *
 
+
+class ServerSpecificInstance:
+
+    def __init__(self, guild: discord.Guild):
+        self.server = guild
+        try:
+            self.server_name = guild.name
+            self.nickname = guild.me.display_name
+        except AttributeError:
+            self.server_name = None
+            self.nickname = client.user.name
+
+        self.recently_sent_messages = 0
+        self.cd_last_reset_time = int(time.time())
+        self.something_sent = False
+        self.comedians = ["Kush", "Kayshav", "dad", "James", 'Dad',
+                          self.nickname]
+
+        self.lockdown = 0  # unix time when lockdown expires
+
+    def get_server(self):
+        return self.server
+
+    def get_server_name(self):
+        return self.server_name
+
+    def get_nickname(self) -> str:
+        return self.nickname
+
+    def on_cooldown(self) -> bool:
+        current_time = int(time.time())
+        return (self.recently_sent_messages >= COOLDOWN_LIMIT
+                and (current_time - self.cd_last_reset_time) < COOLDOWN_LENGTH)
+
+    def clear_message_cache(self) -> None:
+        self.something_sent = False
+
+    def reset_cooldown(self, force = False) -> None:
+        current_time = int(time.time())
+        if force or current_time - self.cd_last_reset_time >= COOLDOWN_LENGTH:
+            self.cd_last_reset_time = current_time
+            self.recently_sent_messages = 0
+
+    def time_since_cd_last_reset_time(self) -> int:
+        current_time = int(time.time())
+        return current_time - self.cd_last_reset_time
+
+    def get_comedians(self) -> list[str]:
+        return self.comedians
+
+    async def send_message(self, reference, text, bypass_cd = False, file_path = None,
+                           fishing = False) -> None:
+        # prevents message length from going over 2000
+        if len(str(text)) > 1990:
+            text = "[*some parts of this message were removed because of discord's character limit*]\n" + text[
+                                                                                                          -1800:]
+
+        file = None
+        if file_path:
+            file = discord.File(file_path)
+
+        if self.on_cooldown() and not fishing:
+            print(f'On cooldown. Message withheld: {text}')
+
+        if self.on_lockdown() and not fishing:
+            print(f'On lockdown. Message withheld: {text}')
+            return
+
+        if bypass_cd or not (self.something_sent or self.on_cooldown()):
+            self.something_sent = True
+
+            if not bypass_cd:
+                self.recently_sent_messages += 1
+
+            await reference.channel.send(text, file = file)
+
+            total_triggers_file = None
+
+            try:
+                total_triggers_file = Path("trackers", "total_triggers.txt").open('r+')
+                current_count = int(total_triggers_file.readline())
+                total_triggers_file.seek(0)
+                total_triggers_file.write(f"{current_count + 1}")
+            finally:
+                if total_triggers_file:
+                    total_triggers_file.close()
+
+            fish_utils.update_user_database(reference.author.name)
+
+        if file:
+            file.close()
+
+    async def reply_to_message(self, reference, text, bypass_cd = False, ping = True,
+                               file_path = None, fishing = False) -> None:
+        if len(str(text)) > 1990:
+            text = "[*some parts of this message were removed because of discord's character limit*]\n" + text[
+                                                                                                          -1800:]
+
+        file = None
+        if file_path:
+            file = discord.File(file_path)
+
+        if self.on_cooldown() and not fishing:
+            print(f'On cooldown. Message withheld: {text}')
+
+        if self.on_lockdown() and not fishing:
+            print(f'On lockdown. Message withheld: {text}')
+            return
+
+        if bypass_cd or not (self.something_sent or self.on_cooldown()):
+            self.something_sent = True
+
+            if not bypass_cd:
+                self.recently_sent_messages += 1
+
+            if ping:
+                await reference.reply(text, file = file)
+            else:
+                await reference.reply(text, file = file,
+                                      allowed_mentions = discord.AllowedMentions.none())
+
+            total_triggers_file = None
+
+            try:
+                total_triggers_file = Path("trackers", "total_triggers.txt").open('r+')
+                current_count = int(total_triggers_file.readline())
+                total_triggers_file.seek(0)
+                total_triggers_file.write(f"{current_count + 1}")
+            finally:
+                if total_triggers_file:
+                    total_triggers_file.close()
+
+            fish_utils.update_user_database(reference.author.name)
+
+        if file:
+            file.close()
+
+    async def change_presence(self, game_name = ""):
+        if not game_name:
+            stalked_member = self.server.get_member(STALKED_ID)
+            stalked_activity = stalked_member.activity
+
+            if stalked_activity is not None:
+                await client.change_presence(activity=stalked_activity if stalked_activity.type == discord.ActivityType.playing
+                                             else None)
+
+            else:
+                await client.change_presence()
+
+        else:
+            await client.change_presence(activity=discord.Game(game_name))
+
+    def set_lockdown(self, seconds) -> int:
+        self.lockdown = int(time.time()) + seconds
+        return self.lockdown
+
+    def on_lockdown(self):
+        return int(time.time()) < self.lockdown
+
+    @staticmethod
+    def get_instance(guild: discord.Guild):
+        return next((i for i in server_instance_list if i.server == guild), None)
+
 # Globals
-server_instance_list = []
+server_instance_list: list[ServerSpecificInstance] = []
 
 # Constants
 POSSESSIVE_PERSONAL_PRONOUN_LIST = ['im', "i'm", 'i am', 'I’m']
@@ -53,8 +216,11 @@ ARAVIND_18TH_BIRTHDAY_UNIX_TIME = 1771135200
 KUSH_BIRTHDAY_UNIX_TIME = 1137852000
 EPIC_MUSHROOM_ID = 456943500249006108
 PALIOPOLIS_ID = 873412148880089102
+JAMES_ID = 336702837792833536
 KUSH_ID = 873411125633491024
 JADEN_ID = 762393738676404224
+
+STALKED_ID = JAMES_ID
 
 GENERAL_CHANNEL_ID_1 = 1309380397410291715
 GENERAL_CHANNEL_ID_2 = 1096685257891250228
@@ -93,153 +259,26 @@ try:
 except FileNotFoundError:
     TOKEN = os.environ['BOT_TOKEN']
 
+# Setup certain variables according to value of ADMIN_ONLY
 COMMANDS_GUILD = None
 if ADMIN_ONLY:
     COMMANDS_GUILD = discord.Object(id=MY_GUILD)
+    STALKED_ID = EPIC_MUSHROOM_ID
 
 # Discord client setup
-intents = discord.Intents.default()
-intents.message_content = True
+intents = discord.Intents.all()
 client = discord.Client(intents=intents)
 tree = discord.app_commands.CommandTree(client)
 
-class ServerSpecificInstance:
+# Builds lyrics of revenge
+with open(Path('revenge.txt'), 'r') as lyrics:
+    REVENGE_LYRICS = []
 
-    def __init__(self, guild: discord.Guild):
-        self.server = guild
-        try:
-            self.server_name = guild.name
-            self.nickname = guild.me.display_name
-        except AttributeError:
-            self.server_name = None
-            self.nickname = client.user.name
+    for line in lyrics:
+        REVENGE_LYRICS.append(strip_punctuation(line.strip().lower()))
 
-        self.recently_sent_messages = 0
-        self.cd_last_reset_time = int(time.time())
-        self.something_sent = False
-        self.comedians = ["Kush", "Kayshav", "dad", "James", 'Dad',
-                          self.nickname]
-
-        self.lockdown = 0 # unix time when lockdown expires
-
-    def get_server(self):
-        return self.server
-
-    def get_server_name(self):
-        return self.server_name
-
-    def get_nickname(self) -> str:
-        return self.nickname
-
-    def on_cooldown(self) -> bool:
-        current_time = int(time.time())
-        return (self.recently_sent_messages >= COOLDOWN_LIMIT
-                and (current_time - self.cd_last_reset_time) < COOLDOWN_LENGTH)
-
-    def clear_message_cache(self) -> None:
-        self.something_sent = False
-
-    def reset_cooldown(self, force=False) -> None:
-        current_time = int(time.time())
-        if force or current_time - self.cd_last_reset_time >= COOLDOWN_LENGTH:
-            self.cd_last_reset_time = current_time
-            self.recently_sent_messages = 0
-
-    def time_since_cd_last_reset_time(self) -> int:
-        current_time = int(time.time())
-        return current_time - self.cd_last_reset_time
-
-    def get_comedians(self) -> list[str]:
-        return self.comedians
-
-    async def send_message(self, reference, text, bypass_cd=False, file_path=None, fishing=False) -> None:
-        # prevents message length from going over 2000
-        if len(str(text)) > 1990:
-            text = "[*some parts of this message were removed because of discord's character limit*]\n" + text[-1800:]
-
-        file = None
-        if file_path:
-            file = discord.File(file_path)
-
-        if self.on_cooldown() and not fishing:
-            print(f'On cooldown. Message withheld: {text}')
-
-        if self.on_lockdown() and not fishing:
-            print(f'On lockdown. Message withheld: {text}')
-            return
-
-        if bypass_cd or not (self.something_sent or self.on_cooldown()):
-            self.something_sent = True
-
-            if not bypass_cd:
-                self.recently_sent_messages += 1
-
-            await reference.channel.send(text, file=file)
-
-            total_triggers_file = None
-
-            try:
-                total_triggers_file = Path("trackers", "total_triggers.txt").open('r+')
-                current_count = int(total_triggers_file.readline())
-                total_triggers_file.seek(0)
-                total_triggers_file.write(f"{current_count + 1}")
-            finally:
-                if total_triggers_file:
-                    total_triggers_file.close()
-
-            fish_utils.update_user_database(reference.author.name)
-            
-        if file:
-            file.close()
-
-    async def reply_to_message(self, reference, text, bypass_cd=False, ping=True, file_path=None, fishing=False) -> None:
-        if len(str(text)) > 1990:
-            text = "[*some parts of this message were removed because of discord's character limit*]\n" + text[-1800:]
-
-        file = None
-        if file_path:
-            file = discord.File(file_path)
-
-        if self.on_cooldown() and not fishing:
-            print(f'On cooldown. Message withheld: {text}')
-
-        if self.on_lockdown() and not fishing:
-            print(f'On lockdown. Message withheld: {text}')
-            return
-
-        if bypass_cd or not (self.something_sent or self.on_cooldown()):
-            self.something_sent = True
-
-            if not bypass_cd:
-                self.recently_sent_messages += 1
-
-            if ping:
-                await reference.reply(text, file=file)
-            else:
-                await reference.reply(text, file=file, allowed_mentions=discord.AllowedMentions.none())
-
-            total_triggers_file = None
-
-            try:
-                total_triggers_file = Path("trackers", "total_triggers.txt").open('r+')
-                current_count = int(total_triggers_file.readline())
-                total_triggers_file.seek(0)
-                total_triggers_file.write(f"{current_count + 1}")
-            finally:
-                if total_triggers_file:
-                    total_triggers_file.close()
-
-            fish_utils.update_user_database(reference.author.name)
-
-        if file:
-            file.close()
-
-    def set_lockdown(self, seconds) -> int:
-        self.lockdown = int(time.time()) + seconds
-        return self.lockdown
-
-    def on_lockdown(self):
-        return int(time.time()) < self.lockdown
+# sends a reminder to renew the server in my dms
+reminder_time = datetime.time(hour=13, minute=0, tzinfo=datetime.timezone(datetime.timedelta(hours=-8)))
 
 def random_range(start: int, stop: int) -> int:
     """random.randrange but its inclusive so i don't keep forgetting the original function has an exclusive endpoint because i have fucking dementia"""
@@ -256,15 +295,6 @@ def days_and_hours_since(current_time: int, considered_time: int) -> tuple:
 
     return(days, hours)
 
-with open(Path('revenge.txt'), 'r') as lyrics:
-    REVENGE_LYRICS = []
-
-    for line in lyrics:
-        REVENGE_LYRICS.append(strip_punctuation(line.strip().lower()))
-
-# sends a reminder to renew the server in my dms
-reminder_time = datetime.time(hour=13, minute=0, tzinfo=datetime.timezone(datetime.timedelta(hours=-8)))
-
 @tasks.loop(time=reminder_time)
 async def reminder():
     me = await client.fetch_user(EPIC_MUSHROOM_ID)
@@ -280,11 +310,21 @@ async def on_ready():
 
     reminder.start()
 
-    await client.change_presence(activity=discord.Game("."))
-
     print(f'connected to {len(client.guilds)} servers')
-    # for g in client.guilds:
-        # logging.info(f'connected to {g.name}, server id: {g.id}')
+
+    for g in client.guilds:
+        server_instance_list.append(ServerSpecificInstance(g))
+
+@client.event
+async def on_presence_update(before, after: discord.Member):
+    instance = ServerSpecificInstance.get_instance(after.guild)
+
+    if instance is None:
+        raise AttributeError("no guild found (?? what??)")
+
+    if after.id == EPIC_MUSHROOM_ID:
+        if before.activity != after.activity:
+            await instance.change_presence()
 
 @client.event
 async def on_message(message):
@@ -300,11 +340,10 @@ async def on_message(message):
     current_time = int(time.time())
     current_guild = message.guild
 
-    server_instance = None
-    for instance in server_instance_list:
-        if instance.get_server() == current_guild:
-            server_instance = instance
-    if not server_instance:
+    server_instance: None | ServerSpecificInstance = ServerSpecificInstance.get_instance(current_guild)
+
+    # Creates a server instance for dms if the message was sent through dms
+    if server_instance is None:
         server_instance_list.append(ServerSpecificInstance(current_guild))
         server_instance = server_instance_list[-1]
 
@@ -557,9 +596,9 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
 
             fish_utils.all_pfs.write_data()
 
-            await client.change_presence(activity=discord.Game("fishing"))
+            await server_instance.change_presence(game_name="fishing")
             await asyncio.sleep(30)
-            await client.change_presence()
+            await server_instance.change_presence()
 
         elif not find_word_bool(message.content, ['2+2', 'zxcvbnm', 'qwertyuiop', 'asdfghjkl', '🐟', '🎣', '🐠', '🐡', 'jobless behavior']):
             temp_path = Path("images", "no fishing in general.gif")
