@@ -155,11 +155,12 @@ class ServerSpecificInstance:
             # on_presence_update gets called once for every mutual server with the user
             return
 
-        else:
-            print(f"attempting to mimic the status of {stalked_member.name}")
-            stalked_activity = stalked_member.activity
+        print(f"attempting to mimic the status of {stalked_member.name}")
 
-        if stalked_activity is not None:
+        activity_gen = (activity.type == discord.ActivityType.playing for activity in stalked_member.activities)
+        if any(activity_gen):
+            stalked_activity = next((activity for activity in stalked_member.activities if activity.type == discord.ActivityType.playing), None)
+
             print(f"changing bot's activity to {stalked_activity.name}")
             await client.change_presence(
                 activity = stalked_activity if stalked_activity.type == discord.ActivityType.playing
