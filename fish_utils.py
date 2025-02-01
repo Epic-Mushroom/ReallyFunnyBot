@@ -73,7 +73,7 @@ class Profile:
                    f"Items caught: **{self.times_fished:,}**\n\n")
 
         display_stacks = [stack for stack in self.items if stack.item.name != 'Credit' and stack.count > 0]
-        display_stacks.sort(key=lambda s: s.count * s.item.value, reverse=True)
+        # display_stacks.sort(key=lambda s: s.count * s.item.value, reverse=True)
 
         output += '**Items:**\n' if len(display_stacks) > 0 else ''
 
