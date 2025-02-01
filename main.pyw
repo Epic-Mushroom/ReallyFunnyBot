@@ -146,10 +146,15 @@ class ServerSpecificInstance:
     async def change_presence(self, game_name=""):
         if not game_name:
             stalked_member = self.server.get_member(STALKED_ID)
-            print(f"attempting to mimic the status of {stalked_member.name}")
-            stalked_activity = stalked_member.activity
+
+            if stalked_member is None:
+                return
+            else:
+                print(f"attempting to mimic the status of {stalked_member.name}")
+                stalked_activity = stalked_member.activity
 
             if stalked_activity is not None:
+                print(f"changing bot's activity to {stalked_activity.name}")
                 await client.change_presence(activity=stalked_activity if stalked_activity.type == discord.ActivityType.playing
                                              else None)
 
@@ -223,6 +228,9 @@ KUSH_ID = 873411125633491024
 JADEN_ID = 762393738676404224
 
 STALKED_ID = JAMES_ID
+
+GROUP_CHAT_SERVER_ID = 1309380397410291712
+PRIVATE_SERVER_ID = 964941621110120538
 
 GENERAL_CHANNEL_ID_1 = 1309380397410291715
 GENERAL_CHANNEL_ID_2 = 1096685257891250228
@@ -319,7 +327,7 @@ async def on_ready():
 
 @client.event
 async def on_presence_update(before, after: discord.Member):
-    if after.id == STALKED_ID:
+    if after.id == STALKED_ID and after.guild.id == (PRIVATE_SERVER_ID if ADMIN_ONLY else GROUP_CHAT_SERVER_ID) :
         instance = ServerSpecificInstance.get_instance(after.guild)
         print(f"entered conditional, user's guild is {after.guild.name}")
 
@@ -600,6 +608,8 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
             fish_utils.all_pfs.write_data()
 
             await server_instance.change_presence(game_name="fishing")
+            await asyncio.sleep(20)
+            await server_instance.change_presence()
 
         elif not find_word_bool(message.content, ['2+2', 'zxcvbnm', 'qwertyuiop', 'asdfghjkl', '🐟', '🎣', '🐠', '🐡', 'jobless behavior']):
             temp_path = Path("images", "no fishing in general.gif")
