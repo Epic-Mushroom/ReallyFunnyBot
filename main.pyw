@@ -143,27 +143,32 @@ class ServerSpecificInstance:
         if file:
             file.close()
 
-    async def change_presence(self, game_name=""):
-        if not game_name:
-            stalked_member = self.server.get_member(STALKED_ID)
+    async def mimic_presence(self, default_name=""):
+        """
+        Copies the status of a certain user when called. If the user has no activity,
+        changes bot's activity to default_name
+        """
+        stalked_member = self.server.get_member(STALKED_ID)
 
-            if stalked_member is None:
-                return
-            else:
-                print(f"attempting to mimic the status of {stalked_member.name}")
-                stalked_activity = stalked_member.activity
-
-            if stalked_activity is not None:
-                print(f"changing bot's activity to {stalked_activity.name}")
-                await client.change_presence(activity=stalked_activity if stalked_activity.type == discord.ActivityType.playing
-                                             else None)
-
-            else:
-                print(f"this user does not have an activity, changing bot activity to nothing")
-                await client.change_presence()
+        if stalked_member is None:
+            # on_presence_update gets called once for every mutual server with the user
+            return
 
         else:
-            await client.change_presence(activity=discord.Game(game_name))
+            print(f"attempting to mimic the status of {stalked_member.name}")
+            stalked_activity = stalked_member.activity
+
+        if stalked_activity is not None:
+            print(f"changing bot's activity to {stalked_activity.name}")
+            await client.change_presence(
+                activity = stalked_activity if stalked_activity.type == discord.ActivityType.playing
+                else None)
+
+        else:
+            print(f"this user does not have an activity, changing bot activity to {default_name if
+            default_name else "nothing"}")
+
+            await change_presence(default_name)
 
     def set_lockdown(self, seconds) -> int:
         self.lockdown = int(time.time()) + seconds
@@ -272,7 +277,7 @@ except FileNotFoundError:
 # Setup certain variables according to value of ADMIN_ONLY
 COMMANDS_GUILD = None
 if ADMIN_ONLY:
-    COMMANDS_GUILD = discord.Object(id=MY_GUILD)
+    COMMANDS_GUILD = discord.Object(id =MY_GUILD)
     STALKED_ID = EPIC_MUSHROOM_ID
 
 # Discord client setup
@@ -305,6 +310,13 @@ def days_and_hours_since(current_time: int, considered_time: int) -> tuple:
 
     return(days, hours)
 
+async def change_presence(game_name=""):
+    if not game_name:
+        await client.change_presence()
+
+    else:
+        await client.change_presence(activity = discord.Game(game_name))
+
 @tasks.loop(time=reminder_time)
 async def reminder():
     me = await client.fetch_user(EPIC_MUSHROOM_ID)
@@ -314,7 +326,7 @@ async def reminder():
 async def on_ready():
     # syncs commands
     if ADMIN_ONLY:
-        await tree.sync(guild=COMMANDS_GUILD)
+        await tree.sync(guild =COMMANDS_GUILD)
     else:
         await tree.sync()
 
@@ -335,15 +347,15 @@ async def on_presence_update(before, after: discord.Member):
             raise AttributeError("no guild found (?? what??)")
 
         if before.activity != after.activity:
-            await instance.change_presence()
+            await instance.mimic_presence()
 
 @client.event
 async def on_message(message):
-    async def send(content='** **', reply=False, bypass_cd=False, ping=True, file_path=None, fishing=False):
+    async def send(content='** **', reply=False, bypass_cd =False, ping= True, file_path=None, fishing=False):
         if reply:
-            await server_instance.reply_to_message(message, content, bypass_cd=bypass_cd, file_path=file_path, ping=ping, fishing=fishing)
+            await server_instance.reply_to_message(message, content, bypass_cd =bypass_cd, file_path=file_path, ping=ping, fishing=fishing)
         else:
-            await server_instance.send_message(message, content, bypass_cd=bypass_cd, file_path=file_path, fishing=fishing)
+            await server_instance.send_message(message, content, bypass_cd =bypass_cd, file_path=file_path, fishing=fishing)
 
     referred_message = None
     lowercase_message_content = message.content.lower()
@@ -400,10 +412,10 @@ async def on_message(message):
             await server_instance.send_message(message, f"Hi {interpreted_name}, I'm {random.choice(server_instance.get_comedians())}!")
 
     if find_isolated_word_bool(message.content, TYPOS) and random_range(1, 1) == 1:
-        await send("https://www.wikihow.com/Type", reply=True)
+        await send("https://www.wikihow.com/Type", reply = True)
 
     if "crazy" in lowercase_message_content.lower():
-        await send(f"{random.choice(CRAZY_RESPONSES)}", reply=True)
+        await send(f"{random.choice(CRAZY_RESPONSES)}", reply = True)
 
     if (message.author.id == PALIOPOLIS_ID or message.author.id == JADEN_ID) and random_range(1, 1000) == 1:
         await message.add_reaction(random.choice(NEGATIVE_EMOJIS))
@@ -411,7 +423,7 @@ async def on_message(message):
     if referred_message and referred_message.author == client.user:
         if referred_message.content.lower() == "who":
             if strip_punctuation(lowercase_message_content.lower()) != "asked":
-                await send("asked :rofl::rofl:", reply=True, bypass_cd=True)
+                await send("asked :rofl::rofl:", reply = True, bypass_cd = True)
             else:
                 await message.add_reaction(random.choice(FUNNY_EMOJIS))
         elif referred_message.content.lower() == "what":
@@ -454,7 +466,7 @@ async def on_message(message):
             if total_triggers_file:
                 total_triggers_file.close()
 
-        await server_instance.reply_to_message(message, f"{current_count} triggers", bypass_cd=True)
+        await server_instance.reply_to_message(message, f"{current_count} triggers", bypass_cd = True)
 
     if "cooldownstatus" in lowercase_message_content:
         if server_instance.on_cooldown():
@@ -470,10 +482,10 @@ async def on_message(message):
 
     if find_word_bool(message.content, ['resetcd']):
         if is_admin:
-            await server_instance.reply_to_message(message, 'Reset cooldown', bypass_cd=True)
-            server_instance.reset_cooldown(force=True)
+            await server_instance.reply_to_message(message, 'Reset cooldown', bypass_cd = True)
+            server_instance.reset_cooldown(force= True)
         else:
-            await server_instance.reply_to_message(message, 'Nah I don\'t feel like it', bypass_cd=True)
+            await server_instance.reply_to_message(message, 'Nah I don\'t feel like it', bypass_cd = True)
 
     if "HALOOLYH BRIKTAY" == message.content:
         await server_instance.reply_to_message(message, message.content)
@@ -549,25 +561,25 @@ https://temu.com/s/Ut2tvFcWcwAKgdUM"""
             await server_instance.send_message(message, f"idk can you {interpreted_text}")
 
     if random_range(1, 888) == 1:
-        await send('🫠 (this message has a 1/888 chance to appear)', bypass_cd=True)
+        await send('🫠 (this message has a 1/888 chance to appear)', bypass_cd = True)
 
     if random_range(1, 6666) == 1:
-        await send('🐺 (this message has a 1/6,666 chance to appear)', bypass_cd=True)
+        await send('🐺 (this message has a 1/6,666 chance to appear)', bypass_cd = True)
 
     if find_word_bool(message.content, ['flip a coin']):
         if random_range(1, 2) == 1:
-            await send('Heads', bypass_cd=True)
+            await send('Heads', bypass_cd = True)
         else:
-            await send('Tails', bypass_cd=True)
+            await send('Tails', bypass_cd = True)
 
     if find_word_bool(message.content, ['roll a die', 'roll a dice', 'diceroll']):
-        await send(str(random_range(1, 6)), bypass_cd=True)
+        await send(str(random_range(1, 6)), bypass_cd = True)
 
     if find_word_bool(message.content, ['roll a d20']):
-        await send(str(random_range(1, 20)), bypass_cd=True)
+        await send(str(random_range(1, 20)), bypass_cd = True)
 
     if find_word_bool(message.content, ['what is my name']):
-        await send(f"{message.author.display_name} *({message.author.name})*", reply=True)
+        await send(f"{message.author.display_name} *({message.author.name})*", reply = True)
 
     if find_word_bool(message.content, ['battle pass']):
         fortnite_battle_pass = """Fortnite Battle Pass 🗣️🗣️
@@ -600,37 +612,37 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
                 #     fish_utils.all_pfs.profile_from_name(message.author.name).last_fish_time = 0
 
                 content = f'{'[TESTING ONLY] ' if not fish_utils.FISHING_ENABLED else ''}{fish_utils.fish_event(message.author.name)}'
-                await send(content, reply=True, bypass_cd=True, fishing=True)
+                await send(content, reply = True, bypass_cd = True, fishing = True)
 
             except fish_utils.MaintenanceError:
-                await server_instance.reply_to_message(message, f'fishing is currently disabled, go play minecraft in the meantime or some shit', bypass_cd=True, fishing=True)
+                await server_instance.reply_to_message(message, f'fishing is currently disabled, go play minecraft in the meantime or some shit', bypass_cd = True, fishing= True)
 
             fish_utils.all_pfs.write_data()
 
-            await server_instance.change_presence(game_name="fishing")
+            await server_instance.mimic_presence(default_name = "fishing")
             await asyncio.sleep(20)
-            await server_instance.change_presence()
+            await server_instance.mimic_presence()
 
         elif not find_word_bool(message.content, ['2+2', 'zxcvbnm', 'qwertyuiop', 'asdfghjkl', '🐟', '🎣', '🐠', '🐡', 'jobless behavior']):
             temp_path = Path("images", "no fishing in general.gif")
-            await send(reply=True, file_path=temp_path)
+            await send(reply = True, file_path = temp_path)
 
     if message.content.startswith('admin:') and len(message.content) > 6:
         if is_admin:
             if message.content.startswith('admin:switch'):
                 if fish_utils.switch_fishing():
-                    await server_instance.send_message(message, 'Fishing sim turned on. let the brainrot begin', fishing=True)
+                    await server_instance.send_message(message, 'Fishing sim turned on. let the brainrot begin', fishing= True)
                 else:
-                    await server_instance.send_message(message, 'Fishing sim turned off. go outside everyone', fishing=True)
+                    await server_instance.send_message(message, 'Fishing sim turned off. go outside everyone', fishing= True)
 
             elif message.content.startswith('admin:shutdown'):
-                await server_instance.send_message(message, "Shutting down bot :(", bypass_cd=True)
+                await server_instance.send_message(message, "Shutting down bot :(", bypass_cd = True)
                 exit(2)
 
             elif message.content.startswith('admin:backup'):
                 try:
                     backup_utils.make_backup()
-                    await server_instance.reply_to_message(message, 'Backup successful', fishing=True)
+                    await server_instance.reply_to_message(message, 'Backup successful', fishing= True)
                 except Exception as e:
                     await server_instance.reply_to_message(message, f'bro you done fucked smth up ({e})')
 
@@ -666,17 +678,17 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
                 except ValueError:
                     temp_count = 1
                 except Exception as e:
-                    await server_instance.reply_to_message(message, f"Something went wrong [{e}]", bypass_cd=True)
+                    await server_instance.reply_to_message(message, f"Something went wrong [{e}]", bypass_cd = True)
                     return
 
                 temp_profile = fish_utils.all_pfs.profile_from_name(temp_username)
                 if temp_profile is not None and temp_fish is not None:
                     temp_profile.add_fish(temp_fish, temp_count)
                 else:
-                    await server_instance.reply_to_message(message, "User/fish couldn't be found", bypass_cd=True)
+                    await server_instance.reply_to_message(message, "User/fish couldn't be found", bypass_cd = True)
                     return
 
-                await server_instance.reply_to_message(message, f"Gave {temp_count} {temp_fish.name} to {temp_username}\n", bypass_cd=True)
+                await server_instance.reply_to_message(message, f"Gave {temp_count} {temp_fish.name} to {temp_username}\n", bypass_cd = True)
                 fish_utils.all_pfs.write_data()
 
             elif message.content.startswith("admin:ban"):
@@ -724,7 +736,7 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
 
         else:
             await server_instance.reply_to_message(message, 'you can\'t do that (reference to 1984 by George Orwell)',
-                                                   bypass_cd=True)
+                                                   bypass_cd = True)
 
     if is_admin or fish_utils.FISHING_ENABLED:
         if find_word_bool(message.content, ['show profile', 'show pf']):
@@ -736,31 +748,31 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
 
             embed = discord.Embed(title=f'{'(Testing Only) ' if not fish_utils.FISHING_ENABLED else ''}'
                                         f'{username_temp}\'s Profile', description=fish_utils.profile_to_string(username_temp))
-            await message.channel.send(embed=embed)
+            await message.channel.send(embed = embed)
 
         if find_word_bool(message.content, ['show leaderboard', 'show lb', '.lb']):
             embed = discord.Embed(title=f'{'(Testing Only) ' if not fish_utils.FISHING_ENABLED else ''}Leaderboard',
                                   description=fish_utils.leaderboard_string())
-            await message.channel.send(embed=embed)
-            # await server_instance.send_message(message, fish_utils.leaderboard_string(), bypass_cd=True)
+            await message.channel.send(embed = embed)
+            # await server_instance.send_message(message, fish_utils.leaderboard_string(), bypass_cd = True)
 
 
         if find_word_bool(message.content, ['item rng lb', 'old luck lb', 'old rng lb', 'show luck old', '.oldrnglb', '.oldlbrng', '.oldlbluck', '.oldlucklb']):
             embed = discord.Embed(title=f'{'(Testing Only) ' if not fish_utils.FISHING_ENABLED else ''}RNG Leaderboard (by item)',
-                                  description=fish_utils.leaderboard_string(sort_by_luck=True))
-            await message.channel.send(embed=embed)
+                                  description=fish_utils.leaderboard_string(sort_by_luck= True))
+            await message.channel.send(embed = embed)
 
         elif find_word_bool(message.content, ['luck lb', 'rng lb', 'show luck', '.rnglb', '.lbrng', '.lbluck', '.lucklb']):
             embed = discord.Embed(title=f'{'(Testing Only) ' if not fish_utils.FISHING_ENABLED else ''}RNG Leaderboard',
                                   description=fish_utils.luck_leaderboard_string())
-            await message.channel.send(embed=embed)
+            await message.channel.send(embed = embed)
 
         if find_word_bool(message.content, ['all fish', 'global stats', 'global fish', 'all stats', 'combined profiles', 'combined joblessness',
                                             'global joblessness', 'how jobless is everyone', '.allfish']):
             embed = discord.Embed(title=f'{'(Testing Only) ' if not fish_utils.FISHING_ENABLED else ''}Universal Stats',
                                   description=fish_utils.universal_profile_to_string())
-            await message.channel.send(embed=embed)
-            # await server_instance.send_message(message, fish_utils.universal_profile_to_string(), bypass_cd=True)
+            await message.channel.send(embed = embed)
+            # await server_instance.send_message(message, fish_utils.universal_profile_to_string(), bypass_cd = True)
 
         if lowercase_message_content.startswith('go shop') or lowercase_message_content.startswith('show shop'):
             parts = message.content.split(' ')
@@ -774,7 +786,7 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
             embed = discord.Embed(title=f'{'(Testing Only) ' if not fish_utils.FISHING_ENABLED else ''}Shop (Page '
                                         f'{page_num:,} of {shop_utils.max_page():,})', description=shop_utils.display_shop_page(page_num),
                                   color=0xffffff)
-            await message.channel.send(embed=embed)
+            await message.channel.send(embed = embed)
 
         if lowercase_message_content.startswith('go buy'):
             parts = message.content.split(' ')
@@ -813,9 +825,9 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
             if pf:
                 await server_instance.reply_to_message(message, f'{pf.username}: '
                                                                 f'{fish_utils.factor_to_percent_increase(factor):.1f}% boost on avg (doesn\'t include effects of powerups)',
-                                                       bypass_cd=True)
+                                                       bypass_cd = True)
             else:
-                await server_instance.reply_to_message(message, "That user (probably) doesn't exist", bypass_cd=True)
+                await server_instance.reply_to_message(message, "That user (probably) doesn't exist", bypass_cd = True)
 
     if message.content.startswith('!spam '):
         parts = message.content.split(' ')
@@ -829,7 +841,7 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
                 await kush.send('Hi')
 
     if find_isolated_word_bool(lowercase_message_content, ['guess what']):
-        await send('chicken butt', reply=True)
+        await send('chicken butt', reply = True)
 
     if find_word_index(lowercase_message_content, ['jaden status', 'jedwin']) > -1:
         time_tuple = days_and_hours_since(current_time, JADEN_18TH_BIRTHDAY_UNIX_TIME)
@@ -852,9 +864,9 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
         await server_instance.reply_to_message(message, f"Kayshav has been consuming brainrot for {time_tuple[0]} days and {time_tuple[1]} hours")
 
     # if random_range(1, 210) == 1:
-    #     await server_instance.reply_to_message(message, f"{random.choice(BAITS)}", ping=False)
+    #     await server_instance.reply_to_message(message, f"{random.choice(BAITS)}", ping = False)
     # elif index_of_pronoun > -1 and random_range(1, 27) == 1:
-    #     await server_instance.reply_to_message(message, f"{random.choice(BAITS[4:])}", ping=False)
+    #     await server_instance.reply_to_message(message, f"{random.choice(BAITS[4:])}", ping = False)
 
 if __name__ == '__main__':
     client.run(TOKEN)
