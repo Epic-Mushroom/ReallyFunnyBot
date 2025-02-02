@@ -8,6 +8,19 @@ from string_utils import *
 from constants import *
 
 
+class BotInstance:
+
+    def __init__(self, client: discord.Client):
+        self.server_instance_list: list[ServerSpecificInstance] = []
+        self.current_status_task: asyncio.Task | None = None
+        self.client = client
+
+    def add_server_instance(self, guild: discord.Guild):
+        self.server_instance_list.append(ServerSpecificInstance(guild))
+
+    def get_server_instance(self, guild: discord.Guild):
+        return next((i for i in self.server_instance_list if i.server == guild), None)
+
 class ServerSpecificInstance:
 
     def __init__(self, guild: discord.Guild):
@@ -155,7 +168,7 @@ class ServerSpecificInstance:
             # on_presence_update gets called once for every mutual server with the user
             return
 
-        print(f"attempting to mimic the status of {stalked_member.name}")
+        # print(f"attempting to mimic the status of {stalked_member.name}")
 
         activity_gen = (activity.type == discord.ActivityType.playing for activity in stalked_member.activities)
         if any(activity_gen):
@@ -167,8 +180,8 @@ class ServerSpecificInstance:
                 else None)
 
         else:
-            print(f"this user does not have an activity, changing bot activity to {default_name if
-            default_name else "nothing"}")
+            # print(f"this user does not have an activity, changing bot activity to {default_name if
+            # default_name else "nothing"}")
 
             await change_presence(default_name)
 
@@ -178,13 +191,6 @@ class ServerSpecificInstance:
 
     def on_lockdown(self):
         return int(time.time()) < self.lockdown
-
-    @staticmethod
-    def get_instance(guild: discord.Guild):
-        return next((i for i in server_instance_list if i.server == guild), None)
-
-# Globals
-server_instance_list: list[ServerSpecificInstance] = []
 
 # Directory setup
 script_directory = Path(__file__).parent.resolve()
@@ -206,7 +212,6 @@ finally:
 SECRET_FILE_PATH_MAIN = Path('secrets', 'discord bot token.txt')
 SECRET_FILE_PATH_TEST = Path('secrets', 'test discord bot token.txt')
 TOKEN = None
-MY_GUILD = 964941621110120538
 
 try:
     token_path = SECRET_FILE_PATH_TEST if ADMIN_ONLY else SECRET_FILE_PATH_MAIN
@@ -221,13 +226,15 @@ COMMANDS_GUILD = None
 STALKED_ID = JAMES_ID
 
 if ADMIN_ONLY:
-    COMMANDS_GUILD = discord.Object(id =MY_GUILD)
+    COMMANDS_GUILD = discord.Object(id = MY_GUILD)
     STALKED_ID = EPIC_MUSHROOM_ID
 
 # Discord client setup
 intents = discord.Intents.all()
-client = discord.Client(intents=intents)
+client = discord.Client(intents = intents)
 tree = discord.app_commands.CommandTree(client)
+
+bot_instance = BotInstance(client)
 
 # Builds lyrics of revenge
 with open(Path('revenge.txt'), 'r') as lyrics:
@@ -237,7 +244,7 @@ with open(Path('revenge.txt'), 'r') as lyrics:
         REVENGE_LYRICS.append(strip_punctuation(line.strip().lower()))
 
 # sends a reminder to renew the server in my dms
-reminder_time = datetime.time(hour=13, minute=0, tzinfo=datetime.timezone(datetime.timedelta(hours=-8)))
+reminder_time = datetime.time(hour = 13, minute = 0, tzinfo = datetime.timezone(datetime.timedelta(hours=-8)))
 
 def random_range(start: int, stop: int) -> int:
     """random.randrange but its inclusive so i don't keep forgetting the original function has an exclusive endpoint because i have fucking dementia"""
@@ -261,6 +268,11 @@ async def change_presence(game_name=""):
     else:
         await client.change_presence(activity = discord.Game(game_name))
 
+async def fishing_status_coro(server_instance):
+    await server_instance.mimic_presence(default_name = "fishing")
+    await asyncio.sleep(20)
+    await server_instance.mimic_presence()
+
 @tasks.loop(time=reminder_time)
 async def reminder():
     me = await client.fetch_user(EPIC_MUSHROOM_ID)
@@ -279,12 +291,12 @@ async def on_ready():
     print(f'connected to {len(client.guilds)} servers')
 
     for g in client.guilds:
-        server_instance_list.append(ServerSpecificInstance(g))
+        bot_instance.add_server_instance(g)
 
 @client.event
 async def on_presence_update(before, after: discord.Member):
     if after.id == STALKED_ID and after.guild.id == (PRIVATE_SERVER_ID if ADMIN_ONLY else GROUP_CHAT_SERVER_ID) :
-        instance = ServerSpecificInstance.get_instance(after.guild)
+        instance = bot_instance.get_server_instance(after.guild)
         print(f"entered conditional, user's guild is {after.guild.name}")
 
         if instance is None:
@@ -307,12 +319,12 @@ async def on_message(message):
     current_time = int(time.time())
     current_guild = message.guild
 
-    server_instance: None | ServerSpecificInstance = ServerSpecificInstance.get_instance(current_guild)
+    server_instance: None | ServerSpecificInstance = bot_instance.get_server_instance(current_guild)
 
     # Creates a server instance for dms if the message was sent through dms
     if server_instance is None:
-        server_instance_list.append(ServerSpecificInstance(current_guild))
-        server_instance = server_instance_list[-1]
+        bot_instance.add_server_instance(current_guild)
+        server_instance = bot_instance.server_instance_list[-1]
 
     # Makes it so it doesn't reply to itself
     if message.author.id in [1334971973859672094, 1300220037268770907]:
@@ -563,9 +575,7 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
 
             fish_utils.all_pfs.write_data()
 
-            await server_instance.mimic_presence(default_name = "fishing")
-            await asyncio.sleep(20)
-            await server_instance.mimic_presence()
+            fishing_status_task = asyncio.create_task(fishing_status_coro(server_instance))
 
         elif not find_word_bool(message.content, ['2+2', 'zxcvbnm', 'qwertyuiop', 'asdfghjkl', '🐟', '🎣', '🐠', '🐡', 'jobless behavior']):
             temp_path = Path("images", "no fishing in general.gif")
