@@ -21,6 +21,16 @@ class BotInstance:
     def get_server_instance(self, guild: discord.Guild):
         return next((i for i in self.server_instance_list if i.server == guild), None)
 
+    def set_current_status_task(self, task):
+        self.current_status_task = task
+
+    def cancel_current_status_task(self):
+        try:
+            self.current_status_task.cancel()
+
+        except AttributeError:
+            pass
+
 class ServerSpecificInstance:
 
     def __init__(self, guild: discord.Guild):
@@ -162,10 +172,14 @@ class ServerSpecificInstance:
         Copies the status of a certain user when called. If the user has no activity,
         changes bot's activity to default_name
         """
-        stalked_member = self.server.get_member(STALKED_ID)
+        try:
+            stalked_member = self.server.get_member(STALKED_ID)
 
-        if stalked_member is None:
-            # on_presence_update gets called once for every mutual server with the user
+            if stalked_member is None:
+                # on_presence_update gets called once for every mutual server with the user
+                raise AttributeError
+
+        except AttributeError:
             return
 
         # print(f"attempting to mimic the status of {stalked_member.name}")
@@ -575,7 +589,8 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
 
             fish_utils.all_pfs.write_data()
 
-            fishing_status_task = asyncio.create_task(fishing_status_coro(server_instance))
+            bot_instance.cancel_current_status_task()
+            bot_instance.set_current_status_task(asyncio.create_task(fishing_status_coro(server_instance)))
 
         elif not find_word_bool(message.content, ['2+2', 'zxcvbnm', 'qwertyuiop', 'asdfghjkl', '🐟', '🎣', '🐠', '🐡', 'jobless behavior']):
             temp_path = Path("images", "no fishing in general.gif")
