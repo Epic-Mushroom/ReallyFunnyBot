@@ -231,7 +231,15 @@ async def change_presence(game_name=""):
         await client.change_presence(activity = discord.Game(game_name))
 
 async def fishing_status_coro(server_instance):
-    await server_instance.mimic_presence(default_name = "fishing")
+    possible_presences = ["fishing", "go fish", "><>", "<><",
+                          "go fish", "jobless behavior", "fishe", "let's go gambling"]
+    chosen_presence = random.choice(possible_presences)
+    client_activity = server_instance.server.get_member(client.application_id).activity
+
+    if client_activity is not None and client_activity.name in possible_presences:
+        chosen_presence = client_activity.name
+
+    await server_instance.mimic_presence(default_name = chosen_presence)
     await asyncio.sleep(20)
     await server_instance.mimic_presence()
 
