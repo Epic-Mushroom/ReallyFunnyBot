@@ -245,6 +245,9 @@ class FishingItem:
     def __str__(self):
         return self.name
 
+class FishEvent:
+    ...
+
 def switch_fishing() -> bool:
     global FISHING_ENABLED
 
@@ -1073,6 +1076,7 @@ if __name__ == '__main__':
             for i in range(iterations):
                 print(fish_event('epicmushroom.'))
                 all_pfs.write_data()
+
         elif user_input == 'fishobtest':
             test_items = ['Credit', 'Ohlone Rejection Letter', 'Boops boops', 'Floating Wood EX', 'Blue Whale']
 
