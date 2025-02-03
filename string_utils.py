@@ -91,3 +91,14 @@ def seconds_to_descriptive_time(seconds, decimalize=False) -> str:
         return f'{pluralize(int(minutes), 'minute')}{f' and {seconds_to_descriptive_time(time_left, decimalize=decimalize)}' if time_left > 0 else ''}'
     else:
         return f'{seconds:,.1f} seconds' if decimalize else f'{seconds:,.0f} seconds'
+
+def hours_since(current_time: int, considered_time: int) -> int:
+    seconds_since = int(current_time - considered_time)
+    return seconds_since // 3600
+
+def days_and_hours_since(current_time: int, considered_time: int) -> tuple:
+    hours = hours_since(current_time, considered_time)
+    days = hours // 24
+    hours = hours - days * 24
+
+    return days, hours

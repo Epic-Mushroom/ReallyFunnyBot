@@ -1017,26 +1017,6 @@ def recalculate_fish_database() -> int:
     update_fish_file(list_of_profiles)
     return items_changed
 
-def update_user_database(username: str, increment=1) -> None:
-    with open(GENERAL_DATABASE_PATH, 'r+') as file:
-        list_of_dicts = json.load(file)
-        user_found = False
-
-        for one_dict in list_of_dicts:
-            if one_dict['username'] == username:
-                user_found = True
-                one_dict['value'] += increment
-
-        if not user_found:
-            new_dict = dict()
-            new_dict['username'] = username
-            new_dict['value'] = increment
-            list_of_dicts.append(new_dict)
-
-        file.seek(0)
-        json.dump(list_of_dicts, file, indent=4)
-        file.truncate()
-
 def _manual_data_changes() -> str:
     output = ''
 

@@ -80,12 +80,13 @@ class ServerSpecificInstance:
     def get_comedians(self) -> list[str]:
         return self.comedians
 
-    async def send_message(self, reference, text, bypass_cd = False, file_path = None,
+    async def send_message(self, reference, text, reply = True,
+                           bypass_cd = False, file_path = None,
                            fishing = False) -> None:
         # prevents message length from going over 2000
         if len(str(text)) > 1990:
-            text = "[*some parts of this message were removed because of discord's character limit*]\n" + text[
-                                                                                                          -1800:]
+            text = ("[*some parts of this message were removed because of discord's character limit*]\n" +
+                    text[-1800:])
 
         file = None
         if file_path:
@@ -93,6 +94,7 @@ class ServerSpecificInstance:
 
         if self.on_cooldown() and not fishing:
             print(f'On cooldown. Message withheld: {text}')
+            return
 
         if self.on_lockdown() and not fishing:
             print(f'On lockdown. Message withheld: {text}')
@@ -104,65 +106,9 @@ class ServerSpecificInstance:
             if not bypass_cd:
                 self.recently_sent_messages += 1
 
-            await reference.channel.send(text, file = file)
+            await reference.channel.send(text, file = file, reference = reference if reply else None)
 
-            total_triggers_file = None
-
-            try:
-                total_triggers_file = Path("trackers", "total_triggers.txt").open('r+')
-                current_count = int(total_triggers_file.readline())
-                total_triggers_file.seek(0)
-                total_triggers_file.write(f"{current_count + 1}")
-            finally:
-                if total_triggers_file:
-                    total_triggers_file.close()
-
-            fish_utils.update_user_database(reference.author.name)
-
-        if file:
-            file.close()
-
-    async def reply_to_message(self, reference, text, bypass_cd = False, ping = True,
-                               file_path = None, fishing = False) -> None:
-        if len(str(text)) > 1990:
-            text = "[*some parts of this message were removed because of discord's character limit*]\n" + text[
-                                                                                                          -1800:]
-
-        file = None
-        if file_path:
-            file = discord.File(file_path)
-
-        if self.on_cooldown() and not fishing:
-            print(f'On cooldown. Message withheld: {text}')
-
-        if self.on_lockdown() and not fishing:
-            print(f'On lockdown. Message withheld: {text}')
-            return
-
-        if bypass_cd or not (self.something_sent or self.on_cooldown()):
-            self.something_sent = True
-
-            if not bypass_cd:
-                self.recently_sent_messages += 1
-
-            if ping:
-                await reference.reply(text, file = file)
-            else:
-                await reference.reply(text, file = file,
-                                      allowed_mentions = discord.AllowedMentions.none())
-
-            total_triggers_file = None
-
-            try:
-                total_triggers_file = Path("trackers", "total_triggers.txt").open('r+')
-                current_count = int(total_triggers_file.readline())
-                total_triggers_file.seek(0)
-                total_triggers_file.write(f"{current_count + 1}")
-            finally:
-                if total_triggers_file:
-                    total_triggers_file.close()
-
-            fish_utils.update_user_database(reference.author.name)
+            increment_total_triggers()
 
         if file:
             file.close()
@@ -194,7 +140,7 @@ class ServerSpecificInstance:
                 else None)
 
         else:
-            # print(f"this user does not have an activity, changing bot activity to {default_name if
+            # print(f"this user does not have a "playing" activity, changing bot activity to {default_name if
             # default_name else "nothing"}")
 
             await change_presence(default_name)
@@ -264,16 +210,18 @@ def random_range(start: int, stop: int) -> int:
     """random.randrange but its inclusive so i don't keep forgetting the original function has an exclusive endpoint because i have fucking dementia"""
     return random.randrange(start, stop + 1)
 
-def hours_since(current_time: int, considered_time: int) -> int:
-    seconds_since = int(current_time - considered_time)
-    return seconds_since // 3600
+def increment_total_triggers(count=1):
+    total_triggers_file = None
 
-def days_and_hours_since(current_time: int, considered_time: int) -> tuple:
-    hours = hours_since(current_time, considered_time)
-    days = hours // 24
-    hours = hours - days * 24
+    try:
+        total_triggers_file = Path("trackers", "total_triggers.txt").open('r+')
+        current_count = int(total_triggers_file.readline())
+        total_triggers_file.seek(0)
+        total_triggers_file.write(f"{current_count + 1}")
 
-    return(days, hours)
+    finally:
+        if total_triggers_file:
+            total_triggers_file.close()
 
 async def change_presence(game_name=""):
     if not game_name:
@@ -321,11 +269,8 @@ async def on_presence_update(before, after: discord.Member):
 
 @client.event
 async def on_message(message):
-    async def send(content='** **', reply=False, bypass_cd =False, ping= True, file_path=None, fishing=False):
-        if reply:
-            await server_instance.reply_to_message(message, content, bypass_cd =bypass_cd, file_path=file_path, ping=ping, fishing=fishing)
-        else:
-            await server_instance.send_message(message, content, bypass_cd =bypass_cd, file_path=file_path, fishing=fishing)
+    async def send(content='** **', reply = True, bypass_cd =False, ping= True, file_path=None, fishing=False):
+        await server_instance.send_message(message, content, reply = reply, bypass_cd = bypass_cd, file_path = file_path, fishing = fishing)
 
     referred_message = None
     lowercase_message_content = message.content.lower()
@@ -367,7 +312,7 @@ async def on_message(message):
     if any(lowercase_message_content.strip().startswith(lyric) for lyric in REVENGE_LYRICS):
         try:
             lyric_found = find_word(message.content, REVENGE_LYRICS)
-            await server_instance.reply_to_message(message, REVENGE_LYRICS[REVENGE_LYRICS.index(lyric_found) + 1])
+            await send(REVENGE_LYRICS[REVENGE_LYRICS.index(lyric_found) + 1])
         except IndexError:
             pass
         except ValueError:
@@ -393,37 +338,37 @@ async def on_message(message):
     if referred_message and referred_message.author == client.user:
         if referred_message.content.lower() == "who":
             if strip_punctuation(lowercase_message_content.lower()) != "asked":
-                await send("asked :rofl::rofl:", reply = True, bypass_cd = True)
+                await send("asked :rofl::rofl:", bypass_cd = True)
             else:
                 await message.add_reaction(random.choice(FUNNY_EMOJIS))
         elif referred_message.content.lower() == "what":
             if strip_punctuation(lowercase_message_content.lower()) != "ever":
-                await server_instance.reply_to_message(message, "ever :joy::joy:", True)
+                await send("ever :joy::joy:", bypass_cd = True)
             else:
                 await message.add_reaction(random.choice(FUNNY_EMOJIS))
         elif referred_message.content.lower() == "when":
             if strip_punctuation(lowercase_message_content.lower()) != "did i ask" and strip_punctuation(lowercase_message_content.lower()) != "did you ask":
-                await server_instance.reply_to_message(message, "did I ask :joy::joy::rofl:", True)
+                await send("did I ask :joy::joy::rofl:", bypass_cd = True)
             else:
                 await message.add_reaction(random.choice(FUNNY_EMOJIS))
 
     if find_word_bool(lowercase_message_content, THICK_OF_IT_TRIGGERS):
-        await server_instance.reply_to_message(message, "https://www.youtube.com/watch?v=At8v_Yc044Y")
+        await send("https://www.youtube.com/watch?v=At8v_Yc044Y")
 
     if find_word_bool(lowercase_message_content, ['skibidi', 'hawk tuah', 'jelqing', 'lv 100 gyatt']):
-        await server_instance.send_message(message, "no")
+        await send("no")
 
     if "FUCK" in message.content or "SHIT" in message.content or lowercase_message_content == "shut the fuck up":
-        await server_instance.reply_to_message(message, f"{random.choice(SWEARING_RESPONSES)}")
+        await send(random.choice(SWEARING_RESPONSES))
 
     if find_isolated_word_bool(message.content, ['kys', 'kill yourself', 'kill your self']):
-        await server_instance.send_message(message, f"{random.choice(KYS_RESPONSES)}")
+        await send(random.choice(KYS_RESPONSES))
     
     if "what is the time" in lowercase_message_content:
-        await server_instance.reply_to_message(message, f"It is <t:{current_time}:f>")
+        await send(f"It is <t:{current_time}:f>")
 
     if "what is the unix time" in lowercase_message_content:
-        await server_instance.reply_to_message(message, f"The unix time is {current_time}\nformatted, that's <t:{current_time}:f>")
+        await send(f"The unix time is {current_time}\nformatted, that's <t:{current_time}:f>")
 
     if "totaltriggers" in lowercase_message_content:
         total_triggers_file = None
@@ -436,37 +381,37 @@ async def on_message(message):
             if total_triggers_file:
                 total_triggers_file.close()
 
-        await server_instance.reply_to_message(message, f"{current_count} triggers", bypass_cd = True)
+        await send(f"{current_count} triggers", bypass_cd = True)
 
     if "cooldownstatus" in lowercase_message_content:
         if server_instance.on_cooldown():
-            await server_instance.reply_to_message(message, f"I am on cooldown. Stop freaking spamming bro. (cooldown length is {COOLDOWN_LENGTH}, "
-                                        f"max number of messages able to be sent per cooldown reset period is {COOLDOWN_LIMIT}, "
-                                            f"{server_instance.recently_sent_messages+1} messages were sent during this period)", True)
+            await send(f"I am on cooldown. Stop freaking spamming bro. (cooldown length is {COOLDOWN_LENGTH}, "
+                       f"max number of messages able to be sent per cooldown reset period is {COOLDOWN_LIMIT}, "
+                       f"{server_instance.recently_sent_messages+1} messages were sent during this period)", bypass_cd = True)
+
         else:
-            await server_instance.reply_to_message(message,
-                                   f"I am not on cooldown. (cooldown length is {COOLDOWN_LENGTH}, "
-                                   f"max number of messages able to be sent per cooldown reset is {COOLDOWN_LIMIT}, "
-                                   f"{server_instance.recently_sent_messages+1} messages were sent during this period)",
-                                   True)
+            await send(f"I am not on cooldown. (cooldown length is {COOLDOWN_LENGTH}, "
+                       f"max number of messages able to be sent per cooldown reset is {COOLDOWN_LIMIT}, "
+                       f"{server_instance.recently_sent_messages+1} messages were sent during this period)", bypass_cd = True)
 
     if find_word_bool(message.content, ['resetcd']):
         if is_admin:
-            await server_instance.reply_to_message(message, 'Reset cooldown', bypass_cd = True)
-            server_instance.reset_cooldown(force= True)
+            await send("Reset cooldown", bypass_cd = True)
+            server_instance.reset_cooldown(force = True)
+
         else:
-            await server_instance.reply_to_message(message, 'Nah I don\'t feel like it', bypass_cd = True)
+            await send('Nah I don\'t feel like it', bypass_cd = True)
 
     if "HALOOLYH BRIKTAY" == message.content:
-        await server_instance.reply_to_message(message, message.content)
+        await send(message.content)
 
-    if find_isolated_word_bool(message.content, ['money']):
+    if find_isolated_word_bool(message.content, ['money']) and random_range(1, 3) == 1:
         temu = """Happy New Year~ Sending you a New Year's card. Come and see my New Year's wishes and accept my invitation.
 -For real?
 -Sure, only 2 steps to take the gift and help me get mine!
 https://temu.com/s/Ut2tvFcWcwAKgdUM"""
         await asyncio.sleep(5)
-        await send(temu)
+        await send(temu, reply = False)
 
     if find_word_bool(message.content, ['ur mom', 'your mom', 'ur dad', 'ur gae', 'ur gay', "you're gay"]):
         await message.add_reaction(random.choice(FUNNY_EMOJIS))
@@ -510,25 +455,23 @@ https://temu.com/s/Ut2tvFcWcwAKgdUM"""
             print(f"'{str(video_path)} wasn't found'")
 
     if find_isolated_word_bool(message.content, ['speech bubble', 'speechbubble']) and referred_message:
-        if not message.mentions:
-            await server_instance.reply_to_message(referred_message, random.choice(SPEECH_BUBBLES))
-        else:
-            await server_instance.reply_to_message(referred_message, random.choice(SPEECH_BUBBLES), ping=False)
+        await send(random.choice(SPEECH_BUBBLES), ping = not message.mentions)
 
     if find_isolated_word_bool(message.content, ['brawl stars', 'hop on brawl']):
-        await server_instance.reply_to_message(message, 'https://tenor.com/view/wanna-play-brawl-stars-lonely-no-one-plays-brawl-stars-lmoa-gif-23811622')
+        await send('https://tenor.com/view/wanna-play-brawl-stars-lonely-no-one-plays-brawl-stars-lmoa-gif-23811622')
 
     if find_isolated_word_bool(message.content, ['sigma']):
-        await server_instance.reply_to_message(message, 'https://tenor.com/view/not-a-sigma-sorry-you-are-not-a-sigma-sorry-you%27re-not-a-sigma-you-aren%27t-a-sigma-you-are-not-sigma-gif-337838532227751572')
+        await send('https://tenor.com/view/not-a-sigma-sorry-you-are-not-a-sigma-sorry-you%27re-not-a-sigma-you-aren%27t-a-sigma-you-are-not-sigma-gif-337838532227751572')
 
     if find_isolated_word_bool(message.content, ['uwu', 'owo', ':3']):
-        await server_instance.reply_to_message(message, 'https://tenor.com/view/kekw-gif-21672467')
+        await send('https://tenor.com/view/kekw-gif-21672467')
 
     if find_isolated_word_bool(message.content, ['can i', 'can we']):
         index_can = find_index_after_word(message.content, ['can i', 'can we'])
         interpreted_text = strip_punctuation(message.content[index_can:])
+        
         if len(interpreted_text) > 0:
-            await server_instance.send_message(message, f"idk can you {interpreted_text}")
+            await send(f"idk can you {interpreted_text}", reply = False)
 
     if random_range(1, 888) == 1:
         await send('🫠 (this message has a 1/888 chance to appear)', bypass_cd = True)
@@ -585,7 +528,7 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
                 await send(content, reply = True, bypass_cd = True, fishing = True)
 
             except fish_utils.MaintenanceError:
-                await server_instance.reply_to_message(message, f'fishing is currently disabled, go play minecraft in the meantime or some shit', bypass_cd = True, fishing= True)
+                await send(f'fishing is currently disabled, go play minecraft in the meantime or some shit', fishing = True)
 
             fish_utils.all_pfs.write_data()
 
@@ -611,32 +554,28 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
             elif message.content.startswith('admin:backup'):
                 try:
                     backup_utils.make_backup()
-                    await server_instance.reply_to_message(message, 'Backup successful', fishing= True)
+                    await send('Backup successful', fishing = True)
                 except Exception as e:
-                    await server_instance.reply_to_message(message, f'bro you done fucked smth up ({e})')
+                    await send(f'bro you done fucked smth up ({e})', fishing = True)
 
             elif message.content.startswith('admin:mutebot '):
                 parts = message.content.split(' ')
                 timeout_length = int(parts[-1])
 
                 lockdown_expiry_time = server_instance.set_lockdown(timeout_length)
-                await message.channel.send(f'The bot may not exercise freedom of speech until <t:{lockdown_expiry_time}:f>')
+                await send(f'The bot may not exercise freedom of speech until <t:{lockdown_expiry_time}:f>', reply = False)
 
             elif message.content.startswith('admin:unmutebot'):
                 server_instance.set_lockdown(-1)
-                await message.channel.send('The bot may exercise freedom of speech again')
+                await send('The bot may exercise freedom of speech again', reply = False)
 
             elif message.content.startswith('admin:save'):
-                fish_utils.all_pfs.write_data()
-
-            elif message.content.startswith('admin:refund'):
-                # USE THIS COMMAND WITH CAUTION
-                await server_instance.reply_to_message(message, fish_utils._manual_data_changes())
                 fish_utils.all_pfs.write_data()
 
             elif message.content.startswith('admin:give'):
                 # ONLY USE THIS IF FISH IS UNFAIRLY LOST/GAINED BECAUSE OF BUGS
                 # format: "admin:give "epicmushroom." "God" 3"
+                
                 parts = message.content.split('"')
                 temp_username = parts[1]
                 temp_fish = fish_utils.get_fish_from_name(parts[3])
@@ -647,17 +586,17 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
                 except ValueError:
                     temp_count = 1
                 except Exception as e:
-                    await server_instance.reply_to_message(message, f"Something went wrong [{e}]", bypass_cd = True)
+                    await send(f"Something went wrong [{e}]", bypass_cd = True)
                     return
 
                 temp_profile = fish_utils.all_pfs.profile_from_name(temp_username)
                 if temp_profile is not None and temp_fish is not None:
                     temp_profile.add_fish(temp_fish, temp_count)
                 else:
-                    await server_instance.reply_to_message(message, "User/fish couldn't be found", bypass_cd = True)
+                    await send("User/fish couldn't be found", bypass_cd = True)
                     return
 
-                await server_instance.reply_to_message(message, f"Gave {temp_count} {temp_fish.name} to {temp_username}\n", bypass_cd = True)
+                await send(f"Gave {temp_count} {temp_fish.name} to {temp_username}\n", bypass_cd = True)
                 fish_utils.all_pfs.write_data()
 
             elif message.content.startswith("admin:ban"):
@@ -704,7 +643,7 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
 
 
         else:
-            await server_instance.reply_to_message(message, 'you can\'t do that (reference to 1984 by George Orwell)',
+            await send('you can\'t do that (reference to 1984 by George Orwell)',
                                                    bypass_cd = True)
 
     if is_admin or fish_utils.FISHING_ENABLED:
@@ -741,7 +680,6 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
             embed = discord.Embed(title=f'{'(Testing Only) ' if not fish_utils.FISHING_ENABLED else ''}Universal Stats',
                                   description=fish_utils.universal_profile_to_string())
             await message.channel.send(embed = embed)
-            # await server_instance.send_message(message, fish_utils.universal_profile_to_string(), bypass_cd = True)
 
         if lowercase_message_content.startswith('go shop') or lowercase_message_content.startswith('show shop'):
             parts = message.content.split(' ')
@@ -792,11 +730,10 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
             factor = fish_utils.fishing_manifesto_factor(pf.username)
 
             if pf:
-                await server_instance.reply_to_message(message, f'{pf.username}: '
-                                                                f'{fish_utils.factor_to_percent_increase(factor):.1f}% boost on avg (doesn\'t include effects of powerups)',
-                                                       bypass_cd = True)
+                await send(f'{pf.username}: {fish_utils.factor_to_percent_increase(factor):.1f}% boost on avg (doesn\'t include effects of powerups)',
+                       bypass_cd = True)
             else:
-                await server_instance.reply_to_message(message, "That user (probably) doesn't exist", bypass_cd = True)
+                await send("That user (probably) doesn't exist", bypass_cd = True)
 
     if message.content.startswith('!spam '):
         parts = message.content.split(' ')
@@ -814,28 +751,28 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
 
     if find_word_index(lowercase_message_content, ['jaden status', 'jedwin']) > -1:
         time_tuple = days_and_hours_since(current_time, JADEN_18TH_BIRTHDAY_UNIX_TIME)
-        await server_instance.reply_to_message(message, f"Jaden has been stalking minors for {time_tuple[0]} days and {time_tuple[1]} hours")
+        await send(f"Jaden has been stalking minors for {time_tuple[0]} days and {time_tuple[1]} hours")
 
     if find_word_index(lowercase_message_content, ['james status']) > -1:
         time_tuple = days_and_hours_since(current_time, JAMES_18TH_BIRTHDAY_UNIX_TIME)
-        await server_instance.reply_to_message(message, f"James has been getting high for {time_tuple[0]} days and {time_tuple[1]} hours")
+        await send(f"James has been getting high for {time_tuple[0]} days and {time_tuple[1]} hours")
 
     if find_word_index(lowercase_message_content, ['aravind status', 'arvind']) > -1:
         time_tuple = days_and_hours_since(ARAVIND_18TH_BIRTHDAY_UNIX_TIME, current_time)
-        await server_instance.reply_to_message(message, f"Aravind will be legal in {time_tuple[0]} days and {time_tuple[1]} hours")
+        await send(f"Aravind will be legal in {time_tuple[0]} days and {time_tuple[1]} hours")
 
     if find_index_after_word(lowercase_message_content, ['kush status', 'hush b', 'hush']) > -1:
         time_tuple = days_and_hours_since(current_time, KUSH_BIRTHDAY_UNIX_TIME)
-        await server_instance.reply_to_message(message, f"Kush has been consuming brainrot for {time_tuple[0]} days and {time_tuple[1]} hours")
+        await send(f"Kush has been consuming brainrot for {time_tuple[0]} days and {time_tuple[1]} hours")
 
     if find_index_after_word(lowercase_message_content, ['kayshav status']) > -1:
         time_tuple = days_and_hours_since(current_time, KUSH_BIRTHDAY_UNIX_TIME)
-        await server_instance.reply_to_message(message, f"Kayshav has been consuming brainrot for {time_tuple[0]} days and {time_tuple[1]} hours")
+        await send(f"Kayshav has been consuming brainrot for {time_tuple[0]} days and {time_tuple[1]} hours")
 
     # if random_range(1, 210) == 1:
-    #     await server_instance.reply_to_message(message, f"{random.choice(BAITS)}", ping = False)
+    #     await send(f"{random.choice(BAITS)}", ping = False)
     # elif index_of_pronoun > -1 and random_range(1, 27) == 1:
-    #     await server_instance.reply_to_message(message, f"{random.choice(BAITS[4:])}", ping = False)
+    #     await send(f"{random.choice(BAITS[4:])}", ping = False)
 
 if __name__ == '__main__':
     client.run(TOKEN)
