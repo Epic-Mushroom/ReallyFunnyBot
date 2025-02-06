@@ -360,7 +360,7 @@ async def on_message(message: discord.Message):
                 await message.add_reaction(random.choice(FUNNY_EMOJIS))
 
     if find_word_bool(lowercase_message_content, THICK_OF_IT_TRIGGERS):
-        await send("https://www.youtube.com/watch?v=At8v_Yc044Y")
+        await send(file_path = Path('videos', 'thick of it lipsync.mp4'))
 
     if find_word_bool(lowercase_message_content, ['skibidi', 'hawk tuah', 'jelqing', 'lv 100 gyatt']):
         await send("no")
