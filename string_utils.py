@@ -10,6 +10,16 @@ def strip_punctuation(text: str) -> str:
 
     return text.strip()
 
+
+def file_lines_to_list(file_path) -> list:
+    with open(file_path, 'r') as file:
+        lines = []
+
+        for line in file:
+            lines.append(strip_punctuation(line.strip().lower()))
+
+    return lines
+
 def find_word_bool(text: str, words: list[str]) -> bool:
     """Returns False if none of the elements in words are in text, returns True otherwise"""
     text = text.lower()

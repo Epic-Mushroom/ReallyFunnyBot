@@ -196,12 +196,8 @@ tree = discord.app_commands.CommandTree(client)
 
 bot_instance = BotInstance(client)
 
-# Builds lyrics of revenge
-with open(Path('revenge.txt'), 'r') as lyrics:
-    REVENGE_LYRICS = []
-
-    for line in lyrics:
-        REVENGE_LYRICS.append(strip_punctuation(line.strip().lower()))
+REVENGE_LYRICS = file_lines_to_list(Path('revenge.txt'))
+DRUG_NAMES = file_lines_to_list(Path('drugs_list.txt'))
 
 # sends a reminder to renew the server in my dms
 reminder_time = datetime.time(hour = 13, minute = 0, tzinfo = datetime.timezone(datetime.timedelta(hours=-8)))
@@ -232,7 +228,8 @@ async def change_presence(game_name=""):
 
 async def fishing_status_coro(server_instance):
     possible_presences = ["fishing", "go fish", "><>", "<><",
-                          "go fish", "jobless behavior", "fishe", "let's go gambling"]
+                          "go fish", "jobless behavior", "fishe",
+                          "let's go gambling"]
     chosen_presence = random.choice(possible_presences)
     client_activity = server_instance.server.get_member(client.application_id).activity
 
@@ -276,7 +273,7 @@ async def on_presence_update(before, after: discord.Member):
             await instance.mimic_presence()
 
 @client.event
-async def on_message(message):
+async def on_message(message: discord.Message):
     async def send(content='** **', reply = True, bypass_cd =False, ping= True, file_path=None, fishing=False):
         await server_instance.send_message(message, content, reply = reply, bypass_cd = bypass_cd, file_path = file_path, fishing = fishing)
 
@@ -433,6 +430,10 @@ https://temu.com/s/Ut2tvFcWcwAKgdUM"""
             await server_instance.send_message(message, "** **", file_path=image_path)
         except FileNotFoundError:
             print(f"'{str(image_path)} wasn't found'")
+
+    if find_isolated_word_bool(message.content, DRUG_NAMES):
+        await send("https://tenor.com/view/sobriety-prevent-the-misuse-of-drugs-and-alcohol-your-mental-health-will-thank-you-sober-recovery-gif-25389902", reply = False)
+        # await message.delete()
 
     if find_word_bool(message.content, ["kachow"]):
         image_path = Path("images", "jedwin", "kachow.png")
