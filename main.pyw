@@ -82,7 +82,7 @@ class ServerSpecificInstance:
 
     async def send_message(self, reference, text, reply = True,
                            bypass_cd = False, file_path = None,
-                           fishing = False) -> None:
+                           fishing = False) -> discord.Message:
         # prevents message length from going over 2000
         if len(str(text)) > 1990:
             text = ("[*some parts of this message were removed because of discord's character limit*]\n" +
@@ -106,12 +106,14 @@ class ServerSpecificInstance:
             if not bypass_cd:
                 self.recently_sent_messages += 1
 
-            await reference.channel.send(text, file = file, reference = reference if reply else None)
+            msg = await reference.channel.send(text, file = file, reference = reference if reply else None)
 
             increment_total_triggers()
 
         if file:
             file.close()
+
+        return msg
 
     async def mimic_presence(self, default_name=""):
         """
@@ -264,7 +266,7 @@ async def on_ready():
 async def on_presence_update(before, after: discord.Member):
     if after.id == STALKED_ID and after.guild.id == (PRIVATE_SERVER_ID if ADMIN_ONLY else GROUP_CHAT_SERVER_ID) :
         instance = bot_instance.get_server_instance(after.guild)
-        print(f"entered conditional, user's guild is {after.guild.name}")
+        # print(f"entered conditional, user's guild is {after.guild.name}")
 
         if instance is None:
             raise AttributeError("no guild found (?? what??)")
@@ -275,7 +277,7 @@ async def on_presence_update(before, after: discord.Member):
 @client.event
 async def on_message(message: discord.Message):
     async def send(content='** **', reply = True, bypass_cd =False, ping= True, file_path=None, fishing=False):
-        await server_instance.send_message(message, content, reply = reply, bypass_cd = bypass_cd, file_path = file_path, fishing = fishing)
+        return await server_instance.send_message(message, content, reply = reply, bypass_cd = bypass_cd, file_path = file_path, fishing = fishing)
 
     referred_message = None
     lowercase_message_content = message.content.lower()
@@ -522,9 +524,9 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
                                         'quiero comer pescado', 'lets go gambling', 'let\'s go gambling',
                                         '.fish', 'let’s go gambling', '><>', '去钓鱼', '<><', '2+2', 'godfisa',
                                         'zxcvbnm', 'qwertyuiop', 'go ghoti']):
-        if random_range(1, 1500) == 1:
-            jumpscare = await message.channel.send('https://tenor.com/view/oceanmam-fnaf-jumpscare-gif-22911379')
-            await asyncio.sleep(0.31)
+        if random_range(1, 1000) == 1:
+            jumpscare = await send(file_path = Path('images', 'deepfriedjumpscare.png'), fishing = True)
+            await asyncio.sleep(0.42)
             await jumpscare.delete()
             await asyncio.sleep(0.5)
 
