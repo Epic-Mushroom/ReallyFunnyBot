@@ -16,7 +16,10 @@ def file_lines_to_list(file_path) -> list:
         lines = []
 
         for line in file:
-            lines.append(strip_punctuation(line.strip().lower()))
+            to_add = strip_punctuation(line.strip().lower())
+
+            if to_add:
+                lines.append(strip_punctuation(line.strip().lower()))
 
     return lines
 
