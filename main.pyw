@@ -202,7 +202,7 @@ REVENGE_LYRICS = file_lines_to_list(Path('revenge.txt'))
 DRUG_NAMES = file_lines_to_list(Path('drugs_list.txt'))
 
 # sends a reminder to renew the server in my dms
-reminder_time = datetime.time(hour = 13, minute = 0, tzinfo = datetime.timezone(datetime.timedelta(hours=-8)))
+reminder_time = datetime.time(hour = 12, minute = 0, tzinfo = datetime.timezone(datetime.timedelta(hours=-8)))
 
 def random_range(start: int, stop: int) -> int:
     """random.randrange but its inclusive so i don't keep forgetting the original function has an exclusive endpoint because i have fucking dementia"""
@@ -245,7 +245,7 @@ async def fishing_status_coro(server_instance):
 @tasks.loop(time=reminder_time)
 async def reminder():
     me = await client.fetch_user(EPIC_MUSHROOM_ID)
-    await me.send('@everyone renew server')
+    await me.send('@everyone renew server + do microsoft rewards')
 
 @client.event
 async def on_ready():
