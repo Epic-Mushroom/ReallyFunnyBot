@@ -440,7 +440,7 @@ The hallway smelt of boiled cabbage and old rag mats. At one end of it a coloure
 
         await send(winston, reply = False)
 
-    if find_isolated_word_bool(message.content, DRUG_NAMES):
+    if random_range(1, 420) == 1 and find_isolated_word_bool(message.content, DRUG_NAMES):
         await send("https://tenor.com/view/sobriety-prevent-the-misuse-of-drugs-and-alcohol-your-mental-health-will-thank-you-sober-recovery-gif-25389902", reply = False)
         # await message.delete()
 
