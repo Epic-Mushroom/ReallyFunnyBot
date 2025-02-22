@@ -342,7 +342,7 @@ async def on_message(message: discord.Message):
     if random_range(1, 1000) == 1 and (message.author.id == PALIOPOLIS_ID or message.author.id == JADEN_ID):
         await message.add_reaction(random.choice(NEGATIVE_EMOJIS))
 
-    if random_range(1, 100) and message.author.id == MOKSHA_ID:
+    if random_range(1, 100) == 1 and message.author.id == MOKSHA_ID:
         await message.add_reaction("🧔🏿‍♀️")
 
     if referred_message and referred_message.author == client.user:
