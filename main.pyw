@@ -584,11 +584,11 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
                 timeout_length = int(parts[-1])
 
                 lockdown_expiry_time = server_instance.set_lockdown(timeout_length)
-                await send(f'The bot may not exercise freedom of speech until <t:{lockdown_expiry_time}:f>', reply = False)
+                await send(f'The bot may not exercise freedom of speech until <t:{lockdown_expiry_time}:f>', reply = False, bypass_cd = True, fishing = True)
 
             elif message.content.startswith('admin:unmutebot'):
                 server_instance.set_lockdown(-1)
-                await send('The bot may exercise freedom of speech again', reply = False)
+                await send('The bot may exercise freedom of speech again', reply = False, bypass_cd = True)
 
             elif message.content.startswith('admin:save'):
                 fish_utils.all_pfs.write_data()
