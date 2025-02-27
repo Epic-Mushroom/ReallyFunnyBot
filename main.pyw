@@ -11,12 +11,12 @@ from constants import *
 class BotInstance:
 
     def __init__(self, client: discord.Client):
-        self.server_instance_list: list[ServerSpecificInstance] = []
+        self.server_instance_list: list[ServerInstance] = []
         self.current_status_task: asyncio.Task | None = None
         self.client = client
 
     def add_server_instance(self, guild: discord.Guild):
-        self.server_instance_list.append(ServerSpecificInstance(guild))
+        self.server_instance_list.append(ServerInstance(guild))
 
     def get_server_instance(self, guild: discord.Guild):
         return next((i for i in self.server_instance_list if i.server == guild), None)
@@ -31,7 +31,7 @@ class BotInstance:
         except AttributeError:
             pass
 
-class ServerSpecificInstance:
+class ServerInstance:
 
     def __init__(self, guild: discord.Guild):
         self.server = guild
@@ -146,6 +146,11 @@ class ServerSpecificInstance:
             # default_name else "nothing"}")
 
             await change_presence(default_name)
+
+    async def change_nickname(self, nickname):
+        bot_member = self.server.get_member(client.user.id)
+
+        await bot_member.edit(nick = nickname)
 
     def set_lockdown(self, seconds) -> int:
         self.lockdown = int(time.time()) + seconds
@@ -285,7 +290,7 @@ async def on_message(message: discord.Message):
     current_time = int(time.time())
     current_guild = message.guild
 
-    server_instance: None | ServerSpecificInstance = bot_instance.get_server_instance(current_guild)
+    server_instance: None | ServerInstance = bot_instance.get_server_instance(current_guild)
 
     # Creates a server instance for dms if the message was sent through dms
     if server_instance is None:
@@ -770,25 +775,28 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
     if find_isolated_word_bool(lowercase_message_content, ['guess what']):
         await send('chicken butt', reply = True)
 
-    if find_word_index(lowercase_message_content, ['jaden status', 'jedwin']) > -1:
+    if find_word(lowercase_message_content, ['jaden status', 'jedwin']):
         time_tuple = days_and_hours_since(current_time, JADEN_18TH_BIRTHDAY_UNIX_TIME)
         await send(f"Jaden has been stalking minors for {time_tuple[0]} days and {time_tuple[1]} hours")
 
-    if find_word_index(lowercase_message_content, ['james status']) > -1:
+    if find_word(lowercase_message_content, ['james status']):
         time_tuple = days_and_hours_since(current_time, JAMES_18TH_BIRTHDAY_UNIX_TIME)
         await send(f"James has been getting high for {time_tuple[0]} days and {time_tuple[1]} hours")
 
-    if find_word_index(lowercase_message_content, ['aravind status', 'arvind']) > -1:
+    if find_word(lowercase_message_content, ['aravind status', 'arvind']):
         time_tuple = days_and_hours_since(ARAVIND_18TH_BIRTHDAY_UNIX_TIME, current_time)
         await send(f"Aravind will be legal in {time_tuple[0]} days and {time_tuple[1]} hours")
 
-    if find_index_after_word(lowercase_message_content, ['kush status', 'hush b', 'hush']) > -1:
+    if find_word(lowercase_message_content, ['kush status', 'hush b', 'hush']):
         time_tuple = days_and_hours_since(current_time, KUSH_BIRTHDAY_UNIX_TIME)
         await send(f"Kush has been consuming brainrot for {time_tuple[0]} days and {time_tuple[1]} hours")
 
-    if find_index_after_word(lowercase_message_content, ['kayshav status']) > -1:
+    if find_word(lowercase_message_content, ['kayshav status']):
         time_tuple = days_and_hours_since(current_time, KUSH_BIRTHDAY_UNIX_TIME)
         await send(f"Kayshav has been consuming brainrot for {time_tuple[0]} days and {time_tuple[1]} hours")
+
+    if find_word(lowercase_message_content, ['testingtesting']):
+        await server_instance.change_nickname("test")
 
     # if random_range(1, 210) == 1:
     #     await send(f"{random.choice(BAITS)}", ping = False)
