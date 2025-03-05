@@ -796,7 +796,7 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
         await send(f"Kayshav has been consuming brainrot for {time_tuple[0]} days and {time_tuple[1]} hours")
 
     if lowercase_message_content == 'wait':
-        await send("I'm waiting")
+        await send("I'm waiting", reply = False)
 
     if find_word(lowercase_message_content, ['testingtesting']):
         await server_instance.change_nickname("test")
