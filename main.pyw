@@ -795,6 +795,9 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
         time_tuple = days_and_hours_since(current_time, KUSH_BIRTHDAY_UNIX_TIME)
         await send(f"Kayshav has been consuming brainrot for {time_tuple[0]} days and {time_tuple[1]} hours")
 
+    if lowercase_message_content == 'wait':
+        await send("I'm waiting")
+
     if find_word(lowercase_message_content, ['testingtesting']):
         await server_instance.change_nickname("test")
 
