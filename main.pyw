@@ -136,7 +136,7 @@ class ServerInstance:
         if any(activity_gen):
             stalked_activity = next((activity for activity in stalked_member.activities if activity.type == discord.ActivityType.playing), None)
 
-            print(f"changing bot's activity to {stalked_activity.name}")
+            # print(f"changing bot's activity to {stalked_activity.name}")
             await client.change_presence(
                 activity = stalked_activity if stalked_activity.type == discord.ActivityType.playing
                 else None)
