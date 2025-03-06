@@ -15,6 +15,9 @@ FISHING_DATABASE_PATH = Path("trackers", "fishing.json")
 SPECIALS_DATABASE_PATH = Path("trackers", "specials.json")
 GENERAL_DATABASE_PATH = Path("trackers", "user_triggers.json")
 
+BLUE_WHALE_CAP = 20
+CATFISH_CAP = 9
+
 HIGHER_BEINGS = ['epicmushroom.', 'test_user', 'test_user2', 'test_user3', 'joker_from_persona_5', 'bill_nye', 'hi_guys', 'welcome_back_to_my_yt_channel']
 
 NEGATIVES = ['trollface.png', 'Negative Jamesfish', 'Bribe Fish',
@@ -444,7 +447,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
             elif active_special == 'unregistered_firearm':
                 force_fish_name = 'CS:GO Fish'
             elif active_special == 'testing_only':
-                force_fish_name = random.choice(['Reminder to Go Outside'])
+                force_fish_name = random.choice(['Blue Whale'])
             elif active_special == 'midasfish':
                 midas_active = True
             elif active_special == 'drug_magnet':
@@ -574,8 +577,8 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
         pf = catfish_holder_pf
         bypass_fish_cd = True
 
-    # caps catfish at 9
-    if 'catfish' in pf.get_active_specials() and pf.specials['catfish'] >= 7:
+    # caps catfish at CATFISH_CAP
+    if 'catfish' in pf.get_active_specials() and pf.specials['catfish'] > CATFISH_CAP - 3:
         uncatchable.append('Catfish')
 
     if original_pf.is_banned():
@@ -697,7 +700,8 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
                 output += f'You caught: **{one_fish.name}** (everyone\'s next catch is much more likely to include rare items)'
 
                 for prof in all_pfs.profiles:
-                    prof.add_special('luck_boost', count=1)
+                    if not ('luck_boost' in prof.get_active_specials() and prof.specials['luck_boost'] >= BLUE_WHALE_CAP):
+                        prof.add_special('luck_boost', count=1)
 
             elif one_fish.name == 'Bribe Fish':
                 output += f'You caught: **{one_fish.name}** (-50 moneys, but immune to Cop Fish for next 60 catches)'
