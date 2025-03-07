@@ -499,11 +499,8 @@ The hallway smelt of boiled cabbage and old rag mats. At one end of it a coloure
         if len(interpreted_text) > 0:
             await send(f"idk can you {interpreted_text}", reply = False)
 
-    if random_range(1, 888) == 1:
-        await send('🫠 (this message has a 1/888 chance to appear)', bypass_cd = True)
-
     if random_range(1, 6666) == 1:
-        await send('🐺 (this message has a 1/6,666 chance to appear)', bypass_cd = True)
+        await send('🐺 (this message has a 1/6,666 chance to appear)', bypass_cd = True, reply = False)
 
     if find_word_bool(message.content, ['flip a coin']):
         if random_range(1, 2) == 1:
