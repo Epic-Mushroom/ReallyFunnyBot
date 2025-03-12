@@ -673,8 +673,8 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
                 pf.add_special('mercenary_contract', count=3)
 
             elif one_fish.name == 'Astro Gruel':
-                output += f'You caught: **{one_fish.name}** (cooldown doubled for next 8 catches)'
-                pf.add_special('astro_gruel', count=8)
+                output += f'You caught: **{one_fish.name}** (cooldown doubled for next 5 catches)'
+                pf.add_special('astro_gruel', count=5)
 
             elif one_fish.name == 'Astro Fuel':
                 output += f'You caught: **{one_fish.name}** (cooldown set to 1 second for next 7 catches)'

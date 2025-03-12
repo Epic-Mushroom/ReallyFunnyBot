@@ -210,6 +210,11 @@
         "weight": 2.1
     },
     {
+        "name": "Astro Gruel",
+        "value": 0,
+        "weight": 2.1
+    },
+    {
         "name": "Astro Fuel",
         "value": 0,
         "weight": 2.2
@@ -218,11 +223,6 @@
         "name": "P-Wing Boys Bathroom Cocaine",
         "value": 99,
         "weight": 2.3
-    },
-    {
-        "name": "Astro Gruel",
-        "value": 0,
-        "weight": 2.5
     },
     {
         "name": "Bribe Fish",
