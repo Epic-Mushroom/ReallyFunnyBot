@@ -481,7 +481,8 @@ The hallway smelt of boiled cabbage and old rag mats. At one end of it a coloure
             print(f"'{str(video_path)} wasn't found'")
 
     if find_isolated_word_bool(message.content, ['speech bubble', 'speechbubble']) and referred_message:
-        await send(random.choice(SPEECH_BUBBLES), ping = not message.mentions)
+        await referred_message.reply(random.choices(SPEECH_BUBBLES), allowed_mentions = discord.AllowedMentions().none()
+                                     if message.mentions else None)
 
     if find_isolated_word_bool(message.content, ['brawl stars', 'hop on brawl']):
         await send('https://tenor.com/view/wanna-play-brawl-stars-lonely-no-one-plays-brawl-stars-lmoa-gif-23811622')
