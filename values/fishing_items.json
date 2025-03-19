@@ -60,6 +60,11 @@
         "weight": 0
     },
     {
+        "name": "Fish Soap",
+        "value": 0,
+        "weight": 0
+    },
+    {
         "name": "Reminder to Go Outside",
         "value": 26999,
         "weight": 0.04
@@ -78,6 +83,11 @@
         "name": "How Unfortunate",
         "value": -1000,
         "weight": 0.15
+    },
+    {
+        "name": "Absolute Value Fish",
+        "value": 0,
+        "weight": 0.2
     },
     {
         "name": "Rainbow Crystal Meth",
@@ -102,11 +112,6 @@
     {
         "name": "Adderall (1840 Limited Edition)",
         "value": 1299,
-        "weight": 0.7
-    },
-    {
-        "name": "Absolute Value Fish",
-        "value": 0,
         "weight": 0.7
     },
     {
@@ -151,11 +156,6 @@
     },
     {
         "name": "Midasfish",
-        "value": 0,
-        "weight": 1.45
-    },
-    {
-        "name": "Fish Soap",
         "value": 0,
         "weight": 1.45
     },
