@@ -64,7 +64,7 @@ class WordleGame:
     def register_guess(self, guess: str):
         guess = guess.lower().strip()
 
-        if len(guess) != WORD_LENGTH:
+        if len(guess) != WORD_LENGTH or not WordleGame.validate_word(guess):
             raise InvalidGuessError
 
         elif self.correct_word in self.guesses or len(self.guesses) >= MAX_CHANCES:
@@ -98,6 +98,19 @@ class WordleGame:
 
             return word_bank.readline().rstrip()
 
+    @staticmethod
+    def validate_word(word) -> bool:
+        word = word.lower().strip()
+
+        with Path("word-bank.csv").open() as word_bank:
+            for i in range(NUM_POSSIBLE_WORDS):
+                valid_word = word_bank.readline().strip()
+
+                if valid_word == word:
+                    return True
+
+            return False
+
 if __name__ == '__main__':
     word_status = WordStatus('birds', 'brick')
     assert word_status.status[0] == WordStatus.GREEN
@@ -109,6 +122,10 @@ if __name__ == '__main__':
 
     word_status = WordStatus('blaze', 'blaze')
     assert word_status.is_correct()
+
+    assert WordleGame.validate_word('blaze')
+    assert WordleGame.validate_word('zonal')
+    assert not WordleGame.validate_word('asdfe')
 
     game = WordleGame("epicmushroom.", "grind")
 
