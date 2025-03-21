@@ -82,7 +82,7 @@ class ServerInstance:
 
     async def send_message(self, reference, text, reply = True,
                            bypass_cd = False, file_path = None,
-                           fishing = False) -> discord.Message:
+                           fishing = False) -> discord.Message | None:
         # prevents message length from going over 2000
         if len(str(text)) > 1990:
             text = ("[*some parts of this message were removed because of discord's character limit*]\n" +
@@ -331,7 +331,7 @@ async def on_message(message: discord.Message):
             pass
 
     if find_isolated_word_bool(message.content, ['allegro barbaro']):
-        await message.add_reaction('🖕')
+        await message.add_reaction('👎')
 
     if find_isolated_word_bool(message.content, POSSESSIVE_PERSONAL_PRONOUN_LIST):
         interpreted_name = strip_punctuation(message.content[index_of_im:])
