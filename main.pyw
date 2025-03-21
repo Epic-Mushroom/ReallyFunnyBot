@@ -80,7 +80,7 @@ class ServerInstance:
     def get_comedians(self) -> list[str]:
         return self.comedians
 
-    async def send_message(self, reference, text, reply = True,
+    async def send_message(self, reference, text, reply = True, ping = True,
                            bypass_cd = False, file_path = None,
                            fishing = False) -> discord.Message | None:
         # prevents message length from going over 2000
@@ -106,7 +106,7 @@ class ServerInstance:
             if not bypass_cd:
                 self.recently_sent_messages += 1
 
-            msg = await reference.channel.send(text, file = file, reference = reference if reply else None)
+            msg = await reference.channel.send(text, file = file, allowed_mentions = None if ping else discord.AllowedMentions().none(), reference = reference if reply else None)
 
             increment_total_triggers()
 
@@ -281,8 +281,8 @@ async def on_presence_update(before, after: discord.Member):
 
 @client.event
 async def on_message(message: discord.Message):
-    async def send(content='** **', reply = True, bypass_cd =False, ping= True, file_path=None, fishing=False):
-        return await server_instance.send_message(message, content, reply = reply, bypass_cd = bypass_cd, file_path = file_path, fishing = fishing)
+    async def send(content ='** **', reply = True, bypass_cd = False, ping= True, file_path=None, fishing=False):
+        return await server_instance.send_message(message, content, reply = reply, ping = ping, bypass_cd = bypass_cd, file_path = file_path, fishing = fishing)
 
     referred_message = None
     lowercase_message_content = message.content.lower()
@@ -336,7 +336,7 @@ async def on_message(message: discord.Message):
     if find_isolated_word_bool(message.content, POSSESSIVE_PERSONAL_PRONOUN_LIST):
         interpreted_name = strip_punctuation(message.content[index_of_im:])
         if len(interpreted_name) > 0 and random_range(1, 1) == 1:
-            await server_instance.send_message(message, f"Hi {interpreted_name}, I'm {random.choice(server_instance.get_comedians())}!")
+            await server_instance.send_message(message, f"Hi {interpreted_name}, I'm {random.choice(server_instance.get_comedians())}!", ping = False)
 
     if find_isolated_word_bool(message.content, TYPOS) and random_range(1, 1) == 1:
         await send("https://www.wikihow.com/Type", reply = True)
@@ -371,7 +371,7 @@ async def on_message(message: discord.Message):
         await send(file_path = Path('videos', 'thick of it lipsync.mp4'))
 
     if find_word_bool(lowercase_message_content, ['skibidi', 'hawk tuah', 'jelqing', 'lv 100 gyatt']):
-        await send("no")
+        await send("no", reply = False)
 
     if "FUCK" in message.content or "SHIT" in message.content or lowercase_message_content == "shut the fuck up":
         await send(random.choice(SWEARING_RESPONSES))
