@@ -91,6 +91,9 @@ def find_index_after_word(text: str, words: list[str]) -> int:
             return -1
 
 def pluralize(count, word):
+    """
+    "word" parameter must be singular
+    """
     return f'{count} {word}{'s' if count != 1 else ''}'
 
 def seconds_to_descriptive_time(seconds, decimalize=False) -> str:
