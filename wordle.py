@@ -45,8 +45,8 @@ class WordStatus:
         output = ""
 
         for status in self.status:
-            output += "🟩" if status == WordStatus.GREEN else "🟨" if status == WordStatus.YELLOW
-            else "⬛"
+            output += ("🟩" if status == WordStatus.GREEN else "🟨" if status == WordStatus.YELLOW
+            else "⬛")
 
         return output
 
@@ -109,3 +109,9 @@ if __name__ == '__main__':
 
     word_status = WordStatus('blaze', 'blaze')
     assert word_status.is_correct()
+
+    game = WordleGame("epicmushroom.", "grind")
+
+    while game.game_state == WordleGame.UNFINISHED:
+        guess = input()
+        game.register_guess(guess)
