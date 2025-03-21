@@ -1,3 +1,5 @@
+import datetime
+
 # Constants
 POSSESSIVE_PERSONAL_PRONOUN_LIST = ['im', "i'm", 'i am', 'I’m']
 AMONG_US_TRIGGERS = ["among us", 'amongus', 'amogus', 'among sus', 'sussy', 'sus', 'baka']
@@ -58,3 +60,5 @@ MY_GUILD = 964941621110120538
 
 COOLDOWN_LENGTH = 10
 COOLDOWN_LIMIT = 4 # how many messages that can be sent per COOLDOWN_LENGTH seconds
+
+REMINDER_TIME = datetime.time(hour = 12, minute = 0, tzinfo = datetime.timezone(datetime.timedelta(hours=-7)))

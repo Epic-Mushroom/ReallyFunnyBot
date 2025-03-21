@@ -1,6 +1,6 @@
-import os, random, datetime, time, asyncio
+import os, random, time, asyncio
 import discord
-import fish_utils, shop_utils, backup_utils
+import commands, fish_utils, shop_utils, backup_utils
 
 from pathlib import Path
 from discord.ext import tasks
@@ -14,6 +14,11 @@ class BotInstance:
         self.server_instance_list: list[ServerInstance] = []
         self.current_status_task: asyncio.Task | None = None
         self.client = client
+
+        self.tree = discord.app_commands.CommandTree(self.client)
+
+    def get_tree(self):
+        return self.tree
 
     def add_server_instance(self, guild: discord.Guild):
         self.server_instance_list.append(ServerInstance(guild))
@@ -185,6 +190,7 @@ try:
 
     with open(token_path) as file1:
         TOKEN = file1.readline()
+
 except FileNotFoundError:
     TOKEN = os.environ['BOT_TOKEN']
 
@@ -199,15 +205,11 @@ if ADMIN_ONLY:
 # Discord client setup
 intents = discord.Intents.all()
 client = discord.Client(intents = intents)
-tree = discord.app_commands.CommandTree(client)
 
 bot_instance = BotInstance(client)
 
 REVENGE_LYRICS = file_lines_to_list(Path('revenge.txt'))
 DRUG_NAMES = file_lines_to_list(Path('drugs_list.txt'))
-
-# sends a reminder to renew the server in my dms
-reminder_time = datetime.time(hour = 12, minute = 0, tzinfo = datetime.timezone(datetime.timedelta(hours=-7)))
 
 def random_range(start: int, stop: int) -> int:
     """random.randrange but its inclusive so i don't keep forgetting the original function has an exclusive endpoint because i have fucking dementia"""
@@ -247,7 +249,7 @@ async def fishing_status_coro(server_instance):
     await asyncio.sleep(20)
     await server_instance.mimic_presence()
 
-@tasks.loop(time=reminder_time)
+@tasks.loop(time=REMINDER_TIME)
 async def reminder():
     me = await client.fetch_user(EPIC_MUSHROOM_ID)
     await me.send('@everyone renew server + do microsoft rewards')
@@ -255,17 +257,20 @@ async def reminder():
 @client.event
 async def on_ready():
     # syncs commands
-    if ADMIN_ONLY:
-        await tree.sync(guild =COMMANDS_GUILD)
-    else:
-        await tree.sync()
+    my_commands = commands.Commands(bot_instance.get_tree())
+    my_commands.set_up_commands()
 
+    await bot_instance.get_tree().sync()
+    print(f'number of commands synced: {len(bot_instance.get_tree().get_commands())}')
+
+    # starts tasks
     reminder.start()
 
-    print(f'connected to {len(client.guilds)} servers')
-
+    # adds server instances to bot instance
     for g in client.guilds:
         bot_instance.add_server_instance(g)
+
+    print(f'connected to {len(client.guilds)} servers')
 
 @client.event
 async def on_presence_update(before, after: discord.Member):
@@ -407,7 +412,7 @@ async def on_message(message: discord.Message):
         else:
             await send(f"I am not on cooldown. (cooldown length is {COOLDOWN_LENGTH}, "
                        f"max number of messages able to be sent per cooldown reset is {COOLDOWN_LIMIT}, "
-                       f"{server_instance.recently_sent_messages+1} messages were sent during this period)", bypass_cd = True)
+                       f"{pluralize(server_instance.recently_sent_messages + 1, "message")} were sent during this period)", bypass_cd = True)
 
     if find_word_bool(message.content, ['resetcd']):
         if is_admin:
