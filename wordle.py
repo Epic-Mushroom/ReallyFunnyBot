@@ -239,7 +239,8 @@ class WordleGame:
 
         elif self.game_state == WordleGame.WIN:
             output += (f"✅ **You won!** *{self.get_win_message()}*\n"
-                       f"⏰ {seconds_to_descriptive_time(self.get_time_used())}\n\n")
+                       f"⏰ {seconds_to_descriptive_time(self.get_time_used())}\n"
+                       f"✨ +{self.calculate_score()} points\n\n")
 
         for i in range(len(self.guesses)):
             output += f"{WordStatus(self.guesses[i], self.correct_word)}\n"
