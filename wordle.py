@@ -64,6 +64,11 @@ class WordleGame:
         self.guesses = []
         self.game_state = WordleGame.UNFINISHED
 
+        self.green_letters = []
+        self.yellow_letters = []
+        self.gray_letters = []
+        self.unused_letters: list[str] = sorted([char.upper() for char in ALPHABET])
+
     def register_guess(self, guess: str):
         guess = guess.lower().strip()
 
@@ -80,6 +85,7 @@ class WordleGame:
         self.guesses.append(guess)
 
         self.update_game_state()
+        self.update_letter_colors()
 
     def update_game_state(self):
         self.game_state = WordleGame.UNFINISHED
@@ -93,11 +99,28 @@ class WordleGame:
             elif len(self.guesses) >= MAX_CHANCES:
                 self.game_state = WordleGame.LOSS
 
+    def update_letter_colors(self):
+        if len(self.guesses) >= 1:
+            word_status = WordStatus(self.guesses[-1], self.correct_word)
+
+            for i in range(WORD_LENGTH):
+                if word_status.status[i] == WordStatus.GREEN:
+                    self.green_letters.append(self.guesses[-1][i].upper())
+
+                elif word_status.status[i] == WordStatus.YELLOW:
+                    self.yellow_letters.append(self.guesses[-1][i].upper())
+
+                else:
+                    self.gray_letters.append(self.guesses[-1][i].upper())
+
+                if self.guesses[-1][i].upper() in self.unused_letters:
+                    self.unused_letters.pop(self.unused_letters.index(self.guesses[-1][i].upper()))
+
     def __str__(self):
         output = f"Username: {self.username}\nGuesses: {len(self.guesses)}/{MAX_CHANCES}\n\n"
 
         if self.game_state == WordleGame.LOSS:
-            output += "❌ **You lost!**\n\n"
+            output += f"❌ **You lost!**\nThe word was: **{self.correct_word.upper()}**\n"
 
         elif self.game_state == WordleGame.WIN:
             output += f"✅ {WordleGame.WIN_MESSAGES[len(self.guesses) - 1]}\n\n"
@@ -107,6 +130,16 @@ class WordleGame:
 
         for i in range(len(self.guesses), MAX_CHANCES):
             output += "🔳🔳🔳🔳🔳\n"
+
+        output += "\n"
+        if len(self.green_letters) > 0:
+            output += "🟩: " + ", ".join(self.green_letters) + "\n"
+        if len(self.yellow_letters) > 0:
+            output += "🟨: " + ", ".join(self.yellow_letters) + "\n"
+        if len(self.gray_letters) > 0:
+            output += "⬛: " + ", ".join(self.gray_letters) + "\n"
+        if len(self.unused_letters) > 0:
+            output += "🔳: " + ", ".join(self.unused_letters) + "\n"
 
         return output
 
