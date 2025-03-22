@@ -1,5 +1,6 @@
 from pathlib import Path
-import random
+import random, time
+from string_utils import seconds_to_descriptive_time
 
 NUM_POSSIBLE_WORDS = 2315
 NUM_VALID_WORDS = 12972
@@ -64,6 +65,8 @@ class WordleGame:
         self.guesses = []
         self.game_state = WordleGame.UNFINISHED
 
+        self.start_time = time.time()
+
         self.green_letters = []
         self.yellow_letters = []
         self.gray_letters = []
@@ -120,14 +123,35 @@ class WordleGame:
             self.yellow_letters.sort()
             self.gray_letters.sort()
 
+    def get_time_used(self):
+        current_time = time.time()
+        return round(current_time - self.start_time)
+
+    def calculate_score(self):
+        time_used = self.get_time_used()
+
+        if not self.game_state == WordleGame.WIN:
+            return 0
+
+        if len(self.guesses) == 1:
+            return 100
+
+        elif len(self.guesses) == 2:
+            return 80
+
+        elif 3 <= len(self.guesses) <= MAX_CHANCES:
+            return (6 - len(self.guesses)) * 5 + round((120 - time_used) / 2)
+
     def __str__(self):
         output = f"Username: {self.username}\nGuesses: {len(self.guesses)}/{MAX_CHANCES}\n\n"
 
         if self.game_state == WordleGame.LOSS:
-            output += f"❌ **You lost!**\nThe word was: **{self.correct_word.upper()}**\n"
+            output += (f"❌ **You lost!**\nThe word was: **{self.correct_word.upper()}**\n"
+                       f"⏰ {seconds_to_descriptive_time(self.get_time_used())}\n\n")
 
         elif self.game_state == WordleGame.WIN:
-            output += f"✅ {WordleGame.WIN_MESSAGES[len(self.guesses) - 1]}\n\n"
+            output += (f"✅ {WordleGame.WIN_MESSAGES[len(self.guesses) - 1]}\n"
+                       f"⏰ {seconds_to_descriptive_time(self.get_time_used())}\n\n")
 
         for i in range(len(self.guesses)):
             output += f"{WordStatus(self.guesses[i], self.correct_word)}\n"
@@ -192,3 +216,4 @@ if __name__ == '__main__':
         game.register_guess(guess)
 
         print(game)
+        print(f"Score: {game.calculate_score()}")

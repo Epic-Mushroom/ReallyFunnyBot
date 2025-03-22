@@ -96,7 +96,7 @@ def pluralize(count, word):
     """
     return f'{count} {word}{'s' if count != 1 else ''}'
 
-def seconds_to_descriptive_time(seconds, decimalize=False) -> str:
+def seconds_to_descriptive_time(seconds, decimalize = False) -> str:
     if seconds >= 3600:
         hours = seconds // 3600
         time_left = seconds - hours * 3600
