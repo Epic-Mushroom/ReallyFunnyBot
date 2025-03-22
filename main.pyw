@@ -260,7 +260,8 @@ async def on_ready():
     my_commands = commands.Commands(bot_instance.get_tree())
     my_commands.set_up_commands()
 
-    await bot_instance.get_tree().sync()
+    # commands should not be synced all the time
+    # await bot_instance.get_tree().sync()
     print(f'number of commands synced: {len(bot_instance.get_tree().get_commands())}')
 
     # for c in bot_instance.get_tree().get_commands():

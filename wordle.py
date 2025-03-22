@@ -175,11 +175,11 @@ class WordleGame:
         elif len(self.green_letters) >= 4:
             return random.choice(CLOSE_MESSAGES)
 
-        elif len(self.guesses) != len(set(self.guesses)):
-            return random.choice(DUPLICATE_GUESS_MESSAGES)
-
         elif len(self.green_letters) <= 1 and len(self.yellow_letters) <= 2:
             return random.choice(POOR_PERFORMANCE_MESSAGES)
+
+        elif len(self.guesses) != len(set(self.guesses)):
+            return random.choice(DUPLICATE_GUESS_MESSAGES)
 
         else:
             return random.choice(NORMAL_MESSAGES)
