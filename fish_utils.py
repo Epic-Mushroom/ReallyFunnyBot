@@ -44,9 +44,12 @@ class MaintenanceError(Exception):
     pass
 
 class Profile:
-    def __init__(self, username, next_fish_time=0, new_moneys=0, new_catches=0,
+    def __init__(self, username, wordle_wins = 0, wordle_losses = 0, wordle_points = 0, next_fish_time = 0, new_moneys = 0, new_catches = 0,
                  items=None, specials=None, upgrades=None, banned_until=0, ban_reason="", **kwargs):
         self.username = username
+        self.wordle_wins = wordle_wins
+        self.wordle_losses = wordle_losses
+        self.wordle_points = wordle_points
         self.next_fish_time = next_fish_time
         self.new_moneys = new_moneys
         self.new_catches = new_catches
@@ -159,6 +162,13 @@ class Profile:
 
         self.banned_until = 0
         self.ban_reason = ""
+
+    def get_win_loss_ratio(self):
+        try:
+            return self.wordle_wins / self.wordle_losses
+
+        except ZeroDivisionError:
+            return 6969696969
 
 class AllProfiles:
     LB_BANNED = ['test_user', 'test_user2', 'StickyBot', 'Reminder', 'ReallyFunnyBotTEST']

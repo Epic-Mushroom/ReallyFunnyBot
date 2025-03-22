@@ -47,7 +47,7 @@ class Commands:
             game = wordle.WordleGame(username)
             self.wordle_games[username] = game
             await interaction.response.send_message(embed = make_wordle_embed(game))
-            await interaction.channel.send(f"The word is {game.correct_word}")
+            # await interaction.channel.send(f"The word is {game.correct_word}")
 
         @self.tree.command(name = "guess", description = "Guess a word (Wordle)")
         @discord.app_commands.describe(word = "Your guess (must be a valid five-letter word)")
@@ -72,8 +72,18 @@ class Commands:
             if game.game_state != wordle.WordleGame.UNFINISHED:
                 del self.wordle_games[username]
 
-                if random.randint(1, 1000) <= game.calculate_score(): # score divided by 10 is the chance in %
+                score = game.calculate_score()
+                profile = all_pfs.profile_from_name(username)
+                profile.wordle_points += score
+
+                if game.game_state == wordle.WordleGame.LOSS:
+                    profile.wordle_losses += 1
+                else:
+                    profile.wordle_wins += 1
+
+                if random.randint(1, 1000) <= score: # score divided by 10 is the chance in %
                     await interaction.channel.send(fish_event(username, force_fish_name = "Wordlefish", bypass_fish_cd = True))
-                    all_pfs.write_data()
+
+                all_pfs.write_data()
 
 

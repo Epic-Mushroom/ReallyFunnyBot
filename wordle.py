@@ -166,7 +166,7 @@ class WordleGame:
         elif self.username == "jesusfreak72" and random.randint(1, 5) == 1:
             return random.choice(JADEN_LOSS_MESSAGE)
 
-        elif self.get_time_used() <= 20:
+        elif self.get_time_used() <= 25:
             return random.choice(RUSH_MESSAGES)
 
         elif self.get_time_used() >= 600:
