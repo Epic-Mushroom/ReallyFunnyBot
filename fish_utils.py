@@ -1067,8 +1067,10 @@ test_file = None
 try:
     test_file = open(Path("testing", "test_file.txt"))
     FISHING_ENABLED = False
+
 except FileNotFoundError:
     FISHING_ENABLED = True
+
 finally:
     if test_file:
         test_file.close()

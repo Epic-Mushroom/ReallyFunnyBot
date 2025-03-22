@@ -1,8 +1,7 @@
 import random
 
 import discord
-import wordle
-from fish_utils import fish_event, all_pfs
+import wordle, fish_utils
 
 def make_wordle_embed(wordle_game: wordle.WordleGame) -> discord.Embed:
     gray = discord.Colour.from_str("#787C7E")
@@ -73,7 +72,7 @@ class Commands:
                 del self.wordle_games[username]
 
                 score = game.calculate_score()
-                profile = all_pfs.profile_from_name(username)
+                profile = fish_utils.all_pfs.profile_from_name(username)
                 profile.wordle_points += score
 
                 if game.game_state == wordle.WordleGame.LOSS:
@@ -82,8 +81,46 @@ class Commands:
                     profile.wordle_wins += 1
 
                 if random.uniform(1, 1000) <= score: # score divided by 10 is the chance in %
-                    await interaction.channel.send(fish_event(username, force_fish_name = "Wordlefish", bypass_fish_cd = True))
+                    await interaction.channel.send(fish_utils.fish_event(username, force_fish_name = "Wordlefish", bypass_fish_cd = True))
 
-                all_pfs.write_data()
+                fish_utils.all_pfs.write_data()
+
+        @self.tree.command(name = "leaderboard", description = "Displays the leaderboard")
+        @discord.app_commands.describe(type = "Type of leaderboard to display (defaults to moneys)")
+        @discord.app_commands.choices(type = [discord.app_commands.Choice(name = "moneys", value = "default"),
+                                              discord.app_commands.Choice(name = "RNG", value = "rng")])
+        async def leaderboard(interaction: discord.Interaction, type: str = 'default'):
+            embed = None
+            if type == 'default':
+                embed = discord.Embed(
+                    title = f'{'(Testing Only) ' if not fish_utils.FISHING_ENABLED else ''}Leaderboard',
+                    description = fish_utils.leaderboard_string())
+
+            elif type == 'rng':
+                embed = discord.Embed(
+                    title = f'{'(Testing Only) ' if not fish_utils.FISHING_ENABLED else ''}RNG Leaderboard',
+                    description = fish_utils.luck_leaderboard_string())
+
+            await interaction.response.send_message(embed = embed)
+
+        @self.tree.command(name = "profile", description = "Displays a user's fishing stats")
+        @discord.app_commands.describe(user = "User whose profile will be displayed (defaults to self)")
+        async def profile(interaction: discord.Interaction, user: discord.User | None = None):
+            username = interaction.user.name if user is None else user.name
+
+            embed = discord.Embed(
+                title = f'{'(Testing Only) ' if not fish_utils.FISHING_ENABLED else ''}'
+                        f'{username}\'s Profile',
+                description = fish_utils.profile_to_string(username))
+
+            await interaction.response.send_message(embed = embed)
+
+        @self.tree.command(name = "universal_stats", description = "Displays universal fishing stats")
+        async def universal_stats(interaction: discord.Interaction):
+            embed = discord.Embed(
+                title = f'{'(Testing Only) ' if not fish_utils.FISHING_ENABLED else ''}Universal Stats',
+                description = fish_utils.universal_profile_to_string())
+
+            await interaction.response.send_message(embed = embed)
 
 
