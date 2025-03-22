@@ -212,7 +212,7 @@ REVENGE_LYRICS = file_lines_to_list(Path('revenge.txt'))
 DRUG_NAMES = file_lines_to_list(Path('drugs_list.txt'))
 
 def random_range(start: int, stop: int) -> int:
-    """random.randrange but its inclusive so i don't keep forgetting the original function has an exclusive endpoint because i have fucking dementia"""
+    """me when i don't know that random.randint exists"""
     return random.randrange(start, stop + 1)
 
 def increment_total_triggers(count=1):

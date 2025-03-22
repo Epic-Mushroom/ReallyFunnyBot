@@ -57,8 +57,6 @@ class WordleGame:
     LOSS = 1
     WIN = 2
 
-    WIN_MESSAGES = ["Cheater...", "Damn, okay.", "Well played.", "Good job.", "👍", "Not close at all..."]
-
     def __init__(self, username, correct_word = None):
         self.username = username
         self.correct_word = WordleGame.get_random_word() if correct_word is None else correct_word
@@ -142,15 +140,83 @@ class WordleGame:
         elif 3 <= len(self.guesses) <= MAX_CHANCES:
             return (6 - len(self.guesses)) * 5 + round((120 - time_used) / 2)
 
+    def get_loss_message(self):
+        RUSH_MESSAGES = ["Maybe don't rush it next time?", "How about you slow down a little?", "Are you trying to speedrun losing this game?"] # time_used < 20
+        NORMAL_MESSAGES = ["Better luck next time.", "Too bad.", "Skill issue."]
+        POOR_PERFORMANCE_MESSAGES = ["Have you considered investing in a dictionary?", "Wow, you suck.", "Maybe you should just stick to fishing."] # <= 1 green letter and <= 2 yellow letters found
+        RARE_LOSS_MESSAGES = ["This is for you, human. You and only you. You are not special, you are not important, and you are not needed. You are a waste of time and resources. You are a burden on society. You are a drain on the earth. You are a blight on the landscape. You are a stain on the universe. Please die. Please."] # 0.5% chance
+        CLOSE_MESSAGES = ["That hurts to look at.", "How unfortunate."] # 4 green letters
+        WASTING_TIME_MESSAGES_1 = ["Not locked in...", "You took your time... and still lost.", "Zzzzzzz"] # time_used >= 600
+
+        if random.randint(1, 200) == 1:
+            return random.choice(RARE_LOSS_MESSAGES)
+
+        elif self.get_time_used() <= 20:
+            return random.choice(RUSH_MESSAGES)
+
+        elif self.get_time_used() >= 600:
+            return random.choice(WASTING_TIME_MESSAGES_1)
+
+        elif len(self.green_letters) >= 4:
+            return random.choice(CLOSE_MESSAGES)
+
+        elif len(self.green_letters) <= 1 and len(self.yellow_letters) <= 2:
+            return random.choice(POOR_PERFORMANCE_MESSAGES)
+
+        else:
+            return random.choice(NORMAL_MESSAGES)
+
+    def get_win_message(self):
+        ONE_GUESS = ["Cheater...", "What the fuck?", "Excuse me?"]
+        TWO_GUESSES = ["Damn, okay.", "That's crazy.", "Cracked or just lucky?"]
+        THREE_GUESSES = ["Impressive. Kind of.", "Well played.", "Nice!", "Kachow"]
+        FOUR_GUESSES = ["Not bad.", "Good job.", "👍"]
+        FIVE_GUESSES = ["Okay.", "👍", "At least you didn't cheat."]
+        SIX_GUESSES = ["\"Phew\" - John Wordle, 2021", "Not close at all..."]
+        SPEEDRUN_MESSAGES = ["That was fast.", "Nerd."] # time_used <= 25
+        WASTING_TIME_MESSAGES = ["You sure took your time.", "About time you finished."] # time_used >= 600
+        RARE_WIN_MESSAGES = ["gae gaygen is gay"] # 2% chance
+        OTHER_MESSAGES = ["If you got this message, then you somehow broke the game. Ping me about this lmfao"]
+
+        if random.randint(1, 50) == 1:
+            return random.choice(RARE_WIN_MESSAGES)
+
+        elif self.get_time_used() >= 600 and len(self.guesses) >= 3:
+            return random.choice(WASTING_TIME_MESSAGES)
+
+        elif self.get_time_used() <= 25 and len(self.guesses) >= 3:
+            return random.choice(SPEEDRUN_MESSAGES)
+
+        elif len(self.guesses) == 1:
+            return random.choice(ONE_GUESS)
+
+        elif len(self.guesses) == 2:
+            return random.choice(TWO_GUESSES)
+
+        elif len(self.guesses) == 3:
+            return random.choice(THREE_GUESSES)
+
+        elif len(self.guesses) == 4:
+            return random.choice(FOUR_GUESSES)
+
+        elif len(self.guesses) == 5:
+            return random.choice(FIVE_GUESSES)
+
+        elif len(self.guesses) == 6:
+            return random.choice(SIX_GUESSES)
+
+        else:
+            return random.choice(OTHER_MESSAGES)
+
     def __str__(self):
         output = f"Username: {self.username}\nGuesses: {len(self.guesses)}/{MAX_CHANCES}\n\n"
 
         if self.game_state == WordleGame.LOSS:
-            output += (f"❌ **You lost!**\nThe word was: **{self.correct_word.upper()}**\n"
+            output += (f"❌ **You lost!** *{self.get_loss_message()}*\nThe word was: **{self.correct_word.upper()}**\n"
                        f"⏰ {seconds_to_descriptive_time(self.get_time_used())}\n\n")
 
         elif self.game_state == WordleGame.WIN:
-            output += (f"✅ {WordleGame.WIN_MESSAGES[len(self.guesses) - 1]}\n"
+            output += (f"✅ **You won!** *{self.get_win_message()}*\n"
                        f"⏰ {seconds_to_descriptive_time(self.get_time_used())}\n\n")
 
         for i in range(len(self.guesses)):
