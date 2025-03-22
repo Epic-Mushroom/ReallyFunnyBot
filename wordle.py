@@ -2,6 +2,7 @@ from pathlib import Path
 import random
 
 NUM_POSSIBLE_WORDS = 2315
+NUM_VALID_WORDS = 12972
 WORD_LENGTH = 5
 MAX_CHANCES = 6
 ALPHABET = "qwertyuiopasdfghjklzxcvbnm"
@@ -48,12 +49,14 @@ class WordStatus:
             output += ("🟩" if status == WordStatus.GREEN else "🟨" if status == WordStatus.YELLOW
             else "⬛")
 
-        return output
+        return output + f" ({self.guess.upper()})"
 
 class WordleGame:
     UNFINISHED = 0
     LOSS = 1
     WIN = 2
+
+    WIN_MESSAGES = ["Cheater...", "Damn, okay.", "Well played.", "Good job.", "👍", "Not close at all..."]
 
     def __init__(self, username, correct_word = None):
         self.username = username
@@ -90,6 +93,23 @@ class WordleGame:
             elif len(self.guesses) >= MAX_CHANCES:
                 self.game_state = WordleGame.LOSS
 
+    def __str__(self):
+        output = f"Username: {self.username}\nGuesses: {len(self.guesses)}/{MAX_CHANCES}\n\n"
+
+        if self.game_state == WordleGame.LOSS:
+            output += "❌ **You lost!**\n\n"
+
+        elif self.game_state == WordleGame.WIN:
+            output += f"✅ {WordleGame.WIN_MESSAGES[len(self.guesses) - 1]}\n\n"
+
+        for i in range(len(self.guesses)):
+            output += f"{WordStatus(self.guesses[i], self.correct_word)}\n"
+
+        for i in range(len(self.guesses), MAX_CHANCES):
+            output += "🔳🔳🔳🔳🔳\n"
+
+        return output
+
     @staticmethod
     def get_random_word():
         with Path("word-bank.csv").open() as word_bank:
@@ -102,8 +122,8 @@ class WordleGame:
     def validate_word(word) -> bool:
         word = word.lower().strip()
 
-        with Path("word-bank.csv").open() as word_bank:
-            for i in range(NUM_POSSIBLE_WORDS):
+        with Path("valid-words.csv").open() as word_bank:
+            for i in range(NUM_VALID_WORDS):
                 valid_word = word_bank.readline().strip()
 
                 if valid_word == word:
@@ -124,11 +144,14 @@ if __name__ == '__main__':
     assert word_status.is_correct()
 
     assert WordleGame.validate_word('blaze')
-    assert WordleGame.validate_word('zonal')
+    assert WordleGame.validate_word('zymic')
     assert not WordleGame.validate_word('asdfe')
 
     game = WordleGame("epicmushroom.", "grind")
+    print(game)
 
     while game.game_state == WordleGame.UNFINISHED:
         guess = input()
         game.register_guess(guess)
+
+        print(game)
