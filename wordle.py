@@ -104,17 +104,21 @@ class WordleGame:
             word_status = WordStatus(self.guesses[-1], self.correct_word)
 
             for i in range(WORD_LENGTH):
-                if word_status.status[i] == WordStatus.GREEN:
+                if word_status.status[i] == WordStatus.GREEN and self.guesses[-1][i].upper() not in self.green_letters:
                     self.green_letters.append(self.guesses[-1][i].upper())
 
-                elif word_status.status[i] == WordStatus.YELLOW:
+                elif word_status.status[i] == WordStatus.YELLOW and self.guesses[-1][i].upper() not in self.yellow_letters:
                     self.yellow_letters.append(self.guesses[-1][i].upper())
 
-                else:
+                elif self.guesses[-1][i].upper() not in self.gray_letters:
                     self.gray_letters.append(self.guesses[-1][i].upper())
 
                 if self.guesses[-1][i].upper() in self.unused_letters:
                     self.unused_letters.pop(self.unused_letters.index(self.guesses[-1][i].upper()))
+
+            self.green_letters.sort()
+            self.yellow_letters.sort()
+            self.gray_letters.sort()
 
     def __str__(self):
         output = f"Username: {self.username}\nGuesses: {len(self.guesses)}/{MAX_CHANCES}\n\n"
