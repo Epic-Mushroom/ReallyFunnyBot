@@ -363,7 +363,7 @@ def get_active_specials(username: str) -> list[str]:
 
     return active_specials_
 
-def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=False) -> str:
+def fish_event(username: str, force_fish_name = None, factor=1.0, bypass_fish_cd=False) -> str:
 
     def other_profile_with_taxation() -> Profile | None:
         pass
@@ -412,8 +412,8 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
             activated_specials[1] = None
 
         if force_fish_name is not None:
-            # if force_fish_name is passed as not None, no force fish powerups shall be used up
-            activated_specials[4] = None
+            # if force_fish_name is passed as not None, no powerups shall be used up
+            activated_specials = [None] * len(activated_specials)
 
         if activated_specials[4] is not None:
             # force fish powerups cannot use up powerups of another kind that modify the type of item produced
@@ -560,7 +560,8 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
     double_items = False
     octuple_items = False
     double_mercenary = False
-    catfish_immunity = False
+    catfish_immunity = True if force_fish_name is not None else False # automatic catfish immunity if force_fish_name is being passed as not None
+    mrbeast_immunity = False
     sffi_tiers = 0
     ml_tiers = 0
 

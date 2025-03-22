@@ -148,7 +148,7 @@ class WordleGame:
             return 80
 
         elif 3 <= len(self.guesses) <= MAX_CHANCES:
-            return (6 - len(self.guesses)) * 5 + round((120 - time_used) / 2)
+            return max(0, (6 - len(self.guesses)) * 5 + max(-5, round((120 - time_used) / 2)))
 
     def get_loss_message(self):
         RUSH_MESSAGES = ["Maybe don't rush it next time?", "How about you slow down a little?", "Are you trying to speedrun losing this game?"] # time_used < 20
