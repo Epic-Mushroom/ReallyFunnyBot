@@ -81,7 +81,7 @@ class Commands:
                 else:
                     profile.wordle_wins += 1
 
-                if random.randint(1, 1000) <= score: # score divided by 10 is the chance in %
+                if random.uniform(1, 1000) <= score: # score divided by 10 is the chance in %
                     await interaction.channel.send(fish_event(username, force_fish_name = "Wordlefish", bypass_fish_cd = True))
 
                 all_pfs.write_data()
