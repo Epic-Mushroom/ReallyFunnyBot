@@ -263,8 +263,8 @@ async def on_ready():
     await bot_instance.get_tree().sync()
     print(f'number of commands synced: {len(bot_instance.get_tree().get_commands())}')
 
-    for c in bot_instance.get_tree().get_commands():
-        print(c.name, c.description)
+    # for c in bot_instance.get_tree().get_commands():
+    #     print(c.name, c.description)
 
     # starts tasks
     reminder.start()
