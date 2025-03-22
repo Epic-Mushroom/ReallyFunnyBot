@@ -142,10 +142,10 @@ class WordleGame:
             return 0
 
         if len(self.guesses) == 1:
-            return 100
+            return 200
 
         elif len(self.guesses) == 2:
-            return 80
+            return 100
 
         elif 3 <= len(self.guesses) <= MAX_CHANCES:
             return max(0, (6 - len(self.guesses)) * 5 + max(-5, round((120 - time_used) / 2)))
