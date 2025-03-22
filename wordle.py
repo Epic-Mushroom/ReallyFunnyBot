@@ -142,7 +142,7 @@ class WordleGame:
             return 0
 
         if len(self.guesses) == 1:
-            return 200
+            return 1000
 
         elif len(self.guesses) == 2:
             return 100
