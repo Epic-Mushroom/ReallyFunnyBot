@@ -110,6 +110,10 @@ class Profile:
         else:
             output += '*No upgrades purchased*\n'
 
+        if self.wordle_points + self.wordle_losses + self.wordle_wins > 0:
+            output += '\n'
+            output += f'**Wordle points:** {self.wordle_points}\n'
+
         return output
 
     def add_cd(self, amount=FISHING_COOLDOWN):
