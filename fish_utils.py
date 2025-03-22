@@ -414,6 +414,10 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
             # curse cannot use up mrbeast
             activated_specials[1] = None
 
+        if force_fish_name is not None:
+            # if force_fish_name is passed as not None, no force fish powerups shall be used up
+            activated_specials[4] = None
+
         if activated_specials[4] is not None:
             # force fish powerups cannot use up powerups of another kind that modify the type of item produced
             activated_specials[2] = None

@@ -65,6 +65,11 @@
         "weight": 0
     },
     {
+        "name": "Wordlefish",
+        "value": 120,
+        "weight": 0
+    },
+    {
         "name": "Reminder to Go Outside",
         "value": 26999,
         "weight": 0.04

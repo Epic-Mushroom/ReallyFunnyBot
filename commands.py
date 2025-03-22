@@ -1,5 +1,8 @@
+import random
+
 import discord
 import wordle
+from fish_utils import fish_event
 
 def make_wordle_embed(wordle_game: wordle.WordleGame) -> discord.Embed:
     gray = discord.Colour.from_str("#787C7E")
@@ -44,6 +47,7 @@ class Commands:
             game = wordle.WordleGame(username)
             self.wordle_games[username] = game
             await interaction.response.send_message(embed = make_wordle_embed(game))
+            # await interaction.channel.send(f"The word is {game.correct_word}")
 
         @self.tree.command(name = "guess", description = "Guess a word (Wordle)")
         @discord.app_commands.describe(word = "Your guess (must be a valid five-letter word)")
@@ -67,5 +71,8 @@ class Commands:
 
             if game.game_state != wordle.WordleGame.UNFINISHED:
                 del self.wordle_games[username]
+
+                if random.randint(1, 100) <= game.calculate_score():
+                    await interaction.channel.send(fish_event(username, force_fish_name = "Wordlefish", bypass_fish_cd = True))
 
 
