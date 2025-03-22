@@ -44,12 +44,10 @@ class MaintenanceError(Exception):
     pass
 
 class Profile:
-    def __init__(self, username, value=0, next_fish_time=0, times_fished=0, new_moneys=0, new_catches=0,
+    def __init__(self, username, next_fish_time=0, new_moneys=0, new_catches=0,
                  items=None, specials=None, upgrades=None, banned_until=0, ban_reason="", **kwargs):
         self.username = username
-        self.value = value
         self.next_fish_time = next_fish_time
-        self.times_fished = times_fished
         self.new_moneys = new_moneys
         self.new_catches = new_catches
         self.items = items if items is not None else []
@@ -68,12 +66,13 @@ class Profile:
             self.items = stack_list
 
         for key, value in kwargs.items():
-            setattr(self, key, value)
+            if key not in ['times_fished', 'value']:
+                setattr(self, key, value)
 
     def __str__(self):
         output: str = f"\n"
-        output += (f"Moneys obtained: **{self.value:,}**\n" +
-                   f"Items caught: **{self.times_fished:,}**\n\n")
+        output += (f"Moneys obtained: **{self.value():,}**\n" +
+                   f"Items caught: **{self.items_caught():,}**\n\n")
 
         display_stacks = [stack for stack in self.items if stack.item.name != 'Credit' and stack.count > 0]
         # display_stacks.sort(key=lambda s: s.count * s.item.value, reverse=True)
@@ -122,8 +121,6 @@ class Profile:
             fish_stack.count += count
 
         self.sort_items_by_value()
-        self.update_value()
-        self.update_items_caught()
 
     def add_special(self, special, count=1):
         if special in self.specials.keys():
@@ -137,11 +134,11 @@ class Profile:
     def sort_items_by_value(self):
         self.items.sort(key=lambda stack: stack.item.value, reverse=True)
 
-    def update_value(self):
-        self.value = round(sum(stack.item.value * stack.count for stack in self.items))
+    def value(self):
+        return round(sum(stack.item.value * stack.count for stack in self.items))
 
-    def update_items_caught(self):
-        self.times_fished = sum(stack.count for stack in self.items if stack.item.name != 'Credit')
+    def items_caught(self):
+        return sum(stack.count for stack in self.items if stack.item.name != 'Credit')
 
     def on_cooldown(self) -> bool:
         return time.time() < self.next_fish_time
@@ -194,8 +191,8 @@ class AllProfiles:
         return False
 
     def __str__(self):
-        output = (f"Moneys obtained: **{round(sum(profile.value for profile in self.real_profiles)):,}**\n" +
-               f"Items caught: **{sum(profile.times_fished for profile in self.real_profiles):,}*" +
+        output = (f"Moneys obtained: **{round(sum(profile.value() for profile in self.real_profiles)):,}**\n" +
+               f"Items caught: **{sum(profile.items_caught() for profile in self.real_profiles):,}*" +
                f"*\n\n")
 
         fishing_items_sorted_by_value = sorted(fishing_items, key=lambda item: item.value, reverse=True)
@@ -319,8 +316,8 @@ def manipulated_weights(factor=1.0, uncatchable=None) -> list:
 
 def fishing_manifesto_factor(username: str) -> float:
     pf = all_pfs.profile_from_name(username)
-    x_ = max(pf.value, 0) if pf is not None else 0
-    m_ = max(profile.value for profile in all_pfs.real_profiles)
+    x_ = max(pf.value(), 0) if pf is not None else 0
+    m_ = max(profile.value() for profile in all_pfs.real_profiles)
     old_formula = 21 * ((420 * x_ / m_) + 1) ** -0.2 - 4.45
     new_formula = percent_increase_to_factor(500 * ((420 * x_ / m_) + 1) ** -0.2 - 70)
 
@@ -376,7 +373,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
 
     def find_random_user_to_donate_to() -> Profile:
         usable_profiles = [prof for prof in all_pfs.real_profiles if prof.username != original_user]
-        weights_ = [max(prof.value, 0) ** 0.37 for prof in usable_profiles]
+        weights_ = [max(prof.value(), 0) ** 0.37 for prof in usable_profiles]
 
         return random.choices(usable_profiles, weights=weights_, k=1)[0]
 
@@ -544,7 +541,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
     original_pf = pf
 
     next_fish_time = pf.next_fish_time
-    old_value = pf.value # to determine new luck lb stats
+    old_value = pf.value() # to determine new luck lb stats
 
     cd = FISHING_COOLDOWN
     penalty = 0
@@ -817,7 +814,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
 
     if curse_active:
         if random_range(1, 150) <= 2: # 1.5% chance for each curse
-            money_to_remove = min(15000, int(pf.value * 0.1))
+            money_to_remove = min(15000, int(pf.value() * 0.1))
             pf.add_fish(get_fish_from_name('Credit'), 0 - money_to_remove)
             output += f'\n*Oops! Lost {money_to_remove:,} moneys (Curse)*'
 
@@ -846,7 +843,7 @@ def fish_event(username: str, force_fish_name=None, factor=1.0, bypass_fish_cd=F
 
     # increments new_moneys and new_catches stats for the new luck lb
     original_pf.new_catches += 1
-    original_pf.new_moneys += original_pf.value - old_value
+    original_pf.new_moneys += original_pf.value() - old_value
 
     return output
 
@@ -882,7 +879,7 @@ def steal_fish_from_random(thief_name: str, recipient_name: str=None, shoot=Fals
 
     iterations = 0
     while True:
-        weights = [pf.value for pf in all_pfs.real_profiles]
+        weights = [pf.value() for pf in all_pfs.real_profiles]
         player_pf: Profile = random.choices(all_pfs.real_profiles, weights=weights, k=1)[0]
         player_name = player_pf.username
 
@@ -938,22 +935,22 @@ def leaderboard_string(sort_by_luck=False) -> str:
     output = ''
     index = 1
 
-    list_of_profiles = [profile for profile in all_pfs.real_profiles if profile.times_fished > 0]
+    list_of_profiles = [profile for profile in all_pfs.real_profiles if profile.items_caught() > 0]
     unshown = len(all_pfs.profiles) - len(list_of_profiles)
 
     if sort_by_luck:
-        list_of_profiles.sort(key=lambda prof: sum([stack.count * stack.item.value for stack in prof.items if stack.item.name != 'Credit']) / prof.times_fished, reverse=True)
+        list_of_profiles.sort(key=lambda prof: sum([stack.count * stack.item.value for stack in prof.items if stack.item.name != 'Credit']) / prof.items_caught(), reverse=True)
     else:
-        list_of_profiles.sort(key=lambda prof: prof.value, reverse=True)
+        list_of_profiles.sort(key=lambda prof: prof.value(), reverse=True)
 
     for profile in list_of_profiles:
         try:
             trophy = '🥇 ' if index == 1 else '🥈 ' if index == 2 else '🥉 ' if index == 3 else ''
 
-            more_accurate_val = profile.value if not sort_by_luck else sum([stack.count * stack.item.value for stack in profile.items if stack.item.name != 'Credit'])
+            more_accurate_val = profile.value() if not sort_by_luck else sum([stack.count * stack.item.value for stack in profile.items if stack.item.name != 'Credit'])
 
-            if not sort_by_luck or profile.times_fished >= 10:
-                output += (f'{index:,}. {trophy}{profile.username}: **{(more_accurate_val if not sort_by_luck else round(more_accurate_val / profile.times_fished, 2)):,} '
+            if not sort_by_luck or profile.items_caught() >= 10:
+                output += (f'{index:,}. {trophy}{profile.username}: **{(more_accurate_val if not sort_by_luck else round(more_accurate_val / profile.items_caught(), 2)):,} '
                            f'moneys{'/item' if sort_by_luck else ''}**\n')
 
                 index += 1
@@ -962,6 +959,7 @@ def leaderboard_string(sort_by_luck=False) -> str:
 
         except KeyError:
             pass
+
         except ZeroDivisionError:
             pass
 
