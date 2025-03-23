@@ -40,12 +40,13 @@ class Commands:
             username = interaction.user.name
 
             if username in self.wordle_games.keys():
-                await interaction.response.send_message("You are already playing a game of Wordle")
-                return
+                await interaction.channel.send("You are already playing a game of Wordle")
 
-            game = wordle.WordleGame(username)
-            self.wordle_games[username] = game
-            await interaction.response.send_message(embed = make_wordle_embed(game))
+            else:
+                game = wordle.WordleGame(username)
+                self.wordle_games[username] = game
+
+            await interaction.response.send_message(embed = make_wordle_embed(self.wordle_games[username]))
             # await interaction.channel.send(f"The word is {game.correct_word}")
 
         @self.tree.command(name = "guess", description = "Guess a word (Wordle)")
