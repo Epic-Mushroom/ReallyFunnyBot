@@ -88,7 +88,8 @@ class Commands:
         @self.tree.command(name = "leaderboard", description = "Displays the leaderboard")
         @discord.app_commands.describe(type = "Type of leaderboard to display (defaults to moneys)")
         @discord.app_commands.choices(type = [discord.app_commands.Choice(name = "moneys", value = "default"),
-                                              discord.app_commands.Choice(name = "RNG", value = "rng")])
+                                              discord.app_commands.Choice(name = "RNG", value = "rng"),
+                                              discord.app_commands.Choice(name = "Wordle", value = "wordle")])
         async def leaderboard(interaction: discord.Interaction, type: str = 'default'):
             embed = None
             if type == 'default':
@@ -100,6 +101,12 @@ class Commands:
                 embed = discord.Embed(
                     title = f'{'(Testing Only) ' if not fish_utils.FISHING_ENABLED else ''}RNG Leaderboard',
                     description = fish_utils.luck_leaderboard_string())
+
+            elif type == 'wordle':
+                embed = discord.Embed(
+                    title = 'Wordle Leaderboard',
+                    description = fish_utils.wordle_leaderboard_string()
+                )
 
             await interaction.response.send_message(embed = embed)
 

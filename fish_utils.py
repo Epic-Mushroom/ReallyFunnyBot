@@ -174,6 +174,9 @@ class Profile:
         except ZeroDivisionError:
             return 6969696969
 
+    def get_wordle_elo(self):
+        return self.wordle_points / (self.wordle_wins + self.wordle_losses)
+
 class AllProfiles:
     LB_BANNED = ['test_user', 'test_user2', 'StickyBot', 'Reminder', 'ReallyFunnyBotTEST']
 
@@ -946,7 +949,7 @@ def profile_to_string(username: str) -> str:
 def universal_profile_to_string() -> str:
     return str(all_pfs)
 
-def leaderboard_string(sort_by_luck=False) -> str:
+def leaderboard_string(sort_by_luck = False) -> str:
     output = ''
     index = 1
 
@@ -1015,6 +1018,20 @@ def luck_leaderboard_string() -> str:
 
     if unshown > 0:
         output += f'\n*{unshown:,} players not shown*'
+
+    return output
+
+def wordle_leaderboard_string() -> str:
+    output = ''
+    index = 1
+
+    list_of_profiles: list[Profile] = [profile for profile in all_pfs.profiles if profile.wordle_wins + profile.wordle_losses > 0]
+    list_of_profiles.sort(key = lambda p: p.wordle_points, reverse = True)
+
+    for profile in list_of_profiles:
+        trophy = '🥇 ' if index == 1 else '🥈 ' if index == 2 else '🥉 ' if index == 3 else ''
+
+        output += f'{index:,}. {trophy}{profile.username}: **{profile.wordle_points} points**\n'
 
     return output
 
