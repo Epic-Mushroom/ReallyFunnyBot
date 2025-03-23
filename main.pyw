@@ -608,8 +608,12 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
             elif message.content.startswith('admin:give'):
                 # ONLY USE THIS IF FISH IS UNFAIRLY LOST/GAINED BECAUSE OF BUGS
                 # format: "admin:give "epicmushroom." "God" 3"
-                
                 parts = message.content.split('"')
+
+                if len(parts) <= 1:
+                    # send with no args to get help message
+                    await send('format: \'admin:give "epicmushroom." "God" 3\'')
+
                 temp_username = parts[1]
                 temp_fish = fish_utils.get_fish_from_name(parts[3])
                 try:
@@ -635,6 +639,10 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
             elif message.content.startswith("admin:ban"):
                 # format: "admin:ban epicmushroom. 3600 testing testing"
                 parts = message.content.split(" ")
+
+                if len(parts) <= 1:
+                    # send with no args to get help message
+                    await send('format: "admin:ban epicmushroom. 3600 the reason"')
 
                 temp_username = parts[1]
                 try:
