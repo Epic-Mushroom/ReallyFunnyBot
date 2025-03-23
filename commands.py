@@ -50,7 +50,7 @@ class Commands:
             # await interaction.channel.send(f"The word is {game.correct_word}")
 
         @self.tree.command(name = "guess", description = "Guess a word (Wordle)")
-        @discord.app_commands.describe(word = "Your guess (must be a valid five-letter word)")
+        @discord.app_commands.describe(word = "Your guess (must be a valid five-letter word). Enter \"quit\" to give up")
         async def guess(interaction: discord.Interaction, word: str):
             username = interaction.user.name
 

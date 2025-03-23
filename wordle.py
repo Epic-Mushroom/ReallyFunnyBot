@@ -76,7 +76,11 @@ class WordleGame:
     def register_guess(self, guess: str):
         guess = guess.lower().strip()
 
-        if len(guess) != WORD_LENGTH or not WordleGame.validate_word(guess):
+        if guess in ['suicide', 'forfeit', 'giveup', 'give up', 'quit']:
+            self.game_state = WordleGame.LOSS
+            return
+
+        elif len(guess) != WORD_LENGTH or not WordleGame.validate_word(guess):
             raise InvalidGuessError
 
         elif self.correct_word in self.guesses or len(self.guesses) >= MAX_CHANCES:
@@ -142,7 +146,8 @@ class WordleGame:
             return 0
 
         if self.game_state == WordleGame.LOSS:
-            return -3 if len(self.green_letters) >= 4 else -7
+            return ((-3 if len(self.green_letters) >= 4 else -7)
+                    if len(self.guesses) >= MAX_CHANCES else 0)
 
         if len(self.guesses) == 1:
             return 1000
@@ -162,9 +167,13 @@ class WordleGame:
         DUPLICATE_GUESS_MESSAGES = ["Have you tried not typing the same word twice?"] # Duplicate guesses
         WASTING_TIME_MESSAGES_1 = ["Not locked in...", "You took your time... and still lost.", "Zzzzzzz"] # time_used >= 600
         JADEN_LOSS_MESSAGE = ["JED LOSES"]
+        GIVE_UP_MESSAGES = ["You gave up.", "You forfeit."]
 
         if random.randint(1, 200) == 1:
             return random.choice(RARE_LOSS_MESSAGES)
+
+        elif len(self.guesses) < MAX_CHANCES:
+            return random.choice(GIVE_UP_MESSAGES)
 
         elif self.username == "jesusfreak72" and random.randint(1, 5) == 1:
             return random.choice(JADEN_LOSS_MESSAGE)
