@@ -1033,6 +1033,8 @@ def wordle_leaderboard_string() -> str:
 
         output += f'{index:,}. {trophy}{profile.username}: **{profile.wordle_points} points**\n'
 
+        index += 1
+
     return output
 
 def recalculate_fish_database() -> int:
