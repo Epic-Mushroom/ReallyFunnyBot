@@ -138,8 +138,11 @@ class WordleGame:
     def calculate_score(self):
         time_used = self.get_time_used()
 
-        if not self.game_state == WordleGame.WIN:
+        if self.game_state == WordleGame.UNFINISHED:
             return 0
+
+        if self.game_state == WordleGame.LOSS:
+            return -3 if len(self.green_letters) >= 4 else -7
 
         if len(self.guesses) == 1:
             return 1000
@@ -235,7 +238,8 @@ class WordleGame:
 
         if self.game_state == WordleGame.LOSS:
             output += (f"❌ **You lost!** *{self.get_loss_message()}*\nThe word was: **{self.correct_word.upper()}**\n"
-                       f"⏰ {seconds_to_descriptive_time(self.get_time_used())}\n\n")
+                       f"⏰ {seconds_to_descriptive_time(self.get_time_used())}\n"
+                       f"✨ {self.calculate_score()} points\n\n")
 
         elif self.game_state == WordleGame.WIN:
             output += (f"✅ **You won!** *{self.get_win_message()}*\n"
