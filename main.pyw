@@ -137,14 +137,11 @@ class ServerInstance:
 
         # print(f"attempting to mimic the status of {stalked_member.name}")
 
-        activity_gen = (activity.type == discord.ActivityType.playing for activity in stalked_member.activities)
-        if any(activity_gen):
-            stalked_activity = next((activity for activity in stalked_member.activities if activity.type == discord.ActivityType.playing), None)
+        stalked_activity = next((activity for activity in stalked_member.activities if activity.type == discord.ActivityType.playing), None)
 
+        if stalked_activity is not None:
             # print(f"changing bot's activity to {stalked_activity.name}")
-            await client.change_presence(
-                activity = stalked_activity if stalked_activity.type == discord.ActivityType.playing
-                else None)
+            await client.change_presence(activity = stalked_activity)
 
         else:
             # print(f"this user does not have a "playing" activity, changing bot activity to {default_name if
