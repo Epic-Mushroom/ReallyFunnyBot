@@ -5,6 +5,9 @@ MAX_HAND_VALUE = 21
 class GameOverError(Exception):
     pass
 
+class HitLimitError(Exception):
+    pass
+
 class Card:
     SUITS = ['hearts', 'clubs', 'spades', 'diamonds']
     TYPES = ['ace', 'jack', 'queen', 'king'] + [str(i) for i in range(2, 11)]
@@ -49,7 +52,7 @@ class BlackjackGame:
     def __init__(self, username: str, wager: int, rigged = False):
         self.username = username
         self.wager = wager
-        self.rigged = rigged
+        self.rigged = True if self.wager < 0 else rigged
 
         self.main_deck = build_initial_deck()
         self.dealer_hand = Hand([draw_from_deck(self.main_deck)])
@@ -61,10 +64,20 @@ class BlackjackGame:
         if not self.game_state == BlackjackGame.UNFINISHED:
             raise GameOverError
 
-        card = draw_from_deck(self.main_deck)
-        self.player_hand.add_card(card)
+        if self.player_hand.total_value() < MAX_HAND_VALUE:
+            # hitting only allowed if player isn't at 21 yet
+            if self.rigged:
+                max_value = min(10, MAX_HAND_VALUE - self.player_hand.total_value())
+                card = draw_from_deck(self.main_deck, force_max_value = max_value)
+            else:
+                card = draw_from_deck(self.main_deck)
 
-        if player_value > MAX_HAND_VALUE:
+            self.player_hand.add_card(card)
+
+        else:
+            raise HitLimitError
+
+        if self.player_hand.total_value() > MAX_HAND_VALUE:
             # only update game state if player busts
             self.update_game_state()
 
@@ -72,12 +85,8 @@ class BlackjackGame:
         if not self.game_state == BlackjackGame.UNFINISHED:
             raise GameOverError
 
-        while self.dealer_hand.total_value() < 17:
-            if self.rigged:
-                card = draw_from_deck(self.main_deck,
-                                      force_value = MAX_HAND_VALUE - self.dealer_hand.total_value() - 1)
-                self.dealer_hand.add_card(card)
-
+        while self.dealer_hand.total_value() < MAX_HAND_VALUE + 1 if self.rigged else 17:
+            # dealer should always bust if self.rigged is True
             card = draw_from_deck(self.main_deck)
             self.dealer_hand.add_card(card)
 
@@ -193,29 +202,64 @@ class BlackjackGame:
 
         return "If you are seeing this then something went wrong. Ping me about this lol"
 
+    def get_earned_moneys(self) -> str:
+        if self.game_state in [BlackjackGame.TIE, BlackjackGame.WIN]:
+            if self.wager >= 0:
+                return f"🪙 +{self.wager} moneys"
+
+            else:
+                return f"🪙 {self.wager} moneys"
+
+        elif self.game_state == BlackjackGame.LOSS:
+            if self.wager >= 0:
+                return f"🪙 {self.wager} moneys"
+
+            else:
+                # this should never happen considering the game is rigged in the player's favor
+                # when wager is negative
+                return f"🪙 +{self.wager} moneys"
+
+        else:
+            return ""
+
     def __str__(self):
         output = f"Username: {self.username}\nWager: {self.wager} moneys\n\n"
 
         if self.game_state == BlackjackGame.TIE:
             output += f"🟨 **You tied.** "
+
         elif self.game_state == BlackjackGame.LOSS:
-            output += f"❌ **You lost!** "
+            if self.player_hand.total_value() > MAX_HAND_VALUE:
+                output += f"❌ **You bust!** "
+
+            else:
+                output += f"❌ **You lost!** "
+
+            output += f"*{self.get_game_end_message()}*\n{self.get_earned_moneys()}\n\n"
+
         elif self.game_state == BlackjackGame.WIN:
-            output += f"✅ **You won!** "
+            if self.dealer_hand.total_value() > MAX_HAND_VALUE:
+                output += f"✅ **The dealer bust!** "
 
-        output += self.get_game_end_message() + '\n\n'
+            else:
+                output += f"✅ **You won!** "
 
-        output += f"**Dealer:**\n{str(self.dealer_hand)}\n\n**You:**\n{str(self.player_hand)}"
+            output += f"*{self.get_game_end_message()}*\n{self.get_earned_moneys()}\n\n"
+
+        output += (f"**Dealer:**\n{str(self.dealer_hand)} ({self.dealer_hand.total_value()})"
+                   f"\n\n**You:**\n{str(self.player_hand)} ({self.player_hand.total_value()})")
+
+        return output
 
 def build_initial_deck() -> list[Card]:
     # god i love list comps
     return [Card(type, suit, 1 if type == 'ace' else 10 if type in ['jack', 'queen', 'king'] else int(type))
             for type in Card.TYPES for suit in Card.SUITS]
 
-def draw_from_deck(deck: list[Card], force_value: int | None = None) -> Card:
+def draw_from_deck(deck: list[Card], force_max_value: int | None = None) -> Card:
     try:
-        if force_value is not None:
-            new_deck = [card for card in deck if card.value == force_value]
+        if force_max_value is not None:
+            new_deck = [card for card in deck if card.value <= force_max_value]
             card = random.choice(new_deck)
 
         else:
@@ -229,5 +273,16 @@ def draw_from_deck(deck: list[Card], force_value: int | None = None) -> Card:
     return card
 
 if __name__ == '__main__':
-    for card in build_initial_deck():
-        print(card)
+    bj_game = BlackjackGame('epicmushroom.', -500)
+    print(bj_game)
+
+    while bj_game.game_state == BlackjackGame.UNFINISHED:
+        user_input = input("Enter h to hit, s to stand").rstrip().lower()
+
+        if user_input == 'h':
+            bj_game.hit()
+
+        else:
+            bj_game.stand()
+
+        print(bj_game)
