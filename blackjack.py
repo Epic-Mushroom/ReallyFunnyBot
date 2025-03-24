@@ -85,7 +85,7 @@ class BlackjackGame:
         if not self.game_state == BlackjackGame.UNFINISHED:
             raise GameOverError
 
-        while self.dealer_hand.total_value() < MAX_HAND_VALUE + 1 if self.rigged else 17:
+        while self.dealer_hand.total_value() < ((MAX_HAND_VALUE + 1) if self.rigged else 17):
             # dealer should always bust if self.rigged is True
             card = draw_from_deck(self.main_deck)
             self.dealer_hand.add_card(card)
@@ -257,15 +257,15 @@ def build_initial_deck() -> list[Card]:
             for type in Card.TYPES for suit in Card.SUITS]
 
 def draw_from_deck(deck: list[Card], force_max_value: int | None = None) -> Card:
-    try:
-        if force_max_value is not None:
+    if force_max_value is not None:
+        try:
             new_deck = [card for card in deck if card.value <= force_max_value]
             card = random.choice(new_deck)
 
-        else:
-            raise IndexError
+        except IndexError:
+            card = random.choice(deck)
 
-    except IndexError:
+    else:
         card = random.choice(deck)
 
     deck.remove(card)
@@ -273,7 +273,7 @@ def draw_from_deck(deck: list[Card], force_max_value: int | None = None) -> Card
     return card
 
 if __name__ == '__main__':
-    bj_game = BlackjackGame('epicmushroom.', -500)
+    bj_game = BlackjackGame('epicmushroom.', 0)
     print(bj_game)
 
     while bj_game.game_state == BlackjackGame.UNFINISHED:
