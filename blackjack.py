@@ -205,17 +205,17 @@ class BlackjackGame:
     def get_earned_moneys(self) -> str:
         if self.game_state == BlackjackGame.WIN:
             if self.wager >= 0:
-                return f"🪙 +{self.wager} moneys"
+                return f"🪙 +{self.wager:,} moneys"
 
             else:
-                return f"🪙 {self.wager} moneys"
+                return f"🪙 {self.wager:,} moneys"
 
         elif self.game_state == BlackjackGame.LOSS:
             if self.wager >= 0:
-                return f"🪙 -{self.wager} moneys"
+                return f"🪙 -{self.wager:,} moneys"
 
             else:
-                return f"🪙 {self.wager} moneys"
+                return f"🪙 {self.wager:,} moneys"
 
         elif self.game_state == BlackjackGame.TIE:
             return f"🪙 +0 moneys"
@@ -224,7 +224,7 @@ class BlackjackGame:
             return ""
 
     def __str__(self):
-        output = f"Username: {self.username}\nWager: {self.wager} moneys\n\n"
+        output = f"Username: {self.username}\nWager: {self.wager:,} moneys\n\n"
 
         if self.game_state == BlackjackGame.TIE:
             output += f"🟨 **You tied.** "
@@ -320,4 +320,4 @@ if __name__ == '__main__':
     #
     #     print(bj_game)
 
-    simulate_games('epicmushroom.', 50500, count = 5000)
+    simulate_games('epicmushroom.', -50500, count = 5000)

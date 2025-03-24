@@ -1,9 +1,6 @@
-import random
-
+import random, asyncio
 import discord
 import wordle, blackjack as bj, fish_utils
-from blackjack import BlackjackGame
-
 
 GRAY = discord.Colour.from_str("#787C7E")
 RED = discord.Colour.from_str("#DD2E44")
@@ -35,6 +32,25 @@ class TestView(discord.ui.View):
     async def on_click(self, interaction: discord.Interaction, button: discord.ui.Button):
         await interaction.response.send_message("Congratulations, you clicked a button that does literally nothing. I hope you feel proud of yourself for that.")
 
+class BlackjackConfirmBetView(discord.ui.View):
+    def __init__(self):
+        super().__init__()
+
+        self.confirmed = False
+
+    @discord.ui.button(label = "Hell yeah", style = discord.ButtonStyle.red)
+    async def on_confirm(self, interaction: discord.Interaction, button: discord.ui.Button):
+        self.clear_items()
+        self.confirmed = True
+        await interaction.response.edit_message(view = self)
+        self.stop()
+
+    @discord.ui.button(label = "Maybe not...", style = discord.ButtonStyle.secondary)
+    async def on_deny(self, interaction: discord.Interaction, button: discord.ui.Button):
+        self.clear_items()
+        await interaction.response.edit_message(embed = discord.Embed(description = "Game aborted"), view = self)
+        self.stop()
+
 class BlackjackHitStandView(discord.ui.View):
     def __init__(self, bj_game):
         super().__init__()
@@ -42,7 +58,15 @@ class BlackjackHitStandView(discord.ui.View):
 
     @discord.ui.button(label = "Hit", style = discord.ButtonStyle.primary)
     async def on_hit(self, interaction: discord.Interaction, button: discord.ui.Button):
-        self.game.hit()
+        try:
+            self.game.hit()
+
+        except bj.HitLimitError:
+            self.remove_item(button)
+
+            await interaction.channel.send("Can't hit when hand value is 21")
+            await interaction.response.edit_message(view = self)
+            return
 
         if self.game.game_state == bj.BlackjackGame.UNFINISHED:
             await interaction.response.send_message(embed = make_blackjack_embed(self.game),
@@ -75,7 +99,7 @@ class Commands:
             username = interaction.user.name
 
             if username in self.wordle_games.keys():
-                await interaction.channel.send("You are already playing a game of Wordle")
+                await interaction.channel.send("You are already playing a game of Wordle!")
 
             else:
                 game = wordle.WordleGame(username)
@@ -170,15 +194,33 @@ class Commands:
         @discord.app_commands.describe(wager = "How many moneys you want to bet")
         async def blackjack(interaction: discord.Interaction, wager: int):
             username = interaction.user.name
+            profile = fish_utils.all_pfs.profile_from_name(username)
 
             if username in self.blackjack_games.keys() and self.blackjack_games[username].game_state == bj.BlackjackGame.UNFINISHED:
-                await interaction.channel.send("You are already playing a game of Blackjack")
+                await interaction.channel.send("You are already playing a game of Blackjack!")
+
+            elif abs(wager) > profile.value():
+                await interaction.response.send_message("You don't have enough moneys to make that bet!")
+                return
+
+            elif abs(wager) >= 0.1 * profile.value():
+                embed = discord.Embed(description = f"*Are you sure you want to bet **{wager:,} moneys**?*")
+                confirm_view = BlackjackConfirmBetView()
+
+                await interaction.response.send_message(embed = embed, view = confirm_view)
+                await confirm_view.wait()
+
+                if not confirm_view.confirmed:
+                    return
+
+                game = bj.BlackjackGame(username, wager)
+                self.blackjack_games[username] = game
 
             else:
                 game = bj.BlackjackGame(username, wager)
                 self.blackjack_games[username] = game
 
-            await interaction.response.send_message(embed = make_blackjack_embed(self.blackjack_games[username]),
-                                                    view = BlackjackHitStandView(self.blackjack_games[username]))
+            await interaction.channel.send(embed = make_blackjack_embed(self.blackjack_games[username]),
+                                           view = BlackjackHitStandView(self.blackjack_games[username]))
 
 
