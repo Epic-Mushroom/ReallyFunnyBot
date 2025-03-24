@@ -169,7 +169,7 @@ os.chdir(script_directory)
 ADMIN_ONLY = False
 test_file = None
 try:
-    test_file = open(Path("testing", "test_file.txt"))
+    test_file = open(Path("testing", "adminonlyenabled.txt"))
     ADMIN_ONLY = True
 except FileNotFoundError:
     ADMIN_ONLY = False
@@ -182,14 +182,10 @@ SECRET_FILE_PATH_MAIN = Path('secrets', 'discord bot token.txt')
 SECRET_FILE_PATH_TEST = Path('secrets', 'test discord bot token.txt')
 TOKEN = None
 
-try:
-    token_path = SECRET_FILE_PATH_TEST if ADMIN_ONLY else SECRET_FILE_PATH_MAIN
+token_path = SECRET_FILE_PATH_TEST if ADMIN_ONLY else SECRET_FILE_PATH_MAIN
 
-    with open(token_path) as file1:
-        TOKEN = file1.readline()
-
-except FileNotFoundError:
-    TOKEN = os.environ['BOT_TOKEN']
+with open(token_path) as file1:
+    TOKEN = file1.readline()
 
 # Setup certain variables according to value of ADMIN_ONLY
 COMMANDS_GUILD = None
@@ -258,7 +254,7 @@ async def on_ready():
     my_commands.set_up_commands()
 
     # commands should not be synced all the time
-    # await bot_instance.get_tree().sync()
+    await bot_instance.get_tree().sync()
     print(f'number of commands synced: {len(bot_instance.get_tree().get_commands())}')
 
     # for c in bot_instance.get_tree().get_commands():
