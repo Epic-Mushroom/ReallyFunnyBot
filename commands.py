@@ -1,16 +1,19 @@
 import random
 
 import discord
-import wordle, fish_utils
+import wordle, blackjack as bj, fish_utils
+from blackjack import BlackjackGame
+
+
+GRAY = discord.Colour.from_str("#787C7E")
+RED = discord.Colour.from_str("#DD2E44")
+GREEN = discord.Colour.from_str("#78B159")
+YELLOW = discord.Colour.from_str("#FFD04A")
 
 def make_wordle_embed(wordle_game: wordle.WordleGame) -> discord.Embed:
-    gray = discord.Colour.from_str("#787C7E")
-    red = discord.Colour.from_str("#DD2E44")
-    green = discord.Colour.from_str("#78B159")
-
-    embed_color = (gray if wordle_game.game_state == wordle.WordleGame.UNFINISHED else
-                   red if wordle_game.game_state == wordle.WordleGame.LOSS else
-                   green)
+    embed_color = (GRAY if wordle_game.game_state == wordle.WordleGame.UNFINISHED else
+                   RED if wordle_game.game_state == wordle.WordleGame.LOSS else
+                   GREEN)
     embed_msg = wordle_game.__str__()
 
     if len(wordle_game.guesses) == 0:
@@ -18,16 +21,48 @@ def make_wordle_embed(wordle_game: wordle.WordleGame) -> discord.Embed:
 
     return discord.Embed(color = embed_color, title = "Wordle", description = embed_msg)
 
+def make_blackjack_embed(bj_game: bj.BlackjackGame) -> discord.Embed:
+    embed_color = (GRAY if bj_game.game_state == bj.BlackjackGame.UNFINISHED else
+                   RED if bj_game.game_state == bj.BlackjackGame.LOSS else
+                   GREEN if bj_game.game_state == bj.BlackjackGame.WIN else
+                   YELLOW)
+    embed_msg = bj_game.__str__()
+
+    return discord.Embed(color = embed_color, title = "Blackjack", description = embed_msg)
+
 class TestView(discord.ui.View):
-    @discord.ui.button(label="Click me")
+    @discord.ui.button(label = "Click me")
     async def on_click(self, interaction: discord.Interaction, button: discord.ui.Button):
         await interaction.response.send_message("Congratulations, you clicked a button that does literally nothing. I hope you feel proud of yourself for that.")
+
+class BlackjackHitStandView(discord.ui.View):
+    def __init__(self, bj_game):
+        super().__init__()
+        self.game = bj_game
+
+    @discord.ui.button(label = "Hit", style = discord.ButtonStyle.primary)
+    async def on_hit(self, interaction: discord.Interaction, button: discord.ui.Button):
+        self.game.hit()
+
+        if self.game.game_state == bj.BlackjackGame.UNFINISHED:
+            await interaction.response.send_message(embed = make_blackjack_embed(self.game),
+                                                    view = BlackjackHitStandView(self.game))
+
+        else:
+            await interaction.response.send_message(embed = make_blackjack_embed(self.game))
+
+    @discord.ui.button(label = "Stand", style = discord.ButtonStyle.secondary)
+    async def on_stand(self, interaction: discord.Interaction, button: discord.ui.Button):
+        self.game.stand()
+
+        await interaction.response.send_message(embed = make_blackjack_embed(self.game))
 
 class Commands:
     def __init__(self, tree: discord.app_commands.CommandTree):
         self.tree = tree
 
         self.wordle_games = dict() # follows format "{username}": WordleGame()
+        self.blackjack_games = dict() # follows format "{username}": BlackjackGame()
 
     def set_up_commands(self):
         # All commands are to be implemented here
@@ -132,7 +167,18 @@ class Commands:
             await interaction.response.send_message(embed = embed)
 
         @self.tree.command(name = "blackjack", description = "Gamble your \"hard-earned\" fishing money away")
-        async def blackjack(interaction: discord.Interaction):
-            ...
+        @discord.app_commands.describe(wager = "How many moneys you want to bet")
+        async def blackjack(interaction: discord.Interaction, wager: int):
+            username = interaction.user.name
+
+            if username in self.blackjack_games.keys() and self.blackjack_games[username].game_state == bj.BlackjackGame.UNFINISHED:
+                await interaction.channel.send("You are already playing a game of Blackjack")
+
+            else:
+                game = bj.BlackjackGame(username, wager)
+                self.blackjack_games[username] = game
+
+            await interaction.response.send_message(embed = make_blackjack_embed(self.blackjack_games[username]),
+                                                    view = BlackjackHitStandView(self.blackjack_games[username]))
 
 
