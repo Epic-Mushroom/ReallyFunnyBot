@@ -131,4 +131,8 @@ class Commands:
 
             await interaction.response.send_message(embed = embed)
 
+        @self.tree.command(name = "blackjack", description = "Gamble your \"hard-earned\" fishing money away")
+        async def blackjack(interaction: discord.Interaction):
+            ...
+
 
