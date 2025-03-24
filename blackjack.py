@@ -203,7 +203,7 @@ class BlackjackGame:
         return "If you are seeing this then something went wrong. Ping me about this lol"
 
     def get_earned_moneys(self) -> str:
-        if self.game_state in [BlackjackGame.TIE, BlackjackGame.WIN]:
+        if self.game_state == BlackjackGame.WIN:
             if self.wager >= 0:
                 return f"🪙 +{self.wager} moneys"
 
@@ -212,12 +212,13 @@ class BlackjackGame:
 
         elif self.game_state == BlackjackGame.LOSS:
             if self.wager >= 0:
-                return f"🪙 {self.wager} moneys"
+                return f"🪙 -{self.wager} moneys"
 
             else:
-                # this should never happen considering the game is rigged in the player's favor
-                # when wager is negative
-                return f"🪙 +{self.wager} moneys"
+                return f"🪙 {self.wager} moneys"
+
+        elif self.game_state == BlackjackGame.TIE:
+            return f"🪙 +0 moneys"
 
         else:
             return ""
@@ -235,8 +236,6 @@ class BlackjackGame:
             else:
                 output += f"❌ **You lost!** "
 
-            output += f"*{self.get_game_end_message()}*\n{self.get_earned_moneys()}\n\n"
-
         elif self.game_state == BlackjackGame.WIN:
             if self.dealer_hand.total_value() > MAX_HAND_VALUE:
                 output += f"✅ **The dealer bust!** "
@@ -244,6 +243,7 @@ class BlackjackGame:
             else:
                 output += f"✅ **You won!** "
 
+        if self.game_state != BlackjackGame.UNFINISHED:
             output += f"*{self.get_game_end_message()}*\n{self.get_earned_moneys()}\n\n"
 
         output += (f"**Dealer:**\n{str(self.dealer_hand)} ({self.dealer_hand.total_value()})"
@@ -272,17 +272,32 @@ def draw_from_deck(deck: list[Card], force_max_value: int | None = None) -> Card
 
     return card
 
-if __name__ == '__main__':
-    bj_game = BlackjackGame('epicmushroom.', 0)
-    print(bj_game)
+def simulate_games(username, wager, count = 50):
+    for i in range(count):
+        bj_game = BlackjackGame(username, wager)
 
-    while bj_game.game_state == BlackjackGame.UNFINISHED:
-        user_input = input("Enter h to hit, s to stand").rstrip().lower()
-
-        if user_input == 'h':
+        while bj_game.player_hand.total_value() < 17:
             bj_game.hit()
 
-        else:
+        if bj_game.player_hand.total_value() <= MAX_HAND_VALUE:
+            # stands if the player hasn't busted already
             bj_game.stand()
 
         print(bj_game)
+
+if __name__ == '__main__':
+    # bj_game = BlackjackGame('epicmushroom.', 0)
+    # print(bj_game)
+    #
+    # while bj_game.game_state == BlackjackGame.UNFINISHED:
+    #     user_input = input("Enter h to hit, s to stand").rstrip().lower()
+    #
+    #     if user_input == 'h':
+    #         bj_game.hit()
+    #
+    #     else:
+    #         bj_game.stand()
+    #
+    #     print(bj_game)
+
+    simulate_games('epicmushroom.', 0)
