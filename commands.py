@@ -27,6 +27,21 @@ def make_blackjack_embed(bj_game: bj.BlackjackGame) -> discord.Embed:
 
     return discord.Embed(color = embed_color, title = "Blackjack", description = embed_msg)
 
+async def process_blackjack_game_end(interaction: discord.Interaction, bj_game: bj.BlackjackGame):
+    profile = fish_utils.all_pfs.profile_from_name(bj_game.username)
+
+    if bj_game.game_state == bj.BlackjackGame.WIN:
+        profile.add_fish(fish_utils.get_fish_from_name("Credit"), bj_game.wager)
+        profile.moneys_lost_to_gambling -= bj_game.wager
+
+    elif bj_game.game_state == bj.BlackjackGame.LOSS:
+        profile.add_fish(fish_utils.get_fish_from_name("Credit"), -bj_game.wager)
+        profile.moneys_lost_to_gambling += bj_game.wager
+
+    await interaction.response.send_message(embed = make_blackjack_embed(bj_game))
+
+    fish_utils.all_pfs.write_data()
+
 class TestView(discord.ui.View):
     @discord.ui.button(label = "Click me")
     async def on_click(self, interaction: discord.Interaction, button: discord.ui.Button):
@@ -73,13 +88,13 @@ class BlackjackHitStandView(discord.ui.View):
                                                     view = BlackjackHitStandView(self.game))
 
         else:
-            await interaction.response.send_message(embed = make_blackjack_embed(self.game))
+            await process_blackjack_game_end(interaction, self.game)
 
     @discord.ui.button(label = "Stand", style = discord.ButtonStyle.secondary)
     async def on_stand(self, interaction: discord.Interaction, button: discord.ui.Button):
         self.game.stand()
 
-        await interaction.response.send_message(embed = make_blackjack_embed(self.game))
+        await process_blackjack_game_end(interaction, self.game)
 
 class Commands:
     def __init__(self, tree: discord.app_commands.CommandTree):
@@ -149,7 +164,8 @@ class Commands:
         @discord.app_commands.describe(type = "Type of leaderboard to display (defaults to moneys)")
         @discord.app_commands.choices(type = [discord.app_commands.Choice(name = "moneys", value = "default"),
                                               discord.app_commands.Choice(name = "RNG", value = "rng"),
-                                              discord.app_commands.Choice(name = "Wordle", value = "wordle")])
+                                              discord.app_commands.Choice(name = "Wordle", value = "wordle"),
+                                              discord.app_commands.Choice(name = "gambling losses", value = "gambling")])
         async def leaderboard(interaction: discord.Interaction, type: str = 'default'):
             embed = None
             if type == 'default':
@@ -163,10 +179,12 @@ class Commands:
                     description = fish_utils.luck_leaderboard_string())
 
             elif type == 'wordle':
-                embed = discord.Embed(
-                    title = 'Wordle Leaderboard',
-                    description = fish_utils.wordle_leaderboard_string()
-                )
+                embed = discord.Embed(title = 'Wordle Leaderboard',
+                                      description = fish_utils.wordle_leaderboard_string())
+
+            elif type == 'gambling':
+                embed = discord.Embed(title = 'Gambling Losses Leaderboard',
+                                      description = fish_utils.gambling_losses_leaderboard_string())
 
             await interaction.response.send_message(embed = embed)
 

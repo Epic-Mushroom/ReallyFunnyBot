@@ -44,18 +44,22 @@ class MaintenanceError(Exception):
     pass
 
 class Profile:
-    def __init__(self, username, wordle_wins = 0, wordle_losses = 0, wordle_points = 0, next_fish_time = 0, new_moneys = 0, new_catches = 0,
-                 items=None, specials=None, upgrades=None, banned_until=0, ban_reason="", **kwargs):
+    def __init__(self, username, wordle_wins = 0, wordle_losses = 0, wordle_points = 0, moneys_lost_to_gambling = 0, next_fish_time = 0, new_moneys = 0, new_catches = 0,
+                 items = None, specials = None, upgrades = None, banned_until = 0, ban_reason = "", **kwargs):
         self.username = username
         self.wordle_wins = wordle_wins
         self.wordle_losses = wordle_losses
         self.wordle_points = wordle_points
+
+        self.moneys_lost_to_gambling = moneys_lost_to_gambling
+
         self.next_fish_time = next_fish_time
         self.new_moneys = new_moneys
         self.new_catches = new_catches
         self.items = items if items is not None else []
         self.specials = specials if specials is not None else dict()
         self.upgrades = upgrades if upgrades is not None else []
+
         self.banned_until = banned_until
         self.ban_reason = ban_reason
 
@@ -110,9 +114,11 @@ class Profile:
         else:
             output += '*No upgrades purchased*\n'
 
+        output += '\n'
+        output += f'**Moneys lost to gambling:** {self.moneys_lost_to_gambling:,}\n'
+
         if self.wordle_points + self.wordle_losses + self.wordle_wins > 0:
-            output += '\n'
-            output += f'**Wordle points:** {self.wordle_points}\n'
+            output += f'**Wordle points:** {self.wordle_points:,}\n'
 
         return output
 
@@ -1032,6 +1038,26 @@ def wordle_leaderboard_string() -> str:
         trophy = '🥇 ' if index == 1 else '🥈 ' if index == 2 else '🥉 ' if index == 3 else ''
 
         output += f'{index:,}. {trophy}{profile.username}: **{profile.wordle_points} points**\n'
+
+        index += 1
+
+    return output
+
+def gambling_losses_leaderboard_string() -> str:
+    output = ''
+    index = 1
+
+    list_of_profiles: list[Profile] = all_pfs.real_profiles
+    list_of_profiles.sort(key = lambda p: (p.moneys_lost_to_gambling, p.value()), reverse = True)
+
+    for profile in list_of_profiles:
+        trophy = '🥇 ' if index == 1 else '🥈 ' if index == 2 else '🥉 ' if index == 3 else ''
+
+        if profile.moneys_lost_to_gambling >= 0:
+            output += f'{index:,}. {trophy}{profile.username}: **{profile.moneys_lost_to_gambling:,} moneys lost**\n'
+
+        else:
+            output += f'{index:,}. {trophy}{profile.username}: **{-profile.moneys_lost_to_gambling:,} moneys gained**\n'
 
         index += 1
 
