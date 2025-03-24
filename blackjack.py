@@ -273,6 +273,12 @@ def draw_from_deck(deck: list[Card], force_max_value: int | None = None) -> Card
     return card
 
 def simulate_games(username, wager, count = 50):
+    win_count = 0
+    loss_count = 0
+    tie_count = 0
+
+    money_earned = 0
+
     for i in range(count):
         bj_game = BlackjackGame(username, wager)
 
@@ -284,6 +290,20 @@ def simulate_games(username, wager, count = 50):
             bj_game.stand()
 
         print(bj_game)
+
+        if bj_game.game_state == BlackjackGame.WIN:
+            win_count += 1
+            money_earned += wager
+
+        elif bj_game.game_state == BlackjackGame.LOSS:
+            loss_count += 1
+            money_earned -= wager
+
+        elif bj_game.game_state == BlackjackGame.TIE:
+            tie_count += 1
+
+    print("================")
+    print(f"Wins: {win_count}\nLosses: {loss_count}\nTies: {tie_count}\nMoney lost: {-money_earned}")
 
 if __name__ == '__main__':
     # bj_game = BlackjackGame('epicmushroom.', 0)
@@ -300,4 +320,4 @@ if __name__ == '__main__':
     #
     #     print(bj_game)
 
-    simulate_games('epicmushroom.', 0)
+    simulate_games('epicmushroom.', 50, count = 5000)
