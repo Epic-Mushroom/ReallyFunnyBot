@@ -328,4 +328,4 @@ if __name__ == '__main__':
     #
     #     print(bj_game)
 
-    simulate_games('epicmushroom.', -1, play_normally = False, count = 100000)
+    simulate_games('epicmushroom.', -1, play_normally = True, count = 1000)
