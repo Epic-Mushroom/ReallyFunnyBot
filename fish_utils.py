@@ -44,13 +44,14 @@ class MaintenanceError(Exception):
     pass
 
 class Profile:
-    def __init__(self, username, wordle_wins = 0, wordle_losses = 0, wordle_points = 0, moneys_lost_to_gambling = 0, next_fish_time = 0, new_moneys = 0, new_catches = 0,
+    def __init__(self, username, wordle_wins = 0, wordle_losses = 0, wordle_points = 0, bj_games_played = 0, moneys_lost_to_gambling = 0, next_fish_time = 0, new_moneys = 0, new_catches = 0,
                  items = None, specials = None, upgrades = None, banned_until = 0, ban_reason = "", **kwargs):
         self.username = username
         self.wordle_wins = wordle_wins
         self.wordle_losses = wordle_losses
         self.wordle_points = wordle_points
 
+        self.bj_games_played = bj_games_played
         self.moneys_lost_to_gambling = moneys_lost_to_gambling
 
         self.next_fish_time = next_fish_time
@@ -116,6 +117,9 @@ class Profile:
 
         output += '\n'
         output += f'**Moneys lost to gambling:** {self.moneys_lost_to_gambling:,}\n'
+
+        if self.bj_games_played > 0:
+            output += f'**Blackjack games played:** {self.bj_games_played:,}\n'
 
         if self.wordle_points + self.wordle_losses + self.wordle_wins > 0:
             output += f'**Wordle points:** {self.wordle_points:,}\n'

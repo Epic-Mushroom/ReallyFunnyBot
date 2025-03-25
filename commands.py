@@ -38,6 +38,8 @@ async def process_blackjack_game_end(interaction: discord.Interaction, bj_game: 
         profile.add_fish(fish_utils.get_fish_from_name("Credit"), -bj_game.wager)
         profile.moneys_lost_to_gambling += bj_game.wager
 
+    profile.bj_games_played += 1
+
     await interaction.response.send_message(embed = make_blackjack_embed(bj_game))
 
     fish_utils.all_pfs.write_data()
@@ -48,13 +50,17 @@ class TestView(discord.ui.View):
         await interaction.response.send_message("Congratulations, you clicked a button that does literally nothing. I hope you feel proud of yourself for that.")
 
 class BlackjackConfirmBetView(discord.ui.View):
-    def __init__(self):
+    def __init__(self, username):
         super().__init__()
+        self.username = username
 
         self.confirmed = False
 
     @discord.ui.button(label = "Hell yeah", style = discord.ButtonStyle.red)
     async def on_confirm(self, interaction: discord.Interaction, button: discord.ui.Button):
+        if interaction.user.name != self.username:
+            return
+
         self.clear_items()
         self.confirmed = True
         await interaction.response.edit_message(view = self)
@@ -62,6 +68,9 @@ class BlackjackConfirmBetView(discord.ui.View):
 
     @discord.ui.button(label = "Maybe not...", style = discord.ButtonStyle.secondary)
     async def on_deny(self, interaction: discord.Interaction, button: discord.ui.Button):
+        if interaction.user.name != self.username:
+            return
+
         self.clear_items()
         await interaction.response.edit_message(embed = discord.Embed(description = "Game aborted"), view = self)
         self.stop()
@@ -73,6 +82,9 @@ class BlackjackHitStandView(discord.ui.View):
 
     @discord.ui.button(label = "Hit", style = discord.ButtonStyle.primary)
     async def on_hit(self, interaction: discord.Interaction, button: discord.ui.Button):
+        if interaction.user.name != self.game.username:
+            return
+
         try:
             self.game.hit()
 
@@ -92,6 +104,9 @@ class BlackjackHitStandView(discord.ui.View):
 
     @discord.ui.button(label = "Stand", style = discord.ButtonStyle.secondary)
     async def on_stand(self, interaction: discord.Interaction, button: discord.ui.Button):
+        if interaction.user.name != self.game.username:
+            return
+
         self.game.stand()
 
         await process_blackjack_game_end(interaction, self.game)
@@ -223,7 +238,7 @@ class Commands:
 
             elif abs(wager) >= 0.1 * profile.value():
                 embed = discord.Embed(description = f"*Are you sure you want to bet **{wager:,} moneys**?*")
-                confirm_view = BlackjackConfirmBetView()
+                confirm_view = BlackjackConfirmBetView(username)
 
                 await interaction.response.send_message(embed = embed, view = confirm_view)
                 await confirm_view.wait()
