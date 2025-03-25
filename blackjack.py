@@ -33,8 +33,8 @@ class Hand:
 
     def convert_aces(self):
         for card in self.cards:
-            if card.type == 'ace' and self.total_value() <= MAX_HAND_VALUE - 10:
-                card.value += 10
+            if card.type == 'ace' and card.value == 11 and self.total_value() > MAX_HAND_VALUE:
+                card.value -= 10
 
     def add_card(self, card):
         self.cards.append(card)
@@ -253,7 +253,7 @@ class BlackjackGame:
 
 def build_initial_deck() -> list[Card]:
     # god i love list comps
-    return [Card(type, suit, 1 if type == 'ace' else 10 if type in ['jack', 'queen', 'king'] else int(type))
+    return [Card(type, suit, 11 if type == 'ace' else 10 if type in ['jack', 'queen', 'king'] else int(type))
             for type in Card.TYPES for suit in Card.SUITS]
 
 def draw_from_deck(deck: list[Card], force_max_value: int | None = None) -> Card:
@@ -320,4 +320,4 @@ if __name__ == '__main__':
     #
     #     print(bj_game)
 
-    simulate_games('epicmushroom.', -50500, count = 5000)
+    simulate_games('epicmushroom.', 1, count = 5000)
