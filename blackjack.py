@@ -67,8 +67,16 @@ class BlackjackGame:
         if self.player_hand.total_value() < MAX_HAND_VALUE:
             # hitting only allowed if player isn't at 21 yet
             if self.rigged:
-                max_value = min(10, MAX_HAND_VALUE - self.player_hand.total_value())
-                card = draw_from_deck(self.main_deck, force_max_value = max_value)
+                if self.player_hand.total_value() == 20:
+                    max_value = 11
+                    min_value = 11
+
+                else:
+                    max_value = min(10, MAX_HAND_VALUE - self.player_hand.total_value())
+                    min_value = 2
+
+                card = draw_from_deck(self.main_deck, force_max_value = max_value, force_min_value = min_value)
+
             else:
                 card = draw_from_deck(self.main_deck)
 
@@ -215,7 +223,7 @@ class BlackjackGame:
                 return f"🪙 -{self.wager:,} moneys"
 
             else:
-                return f"🪙 {self.wager:,} moneys"
+                return f"🪙 +{-self.wager:,} moneys"
 
         elif self.game_state == BlackjackGame.TIE:
             return f"🪙 +0 moneys"
@@ -256,23 +264,19 @@ def build_initial_deck() -> list[Card]:
     return [Card(type, suit, 11 if type == 'ace' else 10 if type in ['jack', 'queen', 'king'] else int(type))
             for type in Card.TYPES for suit in Card.SUITS]
 
-def draw_from_deck(deck: list[Card], force_max_value: int | None = None) -> Card:
-    if force_max_value is not None:
-        try:
-            new_deck = [card for card in deck if card.value <= force_max_value]
-            card = random.choice(new_deck)
+def draw_from_deck(deck: list[Card], force_max_value: int = 11, force_min_value: int = 2) -> Card:
+    try:
+        new_deck = [card for card in deck if force_min_value <= card.value <= force_max_value]
+        card = random.choice(new_deck)
 
-        except IndexError:
-            card = random.choice(deck)
-
-    else:
+    except IndexError:
         card = random.choice(deck)
 
     deck.remove(card)
 
     return card
 
-def simulate_games(username, wager, count = 50):
+def simulate_games(username, wager, play_normally = True, count = 50):
     win_count = 0
     loss_count = 0
     tie_count = 0
@@ -282,8 +286,12 @@ def simulate_games(username, wager, count = 50):
     for i in range(count):
         bj_game = BlackjackGame(username, wager)
 
-        while bj_game.player_hand.total_value() < 17:
-            bj_game.hit()
+        while bj_game.player_hand.total_value() < (17 if play_normally else 22):
+            try:
+                bj_game.hit()
+
+            except HitLimitError:
+                break
 
         if bj_game.player_hand.total_value() <= MAX_HAND_VALUE:
             # stands if the player hasn't busted already
@@ -320,4 +328,4 @@ if __name__ == '__main__':
     #
     #     print(bj_game)
 
-    simulate_games('epicmushroom.', 1, count = 5000)
+    simulate_games('epicmushroom.', -1, play_normally = False, count = 100000)
