@@ -1,5 +1,7 @@
 import random, asyncio
 import discord
+from discord import InteractionResponded
+
 import wordle, blackjack as bj, fish_utils
 from constants import GENERAL_CHANNEL_ID_1, GENERAL_CHANNEL_ID_2, GENERAL_CHANNEL_ID_3
 
@@ -272,7 +274,11 @@ class Commands:
                 game = bj.BlackjackGame(username, wager)
                 self.blackjack_games[username] = game
 
-            await interaction.channel.send(embed = make_blackjack_embed(self.blackjack_games[username]),
-                                           view = BlackjackHitStandView(self.blackjack_games[username]))
+            try:
+                await interaction.response.send_message(embed = make_blackjack_embed(self.blackjack_games[username]),
+                                                        view = BlackjackHitStandView(self.blackjack_games[username]))
 
+            except InteractionResponded:
+                await interaction.channel.send(embed = make_blackjack_embed(self.blackjack_games[username]),
+                                               view = BlackjackHitStandView(self.blackjack_games[username]))
 
