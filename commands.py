@@ -1,6 +1,7 @@
 import random, asyncio
 import discord
 import wordle, blackjack as bj, fish_utils
+from constants import GENERAL_CHANNEL_ID_1, GENERAL_CHANNEL_ID_2, GENERAL_CHANNEL_ID_3
 
 GRAY = discord.Colour.from_str("#787C7E")
 RED = discord.Colour.from_str("#DD2E44")
@@ -128,6 +129,10 @@ class Commands:
         async def play_wordle(interaction: discord.Interaction):
             username = interaction.user.name
 
+            if interaction.channel_id in [GENERAL_CHANNEL_ID_1, GENERAL_CHANNEL_ID_2, GENERAL_CHANNEL_ID_3]:
+                await interaction.response.send_message("no wordling in general")
+                return
+
             if username in self.wordle_games.keys():
                 await interaction.channel.send("You are already playing a game of Wordle!")
 
@@ -142,6 +147,10 @@ class Commands:
         @discord.app_commands.describe(word = "Your guess (must be a valid five-letter word). Enter \"quit\" to give up")
         async def guess(interaction: discord.Interaction, word: str):
             username = interaction.user.name
+
+            if interaction.channel_id in [GENERAL_CHANNEL_ID_1, GENERAL_CHANNEL_ID_2, GENERAL_CHANNEL_ID_3]:
+                await interaction.response.send_message("no wordling in general")
+                return
 
             if username not in self.wordle_games.keys():
                 game = wordle.WordleGame(username)
@@ -182,6 +191,9 @@ class Commands:
                                               discord.app_commands.Choice(name = "Wordle", value = "wordle"),
                                               discord.app_commands.Choice(name = "gambling losses", value = "gambling")])
         async def leaderboard(interaction: discord.Interaction, type: str = 'default'):
+            if interaction.channel_id in [GENERAL_CHANNEL_ID_1, GENERAL_CHANNEL_ID_2, GENERAL_CHANNEL_ID_3]:
+                return
+
             embed = None
             if type == 'default':
                 embed = discord.Embed(
@@ -208,6 +220,9 @@ class Commands:
         async def profile(interaction: discord.Interaction, user: discord.User | None = None):
             username = interaction.user.name if user is None else user.name
 
+            if interaction.channel_id in [GENERAL_CHANNEL_ID_1, GENERAL_CHANNEL_ID_2, GENERAL_CHANNEL_ID_3]:
+                return
+
             embed = discord.Embed(
                 title = f'{'(Testing Only) ' if not fish_utils.FISHING_ENABLED else ''}'
                         f'{username}\'s Profile',
@@ -228,6 +243,10 @@ class Commands:
         async def blackjack(interaction: discord.Interaction, wager: int):
             username = interaction.user.name
             profile = fish_utils.all_pfs.profile_from_name(username)
+
+            if interaction.channel_id in [GENERAL_CHANNEL_ID_1, GENERAL_CHANNEL_ID_2, GENERAL_CHANNEL_ID_3]:
+                await interaction.response.send_message("no gambling in general")
+                return
 
             if username in self.blackjack_games.keys() and self.blackjack_games[username].game_state == bj.BlackjackGame.UNFINISHED:
                 await interaction.channel.send("You are already playing a game of Blackjack!")
