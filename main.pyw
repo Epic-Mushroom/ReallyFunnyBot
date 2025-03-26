@@ -230,8 +230,7 @@ async def change_presence(game_name=""):
 
 async def fishing_status_coro(server_instance):
     possible_presences = ["fishing", "go fish", "><>", "<><",
-                          "go fish", "jobless behavior", "fishe",
-                          "let's go gambling"]
+                          "go fish", "jobless behavior", "fishe"]
     chosen_presence = random.choice(possible_presences)
     client_activity = server_instance.server.get_member(client.application_id).activity
 
@@ -535,9 +534,9 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
         """
         await send(fortnite_battle_pass)
 
-    if find_word_bool(message.content, ['🐟', '🎣', '🐠', '🐡', 'asdfghjkl', 'go phish', 'go fish', 'go gamble', 'jobless behavior', 'le fishe',
-                                        'quiero comer pescado', 'lets go gambling', 'let\'s go gambling',
-                                        '.fish', 'let’s go gambling', '><>', '去钓鱼', '<><', '2+2', 'godfisa',
+    if find_word_bool(message.content, ['🐟', '🎣', '🐠', '🐡', 'asdfghjkl', 'go phish', 'go fish', 'jobless behavior', 'le fishe',
+                                        'quiero comer pescado',
+                                        '.fish', '><>', '去钓鱼', '<><', '2+2', 'godfisa',
                                         'zxcvbnm', 'qwertyuiop', 'go ghoti']):
         if random_range(1, 1000) == 1:
             jumpscare = await send(file_path = Path('images', 'deepfriedjumpscare.png'), fishing = True)
