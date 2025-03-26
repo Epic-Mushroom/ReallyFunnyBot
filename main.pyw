@@ -803,8 +803,14 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
         time_tuple = days_and_hours_since(current_time, KUSH_BIRTHDAY_UNIX_TIME)
         await send(f"Kayshav has been consuming brainrot for {time_tuple[0]} days and {time_tuple[1]} hours")
 
+    if find_word(lowercase_message_content, ['show house profits', 'show casino profits']):
+        await send(f"The house has made {fish_utils.all_pfs.house_profits():,} moneys")
+
     if find_word(lowercase_message_content, ['hop on']) and random_range(1, 50) == 1:
         await send("hop on deez nuts imo", reply = False)
+
+    if lowercase_message_content == 'am i cooked':
+        await send(random.choice(['absolutely', 'Yes', 'undeniably', 'Yeah']))
 
     if lowercase_message_content == 'wait':
         await send("I'm waiting", reply = False)

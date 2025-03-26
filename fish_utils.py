@@ -206,6 +206,9 @@ class AllProfiles:
         self.profiles.append(profile)
         self.real_profiles = [pf for pf in self.profiles if not pf.username in AllProfiles.LB_BANNED]
 
+    def house_profits(self):
+        return sum(pf.moneys_lost_to_gambling for pf in self.real_profiles)
+
     def write_data(self):
         update_fish_file(to_dict(self.profiles))
 
