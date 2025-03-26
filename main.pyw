@@ -572,8 +572,8 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
                 else:
                     await server_instance.send_message(message, 'Fishing sim turned off. go outside everyone', fishing= True)
 
-            elif message.content.startswith('admin:shutdown'):
-                await server_instance.send_message(message, "Shutting down bot :(", bypass_cd = True)
+            elif message.content.startswith('admin:restart'):
+                await server_instance.send_message(message, "Restarting bot", bypass_cd = True)
                 exit(2)
 
             elif message.content.startswith('admin:backup'):
