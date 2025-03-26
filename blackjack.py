@@ -133,7 +133,7 @@ class BlackjackGame:
         LOW_WAGER_WIN = ["C'mon, bet some actual money next time."]
 
         # 50 <= wager <= 499
-        MEDIUM_WAGER_TIE = [""]
+        MEDIUM_WAGER_TIE = ["..."]
         MEDIUM_WAGER_WIN = ["Yeah, you probably cheated.", "Good job, now travel back to 2014 and invest in Bitcoin.", "I can't think of any funny messages so uhh sigma balls"]
         MEDIUM_WAGER_LOSS = ["Remember, 99% of gamblers...", "Statistically speaking, you can only lose 100% of your money, but you can gain over 2000% of it.",
                              "If you're not broke yet, you can always try again.", "Did you know that manually breathing increases your odds of winning?"]
