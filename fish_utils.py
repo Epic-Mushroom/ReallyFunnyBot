@@ -121,8 +121,16 @@ class Profile:
         if self.bj_games_played > 0:
             output += f'**Blackjack games played:** {self.bj_games_played:,}\n'
 
-        if self.wordle_points + self.wordle_losses + self.wordle_wins > 0:
+        if self.wordle_losses + self.wordle_wins > 0:
+            output += '\n'
             output += f'**Wordle points:** {self.wordle_points:,}\n'
+
+            wordle_wl = self.get_win_loss_ratio()
+            if wordle_wl < 6969696969:
+                output += f'**Wordle win/loss ratio:** {wordle_wl:.2f}\n'
+
+            else:
+                output += f'**Wordle win/loss ratio:** N/A\n'
 
         return output
 
