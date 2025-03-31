@@ -1,5 +1,8 @@
 import random
 
+from fontTools.ttLib.tables.otTables import DeltaSetIndexMap
+
+
 MAX_HAND_VALUE = 21
 
 class GameOverError(Exception):
@@ -211,25 +214,14 @@ class BlackjackGame:
         return "If you are seeing this then something went wrong. Ping me about this lol"
 
     def get_earned_moneys(self) -> str:
-        if self.game_state == BlackjackGame.WIN:
-            if self.wager >= 0:
-                return f"🪙 +{self.wager:,} moneys"
-
-            else:
-                return f"🪙 {self.wager:,} moneys"
-
-        elif self.game_state == BlackjackGame.LOSS:
-            if self.wager >= 0:
-                return f"🪙 -{self.wager:,} moneys"
-
-            else:
-                return f"🪙 +{-self.wager:,} moneys"
-
-        elif self.game_state == BlackjackGame.TIE:
-            return f"🪙 +0 moneys"
-
-        else:
+        if self.game_state == BlackjackGame.UNFINISHED:
             return ""
+
+        earned = (self.wager if self.game_state == BlackjackGame.WIN
+                  else -self.wager if self.game_state == BlackjackGame.LOSS
+                  else 0)
+
+        return f"🪙 {earned:+,} moneys"
 
     def __str__(self):
         output = f"Username: {self.username}\nWager: {self.wager:,} moneys\n\n"
