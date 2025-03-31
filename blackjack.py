@@ -1,8 +1,5 @@
 import random
 
-from fontTools.ttLib.tables.otTables import DeltaSetIndexMap
-
-
 MAX_HAND_VALUE = 21
 
 class GameOverError(Exception):
