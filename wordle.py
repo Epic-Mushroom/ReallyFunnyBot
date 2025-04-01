@@ -60,6 +60,8 @@ class WordleGame:
     LOSS = 1
     WIN = 2
 
+    BANNED = ['jamescheung24578']
+
     def __init__(self, username, correct_word = None):
         self.username = username
         self.correct_word = WordleGame.get_random_word() if correct_word is None else correct_word
@@ -141,6 +143,9 @@ class WordleGame:
 
     def calculate_score(self):
         time_used = self.get_time_used()
+
+        if self.username in WordleGame.BANNED:
+            return 0
 
         if self.game_state == WordleGame.UNFINISHED:
             return 0
