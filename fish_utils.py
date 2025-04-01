@@ -43,9 +43,10 @@ class OnFishingCooldownError(Exception):
 class MaintenanceError(Exception):
     pass
 
+# yeah... maybe i should use dataclasses.......
 class Profile:
     def __init__(self, username, wordle_wins = 0, wordle_losses = 0, wordle_points = 0, bj_games_played = 0, moneys_lost_to_gambling = 0, next_fish_time = 0, new_moneys = 0, new_catches = 0,
-                 items = None, specials = None, upgrades = None, banned_until = 0, ban_reason = "", **kwargs):
+                 items = None, specials = None, upgrades = None, banned_until = 0, ban_reason = "", fool = False, fake_value = 0, **kwargs):
         self.username = username
         self.wordle_wins = wordle_wins
         self.wordle_losses = wordle_losses
@@ -63,6 +64,9 @@ class Profile:
 
         self.banned_until = banned_until
         self.ban_reason = ban_reason
+
+        self.fool = fool
+        self.fake_value = fake_value
 
         if len(self.items) > 0 and isinstance(items[-1], dict):
             stack_list = []
@@ -159,7 +163,10 @@ class Profile:
     def sort_items_by_value(self):
         self.items.sort(key=lambda stack: stack.item.value, reverse=True)
 
-    def value(self):
+    def value(self, force_real = False):
+        if self.fool and 1743490800 <= time.time() < 1743577200 and not force_real:
+            return round(self.fake_value)
+
         return round(sum(stack.item.value * stack.count for stack in self.items))
 
     def items_caught(self):
@@ -184,6 +191,28 @@ class Profile:
 
         self.banned_until = 0
         self.ban_reason = ""
+
+    def make_fool(self):
+        if 1743490800 <= time.time() < 1743577200:
+            self.fool = True
+            real_value = round(sum(stack.item.value * stack.count for stack in self.items))
+
+            rand_num = random.randint(1, 4)
+            if rand_num == 4:
+                self.fake_value = real_value * random.uniform(1.03, 1.19)
+
+            elif rand_num == 3:
+                self.fake_value = real_value * random.uniform(0.3, 0.8)
+
+            elif rand_num == 2:
+                self.fake_value = real_value * random.uniform(0, 0.01)
+
+            elif rand_num == 1:
+                self.fake_value = real_value * random.uniform(-1, -1.8)
+
+        else:
+            self.fool = False
+            self.fake_value = 0
 
     def get_win_loss_ratio(self):
         try:
@@ -354,8 +383,8 @@ def manipulated_weights(factor=1.0, uncatchable=None) -> list:
 
 def fishing_manifesto_factor(username: str) -> float:
     pf = all_pfs.profile_from_name(username)
-    x_ = max(pf.value(), 0) if pf is not None else 0
-    m_ = max(profile.value() for profile in all_pfs.real_profiles)
+    x_ = max(pf.value(force_real = True), 0) if pf is not None else 0
+    m_ = max(profile.value(force_real = True) for profile in all_pfs.real_profiles)
     old_formula = 21 * ((420 * x_ / m_) + 1) ** -0.2 - 4.45
     new_formula = percent_increase_to_factor(500 * ((420 * x_ / m_) + 1) ** -0.2 - 70)
 
@@ -411,7 +440,7 @@ def fish_event(username: str, force_fish_name = None, factor=1.0, bypass_fish_cd
 
     def find_random_user_to_donate_to() -> Profile:
         usable_profiles = [prof for prof in all_pfs.real_profiles if prof.username != original_user]
-        weights_ = [max(prof.value(), 0) ** 0.37 for prof in usable_profiles]
+        weights_ = [max(prof.value(force_real = True), 0) ** 0.37 for prof in usable_profiles]
 
         return random.choices(usable_profiles, weights=weights_, k=1)[0]
 
@@ -579,7 +608,7 @@ def fish_event(username: str, force_fish_name = None, factor=1.0, bypass_fish_cd
     original_pf = pf
 
     next_fish_time = pf.next_fish_time
-    old_value = pf.value() # to determine new luck lb stats
+    old_value = pf.value(force_real = True) # to determine new luck lb stats
 
     cd = FISHING_COOLDOWN
     penalty = 0
@@ -853,7 +882,7 @@ def fish_event(username: str, force_fish_name = None, factor=1.0, bypass_fish_cd
 
     if curse_active:
         if random_range(1, 150) <= 2: # 1.5% chance for each curse
-            money_to_remove = min(15000, int(pf.value() * 0.1))
+            money_to_remove = min(15000, int(pf.value(force_real = True) * 0.1))
             pf.add_fish(get_fish_from_name('Credit'), 0 - money_to_remove)
             output += f'\n*Oops! Lost {money_to_remove:,} moneys (Curse)*'
 
@@ -880,9 +909,13 @@ def fish_event(username: str, force_fish_name = None, factor=1.0, bypass_fish_cd
             else:
                 output += f'\n*Fish{' and money' if money_laundered > 0 else ''}{addl_msg} donated to {pf.username} (Mr. Beast powerup)*'
 
+    if 1743490800 <= time.time() < 1743577200 and random.randint(1, 10) <= 1:
+        output += f'\n*There was an error calculating this player\'s money value, it has been rolled back to a backup value*'
+        original_pf.make_fool()
+
     # increments new_moneys and new_catches stats for the new luck lb
     original_pf.new_catches += 1
-    original_pf.new_moneys += original_pf.value() - old_value
+    original_pf.new_moneys += original_pf.value(force_real = True) - old_value
 
     return output
 
@@ -918,7 +951,7 @@ def steal_fish_from_random(thief_name: str, recipient_name: str=None, shoot=Fals
 
     iterations = 0
     while True:
-        weights = [pf.value() for pf in all_pfs.real_profiles]
+        weights = [pf.value(force_real = True) for pf in all_pfs.real_profiles]
         player_pf: Profile = random.choices(all_pfs.real_profiles, weights=weights, k=1)[0]
         player_name = player_pf.username
 
@@ -982,22 +1015,14 @@ def leaderboard_string(sort_by_luck = False) -> str:
     else:
         list_of_profiles.sort(key=lambda prof: prof.value(), reverse=True)
 
-    # april fools stuff
-    if 1743490800 <= time.time() < 1743577200:
-        fake_profiles_dict = {pf.username: max(-(random.randint(1, 199)), random.gauss(30000, 35000)) for pf in list_of_profiles}
-        list_of_profiles.sort(key = lambda prof: fake_profiles_dict[prof.username], reverse = True)
-
     for profile in list_of_profiles:
         try:
             trophy = '🥇 ' if index == 1 else '🥈 ' if index == 2 else '🥉 ' if index == 3 else ''
 
-            display_val = profile.value() if not sort_by_luck else sum([stack.count * stack.item.value for stack in profile.items if stack.item.name != 'Credit']) / profile.items_caught()
-
-            if 1743490800 <= time.time() < 1743577200:
-                display_val = round(fake_profiles_dict[profile.username])
+            display_val = profile.value() if not sort_by_luck else round(sum([stack.count * stack.item.value for stack in profile.items if stack.item.name != 'Credit']) / profile.items_caught(), 2)
 
             if not sort_by_luck or profile.items_caught() >= 10:
-                output += (f'{index:,}. {trophy}{profile.username}: **{(display_val if not sort_by_luck else round(display_val / profile.items_caught(), 2)):,} '
+                output += (f'{index:,}. {trophy}{profile.username}: **{display_val:,} '
                            f'moneys{'/item' if sort_by_luck else ''}**\n')
 
                 index += 1
