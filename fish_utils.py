@@ -1101,6 +1101,14 @@ def recalculate_fish_database() -> int:
     update_fish_file(list_of_profiles)
     return items_changed
 
+def wipe_banned_users_wordle():
+    from wordle import WordleGame
+
+    profiles_to_wipe = [pf for pf in all_pfs.real_profiles if pf.username in WordleGame.BANNED and pf.wordle_points > 0]
+
+    for pf in profiles_to_wipe:
+        pf.wordle_wins, pf.wordle_losses, pf.wordle_points = 0, 0, 0
+
 def _manual_data_changes() -> str:
     output = ''
 
@@ -1122,6 +1130,8 @@ fishing_items = initialize_fishing_items()
 
 recalculate_fish_database()
 all_pfs = AllProfiles()
+
+wipe_banned_users_wordle()
 
 test_file = None
 try:
