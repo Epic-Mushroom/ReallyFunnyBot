@@ -1131,7 +1131,7 @@ fishing_items = initialize_fishing_items()
 recalculate_fish_database()
 all_pfs = AllProfiles()
 
-wipe_banned_users_wordle()
+# wipe_banned_users_wordle()
 
 test_file = None
 try:
