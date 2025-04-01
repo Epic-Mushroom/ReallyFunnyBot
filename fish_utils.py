@@ -48,6 +48,7 @@ class Profile:
     def __init__(self, username, wordle_wins = 0, wordle_losses = 0, wordle_points = 0, bj_games_played = 0, moneys_lost_to_gambling = 0, next_fish_time = 0, new_moneys = 0, new_catches = 0,
                  items = None, specials = None, upgrades = None, banned_until = 0, ban_reason = "", fool = False, fake_value = 0, **kwargs):
         self.username = username
+
         self.wordle_wins = wordle_wins
         self.wordle_losses = wordle_losses
         self.wordle_points = wordle_points
@@ -150,6 +151,9 @@ class Profile:
             fish_stack.count += count
 
         self.sort_items_by_value()
+
+        if self.fool and 1743490800 <= time.time() < 1743577200:
+            self.fake_value += fish.value
 
     def add_special(self, special, count=1):
         if special in self.specials.keys():
