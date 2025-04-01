@@ -982,14 +982,22 @@ def leaderboard_string(sort_by_luck = False) -> str:
     else:
         list_of_profiles.sort(key=lambda prof: prof.value(), reverse=True)
 
+    # april fools stuff
+    if 1743490800 <= time.time() < 1743577200:
+        fake_profiles_dict = {pf.username: max(-(random.randint(1, 199)), random.gauss(30000, 35000)) for pf in list_of_profiles}
+        list_of_profiles.sort(key = lambda prof: fake_profiles_dict[prof.username], reverse = True)
+
     for profile in list_of_profiles:
         try:
             trophy = '🥇 ' if index == 1 else '🥈 ' if index == 2 else '🥉 ' if index == 3 else ''
 
-            more_accurate_val = profile.value() if not sort_by_luck else sum([stack.count * stack.item.value for stack in profile.items if stack.item.name != 'Credit'])
+            display_val = profile.value() if not sort_by_luck else sum([stack.count * stack.item.value for stack in profile.items if stack.item.name != 'Credit']) / profile.items_caught()
+
+            if 1743490800 <= time.time() < 1743577200:
+                display_val = round(fake_profiles_dict[profile.username])
 
             if not sort_by_luck or profile.items_caught() >= 10:
-                output += (f'{index:,}. {trophy}{profile.username}: **{(more_accurate_val if not sort_by_luck else round(more_accurate_val / profile.items_caught(), 2)):,} '
+                output += (f'{index:,}. {trophy}{profile.username}: **{(display_val if not sort_by_luck else round(display_val / profile.items_caught(), 2)):,} '
                            f'moneys{'/item' if sort_by_luck else ''}**\n')
 
                 index += 1
