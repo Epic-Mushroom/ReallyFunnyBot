@@ -90,7 +90,7 @@ class ShopItem:
                 if not any(inv_stack.item.name == stack.item.name and inv_stack.count >= stack.count for inv_stack in profile.items):
                     return False
 
-            return self.effective_cost <= profile.value()
+            return self.effective_cost <= profile.value(force_real = True)
 
         user_profile = fish_utils.all_pfs.profile_from_name(username)
 

@@ -253,11 +253,11 @@ class Commands:
             if username in self.blackjack_games.keys() and self.blackjack_games[username].game_state == bj.BlackjackGame.UNFINISHED:
                 await interaction.channel.send("You are already playing a game of Blackjack!")
 
-            elif abs(wager) > profile.value():
+            elif abs(wager) > profile.value(force_real = True):
                 await interaction.response.send_message("You don't have enough moneys to make that bet!")
                 return
 
-            elif abs(wager) >= 0.1 * profile.value():
+            elif abs(wager) >= 0.1 * profile.value(force_real = True):
                 embed = discord.Embed(description = f"*Are you sure you want to bet **{wager:,} moneys**?*")
                 confirm_view = BlackjackConfirmBetView(username)
 
