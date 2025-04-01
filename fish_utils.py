@@ -910,7 +910,7 @@ def fish_event(username: str, force_fish_name = None, factor=1.0, bypass_fish_cd
                 output += f'\n*Fish{' and money' if money_laundered > 0 else ''}{addl_msg} donated to {pf.username} (Mr. Beast powerup)*'
 
     if 1743490800 <= time.time() < 1743577200 and random.randint(1, 10) <= 1:
-        output += f'\n*There was an error calculating this player\'s money value, it has been rolled back to a backup value*'
+        output += f'\n*Something may or may not have happened to your total moneys*'
         original_pf.make_fool()
 
     # increments new_moneys and new_catches stats for the new luck lb
