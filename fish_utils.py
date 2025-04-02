@@ -147,10 +147,10 @@ class Profile:
 
         if fish_stack is None:
             self.items.append(Stack(fish, count))
+            self.sort_items_by_value()
+
         else:
             fish_stack.count += count
-
-        self.sort_items_by_value()
 
         if self.fool and 1743490800 <= time.time() < 1743577200:
             self.fake_value += fish.value
@@ -158,6 +158,7 @@ class Profile:
     def add_special(self, special, count=1):
         if special in self.specials.keys():
             self.specials[special] += count
+
         else:
             self.specials[special] = max(count, 0)
 
