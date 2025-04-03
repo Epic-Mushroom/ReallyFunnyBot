@@ -43,7 +43,6 @@ class OnFishingCooldownError(Exception):
 class MaintenanceError(Exception):
     pass
 
-# yeah... maybe i should use dataclasses.......
 class Profile:
     def __init__(self, username, wordle_wins = 0, wordle_losses = 0, wordle_points = 0, bj_games_played = 0, moneys_lost_to_gambling = 0, next_fish_time = 0, new_moneys = 0, new_catches = 0,
                  items = None, specials = None, upgrades = None, banned_until = 0, ban_reason = "", fool = False, fake_value = 0, **kwargs):
@@ -79,8 +78,7 @@ class Profile:
             self.items = stack_list
 
         for key, value in kwargs.items():
-            if key not in ['times_fished', 'value']:
-                setattr(self, key, value)
+            setattr(self, key, value)
 
     def __str__(self):
         output: str = f"\n"
@@ -263,13 +261,17 @@ class AllProfiles:
         return False
 
     def __str__(self):
-        output = (f"Moneys obtained: **{round(sum(profile.value() for profile in self.real_profiles)):,}**\n" +
-               f"Items caught: **{sum(profile.items_caught() for profile in self.real_profiles):,}*" +
-               f"*\n\n")
+        universal_moneys_balance = round(sum(profile.value() for profile in self.real_profiles))
+
+        output = (f"Moneys obtained: **{universal_moneys_balance:,}**\n" +
+                  f"Items caught: **{sum(profile.items_caught() for profile in self.real_profiles):,}*" +
+                  f"*\n\n")
 
         fishing_items_sorted_by_value = sorted(fishing_items, key=lambda item: item.value, reverse=True)
         display_items = [item for item in fishing_items_sorted_by_value if item.name != 'Credit' and self.fish_obtained(item)]
 
+        # yeah i could've just used join and list comps to shorten this to like 3 lines
+        # but i wrote this with like 2 months of python knowledge and i'm too lazy to refactor
         for fish in display_items:
             temp_name = fish.name
             temp_total = 0
@@ -286,6 +288,13 @@ class AllProfiles:
                     output += f"{temp_total:,}x {temp_name}"
                 if display_items.index(fish) != len(display_items) - 1:
                     output += ', '
+
+        house_profits = self.house_profits()
+        total_moneys_fished = universal_moneys_balance + house_profits
+
+        output += '\n\n'
+        output += f'House profits: **{house_profits:,} moneys**\n'
+        output += f'Fishing income taken by gambling industry: **{(house_profits / total_moneys_fished):.2%}**'
 
         return output
 
