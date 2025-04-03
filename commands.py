@@ -257,7 +257,7 @@ class Commands:
                 await interaction.response.send_message("You don't have enough moneys to make that bet!")
                 return
 
-            elif abs(wager) >= 0.1 * profile.value(force_real = True):
+            elif abs(wager) >= 0.1 * profile.value(force_real = True) or abs(wager) >= 10000:
                 embed = discord.Embed(description = f"*Are you sure you want to bet **{wager:,} moneys**?*")
                 confirm_view = BlackjackConfirmBetView(username)
 
