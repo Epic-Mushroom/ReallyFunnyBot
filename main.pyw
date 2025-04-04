@@ -810,8 +810,13 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
     if find_word(lowercase_message_content, ['show house profits', 'show casino profits']):
         await send(f"The house has made {fish_utils.all_pfs.house_profits():,} moneys")
 
-    if find_word(lowercase_message_content, ['hop on']) and random_range(1, 50) == 1:
-        await send("hop on deez nuts imo", reply = False)
+    if find_word(lowercase_message_content, ['hop on']):
+        if random_range(1, 50) == 1:
+            await send("hop on deez nuts imo", reply = False)
+
+        if find_isolated_word_bool(lowercase_message_content, ['vc']):
+            vc = await client.fetch_channel(VOICE_CHANNEL_ID)
+            await vc.connect()
 
     if lowercase_message_content == 'am i cooked':
         await send(random.choice(['absolutely', 'Yes', 'undeniably', 'Yeah']))
