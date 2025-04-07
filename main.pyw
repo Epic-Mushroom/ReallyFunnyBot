@@ -303,8 +303,8 @@ async def on_message(message: discord.Message):
         bot_instance.add_server_instance(current_guild)
         server_instance = bot_instance.server_instance_list[-1]
 
-    # Makes it so it doesn't reply to itself
-    if message.author.id in [1334971973859672094, 1300220037268770907]:
+    # Makes it so it doesn't reply to itself (or other bots)
+    if message.author.bot:
         return
 
     if message.reference is not None:
