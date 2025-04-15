@@ -65,4 +65,4 @@ MY_GUILD = 964941621110120538
 COOLDOWN_LENGTH = 10
 COOLDOWN_LIMIT = 4 # how many messages that can be sent per COOLDOWN_LENGTH seconds
 
-REMINDER_TIME = datetime.time(hour = 12, minute = 0, tzinfo = datetime.timezone(datetime.timedelta(hours=-7)))
+REMINDER_TIME = datetime.time(hour = 17, minute = 0, tzinfo = datetime.timezone(datetime.timedelta(hours=-7)))

@@ -244,7 +244,7 @@ async def fishing_status_coro(server_instance):
 @tasks.loop(time=REMINDER_TIME)
 async def reminder():
     me = await client.fetch_user(EPIC_MUSHROOM_ID)
-    await me.send('@everyone renew server + do microsoft rewards')
+    await me.send('@everyone afk zluqe + do microsoft rewards (xbox app + bing app too)')
 
 @client.event
 async def on_ready():
