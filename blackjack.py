@@ -265,7 +265,7 @@ def draw_from_deck(deck: list[Card], force_max_value: int = 11, force_min_value:
 
     return card
 
-def simulate_games(username, wager, play_normally = True, count = 50):
+def simulate_games(username, wager, stand_minimum = 15, count = 50):
     win_count = 0
     loss_count = 0
     tie_count = 0
@@ -275,7 +275,7 @@ def simulate_games(username, wager, play_normally = True, count = 50):
     for i in range(count):
         bj_game = BlackjackGame(username, wager)
 
-        while bj_game.player_hand.total_value() < (17 if play_normally else 22):
+        while bj_game.player_hand.total_value() < stand_minimum:
             try:
                 bj_game.hit()
 
@@ -299,8 +299,12 @@ def simulate_games(username, wager, play_normally = True, count = 50):
         elif bj_game.game_state == BlackjackGame.TIE:
             tie_count += 1
 
+    total_games = win_count + loss_count + tie_count
+
     print("================")
-    print(f"Wins: {win_count}\nLosses: {loss_count}\nTies: {tie_count}\nMoney lost: {-money_earned}")
+    print(f"Wins: {win_count}\nLosses: {loss_count}\nTies: {tie_count}\nMoney lost: {-money_earned}\n")
+
+    print(f"Win rate: {win_count / total_games:%}")
 
 if __name__ == '__main__':
     # bj_game = BlackjackGame('epicmushroom.', 0)
@@ -317,4 +321,4 @@ if __name__ == '__main__':
     #
     #     print(bj_game)
 
-    simulate_games('epicmushroom.', -1, play_normally = True, count = 1000)
+    simulate_games('epicmushroom.', 1, stand_minimum = 15, count = 10000)

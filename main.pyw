@@ -679,6 +679,12 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
 
                 fish_utils.all_pfs.write_data()
 
+            elif message.content.startswith("admin:saymessage"):
+                try:
+                    await send(message.content[len("admin:saymessage"):])
+
+                except discord.errors.HTTPException:
+                    pass
 
         else:
             await send('you can\'t do that (reference to 1984 by George Orwell)',
