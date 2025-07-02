@@ -324,27 +324,27 @@ async def on_message(message: discord.Message):
         return
 
     # Triggers start here
-    index_of_im = find_index_after_word(lowercase_message_content, POSSESSIVE_PERSONAL_PRONOUN_LIST)
-    index_of_pronoun = find_index_after_word(lowercase_message_content, PRONOUNS)
+    index_of_im = index_after_any_word(lowercase_message_content, POSSESSIVE_PERSONAL_PRONOUN_LIST)
+    index_of_pronoun = index_after_any_word(lowercase_message_content, PRONOUNS)
 
     if any(lowercase_message_content.strip().startswith(lyric) for lyric in REVENGE_LYRICS):
         try:
-            lyric_found = find_word(message.content, REVENGE_LYRICS)
+            lyric_found = find_any_substring(message.content, REVENGE_LYRICS)
             await send(REVENGE_LYRICS[REVENGE_LYRICS.index(lyric_found) + 1])
         except IndexError:
             pass
         except ValueError:
             pass
 
-    if find_isolated_word_bool(message.content, ['allegro barbaro']):
+    if has_any_word(message.content, ['allegro barbaro']):
         await message.add_reaction('👎')
 
-    if find_isolated_word_bool(message.content, POSSESSIVE_PERSONAL_PRONOUN_LIST):
+    if has_any_word(message.content, POSSESSIVE_PERSONAL_PRONOUN_LIST):
         interpreted_name = strip_punctuation(message.content[index_of_im:])
         if len(interpreted_name) > 0 and random_range(1, 1) == 1:
             await server_instance.send_message(message, f"Hi {interpreted_name}, I'm {random.choice(server_instance.get_comedians())}!", ping = False)
 
-    if find_isolated_word_bool(message.content, TYPOS) and random_range(1, 1) == 1:
+    if has_any_word(message.content, TYPOS) and random_range(1, 1) == 1:
         await send("https://www.wikihow.com/Type", reply = True)
 
     if "crazy" in lowercase_message_content.lower():
@@ -373,16 +373,16 @@ async def on_message(message: discord.Message):
             else:
                 await message.add_reaction(random.choice(FUNNY_EMOJIS))
 
-    if find_word_bool(lowercase_message_content, THICK_OF_IT_TRIGGERS):
+    if has_any_substring(lowercase_message_content, THICK_OF_IT_TRIGGERS):
         await send(file_path = Path('videos', 'thick of it lipsync.mp4'))
 
-    if find_word_bool(lowercase_message_content, ['skibidi', 'hawk tuah', 'jelqing', 'lv 100 gyatt']):
+    if has_any_substring(lowercase_message_content, ['skibidi', 'hawk tuah', 'jelqing', 'lv 100 gyatt']):
         await send("no", reply = False)
 
     if "FUCK" in message.content or "SHIT" in message.content or lowercase_message_content == "shut the fuck up":
         await send(random.choice(SWEARING_RESPONSES))
 
-    if find_isolated_word_bool(message.content, ['kys', 'kill yourself', 'kill your self']):
+    if has_any_word(message.content, ['kys', 'kill yourself', 'kill your self']):
         await send(random.choice(KYS_RESPONSES))
     
     if "what is the time" in lowercase_message_content:
@@ -415,7 +415,7 @@ async def on_message(message: discord.Message):
                        f"max number of messages able to be sent per cooldown reset is {COOLDOWN_LIMIT}, "
                        f"{pluralize(server_instance.recently_sent_messages + 1, "message")} were sent during this period)", bypass_cd = True)
 
-    if find_word_bool(message.content, ['resetcd']):
+    if has_any_substring(message.content, ['resetcd']):
         if is_admin:
             await send("Reset cooldown", bypass_cd = True)
             server_instance.reset_cooldown(force = True)
@@ -426,7 +426,7 @@ async def on_message(message: discord.Message):
     if "HALOOLYH BRIKTAY" == message.content:
         await send(message.content)
 
-    if find_isolated_word_bool(message.content, ['money']) and random_range(1, 30) == 1:
+    if has_any_word(message.content, ['money']) and random_range(1, 30) == 1:
         temu = """Happy New Year~ Sending you a New Year's card. Come and see my New Year's wishes and accept my invitation.
 -For real?
 -Sure, only 2 steps to take the gift and help me get mine!
@@ -434,73 +434,73 @@ https://temu.com/s/Ut2tvFcWcwAKgdUM"""
         await asyncio.sleep(5)
         await send(temu, reply = False)
 
-    if find_word_bool(message.content, ['ur mom', 'your mom', 'ur dad', 'ur gae', 'ur gay', "you're gay"]):
+    if has_any_substring(message.content, ['ur mom', 'your mom', 'ur dad', 'ur gae', 'ur gay', "you're gay"]):
         await message.add_reaction(random.choice(FUNNY_EMOJIS))
 
-    if find_isolated_word_bool(lowercase_message_content, AMONG_US_TRIGGERS):
+    if has_any_word(lowercase_message_content, AMONG_US_TRIGGERS):
         await server_instance.send_message(message, random.choice(AMONG_US_RESPONSES))
 
-    if find_word_bool(message.content, ['mind blowing', 'mindblowing', ":exploding_head:", "🤯"]):
+    if has_any_substring(message.content, ['mind blowing', 'mindblowing', ":exploding_head:", "🤯"]):
         image_path = Path("images", "emoji483.png")
         try:
             await server_instance.send_message(message, "** **", file_path=image_path)
         except FileNotFoundError:
             print(f"'{str(image_path)} wasn't found'")
 
-    if find_isolated_word_bool(message.content, ['literally 1984']):
+    if has_any_word(message.content, ['literally 1984']):
         winston = """It was a bright cold day in April, and the clocks were striking thirteen. Winston Smith, his chin nuzzled into his breast in an effort to escape the vile wind, slipped quickly through the glass doors of Victory Mansions, though not quickly enough to prevent a swirl of gritty dust from entering along with him.
 
 The hallway smelt of boiled cabbage and old rag mats. At one end of it a coloured poster, too large for indoor display, had been tacked to the wall. It depicted simply an enormous face, more than a metre wide: the face of a man of about forty-five, with a heavy black moustache and ruggedly handsome features. Winston made for the stairs. It was no use trying the lift. Even at the best of times it was seldom working, and at present the electric current was cut off during daylight hours. It was part of the economy drive in preparation for Hate Week. The flat was seven flights up, and Winston, who was thirty-nine and had a varicose ulcer above his right ankle, went slowly, resting several times on the way. On each landing, opposite the lift-shaft, the poster with the enormous face gazed from the wall. It was one of those pictures which are so contrived that the eyes follow you about when you move. BIG BROTHER IS WATCHING YOU, the caption beneath it ran."""
 
         await send(winston, reply = False)
 
-    if random_range(1, 420) == 1 and find_isolated_word_bool(message.content, DRUG_NAMES):
+    if random_range(1, 420) == 1 and has_any_word(message.content, DRUG_NAMES):
         await send("https://tenor.com/view/sobriety-prevent-the-misuse-of-drugs-and-alcohol-your-mental-health-will-thank-you-sober-recovery-gif-25389902", reply = False)
         # await message.delete()
 
-    if find_word_bool(message.content, ["kachow"]):
+    if has_any_substring(message.content, ["kachow"]):
         image_path = Path("images", "jedwin", "kachow.png")
         try:
             await server_instance.send_message(message, "** **", file_path=image_path)
         except FileNotFoundError:
             print(f"'{str(image_path)} wasn't found'")
 
-    if find_word_bool(message.content, ["slavery"]):
+    if has_any_substring(message.content, ["slavery"]):
         image_path = Path("images", "jedwin", "Jailed_Jedgar.jpg")
         try:
             await server_instance.send_message(message, "** **", file_path=image_path)
         except FileNotFoundError:
             print(f"'{str(image_path)} wasn't found'")
 
-    if find_word_bool(message.content, ["jaden christian edwin"]):
+    if has_any_substring(message.content, ["jaden christian edwin"]):
         image_path = random.choice(list(Path("images", "jedwin").iterdir()))
         try:
             await server_instance.send_message(message, "** **", file_path=image_path)
         except FileNotFoundError:
             print(f"'{str(image_path)} wasn't found'")
 
-    if find_isolated_word_bool(message.content, ['persona', 'specialist']):
+    if has_any_word(message.content, ['persona', 'specialist']):
         video_path = Path("videos", "p4 specialist compressed.mp4")
         try:
             await server_instance.send_message(message, "** **", file_path=video_path)
         except FileNotFoundError:
             print(f"'{str(video_path)} wasn't found'")
 
-    if find_isolated_word_bool(message.content, ['speech bubble', 'speechbubble']) and referred_message:
+    if has_any_word(message.content, ['speech bubble', 'speechbubble']) and referred_message:
         await referred_message.reply(random.choices(SPEECH_BUBBLES), allowed_mentions = discord.AllowedMentions().none()
                                      if message.mentions else None)
 
-    if find_isolated_word_bool(message.content, ['brawl stars', 'hop on brawl']):
+    if has_any_word(message.content, ['brawl stars', 'hop on brawl']):
         await send('https://tenor.com/view/wanna-play-brawl-stars-lonely-no-one-plays-brawl-stars-lmoa-gif-23811622')
 
-    if find_isolated_word_bool(message.content, ['sigma']):
+    if has_any_word(message.content, ['sigma']):
         await send('https://tenor.com/view/not-a-sigma-sorry-you-are-not-a-sigma-sorry-you%27re-not-a-sigma-you-aren%27t-a-sigma-you-are-not-sigma-gif-337838532227751572')
 
-    if find_isolated_word_bool(message.content, ['uwu', 'owo', ':3']):
+    if has_any_word(message.content, ['uwu', 'owo', ':3']):
         await send('https://tenor.com/view/kekw-gif-21672467')
 
-    if find_isolated_word_bool(message.content, ['can i', 'can we']):
-        index_can = find_index_after_word(message.content, ['can i', 'can we'])
+    if has_any_word(message.content, ['can i', 'can we']):
+        index_can = index_after_any_word(message.content, ['can i', 'can we'])
         interpreted_text = strip_punctuation(message.content[index_can:])
         
         if len(interpreted_text) > 0:
@@ -509,22 +509,22 @@ The hallway smelt of boiled cabbage and old rag mats. At one end of it a coloure
     if random_range(1, 6666) == 1:
         await send('🐺 (this message has a 1/6,666 chance to appear)', bypass_cd = True, reply = False)
 
-    if find_word_bool(message.content, ['flip a coin']):
+    if has_any_substring(message.content, ['flip a coin']):
         if random_range(1, 2) == 1:
             await send('Heads', bypass_cd = True)
         else:
             await send('Tails', bypass_cd = True)
 
-    if find_word_bool(message.content, ['roll a die', 'roll a dice', 'diceroll']):
+    if has_any_substring(message.content, ['roll a die', 'roll a dice', 'diceroll']):
         await send(str(random_range(1, 6)), bypass_cd = True)
 
-    if find_word_bool(message.content, ['roll a d20']):
+    if has_any_substring(message.content, ['roll a d20']):
         await send(str(random_range(1, 20)), bypass_cd = True)
 
-    if find_word_bool(message.content, ['what is my name']):
+    if has_any_substring(message.content, ['what is my name']):
         await send(f"{message.author.display_name} *({message.author.name})*", reply = True)
 
-    if find_word_bool(message.content, ['battle pass']):
+    if has_any_substring(message.content, ['battle pass']):
         fortnite_battle_pass = """Fortnite Battle Pass 🗣️🗣️
 I just shit out my ass 🗣️🗣️🗣️
 Booted up my PC 💻💻
@@ -539,7 +539,7 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
         """
         await send(fortnite_battle_pass)
 
-    if find_word_bool(message.content, ['🐟', '🎣', '🐠', '🐡', 'asdfghjkl', 'go phish', 'go fish', 'jobless behavior', 'le fishe',
+    if has_any_substring(message.content, ['🐟', '🎣', '🐠', '🐡', 'asdfghjkl', 'go phish', 'go fish', 'jobless behavior', 'le fishe',
                                         'quiero comer pescado',
                                         '.fish', '><>', '去钓鱼', '<><', '2+2', 'godfisa',
                                         'zxcvbnm', 'qwertyuiop', 'go ghoti']):
@@ -565,7 +565,7 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
             bot_instance.cancel_current_status_task()
             bot_instance.set_current_status_task(asyncio.create_task(fishing_status_coro(server_instance)))
 
-        elif not find_word_bool(message.content, ['2+2', 'zxcvbnm', 'qwertyuiop', 'asdfghjkl', '🐟', '🎣', '🐠', '🐡', 'jobless behavior']):
+        elif not has_any_substring(message.content, ['2+2', 'zxcvbnm', 'qwertyuiop', 'asdfghjkl', '🐟', '🎣', '🐠', '🐡', 'jobless behavior']):
             temp_path = Path("images", "no fishing in general.gif")
             await send(reply = True, file_path = temp_path)
 
@@ -691,7 +691,7 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
                                                    bypass_cd = True)
 
     if is_admin or fish_utils.FISHING_ENABLED:
-        if find_word_bool(message.content, ['show profile', 'show pf']):
+        if has_any_substring(message.content, ['show profile', 'show pf']):
             username_temp = message.author.name
             if (lowercase_message_content.startswith('show profile ') or
                 lowercase_message_content.startswith('show pf ')):
@@ -702,24 +702,24 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
                                         f'{username_temp}\'s Profile', description=fish_utils.profile_to_string(username_temp))
             await message.channel.send(embed = embed)
 
-        if find_word_bool(message.content, ['show leaderboard', 'show lb', '.lb']):
+        if has_any_substring(message.content, ['show leaderboard', 'show lb', '.lb']):
             embed = discord.Embed(title=f'{'(Testing Only) ' if not fish_utils.FISHING_ENABLED else ''}Leaderboard',
                                   description=fish_utils.leaderboard_string())
             await message.channel.send(embed = embed)
             # await server_instance.send_message(message, fish_utils.leaderboard_string(), bypass_cd = True)
 
 
-        if find_word_bool(message.content, ['item rng lb', 'old luck lb', 'old rng lb', 'show luck old', '.oldrnglb', '.oldlbrng', '.oldlbluck', '.oldlucklb']):
+        if has_any_substring(message.content, ['item rng lb', 'old luck lb', 'old rng lb', 'show luck old', '.oldrnglb', '.oldlbrng', '.oldlbluck', '.oldlucklb']):
             embed = discord.Embed(title=f'{'(Testing Only) ' if not fish_utils.FISHING_ENABLED else ''}RNG Leaderboard (by item)',
                                   description=fish_utils.leaderboard_string(sort_by_luck= True))
             await message.channel.send(embed = embed)
 
-        elif find_word_bool(message.content, ['luck lb', 'rng lb', 'show luck', '.rnglb', '.lbrng', '.lbluck', '.lucklb']):
+        elif has_any_substring(message.content, ['luck lb', 'rng lb', 'show luck', '.rnglb', '.lbrng', '.lbluck', '.lucklb']):
             embed = discord.Embed(title=f'{'(Testing Only) ' if not fish_utils.FISHING_ENABLED else ''}RNG Leaderboard',
                                   description=fish_utils.luck_leaderboard_string())
             await message.channel.send(embed = embed)
 
-        if find_word_bool(message.content, ['all fish', 'global stats', 'global fish', 'all stats', 'combined profiles', 'combined joblessness',
+        if has_any_substring(message.content, ['all fish', 'global stats', 'global fish', 'all stats', 'combined profiles', 'combined joblessness',
                                             'global joblessness', 'how jobless is everyone', '.allfish']):
             embed = discord.Embed(title=f'{'(Testing Only) ' if not fish_utils.FISHING_ENABLED else ''}Universal Stats',
                                   description=fish_utils.universal_profile_to_string())
@@ -764,7 +764,7 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
             except AttributeError:
                 await message.reply(f'That\'s not a valid ID')
 
-        if find_word_bool(message.content, ['show manifesto', 'go manifesto']):
+        if has_any_substring(message.content, ['show manifesto', 'go manifesto']):
             # returns the fishing manifesto factor and percent boost for a given user
             parts = message.content.split(' ')
 
@@ -790,37 +790,37 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
             else:
                 await kush.send('Hi')
 
-    if find_isolated_word_bool(lowercase_message_content, ['guess what']):
+    if has_any_word(lowercase_message_content, ['guess what']):
         await send('chicken butt', reply = True)
 
-    if find_word(lowercase_message_content, ['jaden status', 'jedwin']):
+    if find_any_substring(lowercase_message_content, ['jaden status', 'jedwin']):
         time_tuple = days_and_hours_since(current_time, JADEN_18TH_BIRTHDAY_UNIX_TIME)
         await send(f"Jaden has been stalking minors for {time_tuple[0]} days and {time_tuple[1]} hours")
 
-    if find_word(lowercase_message_content, ['james status']):
+    if find_any_substring(lowercase_message_content, ['james status']):
         time_tuple = days_and_hours_since(current_time, JAMES_18TH_BIRTHDAY_UNIX_TIME)
         await send(f"James has been getting high for {time_tuple[0]} days and {time_tuple[1]} hours")
 
-    if find_word(lowercase_message_content, ['aravind status', 'arvind']):
+    if find_any_substring(lowercase_message_content, ['aravind status', 'arvind']):
         time_tuple = days_and_hours_since(ARAVIND_18TH_BIRTHDAY_UNIX_TIME, current_time)
         await send(f"Aravind will be legal in {time_tuple[0]} days and {time_tuple[1]} hours")
 
-    if find_word(lowercase_message_content, ['kush status', 'hush b', 'hush']):
+    if find_any_substring(lowercase_message_content, ['kush status', 'hush b', 'hush']):
         time_tuple = days_and_hours_since(current_time, KUSH_BIRTHDAY_UNIX_TIME)
         await send(f"Kush has been consuming brainrot for {time_tuple[0]} days and {time_tuple[1]} hours")
 
-    if find_word(lowercase_message_content, ['kayshav status']):
+    if find_any_substring(lowercase_message_content, ['kayshav status']):
         time_tuple = days_and_hours_since(current_time, KUSH_BIRTHDAY_UNIX_TIME)
         await send(f"Kayshav has been consuming brainrot for {time_tuple[0]} days and {time_tuple[1]} hours")
 
-    if find_word(lowercase_message_content, ['show house profits', 'show casino profits']):
+    if find_any_substring(lowercase_message_content, ['show house profits', 'show casino profits']):
         await send(f"The house has made {fish_utils.all_pfs.house_profits():,} moneys")
 
-    if find_word(lowercase_message_content, ['hop on']):
+    if find_any_substring(lowercase_message_content, ['hop on']):
         if random_range(1, 50) == 1:
             await send("hop on deez nuts imo", reply = False)
 
-        if find_isolated_word_bool(lowercase_message_content, ['vc']):
+        if has_any_word(lowercase_message_content, ['vc']):
             vc = await client.fetch_channel(VOICE_CHANNEL_ID)
             await vc.connect()
 
@@ -836,7 +836,7 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
     if lowercase_message_content == 'look':
         await send("I'm looking", reply = False)
 
-    if find_word(lowercase_message_content, ['testingtesting']):
+    if find_any_substring(lowercase_message_content, ['testingtesting']):
         await server_instance.change_nickname("test")
 
     # if random_range(1, 210) == 1:
