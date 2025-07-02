@@ -2,10 +2,7 @@ import datetime, os, shutil, fish_utils, subprocess
 from pathlib import Path
 
 DATA_PATHS = [
-    Path('trackers', 'fishing.json'),
-    Path('trackers', 'specials.json'),
-    Path('trackers', 'total_triggers.txt'),
-    Path('trackers', 'user_triggers.json'),
+    Path('trackers', 'fishing.json')
 ]
 
 def shell_command(input: str) -> None:
