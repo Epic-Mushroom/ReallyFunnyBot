@@ -21,6 +21,13 @@ TYPOS = ['SOTP', 'HWO', 'HLEP', 'imdeed', 'DYHINF', 'EHLP', 'liek', 'sitpoo', 'c
          'go dish', 'gof ish', 'g ofish', 'go fesh', 'go fsih', 'gi fish', 'gi fsih', 'go fsh', 'ho fish', 'go fihs', 'go fidh']
 SWEARING_RESPONSES = ["Bro chill out dude.", "Let's calm down bro.", "Dude swearing is not cool.", "Guys lets find our happy place.",
                       "Watch your fucking language.", "That's a no-no word"]
+JOB_RELATED_TERMS = ["job", "career", "employment", "linkedin", "resume", "indeed.com"]
+AI_RESPONSES = [
+    "Please keep in mind that this is a shared space with members from different backgrounds and comfort levels. Using explicit or offensive language is not okay and violates our server rules. We encourage open conversation, but it has to happen within respectful boundaries. Let’s keep this community safe and welcoming for everyone.",
+    "The content of your message crosses the line of what’s appropriate in this server. We have guidelines to ensure the space remains respectful, and that kind of language doesn’t meet that standard. If you're unsure about what’s allowed, feel free to reach out to a mod for clarification. Let's keep things respectful.",
+    "This server is meant to be a respectful environment for everyone involved. Inappropriate or explicit content can make others uncomfortable and goes against the community standards we’ve set. We’re asking that you be mindful of what you post here going forward. Continued behavior like this could result in further action by the moderation team.",
+    "Hey, just a reminder that this server has rules in place to keep things respectful and comfortable for everyone. Language or content that’s explicit or inappropriate isn’t acceptable here. Please take a moment to review the guidelines and help us maintain a space where people can feel safe and included. Repeated violations may lead to moderation action."
+]
 SPEECH_BUBBLES = ['https://cdn.discordapp.com/attachments/1087868146288951389/1285450220741726278/togif.gif?ex=6722580f&is=6721068f&hm=eae8f4b73914afeef14e09b34df7eca35865ce5b6ee517558325fba6c5fcf0fb&',
                   'https://tenor.com/view/manlet-speech-bubble-bobcat-gif-25293164',
                   'https://tenor.com/view/discord-speech-bubble-small-guy-with-a-sword-speech-bubble-gif-2288421216251484021',

@@ -287,7 +287,7 @@ async def on_presence_update(before, after: discord.Member):
 
 @client.event
 async def on_message(message: discord.Message):
-    async def send(content ='** **', reply = True, bypass_cd = False, ping= True, file_path=None, fishing=False):
+    async def send(content = '** **', reply = True, bypass_cd = False, ping = True, file_path=None, fishing=False):
         return await server_instance.send_message(message, content, reply = reply, ping = ping, bypass_cd = bypass_cd, file_path = file_path, fishing = fishing)
 
     referred_message = None
@@ -793,6 +793,9 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
     if has_any_word(lowercase_message_content, ['guess what']):
         await send('chicken butt', reply = True)
 
+    if has_any_word(lowercase_message_content, JOB_RELATED_TERMS):
+        await send(random.choice(AI_RESPONSES), ping = False)
+
     if find_any_substring(lowercase_message_content, ['jaden status', 'jedwin']):
         time_tuple = days_and_hours_since(current_time, JADEN_18TH_BIRTHDAY_UNIX_TIME)
         await send(f"Jaden has been stalking minors for {time_tuple[0]} days and {time_tuple[1]} hours")
@@ -824,7 +827,7 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
             vc = await client.fetch_channel(VOICE_CHANNEL_ID)
             await vc.connect()
 
-    if lowercase_message_content == 'am i cooked':
+    if has_any_word(lowercase_message_content, ['am i cooked', 'is he cooked', 'are we cooked', 'is she cooked', 'is it cooked']):
         await send(random.choice(['absolutely', 'Yes', 'undeniably', 'Yeah']))
 
     if lowercase_message_content == 'wait':
