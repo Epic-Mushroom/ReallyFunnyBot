@@ -21,6 +21,8 @@ TYPOS = ['SOTP', 'HWO', 'HLEP', 'imdeed', 'DYHINF', 'EHLP', 'liek', 'sitpoo', 'c
          'go dish', 'gof ish', 'g ofish', 'go fesh', 'go fsih', 'gi fish', 'gi fsih', 'go fsh', 'ho fish', 'go fihs', 'go fidh']
 SWEARING_RESPONSES = ["Bro chill out dude.", "Let's calm down bro.", "Dude swearing is not cool.", "Guys lets find our happy place.",
                       "Watch your fucking language.", "That's a no-no word"]
+EIGHT_BALL_RESPONSES = ['absolutely', 'Yes', 'undeniably', 'Yeah', 'sources say probably', 'sources say no but i don\'t agree',
+                        'focus and ask again (yes)', 'unsure atm', 'do you *really* want to know', 'undoubtedly', 'beyond cooked. one might say it is stirred and sauteed. grilled. served. consumed, even. dare i say digested']
 JOB_RELATED_TERMS = ["job", "career", "employment", "linkedin", "resume", "indeed.com"]
 AI_RESPONSES = [
     "Please keep in mind that this is a shared space with members from different backgrounds and comfort levels. Using explicit or offensive language is not okay and violates our server rules. We encourage open conversation, but it has to happen within respectful boundaries. Let’s keep this community safe and welcoming for everyone.",

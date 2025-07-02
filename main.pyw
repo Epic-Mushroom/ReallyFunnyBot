@@ -828,7 +828,7 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
             await vc.connect()
 
     if has_any_word(lowercase_message_content, ['am i cooked', 'is he cooked', 'are we cooked', 'is she cooked', 'is it cooked']):
-        await send(random.choice(['absolutely', 'Yes', 'undeniably', 'Yeah']))
+        await send(random.choice(EIGHT_BALL_RESPONSES))
 
     if lowercase_message_content == 'wait':
         await send("I'm waiting", reply = False)
