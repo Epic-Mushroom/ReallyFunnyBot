@@ -844,7 +844,7 @@ def fish_event(username: str, force_fish_name = None, factor=1.0, bypass_fish_cd
                         heist_tuple = steal_fish_from_random(original_user, recipient_name=pf.username)
                         temp_username, stolen_fish = heist_tuple
 
-                        output += f'\nStole {rare_prefix(stolen_fish)}**{stolen_fish.name}** from {temp_username}'
+                        output += f'\n    Stole {rare_prefix(stolen_fish)}**{stolen_fish.name}** from {temp_username}'
                         stolen_amt += stolen_fish.value
                     except IndexError:
                         output += f'\nBut there was nothing to steal'
@@ -860,6 +860,7 @@ def fish_event(username: str, force_fish_name = None, factor=1.0, bypass_fish_cd
                         temp_username, stolen_fish = heist_tuple
 
                         output += f'{temp_username}\'s {rare_prefix(stolen_fish)}**{stolen_fish.name}** was shot)'
+
                 except Exception as e:
                     output += f'Somehow, there was nothing to shoot [{e}])'
     
