@@ -578,13 +578,19 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
                     await server_instance.send_message(message, 'Fishing sim turned off. go outside everyone', fishing= True)
 
             elif message.content.startswith('admin:restart'):
-                await server_instance.send_message(message, "Restarting bot", bypass_cd = True)
-                exit(2)
+                try:
+                    backup_utils.make_backup()
+                    await server_instance.send_message(message, "Restarting bot", bypass_cd = True)
+                    exit(2)
+
+                except Exception as e:
+                    await send(f'bro you done fucked smth up ({e})', fishing = True)
 
             elif message.content.startswith('admin:backup'):
                 try:
                     backup_utils.make_backup()
                     await send('Backup successful', fishing = True)
+
                 except Exception as e:
                     await send(f'bro you done fucked smth up ({e})', fishing = True)
 
