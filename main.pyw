@@ -816,7 +816,7 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
         await send(random.choice(AI_RESPONSES), ping = False)
         return
 
-    if has_any_word(message.content, JOB_RELATED_TERMS_2) and not has_any_word(lowercase_message_content, JOB_RELATED_TERMS_1):
+    if has_any_word(lowercase_message_content, JOB_RELATED_TERMS_2) and not has_any_word(lowercase_message_content, JOB_RELATED_TERMS_1):
         await message.add_reaction('👎')
 
     if find_any_substring(lowercase_message_content, ['jaden status', 'jedwin']):

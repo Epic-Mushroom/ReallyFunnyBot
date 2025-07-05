@@ -90,6 +90,8 @@ def index_after_any_word(text: str, words: list[str]) -> int:
     #     else:
     #         return -1
 
+    text = text.lower()
+
     for word in words:
         word = word.lower()
         begin_index = text.find(word)
