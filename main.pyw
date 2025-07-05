@@ -244,7 +244,7 @@ async def fishing_status_coro(server_instance):
 @tasks.loop(time=REMINDER_TIME)
 async def reminder():
     me = await client.fetch_user(EPIC_MUSHROOM_ID)
-    await me.send('@everyone afk zluqe + do microsoft rewards (xbox app + bing app too)')
+    await me.send('@everyone')
 
 @client.event
 async def on_ready():
@@ -327,14 +327,14 @@ async def on_message(message: discord.Message):
     index_of_im = index_after_any_word(lowercase_message_content, POSSESSIVE_PERSONAL_PRONOUN_LIST)
     index_of_pronoun = index_after_any_word(lowercase_message_content, PRONOUNS)
 
-    if any(lowercase_message_content.strip().startswith(lyric) for lyric in REVENGE_LYRICS):
-        try:
-            lyric_found = find_any_substring(message.content, REVENGE_LYRICS)
-            await send(REVENGE_LYRICS[REVENGE_LYRICS.index(lyric_found) + 1])
-        except IndexError:
-            pass
-        except ValueError:
-            pass
+    # if any(lowercase_message_content.strip().startswith(lyric) for lyric in REVENGE_LYRICS):
+    #     try:
+    #         lyric_found = find_any_substring(message.content, REVENGE_LYRICS)
+    #         await send(REVENGE_LYRICS[REVENGE_LYRICS.index(lyric_found) + 1])
+    #     except IndexError:
+    #         pass
+    #     except ValueError:
+    #         pass
 
     if has_any_word(message.content, ['allegro barbaro']):
         await message.add_reaction('👎')
@@ -569,6 +569,8 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
             temp_path = Path("images", "no fishing in general.gif")
             await send(reply = True, file_path = temp_path)
 
+            return
+
     if message.content.startswith('admin:') and len(message.content) > 6:
         if is_admin:
             if message.content.startswith('admin:switch'):
@@ -708,28 +710,37 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
                                         f'{username_temp}\'s Profile', description=fish_utils.profile_to_string(username_temp))
             await message.channel.send(embed = embed)
 
+            return
+
         if has_any_substring(message.content, ['show leaderboard', 'show lb', '.lb']):
             embed = discord.Embed(title=f'{'(Testing Only) ' if not fish_utils.FISHING_ENABLED else ''}Leaderboard',
                                   description=fish_utils.leaderboard_string())
             await message.channel.send(embed = embed)
             # await server_instance.send_message(message, fish_utils.leaderboard_string(), bypass_cd = True)
 
+            return
 
         if has_any_substring(message.content, ['item rng lb', 'old luck lb', 'old rng lb', 'show luck old', '.oldrnglb', '.oldlbrng', '.oldlbluck', '.oldlucklb']):
             embed = discord.Embed(title=f'{'(Testing Only) ' if not fish_utils.FISHING_ENABLED else ''}RNG Leaderboard (by item)',
                                   description=fish_utils.leaderboard_string(sort_by_luck= True))
             await message.channel.send(embed = embed)
 
+            return
+
         elif has_any_substring(message.content, ['luck lb', 'rng lb', 'show luck', '.rnglb', '.lbrng', '.lbluck', '.lucklb']):
             embed = discord.Embed(title=f'{'(Testing Only) ' if not fish_utils.FISHING_ENABLED else ''}RNG Leaderboard',
                                   description=fish_utils.luck_leaderboard_string())
             await message.channel.send(embed = embed)
+
+            return
 
         if has_any_substring(message.content, ['all fish', 'global stats', 'global fish', 'all stats', 'combined profiles', 'combined joblessness',
                                             'global joblessness', 'how jobless is everyone', '.allfish']):
             embed = discord.Embed(title=f'{'(Testing Only) ' if not fish_utils.FISHING_ENABLED else ''}Universal Stats',
                                   description=fish_utils.universal_profile_to_string())
             await message.channel.send(embed = embed)
+
+            return
 
         if lowercase_message_content.startswith('go shop') or lowercase_message_content.startswith('show shop'):
             parts = message.content.split(' ')
@@ -770,6 +781,8 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
             except AttributeError:
                 await message.reply(f'That\'s not a valid ID')
 
+            return
+
         if has_any_substring(message.content, ['show manifesto', 'go manifesto']):
             # returns the fishing manifesto factor and percent boost for a given user
             parts = message.content.split(' ')
@@ -799,8 +812,12 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
     if has_any_word(lowercase_message_content, ['guess what']):
         await send('chicken butt', reply = True)
 
-    if has_any_word(lowercase_message_content, JOB_RELATED_TERMS):
+    if has_any_word(lowercase_message_content, JOB_RELATED_TERMS_1):
         await send(random.choice(AI_RESPONSES), ping = False)
+        return
+
+    if has_any_word(message.content, JOB_RELATED_TERMS_2) and not has_any_word(lowercase_message_content, JOB_RELATED_TERMS_1):
+        await message.add_reaction('👎')
 
     if find_any_substring(lowercase_message_content, ['jaden status', 'jedwin']):
         time_tuple = days_and_hours_since(current_time, JADEN_18TH_BIRTHDAY_UNIX_TIME)
@@ -824,6 +841,7 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
 
     if find_any_substring(lowercase_message_content, ['show house profits', 'show casino profits']):
         await send(f"The house has made {fish_utils.all_pfs.house_profits():,} moneys")
+        return
 
     if find_any_substring(lowercase_message_content, ['hop on']):
         if random_range(1, 50) == 1:
@@ -835,15 +853,19 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
 
     if has_any_word(lowercase_message_content, ['am i cooked', 'is he cooked', 'are we cooked', 'is she cooked', 'is it cooked']):
         await send(random.choice(EIGHT_BALL_RESPONSES))
+        return
 
     if lowercase_message_content == 'wait':
         await send("I'm waiting", reply = False)
+        return
 
     if lowercase_message_content == 'listen':
         await send("I'm listening", reply = False)
+        return
 
     if lowercase_message_content == 'look':
         await send("I'm looking", reply = False)
+        return
 
     if find_any_substring(lowercase_message_content, ['testingtesting']):
         await server_instance.change_nickname("test")

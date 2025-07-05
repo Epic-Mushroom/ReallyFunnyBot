@@ -344,14 +344,19 @@ def to_dict(obj):
         data = dict()
         for key, value in obj.items():
             data[key] = to_dict(value)
+
         return data
+
     elif hasattr(obj, "__dict__"):
         data = obj.__dict__.copy()
         for key, value in data.items():
             data[key] = to_dict(value)
+
         return data
+
     elif isinstance(obj, list):
         return [to_dict(item) for item in obj]
+
     else:
         return obj
 
