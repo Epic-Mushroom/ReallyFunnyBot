@@ -15,6 +15,11 @@ FISHING_DATABASE_PATH = Path("trackers", "fishing.json")
 SPECIALS_DATABASE_PATH = Path("trackers", "specials.json")
 GENERAL_DATABASE_PATH = Path("trackers", "user_triggers.json")
 
+# if more than THRESHOLD successful fish commands are sent in LENGTH seconds then smth happens
+# this accounts for astro fuel powerups
+ANTI_AUTOFISH_LENGTH = 300
+ANTI_AUTOFISH_THRESHOLD = 25
+
 BLUE_WHALE_CAP = 20
 CATFISH_CAP = 9
 
@@ -45,7 +50,7 @@ class MaintenanceError(Exception):
 
 class Profile:
     def __init__(self, username, wordle_wins = 0, wordle_losses = 0, wordle_points = 0, bj_games_played = 0, moneys_lost_to_gambling = 0, next_fish_time = 0, new_moneys = 0, new_catches = 0,
-                 items = None, specials = None, upgrades = None, banned_until = 0, ban_reason = "", fool = False, fake_value = 0, **kwargs):
+                 items = None, specials = None, upgrades = None, banned_until = 0, ban_reason = "", fool = False, fake_value = 0, timestamps = None, **kwargs):
         self.username = username
 
         self.wordle_wins = wordle_wins
@@ -67,6 +72,8 @@ class Profile:
 
         self.fool = fool
         self.fake_value = fake_value
+
+        self.timestamps: list[float] = timestamps if timestamps is not None else []
 
         if len(self.items) > 0 and isinstance(items[-1], dict):
             stack_list = []
@@ -192,7 +199,10 @@ class Profile:
     def unban(self):
         self.next_fish_time -= (self.banned_until - time.time())
 
-        self.banned_until = 0
+        if self.next_fish_time > time.time() + 99999:
+            self.next_fish_time = 0 # lazy ass fix for unbanning players that aren't even banned
+
+        self.banned_until = time.time()
         self.ban_reason = ""
 
     def make_fool(self):
@@ -226,6 +236,19 @@ class Profile:
 
     def get_wordle_elo(self):
         return self.wordle_points / (self.wordle_wins + self.wordle_losses)
+
+    def clear_expired_timestamps(self):
+        cur_time = time.time()
+        self.timestamps = [timestamp for timestamp in self.timestamps if
+                           cur_time - timestamp < ANTI_AUTOFISH_LENGTH]
+
+    def add_timestamp(self):
+        self.clear_expired_timestamps()
+        self.timestamps.append(time.time())
+
+    def is_exceeding_autofish_threshold(self):
+        self.clear_expired_timestamps()
+        return len(self.timestamps) >= ANTI_AUTOFISH_THRESHOLD
 
 class AllProfiles:
     LB_BANNED = ['test_user', 'test_user2', 'StickyBot', 'Reminder', 'ReallyFunnyBotTEST']
@@ -936,6 +959,14 @@ def fish_event(username: str, force_fish_name = None, factor=1.0, bypass_fish_cd
     # increments new_moneys and new_catches stats for the new luck lb
     original_pf.new_catches += 1
     original_pf.new_moneys += original_pf.value(force_real = True) - old_value
+
+    # prevents autofishing (james) (lol this can be bypassed pretty easily now that i think about it)
+    if cd >= FISHING_COOLDOWN:
+        original_pf.add_timestamp()
+
+    if original_pf.is_exceeding_autofish_threshold():
+        # shouldn't be retriggered if the player is already banned
+        original_pf.ban(900, "automated ban")
 
     return output
 
