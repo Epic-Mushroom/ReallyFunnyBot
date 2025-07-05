@@ -18,7 +18,7 @@ GENERAL_DATABASE_PATH = Path("trackers", "user_triggers.json")
 # if more than THRESHOLD successful fish commands are sent in LENGTH seconds then smth happens
 # this accounts for astro fuel powerups
 ANTI_AUTOFISH_LENGTH = 300
-ANTI_AUTOFISH_THRESHOLD = 25
+ANTI_AUTOFISH_THRESHOLD = 27
 
 BLUE_WHALE_CAP = 20
 CATFISH_CAP = 9
