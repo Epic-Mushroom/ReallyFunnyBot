@@ -50,7 +50,7 @@ class MaintenanceError(Exception):
 
 class Profile:
     def __init__(self, username, wordle_wins = 0, wordle_losses = 0, wordle_points = 0, bj_games_played = 0, moneys_lost_to_gambling = 0, next_fish_time = 0, new_moneys = 0, new_catches = 0,
-                 items = None, specials = None, upgrades = None, banned_until = 0, ban_reason = "", fool = False, fake_value = 0, timestamps = None, **kwargs):
+                 items = None, specials = None, upgrades = None, banned_until = 0, ban_reason = "", fool = False, fake_value = 0, timestamps = None, captcha = "", **kwargs):
         self.username = username
 
         self.wordle_wins = wordle_wins
@@ -74,6 +74,7 @@ class Profile:
         self.fake_value = fake_value
 
         self.timestamps: list[float] = timestamps if timestamps is not None else []
+        self.captcha = captcha
 
         if len(self.items) > 0 and isinstance(items[-1], dict):
             stack_list = []
@@ -250,6 +251,9 @@ class Profile:
         self.clear_expired_timestamps()
         return len(self.timestamps) >= ANTI_AUTOFISH_THRESHOLD
 
+    def captcha_required(self):
+        return self.captcha != ""
+
 class AllProfiles:
     LB_BANNED = ['test_user', 'test_user2', 'StickyBot', 'Reminder', 'ReallyFunnyBotTEST']
 
@@ -383,10 +387,28 @@ def to_dict(obj):
     else:
         return obj
 
-def percent_increase_to_factor(pc_inc=0) -> float:
+def generate_captcha(prefix = "g:", length = 7) -> str:
+    abcs = "qwertyuiopasdfghjklzxcvbnm"
+    digits = "1234567890"
+
+    captcha = prefix
+
+    for i in range(length):
+        if random_range(1, 3) == 1:
+            captcha += random.choice(digits)
+
+        else:
+            char = random.choice(abcs)
+            char = char.upper() if random_range(1, 2) == 1 else char
+
+            captcha += char
+
+    return captcha
+
+def percent_increase_to_factor(pc_inc = 0) -> float:
     return 1.0082 ** pc_inc
 
-def factor_to_percent_increase(factor=1) -> float:
+def factor_to_percent_increase(factor = 1) -> float:
     return math.log(factor, 1.0082)
 
 def manipulated_weights(factor=1.0, uncatchable=None) -> list:
@@ -698,6 +720,10 @@ def fish_event(username: str, force_fish_name = None, factor=1.0, bypass_fish_cd
     elif original_pf.on_cooldown():
         return f"You're on fishing cooldown ({format_seconds(next_fish_time - time.time(), True)} until you can fish again)"
 
+    elif original_pf.captcha_required():
+        return (f"Type or copy/paste the following to prove you are not automating joblessness\n" +
+                f"||{original_pf.captcha}||")
+
     else:
         caught_fish = []
         caught_fish_count = catch_count(boost=caffeine_active)
@@ -961,12 +987,12 @@ def fish_event(username: str, force_fish_name = None, factor=1.0, bypass_fish_cd
     original_pf.new_moneys += original_pf.value(force_real = True) - old_value
 
     # prevents autofishing (james) (lol this can be bypassed pretty easily now that i think about it)
-    if cd >= FISHING_COOLDOWN:
+    if cd >= FISHING_COOLDOWN or ("REMOVE THIS WHEN DONE TESTING"):
         original_pf.add_timestamp()
 
     if original_pf.is_exceeding_autofish_threshold():
-        # shouldn't be retriggered if the player is already banned
-        original_pf.ban(900, "automated ban")
+        # shouldn't be retriggered if the player is already captcha'd
+        original_pf.captcha = generate_captcha()
 
     return output
 
@@ -1241,6 +1267,8 @@ if __name__ == '__main__':
             print(fishing_manifesto_factor('epicmushroom.'))
         elif user_input == 'proftest':
             print(all_pfs.profile_from_name('epicmushroom.'))
+        elif user_input == 'makecaptcha':
+            print(generate_captcha())
         elif user_input.startswith('>fishtest') or user_input.startswith('go fish'):
             parts = user_input.split(' ')
 

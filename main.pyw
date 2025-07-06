@@ -742,6 +742,15 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
 
             return
 
+        # captchas
+        if message.content.startswith("g:"):
+            temp_profile = fish_utils.all_pfs.profile_from_name(message.author.name)
+
+            if temp_profile.captcha_required() and message.content == temp_profile.captcha:
+                temp_profile.captcha = ""
+                fish_utils.all_pfs.write_data()
+                await message.delete()
+
         if lowercase_message_content.startswith('go shop') or lowercase_message_content.startswith('show shop'):
             parts = message.content.split(' ')
             page_num = 1
