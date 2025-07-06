@@ -987,7 +987,7 @@ def fish_event(username: str, force_fish_name = None, factor=1.0, bypass_fish_cd
     original_pf.new_moneys += original_pf.value(force_real = True) - old_value
 
     # prevents autofishing (james) (lol this can be bypassed pretty easily now that i think about it)
-    if cd >= FISHING_COOLDOWN or ("REMOVE THIS WHEN DONE TESTING"):
+    if cd >= FISHING_COOLDOWN:
         original_pf.add_timestamp()
 
     if original_pf.is_exceeding_autofish_threshold():
