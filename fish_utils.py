@@ -879,7 +879,7 @@ def fish_event(username: str, force_fish_name = None, factor=1.0, bypass_fish_cd
                                                  stack.item.value > 0 and stack.item.name != "Credit" and stack.count > 0])
                 amount_to_add = stack_to_dupe.count
                 pf.add_fish(stack_to_dupe.item, amount_to_add)
-                output += f'\nMaterialized {amount_to_add:,} {stack_to_dupe.item.name}'
+                output += f'\n    Materialized {amount_to_add:,} {stack_to_dupe.item.name}'
     
             elif one_fish.name == 'Jonklerfish':
                 penalty = random_range(44, 144)
