@@ -520,7 +520,7 @@ def fish_event(username: str, force_fish_name = None, factor=1.0, bypass_fish_cd
                   ['8x_items'],
                   ['midasfish', 'drug_magnet'], # x% chance to get items from a group of items
                   ['curse'],
-                  ['astro_gruel', 'astro_fuel']] # modifies cooldown
+                  ['astro_fuel', 'astro_gruel']] # modifies cooldown
 
         user_specials = get_active_specials(username)
         activated_specials = []
