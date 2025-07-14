@@ -18,7 +18,7 @@ PRONOUNS = ['he', 'she', 'they']
 KYS_RESPONSES = ["Let's be nice to each other ok.", "Let's all calm down guys.",
                          "Guys lets find our happy place."]
 TYPOS = ['SOTP', 'HWO', 'HLEP', 'imdeed', 'DYHINF', 'EHLP', 'liek', 'sitpoo', 'cehap', 'parnets', 'paretns', 'vioolni', 'sotfp', 'tahnkss', 'sucj', 'kmagine', 'heah', 'murser',
-         'go dish', 'gof ish', 'g ofish', 'go fesh', 'go fsih', 'gi fish', 'gi fsih', 'go fsh', 'ho fish', 'go fihs', 'go fidh']
+         'go dish', 'gof ish', 'g ofish', 'go fesh', 'go fsih', 'gi fish', 'gi fsih', 'go fsh', 'ho fish', 'go fihs', 'go fidh', 'ho dish']
 SWEARING_RESPONSES = ["Bro chill out dude.", "Let's calm down bro.", "Dude swearing is not cool.", "Guys lets find our happy place.",
                       "Watch your fucking language.", "That's a no-no word"]
 EIGHT_BALL_RESPONSES = ['absolutely', 'Yes', 'undeniably', 'Yeah', 'sources say probably', 'sources say no but i don\'t agree',
