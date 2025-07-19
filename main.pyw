@@ -64,6 +64,9 @@ class ServerInstance:
     def get_nickname(self) -> str:
         return self.nickname
 
+    def is_dm(self) -> bool:
+        return self.server_name is None
+
     def on_cooldown(self) -> bool:
         current_time = int(time.time())
         return (self.recently_sent_messages >= COOLDOWN_LIMIT
@@ -749,7 +752,9 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
             if temp_profile.captcha_required() and message.content == temp_profile.captcha:
                 temp_profile.captcha = ""
                 fish_utils.all_pfs.write_data()
-                await message.delete()
+
+                if not server_instance.is_dm():
+                    await message.delete()
 
         if lowercase_message_content.startswith('go shop') or lowercase_message_content.startswith('show shop'):
             parts = message.content.split(' ')
@@ -877,6 +882,13 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
         return
 
     if find_any_substring(lowercase_message_content, ['testingtesting']):
+        if server_instance.is_dm():
+            await send("This is a dm")
+            return
+
+        else:
+            await send()
+
         await server_instance.change_nickname("test")
 
     # if random_range(1, 210) == 1:
