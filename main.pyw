@@ -153,9 +153,10 @@ class ServerInstance:
             await change_presence(default_name)
 
     async def change_nickname(self, nickname):
-        bot_member = self.server.get_member(client.user.id)
+        if not self.is_dm():
+            bot_member = self.server.get_member(client.user.id)
 
-        await bot_member.edit(nick = nickname)
+            await bot_member.edit(nick = nickname)
 
     def set_lockdown(self, seconds) -> int:
         self.lockdown = int(time.time()) + seconds
