@@ -870,6 +870,9 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
         await send(random.choice(EIGHT_BALL_RESPONSES))
         return
 
+    if has_any_word(lowercase_message_content, ['peak']):
+        await send(PEAK_FICTION)
+
     if lowercase_message_content == 'wait':
         await send("I'm waiting", reply = False)
         return
