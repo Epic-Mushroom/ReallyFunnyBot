@@ -66,10 +66,10 @@ class ShopItem:
         result = f'[ID: {self.id}]\n**{self.name}** ({type_str})\n*{self.description}*\nCosts:\n'
 
         if show_money_price:
-            result += f'{self.money_price:,} moneys\n'
+            result += f'- {self.money_price:,} moneys\n'
         if show_item_price:
             for stack in self.item_price:
-                result += f'{stack.__str__()}\n'
+                result += f'- {stack.__str__()}\n'
 
             if self.effective_cost > 0:
                 result += f'*Effective cost: {self.effective_cost:,} moneys*\n'
