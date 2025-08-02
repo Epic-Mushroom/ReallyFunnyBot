@@ -772,7 +772,7 @@ def fish_event(username: str, force_fish_name = None, factor=1.0, bypass_fish_cd
             output += '⭐ First catch! ' if one_fish.value >= 0 and not all_pfs.fish_obtained(one_fish) else ''
 
             if one_fish.name == 'Cop Fish' and not bypass_fish_cd:
-                temp_rand = random_range(19, 119)
+                temp_rand = random_range(19, 104)
                 penalty += temp_rand
                 output += f'You caught: **{one_fish.name}** (next cooldown increased to {cd + penalty} seconds)'
 
@@ -857,8 +857,8 @@ def fish_event(username: str, force_fish_name = None, factor=1.0, bypass_fish_cd
                 pf.add_special('8x_items', count=1)
 
             elif one_fish.name == 'Mogfish':
-                output += f'You caught: **{one_fish.name}** (next 12 catches by you are nearly guaranteed to include trash items)'
-                pf.add_special('mogfish', count=12)
+                output += f'You caught: **{one_fish.name}** (next 10 catches by you are nearly guaranteed to include trash items)'
+                pf.add_special('mogfish', count=10)
     
             elif one_fish.name == 'Fish Soap':
                 output += f'You caught: **{one_fish.name}** (all items with negative value in your inventory removed)'
@@ -882,7 +882,7 @@ def fish_event(username: str, force_fish_name = None, factor=1.0, bypass_fish_cd
                 output += f'\n    Materialized {amount_to_add:,} {stack_to_dupe.item.name}'
     
             elif one_fish.name == 'Jonklerfish':
-                penalty = random_range(44, 144)
+                penalty = random_range(44, 129)
                 output += (f'You caught: **{one_fish.name}** (+{one_fish.value} moneys, everyone\'s next cooldown ' +
                            f'set to {cd + penalty} seconds)')
     
