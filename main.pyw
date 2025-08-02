@@ -698,6 +698,11 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
                 except discord.errors.HTTPException:
                     pass
 
+            # elif message.content.startswith("admin:reimburse"):
+            #     await send(fish_utils._manual_data_changes())
+            #
+            #     fish_utils.all_pfs.write_data()
+
         else:
             await send('you can\'t do that (reference to 1984 by George Orwell)',
                                                    bypass_cd = True)

@@ -1223,12 +1223,14 @@ def _manual_data_changes() -> str:
     output = ''
 
     for pf in all_pfs.profiles:
-        if 'State Farm Fishing Insurance II' in pf.upgrades:
-            refund_fish = 'Credit'
-            refund_count = 6166
+        credit_fish = get_fish_from_name("Credit")
 
-            # pf.add_fish(get_fish_from_name(refund_fish), refund_count)
-            # output += f'Gave {refund_count} {refund_fish} to {pf.username} (for sffi 2)\n'
+        for stk in pf.items:
+            if stk.count > 0 and stk.item.weight == 0 and stk.item.name in POSITIVES:
+                pf.add_fish(credit_fish, stk.item.value * stk.count)
+
+                output += f'Wiped {stk.count} {stk.item.name} from {pf.username}\n'
+                pf.add_fish(stk.item, -stk.count)
 
     return output + '** **'
 
@@ -1242,6 +1244,8 @@ recalculate_fish_database()
 all_pfs = AllProfiles()
 
 # wipe_banned_users_wordle()
+
+_manual_data_changes()
 
 test_file = None
 try:
