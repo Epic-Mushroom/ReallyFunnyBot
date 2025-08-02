@@ -1245,7 +1245,7 @@ all_pfs = AllProfiles()
 
 # wipe_banned_users_wordle()
 
-_manual_data_changes()
+# _manual_data_changes()
 
 test_file = None
 try:
