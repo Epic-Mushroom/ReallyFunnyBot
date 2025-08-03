@@ -89,8 +89,11 @@ class Profile:
             setattr(self, key, value)
 
     def __str__(self):
+        profile_value = self.value()
+
         output: str = f"\n"
-        output += (f"Moneys obtained: **{self.value():,}**\n" +
+        output += (f"Current moneys: **{profile_value:,}**\n" +
+                   f"Fishing moneys: **{(profile_value + self.moneys_lost_to_gambling):,}**\n" +
                    f"Items caught: **{self.items_caught():,}**\n\n")
 
         display_stacks = [stack for stack in self.items if stack.item.name != 'Credit' and stack.count > 0]
