@@ -92,8 +92,8 @@ class Profile:
         profile_value = self.value()
 
         output: str = f"\n"
-        output += (f"Current moneys: **{profile_value:,}**\n" +
-                   f"Fishing moneys: **{(profile_value + self.moneys_lost_to_gambling):,}**\n" +
+        output += (f"Current moneys: **{profile_value:,}** ({(profile_value + self.moneys_lost_to_gambling):,} in fish)\n" +
+                   # f"Fishing moneys: **{(profile_value + self.moneys_lost_to_gambling):,}**\n" +
                    f"Items caught: **{self.items_caught():,}**\n\n")
 
         display_stacks = [stack for stack in self.items if stack.item.name != 'Credit' and stack.count > 0]
@@ -1103,7 +1103,7 @@ def leaderboard_string(sort_by_luck = False) -> str:
 
             if not sort_by_luck or profile.items_caught() >= 10:
                 output += (f'{index:,}. {trophy}{profile.username}: **{display_val:,} '
-                           f'moneys{'/item' if sort_by_luck else ''}**\n')
+                           f'moneys{'/item**' if sort_by_luck else f'** ({(display_val + profile.moneys_lost_to_gambling):,} in fish)'}\n')
 
                 index += 1
             else:
