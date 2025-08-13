@@ -839,6 +839,10 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
     if has_any_word(lowercase_message_content, JOB_RELATED_TERMS_2) and not has_any_word(lowercase_message_content, JOB_RELATED_TERMS_1):
         await message.add_reaction('👎')
 
+    if has_any_word(lowercase_message_content, ANTI_ROBOT_TERMS):
+        await message.add_reaction('😔')
+        return
+
     if find_any_substring(lowercase_message_content, ['jaden status', 'jedwin']):
         time_tuple = days_and_hours_since(current_time, JADEN_18TH_BIRTHDAY_UNIX_TIME)
         await send(f"Jaden has been stalking minors for {time_tuple[0]} days and {time_tuple[1]} hours")
