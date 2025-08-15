@@ -693,7 +693,8 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
 
             elif message.content.startswith("admin:saymessage"):
                 try:
-                    await send(message.content[len("admin:saymessage"):])
+                    await send(message.content[len("admin:saymessage"):], reply = False)
+                    await message.delete()
 
                 except discord.errors.HTTPException:
                     pass
