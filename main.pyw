@@ -491,7 +491,7 @@ The hallway smelt of boiled cabbage and old rag mats. At one end of it a coloure
             print(f"'{str(video_path)} wasn't found'")
 
     if has_any_word(message.content, ['speech bubble', 'speechbubble']) and referred_message:
-        await referred_message.reply(random.choices(SPEECH_BUBBLES), allowed_mentions = discord.AllowedMentions().none()
+        await referred_message.reply(random.choice(SPEECH_BUBBLES), allowed_mentions = discord.AllowedMentions().none()
                                      if message.mentions else None)
 
     if has_any_word(message.content, ['brawl stars', 'hop on brawl']):
