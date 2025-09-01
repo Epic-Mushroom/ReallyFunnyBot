@@ -275,6 +275,7 @@ async def on_ready():
     # sends startup message in a specific channel
     if not ADMIN_ONLY:
         lgg_channel = await client.fetch_channel(LETS_GO_GAMBLING_CHANNEL_ID)
+        me = await client.fetch_user(EPIC_MUSHROOM_ID)
         await me.send("Bot successfully started")
 
 @client.event
