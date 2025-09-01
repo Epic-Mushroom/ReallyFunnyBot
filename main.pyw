@@ -275,7 +275,7 @@ async def on_ready():
     # sends startup message in a specific channel
     if not ADMIN_ONLY:
         lgg_channel = await client.fetch_channel(LETS_GO_GAMBLING_CHANNEL_ID)
-        await lgg_channel.send("Bot successfully started")
+        await me.send("Bot successfully started")
 
 @client.event
 async def on_presence_update(before, after: discord.Member):
