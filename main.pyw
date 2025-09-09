@@ -853,9 +853,15 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
         time_tuple = days_and_hours_since(current_time, JAMES_18TH_BIRTHDAY_UNIX_TIME)
         await send(f"James has been getting high for {time_tuple[0]} days and {time_tuple[1]} hours")
 
-    if find_any_substring(lowercase_message_content, ['aravind status', 'arvind']):
+    if find_any_substring(lowercase_message_content, ['aravind status']):
         time_tuple = days_and_hours_since(ARAVIND_18TH_BIRTHDAY_UNIX_TIME, current_time)
-        await send(f"Aravind will be legal in {time_tuple[0]} days and {time_tuple[1]} hours")
+
+        if time_tuple[0] >= 0 and time_tuple[1] >= 0:
+            await send(f"Aravind will be legal in {time_tuple[0]} days and {time_tuple[1]} hours")
+
+        else:
+            time_tuple = days_and_hours_since(current_time, ARAVIND_18TH_BIRTHDAY_UNIX_TIME)
+            await send(f"Aravind has been legal for {time_tuple[0]} days and {time_tuple[1]} hours")
 
     if find_any_substring(lowercase_message_content, ['kush status', 'hush b', 'hush']):
         time_tuple = days_and_hours_since(current_time, KUSH_BIRTHDAY_UNIX_TIME)
