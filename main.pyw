@@ -694,8 +694,13 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
 
             elif message.content.startswith("admin:saymessage"):
                 try:
-                    await send(message.content[len("admin:saymessage"):], reply = False)
-                    await message.delete()
+                    if not server_instance.is_dm():
+                        await send(message.content[len("admin:saymessage"):], reply = False)
+                        await message.delete()
+
+                    else:
+                        bkids_general = await client.fetch_channel(GENERAL_CHANNEL_ID_1)
+                        await bkids_general.send(message.content[len("admin:saymessage"):])
 
                 except discord.errors.HTTPException:
                     pass
