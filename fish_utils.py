@@ -946,7 +946,7 @@ def fish_event(username: str, force_fish_name = None, factor=1.0, bypass_fish_cd
     if stolen_amt > 0:
         output += f'\n*Stole {stolen_amt:,} moneys from players*'
 
-    if ml_tiers > 0:
+    if ml_tiers > 0 and force_fish_name != "Dirt":
         if random_range(1, 3 - ml_tiers) == 1:
             pf.add_fish(get_fish_from_name('Credit'), 10)
             output += f'\n*+10 moneys (Money Laundering bonus)*'

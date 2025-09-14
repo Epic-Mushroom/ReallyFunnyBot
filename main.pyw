@@ -547,7 +547,7 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
     if has_any_substring(message.content, ['🐟', '🎣', '🐠', '🐡', 'asdfghjkl', 'go phish', 'go fish', 'jobless behavior', 'le fishe',
                                         'quiero comer pescado',
                                         '.fish', '><>', '去钓鱼', '<><', '2+2', 'godfisa',
-                                        'zxcvbnm', 'qwertyuiop', 'go ghoti']):
+                                        'zxcvbnm', 'qwertyuiop', 'go ghoti', 'go dig']):
         if random_range(1, 1000) == 1:
             jumpscare = await send(file_path = Path('images', 'deepfriedjumpscare.png'), fishing = True)
             await asyncio.sleep(0.42)
@@ -559,8 +559,13 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
                 # if ADMIN_ONLY and is_admin:
                 #     fish_utils.all_pfs.profile_from_name(message.author.name).last_fish_time = 0
 
-                content = f'{'[TESTING ONLY] ' if not fish_utils.FISHING_ENABLED else ''}{fish_utils.fish_event(message.author.name)}'
-                await send(content, reply = True, bypass_cd = True, fishing = True)
+                if not has_any_substring(message.content, ['go dig']):
+                    content = f'{'[TESTING ONLY] ' if not fish_utils.FISHING_ENABLED else ''}{fish_utils.fish_event(message.author.name)}'
+                    await send(content, reply = True, bypass_cd = True, fishing = True)
+
+                else:
+                    content = f'{'[TESTING ONLY] ' if not fish_utils.FISHING_ENABLED else ''}{fish_utils.fish_event(message.author.name, force_fish_name = "Dirt")}'
+                    await send(content, reply = True, bypass_cd = True, fishing = True)
 
             except fish_utils.MaintenanceError:
                 await send(f'fishing is currently disabled, go play minecraft in the meantime or some shit', fishing = True)
@@ -715,10 +720,11 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
                                                    bypass_cd = True)
 
     if is_admin or fish_utils.FISHING_ENABLED:
-        if has_any_substring(message.content, ['show profile', 'show pf']):
+        if has_any_substring(message.content, ['show profile', 'show pf', '.pf']):
             username_temp = message.author.name
             if (lowercase_message_content.startswith('show profile ') or
-                lowercase_message_content.startswith('show pf ')):
+                lowercase_message_content.startswith('show pf ') or
+                lowercase_message_content.startswith('.pf ')):
                 parts = message.content.split(' ')
                 username_temp = parts[-1]
 
