@@ -890,9 +890,9 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
         if random_range(1, 50) == 1:
             await send("hop on deez nuts imo", reply = False)
 
-        if has_any_word(lowercase_message_content, ['vc']):
-            vc = await client.fetch_channel(VOICE_CHANNEL_ID)
-            await vc.connect()
+        # if has_any_word(lowercase_message_content, ['vc']):
+        #     vc = await client.fetch_channel(VOICE_CHANNEL_ID)
+        #     await vc.connect()
 
     if has_any_word(lowercase_message_content, ['am i cooked', 'is he cooked', 'are we cooked', 'is she cooked', 'is it cooked']):
         await send(random.choice(EIGHT_BALL_RESPONSES))
