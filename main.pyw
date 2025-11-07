@@ -247,8 +247,9 @@ async def fishing_status_coro(server_instance):
 
 @tasks.loop(time=REMINDER_TIME)
 async def reminder():
-    me = await client.fetch_user(EPIC_MUSHROOM_ID)
-    await me.send('@everyone')
+    # me = await client.fetch_user(EPIC_MUSHROOM_ID)
+    # await me.send('@everyone')
+    pass
 
 @client.event
 async def on_ready():
