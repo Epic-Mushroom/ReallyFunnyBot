@@ -910,6 +910,10 @@ Y'all remember Cartoon Network?; Adventure Time 🐕‍🦺
         await send("I'm listening", reply = False)
         return
 
+    if lowercase_message_content == 'hold on':
+        await send("I'm holding on", reply = False)
+        return
+
     if lowercase_message_content == 'look':
         await send("I'm looking", reply = False)
         return
