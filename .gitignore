@@ -3,6 +3,8 @@ testing
 .venv
 __pycache__
 *.zip
+images
+videos
 trackers
 secrets
 _command_remover.py
