@@ -943,7 +943,7 @@ def fish_event(username: str, force_fish_name = None, factor=1.0, bypass_fish_cd
             if active_special is not None:
                 original_pf.add_special(active_special, count=-1)
 
-    if stolen_amt > 0:
+    if stolen_amt != 0:
         output += f'\n*Stole {stolen_amt:,} moneys from players*'
 
     if ml_tiers > 0 and force_fish_name != "Dirt":
