@@ -385,7 +385,7 @@ async def on_message(message: discord.Message):
     if has_any_substring(lowercase_message_content, ['skibidi', 'hawk tuah', 'jelqing', 'lv 100 gyatt']):
         await send("no", reply = False)
 
-    if "FUCK" in message.content or "SHIT" in message.content or lowercase_message_content == "shut the fuck up":
+    if "FUCK" in message.content or "SHIT" in message.content or "fuck" in message.content or lowercase_message_content == "shut the fuck up":
         await send(random.choice(SWEARING_RESPONSES))
 
     if has_any_word(message.content, ['kys', 'kill yourself', 'kill your self']):
