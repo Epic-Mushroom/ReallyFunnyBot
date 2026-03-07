@@ -3,6 +3,7 @@ testing
 .venv
 __pycache__
 *.zip
+*.env
 images
 videos
 trackers
