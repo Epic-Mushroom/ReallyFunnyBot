@@ -4,6 +4,7 @@ import commands, fish_utils, shop_utils, backup_utils
 
 from pathlib import Path
 from discord.ext import tasks
+from dotenv import load_dotenv
 from string_utils import *
 from constants import *
 
@@ -182,14 +183,11 @@ finally:
         test_file.close()
 
 # Token and commands guild setup
-SECRET_FILE_PATH_MAIN = Path('secrets', 'discord bot token.txt')
-SECRET_FILE_PATH_TEST = Path('secrets', 'test discord bot token.txt')
-TOKEN = None
+load_dotenv()
 
-token_path = SECRET_FILE_PATH_TEST if ADMIN_ONLY else SECRET_FILE_PATH_MAIN
-
-with open(token_path) as file1:
-    TOKEN = file1.readline()
+# SECRET_FILE_PATH_MAIN = Path('secrets', 'discord bot token.txt')
+# SECRET_FILE_PATH_TEST = Path('secrets', 'test discord bot token.txt')
+TOKEN = os.getenv("BOT_TOKEN_TEST") if ADMIN_ONLY else os.getenv("BOT_TOKEN")
 
 # Setup certain variables according to value of ADMIN_ONLY
 COMMANDS_GUILD = None
@@ -209,7 +207,6 @@ REVENGE_LYRICS = file_lines_to_list(Path('revenge.txt'))
 DRUG_NAMES = file_lines_to_list(Path('drugs_list.txt'))
 
 def random_range(start: int, stop: int) -> int:
-    """me when i don't know that random.randint exists"""
     return random.randrange(start, stop + 1)
 
 def increment_total_triggers(count=1):
